@@ -1,0 +1,16 @@
+className: Solution
+mode: ops
+constructorParams: [int, double]
+methods:
+  - name: allow
+    params: [String]
+    returns: boolean
+cases:
+  - name: capacity-no-refill
+    constructorArgs: [2, 0.0]
+    ops:
+      - [allow, one]
+      - [allow, one]
+      - [allow, one]
+      - [allow, two]
+    expected: [true, true, false, true]

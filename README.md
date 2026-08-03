@@ -20,21 +20,51 @@ Requirements: **JDK 21+**. `start.sh` auto-detects common OpenJDK 21 installs an
 java -jar target/algoprep-1.0.0-SNAPSHOT.jar
 ```
 
+### Docker (no local JDK required)
+
+```bash
+docker compose up --build
+```
+
+Same UI at [http://localhost:8080](http://localhost:8080). Sync files persist in the `algoprep-sync` volume.
+
+Optional harder judge isolation on the **host** (Docker available):
+
+```bash
+ALGOPREP_JUDGE_DOCKER=true ./start.sh
+# or in application.yml: algoprep.judge.docker: true
+```
+
+Runs compile+execute inside `eclipse-temurin:21-jdk` with `--network none`, memory/CPU/pids limits.
+
+### Playwright e2e
+
+With the app already on `:8080`:
+
+```bash
+cd e2e && npm i && npx playwright install chromium
+ALGOPREP_E2E_NO_SERVER=1 npm test
+```
+
 ## What’s included
 
 | Area | Content |
 |------|---------|
 | Patterns | **29** modules (28 classic + Spring Boot Interview Lab) |
-| Problems | **155** catalog problems (Easy / Medium / Hard in every pattern) |
-| Judge | **136** runnable specs + Monaco playground |
-| Challenges | **12** unlabeled hard drills |
+| Problems | **155** catalog + **15** challenges (**170** total) |
+| By difficulty | Catalog **38** Easy · **82** Medium · **35** Hard (every pattern has all three); challenges count as Hard |
+| Judge | **156** runnable specs (incl. ops-mode for Trie/LRU/MinStack/…) + Monaco playground |
+| Challenges | **15** unlabeled hard drills (some with `alternatePatterns`) |
 | Quiz | Guess-the-pattern recognition set |
 | Locales | EN · RU · ES |
 | Themes | Light / Dark |
 
+Difficulty counts (Easy / Medium / Hard) show on the home hero, pattern list, pattern detail, tracks, and challenges.
+
 ### Study modes in the UI
 
-- **Patterns** — intuition, walkthrough, animated diagrams, company/frequency filters, solution reveal, complexity self-check
+- **Patterns** — intuition, walkthrough, animated diagrams, company/frequency filters, difficulty counts, solution reveal, complexity self-check
+- **Plans / Report** — week checklists and printable weekly progress
 - **Playground** — edit Java (Monaco), run hidden tests via `/api/v1/judge`
 - **Daily** — three deterministic problems per day + streak
 - **Review** — spaced repetition (SM-2 lite) for due cards

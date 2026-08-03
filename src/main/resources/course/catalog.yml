@@ -62,7 +62,6 @@ patterns:
     - array
     - two-pointers
     companies:
-    - FAANG
     - Google
     - Amazon
     frequency: HIGH
@@ -82,8 +81,8 @@ patterns:
     - two-pointers
     - in-place
     companies:
-    - FAANG
-    - Microsoft
+    - Google
+    - Amazon
     frequency: HIGH
   - id: triplet-sum-zero
     title: Triplet Sum to Zero
@@ -102,8 +101,7 @@ patterns:
     - array
     - two-pointers
     companies:
-    - FAANG
-    - Meta
+    - Google
     - Amazon
     frequency: HIGH
   - id: container-with-most-water
@@ -121,7 +119,6 @@ patterns:
     - array
     - two-pointers
     companies:
-    - FAANG
     - Google
     - Amazon
     frequency: HIGH
@@ -140,8 +137,8 @@ patterns:
     - array
     - two-pointers
     companies:
-    - Microsoft
-    - Amazon
+    - Google
+    - Uber
     frequency: MEDIUM
   - id: quadruple-sum
     title: Quadruple Sum to Target
@@ -159,7 +156,7 @@ patterns:
     - two-pointers
     companies:
     - Amazon
-    - Meta
+    - Netflix
     frequency: MEDIUM
 - id: FAST_SLOW_POINTERS
   order: 2
@@ -217,9 +214,8 @@ patterns:
     - linked-list
     - cycle
     companies:
-    - FAANG
+    - Google
     - Amazon
-    - Microsoft
     frequency: HIGH
   - id: middle-of-linked-list
     title: Middle of the Linked List
@@ -236,7 +232,7 @@ patterns:
     - linked-list
     companies:
     - Amazon
-    - Microsoft
+    - Google
     frequency: HIGH
   - id: happy-number
     title: Happy Number
@@ -254,7 +250,7 @@ patterns:
     - cycle
     companies:
     - Google
-    - Amazon
+    - Microsoft
     frequency: MEDIUM
   - id: cycle-start
     title: Start of Linked List Cycle
@@ -271,8 +267,8 @@ patterns:
     - linked-list
     - cycle
     companies:
-    - Amazon
-    - Microsoft
+    - Google
+    - Uber
     frequency: MEDIUM
   - id: palindrome-linked-list
     title: Palindrome Linked List
@@ -289,7 +285,8 @@ patterns:
     - linked-list
     companies:
     - Amazon
-    - Meta
+    - LinkedIn
+    - Netflix
     frequency: MEDIUM
   - id: circular-array-loop
     title: Circular Array Loop
@@ -307,6 +304,8 @@ patterns:
     - cycle
     companies:
     - Google
+    - Google
+    - Apple
     frequency: LOW
 - id: SLIDING_WINDOW
   order: 3
@@ -366,7 +365,7 @@ patterns:
     - sliding-window
     companies:
     - Amazon
-    - Microsoft
+    - Uber
     frequency: MEDIUM
   - id: longest-substring-k-distinct
     title: Longest Substring with K Distinct Characters
@@ -384,8 +383,9 @@ patterns:
     - string
     - sliding-window
     companies:
-    - Meta
-    - Google
+    - Amazon
+    - LinkedIn
+    - Netflix
     frequency: MEDIUM
   - id: find-all-anagrams
     title: Find All Anagrams in a String
@@ -403,8 +403,8 @@ patterns:
     - sliding-window
     - anagram
     companies:
-    - Meta
-    - Amazon
+    - Google
+    - Uber
     frequency: MEDIUM
   - id: longest-no-repeat
     title: Longest Substring Without Repeating Characters
@@ -421,9 +421,9 @@ patterns:
     - string
     - sliding-window
     companies:
-    - FAANG
-    - Meta
     - Amazon
+    - LinkedIn
+    - Netflix
     frequency: HIGH
   - id: min-window-substring
     title: Minimum Window Substring
@@ -440,9 +440,9 @@ patterns:
     - string
     - sliding-window
     companies:
-    - FAANG
-    - Meta
     - Google
+    - Google
+    - Apple
     frequency: HIGH
 - id: INTERVALS
   order: 4
@@ -498,9 +498,8 @@ patterns:
     tags:
     - intervals
     companies:
-    - FAANG
     - Google
-    - Meta
+    - Amazon
     frequency: HIGH
   - id: insert-interval
     title: Insert Interval
@@ -518,6 +517,7 @@ patterns:
     companies:
     - Google
     - Meta
+    - Microsoft
     frequency: HIGH
   - id: conflicting-appointments
     title: Conflicting Appointments
@@ -533,8 +533,8 @@ patterns:
     tags:
     - intervals
     companies:
-    - Meta
-    - Amazon
+    - Google
+    - Microsoft
     frequency: MEDIUM
   - id: interval-intersection
     title: Interval List Intersections
@@ -551,7 +551,8 @@ patterns:
     - intervals
     companies:
     - Google
-    - Amazon
+    - Google
+    - Uber
     frequency: MEDIUM
   - id: minimum-meeting-rooms
     title: Minimum Meeting Rooms
@@ -569,8 +570,8 @@ patterns:
     - heap
     companies:
     - Meta
-    - Google
-    - Amazon
+    - Citadel
+    - Meta
     frequency: HIGH
 - id: IN_PLACE_LINKED_LIST
   order: 5
@@ -626,9 +627,8 @@ patterns:
     tags:
     - linked-list
     companies:
-    - FAANG
     - Amazon
-    - Microsoft
+    - Bloomberg
     frequency: HIGH
   - id: reverse-sublist
     title: Reverse Sub List
@@ -646,6 +646,7 @@ patterns:
     - linked-list
     companies:
     - Microsoft
+    - Adobe
     - Amazon
     frequency: MEDIUM
   - id: reverse-every-k
@@ -663,7 +664,7 @@ patterns:
     - linked-list
     companies:
     - Amazon
-    - Microsoft
+    - Amazon
     frequency: MEDIUM
   - id: rotate-list
     title: Rotate List
@@ -680,6 +681,8 @@ patterns:
     - linked-list
     companies:
     - Amazon
+    - Google
+    - Uber
     frequency: MEDIUM
   - id: reorder-list
     title: Reorder List
@@ -697,6 +700,7 @@ patterns:
     companies:
     - Meta
     - Amazon
+    - Jane Street
     frequency: MEDIUM
 - id: TWO_HEAPS
   order: 6
@@ -755,9 +759,9 @@ patterns:
     tags:
     - heap
     companies:
-    - FAANG
-    - Google
-    - Amazon
+    - Meta
+    - Microsoft
+    - Netflix
     frequency: HIGH
   - id: maximize-capital
     title: Maximize Capital
@@ -776,6 +780,7 @@ patterns:
     - greedy
     companies:
     - Amazon
+    - Jane Street
     frequency: MEDIUM
   - id: sliding-window-median
     title: Sliding Window Median
@@ -792,6 +797,8 @@ patterns:
     - heap
     companies:
     - Google
+    - Amazon
+    - Jane Street
     frequency: LOW
   - id: next-interval
     title: Next Interval
@@ -809,6 +816,7 @@ patterns:
     - intervals
     companies:
     - Google
+    - Uber
     frequency: LOW
   - id: static-median
     title: Median of an Unsorted Array
@@ -824,7 +832,8 @@ patterns:
     tags:
     - heap
     companies:
-    - Backend
+    - Uber
+    - Apple
     frequency: LOW
 - id: K_WAY_MERGE
   order: 7
@@ -882,10 +891,9 @@ patterns:
     - heap
     - linked-list
     companies:
-    - FAANG
-    - Amazon
     - Google
-    - Meta
+    - Google
+    - Apple
     frequency: HIGH
   - id: kth-smallest-sorted-matrix
     title: Kth Smallest in Sorted Matrix
@@ -903,8 +911,8 @@ patterns:
     - heap
     - matrix
     companies:
-    - Amazon
     - Google
+    - Uber
     frequency: MEDIUM
   - id: k-smallest-pairs
     title: K Smallest Pairs
@@ -920,6 +928,7 @@ patterns:
     tags:
     - heap
     companies:
+    - Amazon
     - Amazon
     frequency: MEDIUM
   - id: smallest-range
@@ -937,6 +946,8 @@ patterns:
     - heap
     companies:
     - Google
+    - Google
+    - Apple
     frequency: LOW
   - id: merge-two-sorted-lists
     title: Merge Two Sorted Lists
@@ -953,9 +964,8 @@ patterns:
     - linked-list
     - merge
     companies:
-    - FAANG
+    - Google
     - Amazon
-    - Microsoft
     frequency: HIGH
 - id: TOP_K_ELEMENTS
   order: 8
@@ -1011,7 +1021,7 @@ patterns:
     - heap
     companies:
     - Amazon
-    - Meta
+    - Uber
     frequency: MEDIUM
   - id: k-closest-points
     title: K Closest Points to Origin
@@ -1028,9 +1038,9 @@ patterns:
     - heap
     - geometry
     companies:
-    - FAANG
     - Amazon
-    - Google
+    - LinkedIn
+    - Netflix
     frequency: HIGH
   - id: top-k-frequent
     title: Top K Frequent Numbers
@@ -1047,9 +1057,9 @@ patterns:
     - heap
     - hash-map
     companies:
-    - FAANG
-    - Meta
     - Amazon
+    - LinkedIn
+    - Netflix
     frequency: HIGH
   - id: kth-largest
     title: Kth Largest Element
@@ -1067,7 +1077,7 @@ patterns:
     companies:
     - Amazon
     - Meta
-    - Google
+    - Microsoft
     frequency: HIGH
   - id: reorganize-string
     title: Reorganize String
@@ -1085,7 +1095,7 @@ patterns:
     - greedy
     companies:
     - Google
-    - Amazon
+    - Netflix
     frequency: MEDIUM
 - id: MODIFIED_BINARY_SEARCH
   order: 9
@@ -1146,6 +1156,7 @@ patterns:
     - binary-search
     companies:
     - Amazon
+    - Apple
     frequency: MEDIUM
   - id: search-rotated-array
     title: Search in Rotated Sorted Array
@@ -1162,9 +1173,8 @@ patterns:
     tags:
     - binary-search
     companies:
-    - FAANG
-    - Meta
-    - Amazon
+    - Google
+    - Netflix
     frequency: HIGH
   - id: find-range
     title: Find First and Last Position
@@ -1182,7 +1192,8 @@ patterns:
     - binary-search
     companies:
     - Amazon
-    - Google
+    - LinkedIn
+    - Netflix
     frequency: HIGH
   - id: find-peak-element
     title: Find Peak Element
@@ -1199,7 +1210,7 @@ patterns:
     - binary-search
     companies:
     - Google
-    - Amazon
+    - Uber
     frequency: MEDIUM
   - id: search-rotated-duplicates
     title: Search Rotated Array II
@@ -1216,6 +1227,8 @@ patterns:
     - binary-search
     companies:
     - Amazon
+    - Google
+    - Apple
     frequency: MEDIUM
 - id: SUBSETS
   order: 10
@@ -1273,8 +1286,8 @@ patterns:
     tags:
     - subsets
     companies:
-    - FAANG
-    - Meta
+    - Google
+    - Adobe
     - Amazon
     frequency: HIGH
   - id: subsets-with-duplicates
@@ -1292,7 +1305,8 @@ patterns:
     tags:
     - subsets
     companies:
-    - Amazon
+    - Google
+    - Uber
     frequency: MEDIUM
   - id: permutations
     title: Permutations
@@ -1308,9 +1322,9 @@ patterns:
     tags:
     - permutations
     companies:
-    - FAANG
-    - Meta
     - Amazon
+    - LinkedIn
+    - Netflix
     frequency: HIGH
   - id: generate-parentheses
     title: Generate Parentheses
@@ -1327,9 +1341,8 @@ patterns:
     - backtracking
     - subsets
     companies:
-    - FAANG
     - Meta
-    - Google
+    - Microsoft
     frequency: HIGH
   - id: unique-permutations
     title: Permutations II
@@ -1346,6 +1359,8 @@ patterns:
     - permutations
     companies:
     - Amazon
+    - Citadel
+    - Meta
     frequency: MEDIUM
   - id: subsets-size-k
     title: Combinations of Size K
@@ -1363,6 +1378,7 @@ patterns:
     - backtracking
     companies:
     - Amazon
+    - Uber
     frequency: MEDIUM
 - id: GREEDY
   order: 11
@@ -1422,9 +1438,9 @@ patterns:
     tags:
     - greedy
     companies:
-    - FAANG
-    - Amazon
     - Google
+    - Google
+    - Uber
     frequency: HIGH
   - id: jump-game-ii
     title: Jump Game II
@@ -1441,8 +1457,8 @@ patterns:
     tags:
     - greedy
     companies:
-    - Amazon
-    - Google
+    - Meta
+    - Microsoft
     frequency: MEDIUM
   - id: gas-station
     title: Gas Station
@@ -1459,7 +1475,7 @@ patterns:
     - greedy
     companies:
     - Amazon
-    - Meta
+    - Netflix
     frequency: MEDIUM
   - id: candy
     title: Candy
@@ -1475,8 +1491,9 @@ patterns:
     tags:
     - greedy
     companies:
-    - Google
-    - Amazon
+    - Meta
+    - Microsoft
+    - Netflix
     frequency: MEDIUM
   - id: assign-cookies
     title: Assign Cookies
@@ -1492,7 +1509,8 @@ patterns:
     tags:
     - greedy
     companies:
-    - Backend
+    - Amazon
+    - Bloomberg
     frequency: LOW
 - id: BACKTRACKING
   order: 12
@@ -1551,9 +1569,8 @@ patterns:
     tags:
     - backtracking
     companies:
-    - FAANG
-    - Amazon
-    - Meta
+    - Google
+    - Netflix
     frequency: HIGH
   - id: word-search
     title: Word Search
@@ -1570,9 +1587,9 @@ patterns:
     - backtracking
     - matrix
     companies:
-    - FAANG
+    - Google
+    - Adobe
     - Amazon
-    - Meta
     frequency: HIGH
   - id: n-queens
     title: N-Queens
@@ -1588,8 +1605,8 @@ patterns:
     tags:
     - backtracking
     companies:
-    - Google
     - Amazon
+    - Jane Street
     frequency: MEDIUM
   - id: sudoku-solver
     title: Sudoku Solver
@@ -1622,7 +1639,8 @@ patterns:
     tags:
     - backtracking
     companies:
-    - Backend
+    - Microsoft
+    - Google
     frequency: LOW
 - id: DYNAMIC_PROGRAMMING
   order: 13
@@ -1681,8 +1699,7 @@ patterns:
     tags:
     - dp
     companies:
-    - FAANG
-    - Amazon
+    - Google
     - Apple
     frequency: HIGH
   - id: house-robber
@@ -1699,9 +1716,9 @@ patterns:
     tags:
     - dp
     companies:
-    - FAANG
     - Amazon
-    - Google
+    - LinkedIn
+    - Netflix
     frequency: HIGH
   - id: 0-1-knapsack
     title: 0/1 Knapsack
@@ -1719,7 +1736,8 @@ patterns:
     - knapsack
     companies:
     - Amazon
-    - Google
+    - Meta
+    - Microsoft
     frequency: MEDIUM
   - id: coin-change
     title: Coin Change
@@ -1735,9 +1753,8 @@ patterns:
     tags:
     - dp
     companies:
-    - FAANG
-    - Amazon
     - Google
+    - Uber
     frequency: HIGH
   - id: edit-distance
     title: Edit Distance
@@ -1753,9 +1770,9 @@ patterns:
     tags:
     - dp
     companies:
-    - FAANG
-    - Google
     - Meta
+    - Microsoft
+    - Netflix
     frequency: HIGH
 - id: CYCLIC_SORT
   order: 14
@@ -1814,6 +1831,7 @@ patterns:
     - cyclic-sort
     companies:
     - Amazon
+    - Amazon
     frequency: MEDIUM
   - id: find-missing-number
     title: Find the Missing Number
@@ -1830,7 +1848,7 @@ patterns:
     - cyclic-sort
     companies:
     - Amazon
-    - Microsoft
+    - Google
     frequency: HIGH
   - id: find-all-duplicates
     title: Find All Duplicate Numbers
@@ -1847,6 +1865,8 @@ patterns:
     - cyclic-sort
     companies:
     - Amazon
+    - Meta
+    - Microsoft
     frequency: MEDIUM
   - id: find-duplicate-number
     title: Find the Duplicate Number
@@ -1863,9 +1883,8 @@ patterns:
     - cyclic-sort
     - cycle
     companies:
-    - FAANG
-    - Amazon
     - Google
+    - Uber
     frequency: HIGH
   - id: first-missing-positive
     title: First Missing Positive
@@ -1881,9 +1900,9 @@ patterns:
     tags:
     - cyclic-sort
     companies:
-    - FAANG
-    - Amazon
-    - Google
+    - Meta
+    - Microsoft
+    - Netflix
     frequency: HIGH
 - id: TOPOLOGICAL_SORT
   order: 15
@@ -1943,9 +1962,8 @@ patterns:
     - graph
     - topo
     companies:
-    - FAANG
-    - Meta
     - Google
+    - Adobe
     - Amazon
     frequency: HIGH
   - id: course-schedule-order
@@ -1964,8 +1982,7 @@ patterns:
     - topo
     companies:
     - Meta
-    - Google
-    - Amazon
+    - Microsoft
     frequency: HIGH
   - id: tasks-scheduling
     title: Tasks Scheduling
@@ -1983,7 +2000,7 @@ patterns:
     - topo
     companies:
     - Amazon
-    - Microsoft
+    - Amazon
     frequency: MEDIUM
   - id: alien-dictionary-order
     title: Alien Dictionary
@@ -2000,8 +2017,8 @@ patterns:
     - graph
     - topo
     companies:
-    - Google
-    - Meta
+    - Amazon
+    - Jane Street
     frequency: MEDIUM
   - id: verify-alien-dictionary
     title: Verifying an Alien Dictionary
@@ -2019,6 +2036,7 @@ patterns:
     - topo
     companies:
     - Google
+    - Apple
     frequency: LOW
 - id: SORT_AND_SEARCH
   order: 16
@@ -2079,9 +2097,9 @@ patterns:
     - hash-map
     - sort
     companies:
-    - FAANG
-    - Meta
     - Amazon
+    - LinkedIn
+    - Netflix
     frequency: HIGH
   - id: search-suggestions
     title: Search Suggestions (sorted prefix)
@@ -2100,6 +2118,7 @@ patterns:
     companies:
     - Amazon
     - Google
+    - Uber
     frequency: MEDIUM
   - id: wiggle-sort
     title: Wiggle Sort
@@ -2116,6 +2135,8 @@ patterns:
     - sort
     companies:
     - Google
+    - Meta
+    - Microsoft
     frequency: LOW
   - id: count-smaller-after-self
     title: Count of Smaller Numbers After Self
@@ -2133,6 +2154,8 @@ patterns:
     - divide-conquer
     companies:
     - Google
+    - Google
+    - Apple
     frequency: LOW
   - id: intersection-two-arrays
     title: Intersection of Two Arrays
@@ -2149,8 +2172,8 @@ patterns:
     - hash-set
     - sort
     companies:
-    - Meta
-    - Amazon
+    - Google
+    - Microsoft
     frequency: MEDIUM
 - id: MATRICES
   order: 17
@@ -2210,8 +2233,7 @@ patterns:
     tags:
     - matrix
     companies:
-    - FAANG
-    - Microsoft
+    - Google
     - Amazon
     frequency: HIGH
   - id: rotate-image
@@ -2229,8 +2251,8 @@ patterns:
     tags:
     - matrix
     companies:
-    - FAANG
-    - Microsoft
+    - Google
+    - Adobe
     - Amazon
     frequency: HIGH
   - id: set-matrix-zeroes
@@ -2248,6 +2270,7 @@ patterns:
     - matrix
     companies:
     - Amazon
+    - Meta
     - Microsoft
     frequency: MEDIUM
   - id: search-2d-matrix
@@ -2266,7 +2289,8 @@ patterns:
     - binary-search
     companies:
     - Amazon
-    - Google
+    - Meta
+    - Microsoft
     frequency: MEDIUM
   - id: shortest-path-binary-matrix
     title: Shortest Path in Binary Matrix
@@ -2284,7 +2308,7 @@ patterns:
     - bfs
     companies:
     - Google
-    - Amazon
+    - Apple
     frequency: MEDIUM
   - id: matrix-diagonal-sum
     title: Matrix Diagonal Sum
@@ -2300,7 +2324,8 @@ patterns:
     tags:
     - matrix
     companies:
-    - Backend
+    - Microsoft
+    - Google
     frequency: LOW
 - id: STACKS
   order: 18
@@ -2363,10 +2388,8 @@ patterns:
     tags:
     - stack
     companies:
-    - FAANG
-    - Amazon
-    - Meta
-    - Microsoft
+    - Google
+    - Google
     frequency: HIGH
   - id: daily-temperatures
     title: Daily Temperatures
@@ -2384,7 +2407,8 @@ patterns:
     - monotonic
     companies:
     - Amazon
-    - Meta
+    - LinkedIn
+    - Netflix
     frequency: HIGH
   - id: next-greater-element
     title: Next Greater Element
@@ -2402,6 +2426,8 @@ patterns:
     - stack
     companies:
     - Amazon
+    - Google
+    - Uber
     frequency: MEDIUM
   - id: decode-string
     title: Decode String
@@ -2418,7 +2444,8 @@ patterns:
     - stack
     companies:
     - Google
-    - Amazon
+    - Google
+    - Uber
     frequency: MEDIUM
   - id: basic-calculator
     title: Basic Calculator
@@ -2434,8 +2461,8 @@ patterns:
     tags:
     - stack
     companies:
-    - Google
-    - Meta
+    - Amazon
+    - Jane Street
     frequency: MEDIUM
 - id: GRAPHS
   order: 19
@@ -2498,10 +2525,9 @@ patterns:
     - bfs
     - dfs
     companies:
-    - FAANG
     - Amazon
-    - Google
-    - Meta
+    - LinkedIn
+    - Netflix
     frequency: HIGH
   - id: clone-graph
     title: Clone Graph
@@ -2517,9 +2543,8 @@ patterns:
     tags:
     - graph
     companies:
-    - Meta
     - Google
-    - Amazon
+    - Uber
     frequency: HIGH
   - id: pacific-atlantic
     title: Pacific Atlantic Water Flow
@@ -2537,7 +2562,7 @@ patterns:
     - dfs
     companies:
     - Google
-    - Amazon
+    - Uber
     frequency: MEDIUM
   - id: critical-connections
     title: Critical Connections in a Network
@@ -2554,6 +2579,8 @@ patterns:
     - graph
     companies:
     - Google
+    - Google
+    - Apple
     frequency: MEDIUM
   - id: find-center-star
     title: Find Center of Star Graph
@@ -2569,7 +2596,8 @@ patterns:
     tags:
     - graph
     companies:
-    - Backend
+    - Bloomberg
+    - Amazon
     frequency: LOW
 - id: TREE_DFS
   order: 20
@@ -2631,7 +2659,7 @@ patterns:
     - dfs
     companies:
     - Amazon
-    - Microsoft
+    - Uber
     frequency: HIGH
   - id: all-path-sum
     title: All Paths for a Sum
@@ -2650,6 +2678,8 @@ patterns:
     - dfs
     companies:
     - Amazon
+    - Google
+    - Uber
     frequency: MEDIUM
   - id: tree-diameter
     title: Binary Tree Diameter
@@ -2668,7 +2698,7 @@ patterns:
     - dfs
     companies:
     - Amazon
-    - Google
+    - Netflix
     frequency: MEDIUM
   - id: lowest-common-ancestor
     title: Lowest Common Ancestor
@@ -2685,10 +2715,8 @@ patterns:
     - tree
     - dfs
     companies:
-    - FAANG
-    - Amazon
-    - Meta
-    - Microsoft
+    - Google
+    - Uber
     frequency: HIGH
   - id: max-path-sum
     title: Binary Tree Maximum Path Sum
@@ -2705,9 +2733,9 @@ patterns:
     - tree
     - dfs
     companies:
-    - FAANG
-    - Meta
     - Google
+    - Amazon
+    - Jane Street
     frequency: HIGH
 - id: TREE_BFS
   order: 21
@@ -2767,9 +2795,9 @@ patterns:
     - tree
     - bfs
     companies:
-    - FAANG
     - Amazon
-    - Microsoft
+    - LinkedIn
+    - Netflix
     frequency: HIGH
   - id: zigzag-level-order
     title: Zigzag Level Order
@@ -2786,8 +2814,8 @@ patterns:
     - tree
     - bfs
     companies:
-    - Amazon
     - Meta
+    - Microsoft
     frequency: MEDIUM
   - id: right-side-view
     title: Binary Tree Right Side View
@@ -2805,7 +2833,8 @@ patterns:
     - bfs
     companies:
     - Amazon
-    - Meta
+    - LinkedIn
+    - Netflix
     frequency: MEDIUM
   - id: min-depth
     title: Minimum Depth of Binary Tree
@@ -2823,6 +2852,7 @@ patterns:
     - bfs
     companies:
     - Amazon
+    - Google
     frequency: MEDIUM
   - id: vertical-order
     title: Vertical Order Traversal
@@ -2840,7 +2870,7 @@ patterns:
     - bfs
     companies:
     - Meta
-    - Amazon
+    - Meta
     frequency: MEDIUM
 - id: TRIE
   order: 22
@@ -2901,7 +2931,6 @@ patterns:
     tags:
     - trie
     companies:
-    - FAANG
     - Google
     - Amazon
     frequency: HIGH
@@ -2924,7 +2953,8 @@ patterns:
     - dp
     companies:
     - Amazon
-    - Google
+    - LinkedIn
+    - Netflix
     frequency: MEDIUM
   - id: replace-words
     title: Replace Words
@@ -2940,7 +2970,9 @@ patterns:
     tags:
     - trie
     companies:
-    - Backend
+    - Microsoft
+    - Adobe
+    - Amazon
     frequency: LOW
   - id: word-search-ii
     title: Word Search II
@@ -2959,6 +2991,7 @@ patterns:
     companies:
     - Google
     - Amazon
+    - Jane Street
     frequency: MEDIUM
   - id: longest-common-prefix
     title: Longest Common Prefix
@@ -2975,8 +3008,7 @@ patterns:
     - trie
     - string
     companies:
-    - FAANG
-    - Amazon
+    - Google
     - Microsoft
     frequency: HIGH
 - id: HASH_MAPS
@@ -3037,11 +3069,8 @@ patterns:
     tags:
     - hash-map
     companies:
-    - FAANG
-    - Amazon
-    - Meta
     - Google
-    - Microsoft
+    - Uber
     frequency: HIGH
   - id: subarray-sum-equals-k
     title: Subarray Sum Equals K
@@ -3059,8 +3088,7 @@ patterns:
     - prefix-sum
     companies:
     - Meta
-    - Google
-    - Amazon
+    - Microsoft
     frequency: HIGH
   - id: isomorphic-strings
     title: Isomorphic Strings
@@ -3077,6 +3105,7 @@ patterns:
     - hash-map
     companies:
     - Amazon
+    - Uber
     frequency: MEDIUM
   - id: longest-consecutive-already
     title: Contiguous Array
@@ -3093,8 +3122,9 @@ patterns:
     - hash-map
     - prefix-sum
     companies:
-    - Meta
-    - Google
+    - Amazon
+    - LinkedIn
+    - Netflix
     frequency: MEDIUM
   - id: four-sum-ii
     title: 4Sum II
@@ -3111,6 +3141,8 @@ patterns:
     - hash-map
     companies:
     - Amazon
+    - Amazon
+    - Jane Street
     frequency: MEDIUM
 - id: KNOWING_WHAT_TO_TRACK
   order: 24
@@ -3173,7 +3205,7 @@ patterns:
     - tracking
     companies:
     - Amazon
-    - Microsoft
+    - Google
     frequency: HIGH
   - id: longest-consecutive
     title: Longest Consecutive Sequence
@@ -3191,8 +3223,8 @@ patterns:
     - hash-set
     companies:
     - Meta
-    - Google
-    - Amazon
+    - Meta
+    - Microsoft
     frequency: HIGH
   - id: majority-element-ii
     title: Majority Element II
@@ -3208,6 +3240,7 @@ patterns:
     tags:
     - tracking
     companies:
+    - Amazon
     - Amazon
     frequency: MEDIUM
   - id: max-points-on-line
@@ -3225,8 +3258,8 @@ patterns:
     - math
     - hash-map
     companies:
-    - Google
-    - Meta
+    - Amazon
+    - Jane Street
     frequency: MEDIUM
 - id: UNION_FIND
   order: 25
@@ -3287,7 +3320,8 @@ patterns:
     - union-find
     companies:
     - Amazon
-    - Google
+    - Adobe
+    - Amazon
     frequency: HIGH
   - id: redundant-connection
     title: Redundant Connection
@@ -3306,6 +3340,7 @@ patterns:
     - union-find
     companies:
     - Google
+    - Adobe
     - Amazon
     frequency: MEDIUM
   - id: accounts-merge
@@ -3322,8 +3357,9 @@ patterns:
     tags:
     - union-find
     companies:
-    - Meta
     - Amazon
+    - LinkedIn
+    - Netflix
     frequency: MEDIUM
   - id: number-of-islands-ii
     title: Number of Islands II
@@ -3340,6 +3376,7 @@ patterns:
     - union-find
     companies:
     - Google
+    - Apple
     frequency: MEDIUM
   - id: path-exists
     title: Find if Path Exists in Graph
@@ -3355,7 +3392,8 @@ patterns:
     tags:
     - union-find
     companies:
-    - Backend
+    - Amazon
+    - Bloomberg
     frequency: LOW
 - id: CUSTOM_DATA_STRUCTURES
   order: 26
@@ -3417,9 +3455,8 @@ patterns:
     - design
     - stack
     companies:
-    - FAANG
-    - Amazon
-    - Meta
+    - Google
+    - Uber
     frequency: HIGH
   - id: lru-cache
     title: LRU Cache
@@ -3436,11 +3473,9 @@ patterns:
     - design
     - hash-map
     companies:
-    - FAANG
-    - Amazon
     - Meta
-    - Google
     - Microsoft
+    - Netflix
     frequency: HIGH
   - id: time-map
     title: Time Based Key-Value Store
@@ -3457,7 +3492,8 @@ patterns:
     - design
     companies:
     - Amazon
-    - Google
+    - Meta
+    - Microsoft
     frequency: MEDIUM
   - id: lfu-cache
     title: LFU Cache
@@ -3474,7 +3510,7 @@ patterns:
     - design
     companies:
     - Google
-    - Amazon
+    - Meta
     frequency: MEDIUM
   - id: design-hashmap
     title: Design HashMap
@@ -3491,6 +3527,7 @@ patterns:
     - design
     companies:
     - Amazon
+    - Uber
     frequency: MEDIUM
 - id: BITWISE
   order: 27
@@ -3551,7 +3588,7 @@ patterns:
     - bit
     companies:
     - Amazon
-    - Meta
+    - Apple
     frequency: HIGH
   - id: number-of-1-bits
     title: Number of 1 Bits
@@ -3569,7 +3606,7 @@ patterns:
     - bit
     companies:
     - Amazon
-    - Apple
+    - Google
     frequency: HIGH
   - id: single-number-ii
     title: Single Number II
@@ -3585,6 +3622,8 @@ patterns:
     tags:
     - bit
     companies:
+    - Amazon
+    - Adobe
     - Amazon
     frequency: MEDIUM
   - id: sum-of-two-integers
@@ -3602,7 +3641,7 @@ patterns:
     - bit
     companies:
     - Amazon
-    - Apple
+    - Netflix
     frequency: MEDIUM
   - id: reverse-bits
     title: Reverse Bits
@@ -3618,8 +3657,8 @@ patterns:
     tags:
     - bit
     companies:
-    - Apple
     - Amazon
+    - Bloomberg
     frequency: MEDIUM
   - id: bitwise-and-range
     title: Bitwise AND of Numbers Range
@@ -3635,7 +3674,9 @@ patterns:
     tags:
     - bit
     companies:
-    - Backend
+    - Meta
+    - Microsoft
+    - Netflix
     frequency: LOW
 - id: MATH_GEOMETRY
   order: 28
@@ -3698,7 +3739,7 @@ patterns:
     - math
     companies:
     - Google
-    - Amazon
+    - Netflix
     frequency: MEDIUM
   - id: gcd-of-strings
     title: Greatest Common Divisor of Strings
@@ -3715,7 +3756,8 @@ patterns:
     - math
     - string
     companies:
-    - Backend
+    - Amazon
+    - Bloomberg
     frequency: LOW
   - id: sqrt
     title: Sqrt(x)
@@ -3733,7 +3775,7 @@ patterns:
     - binary-search
     companies:
     - Amazon
-    - Apple
+    - Bloomberg
     frequency: MEDIUM
   - id: integer-to-roman
     title: Integer to Roman
@@ -3750,6 +3792,8 @@ patterns:
     - math
     companies:
     - Amazon
+    - LinkedIn
+    - Netflix
     frequency: MEDIUM
   - id: max-points-line-math
     title: Valid Square
@@ -3767,6 +3811,8 @@ patterns:
     - geometry
     companies:
     - Google
+    - Google
+    - Uber
     frequency: LOW
   - id: max-points-on-a-line
     title: Max Points on a Line
@@ -3784,7 +3830,8 @@ patterns:
     - geometry
     companies:
     - Google
-    - Meta
+    - Amazon
+    - Jane Street
     frequency: MEDIUM
 - id: SPRING_BOOT_INTERVIEW
   order: 29
@@ -3850,9 +3897,8 @@ patterns:
     - spring
     - concurrency
     companies:
-    - Fintech
-    - Backend
-    - Netflix
+    - Amazon
+    - Uber
     frequency: HIGH
   - id: idempotency-store
     title: Idempotency Key Store
@@ -3872,7 +3918,6 @@ patterns:
     companies:
     - Fintech
     - Backend
-    - Amazon
     frequency: HIGH
   - id: circuit-breaker
     title: Circuit Breaker
@@ -3889,9 +3934,8 @@ patterns:
     - spring
     - resilience
     companies:
-    - Netflix
-    - Backend
-    - Microsoft
+    - Uber
+    - Amazon
     frequency: MEDIUM
   - id: lru-http-cache
     title: HTTP Response Cache
@@ -3909,7 +3953,7 @@ patterns:
     - cache
     companies:
     - Backend
-    - Amazon
+    - Netflix
     frequency: MEDIUM
   - id: config-store
     title: In-Memory Config Store
@@ -3925,6 +3969,7 @@ patterns:
     tags:
     - spring
     companies:
+    - Netflix
     - Backend
     frequency: LOW
   - id: request-id-filter
@@ -3945,8 +3990,8 @@ patterns:
     - spring
     - web
     companies:
-    - Backend
     - Microsoft
+    - Fintech
     frequency: HIGH
   - id: transactional-outbox
     title: Transactional Outbox
@@ -3966,9 +4011,8 @@ patterns:
     - spring
     - reliability
     companies:
-    - Fintech
-    - Backend
-    - Netflix
+    - Uber
+    - Amazon
     frequency: HIGH
   - id: optimistic-lock-service
     title: Optimistic Lock Service
@@ -3987,9 +4031,8 @@ patterns:
     - spring
     - concurrency
     companies:
-    - Fintech
-    - Backend
     - Amazon
+    - Uber
     frequency: MEDIUM
   - id: concurrent-login-tracker
     title: Concurrent Login Tracker
@@ -4010,7 +4053,6 @@ patterns:
     companies:
     - Backend
     - Netflix
-    - Microsoft
     frequency: MEDIUM
   - id: sql-injection-safe-query
     title: SQL Injection Safe Query Builder
@@ -4032,7 +4074,6 @@ patterns:
     - spring
     - security
     companies:
-    - Fintech
+    - Netflix
     - Backend
-    - Microsoft
     frequency: HIGH

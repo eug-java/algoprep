@@ -155,3 +155,94 @@
 
   scan: index 1 holds -1 != 2
   Answer: 2
+
+"find-median-stream": |
+  stream: 1, 2, 3
+  maxHeap (lo) | minHeap (hi)
+
+  add 1 -> lo:[1]           median=1
+  add 2 -> lo:[1] hi:[2]    median=(1+2)/2
+  add 3 -> lo:[1,2] hi:[3]  rebalance; median=2
+
+  Always |lo| == |hi| or |lo| == |hi|+1
+
+"reorder-list": |
+  1 -> 2 -> 3 -> 4 -> 5
+
+  mid (slow/fast): 3
+  reverse second: 5 -> 4 -> 3
+  weave:
+    1 -> 5 -> 2 -> 4 -> 3
+
+"critical-connections": |
+  graph bridges via discovery/lowlink (Tarjan)
+
+  dfs(u):
+    disc[u]=low[u]=time++
+    for v in adj[u]:
+      if not visited: parent, recurse
+        low[u]=min(low[u], low[v])
+        if low[v] > disc[u]: (u,v) is bridge
+      else if v!=parent:
+        low[u]=min(low[u], disc[v])
+
+"basic-calculator": |
+  s = "(1+(4+5+2)-3)+(6+8)"
+  stack holds prior sum & sign when '('
+
+  num=0, sign=+1, acc=0
+  '(': push acc,sign; reset
+  ')': acc = pop_sign*acc + pop_acc
+  digit: build num; on op apply sign*num
+
+  Answer: 23
+
+"vertical-order": |
+  tree root=3, L=9, R=20, R.L=15, R.R=7
+
+  BFS queue (node, col)
+  col map:
+    -1: [9]
+     0: [3,15]
+     1: [20]
+     2: [7]
+
+  emit cols left->right
+  Answer: [[9],[3,15],[20],[7]]
+
+"count-smaller-after-self": |
+  nums = [5,2,6,1]
+  merge-sort count inversions to the right
+
+  merge halves; when taking from right half,
+  each remaining left element gains +1 smaller-after
+
+  result indices: [2,1,1,0]
+
+"lfu-cache": |
+  capacity=2
+  put(1,a) freq1
+  put(2,b) freq1
+  get(1)   freq2  (1 more frequent)
+  put(3,c) evict 2 (LFU among freq1)
+  get(2)   -1
+  get(3)   c
+
+  maps: key->node, freq->LRU list, minFreq
+
+"shortest-path-binary-matrix": |
+  grid 0=open 1=blocked, 8-dir BFS
+  start (0,0) if open
+
+  queue dist=1; mark visited
+  expand 8 neighbors; first reach (n-1,n-1) = shortest
+
+  blocked start/end -> -1
+
+"candy": |
+  ratings = [1,0,2]
+  left pass:  ensure higher than left neighbor
+    candies: [1,1,2]
+  right pass: ensure higher than right
+    candies: [2,1,2]
+  sum = 5

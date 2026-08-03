@@ -12,9 +12,20 @@ record JudgeSpec(
         Boolean referenceStatic,
         List<String> imports,
         List<String> helpers,
+        String mode,
+        List<MethodSig> methods,
+        List<String> constructorParams,
         List<JudgeCase> cases) {
 
-    record JudgeCase(String name, List<Object> args, Object expected) {
+    record MethodSig(String name, List<String> params, String returns) {
+    }
+
+    record JudgeCase(
+            String name,
+            List<Object> args,
+            Object expected,
+            List<Object> constructorArgs,
+            List<List<Object>> ops) {
     }
 
     boolean referenceStaticOrDefault() {
@@ -23,5 +34,14 @@ record JudgeSpec(
 
     String referenceMethodOrDefault() {
         return referenceMethod == null || referenceMethod.isBlank() ? method : referenceMethod;
+    }
+
+    boolean opsMode() {
+        if ("ops".equals(mode)) return true;
+        if (cases == null) return false;
+        for (JudgeCase testCase : cases) {
+            if (testCase.ops() != null) return true;
+        }
+        return false;
     }
 }

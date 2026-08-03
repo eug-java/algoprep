@@ -15,23 +15,32 @@ jobs:
           distribution: temurin
           java-version: '21'
           cache: maven
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
       - name: Unit tests
         run: ./mvnw -B test
       - name: Package
         run: ./mvnw -B -DskipTests package
-      - name: Smoke API
+      - name: Start app
         run: |
           java -jar target/algoprep-1.0.0-SNAPSHOT.jar > /tmp/algoprep.log 2>&1 &
-          APP_PID=$!
+          echo $! > /tmp/algoprep.pid
           for i in $(seq 1 60); do
-            if curl -sf http://localhost:8080/actuator/health >/dev/null; then break; fi
+            if curl -sf http://localhost:8080/actuator/health >/dev/null; then exit 0; fi
             sleep 1
           done
+          echo "App failed to start" >&2
+          tail -n 80 /tmp/algoprep.log || true
+          exit 1
+      - name: Smoke API
+        run: |
           curl -sf http://localhost:8080/api/v1/course >/dev/null
           curl -sf http://localhost:8080/api/v1/course/patterns >/dev/null
           curl -sf http://localhost:8080/api/v1/course/quiz >/dev/null
           curl -sf http://localhost:8080/api/v1/course/challenges >/dev/null
           curl -sf http://localhost:8080/api/v1/judge/template/TWO_POINTERS/pair-with-target-sum >/dev/null
+          curl -sf http://localhost:8080/api/v1/judge/template/CUSTOM_DATA_STRUCTURES/min-stack >/dev/null
           curl -sf -X POST http://localhost:8080/api/v1/sync/keys | grep -q syncKey
           curl -sf -X POST http://localhost:8080/api/v1/metrics/events \
             -H 'Content-Type: application/json' \
@@ -39,6 +48,17 @@ jobs:
           curl -sf http://localhost:8080/skills >/dev/null
           curl -sf http://localhost:8080/review >/dev/null
           curl -sf http://localhost:8080/tracks >/dev/null
+          curl -sf http://localhost:8080/plans >/dev/null
           curl -sf http://localhost:8080/js/app.js >/dev/null
-          kill $APP_PID
-          wait $APP_PID || true
+      - name: Playwright e2e
+        working-directory: e2e
+        run: |
+          npm i
+          npx playwright install --with-deps chromium
+          ALGOPREP_E2E_NO_SERVER=1 npm test
+        env:
+          ALGOPREP_BASE_URL: http://127.0.0.1:8080
+      - name: Stop app
+        if: always()
+        run: |
+          if [[ -f /tmp/algoprep.pid ]]; then kill "$(cat /tmp/algoprep.pid)" || true; fi

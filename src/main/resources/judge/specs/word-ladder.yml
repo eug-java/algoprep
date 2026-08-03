@@ -1,0 +1,12 @@
+className: Solution
+method: ladderLength
+params: [String, String, "List<String>"]
+returns: int
+referenceClass: com.algoprep.patterns.challenge.WordLadder
+referenceMethod: ladderLength
+referenceStatic: true
+cases:
+  - name: example1
+    args: [hit, cog, [hot, dot, dog, lot, log, cog]]
+  - name: unreachable
+    args: [hit, cog, [hot, dot, dog, lot, log]]

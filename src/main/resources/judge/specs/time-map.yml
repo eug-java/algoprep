@@ -1,0 +1,19 @@
+className: Solution
+mode: ops
+methods:
+  - name: set
+    params: [String, String, int]
+    returns: void
+  - name: get
+    params: [String, int]
+    returns: String
+cases:
+  - name: example1
+    ops:
+      - [set, foo, bar, 1]
+      - [get, foo, 1]
+      - [get, foo, 3]
+      - [set, foo, bar2, 4]
+      - [get, foo, 4]
+      - [get, foo, 5]
+    expected: [null, bar, bar, null, bar2, bar2]

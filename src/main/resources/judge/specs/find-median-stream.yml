@@ -1,0 +1,19 @@
+className: Solution
+mode: ops
+methods:
+  - name: addNum
+    params: [int]
+    returns: void
+  - name: findMedian
+    params: []
+    returns: double
+cases:
+  - name: example1
+    ops:
+      - [addNum, 3]
+      - [findMedian]
+      - [addNum, 1]
+      - [findMedian]
+      - [addNum, 5]
+      - [findMedian]
+    expected: [null, 3.0, null, 2.0, null, 3.0]

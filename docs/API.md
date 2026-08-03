@@ -8,7 +8,7 @@ Most course GETs accept `?lang=en|ru|es` (default from server config / client).
 
 | Method | Path | Description |
 |--------|------|-------------|
-| GET | `/` | Overview: title, pattern/problem counts, pattern summaries |
+| GET | `/` | Overview: title, pattern/problem counts, **easy/medium/hard counts**, pattern summaries |
 | GET | `/ui` | UI bundle (cheatsheet rows, chrome strings from course overlays) |
 | GET | `/patterns` | Full pattern list with nested problems |
 | GET | `/patterns/{patternId}` | Pattern detail: intuition, walkthrough, mistakes, problems |
@@ -17,10 +17,33 @@ Most course GETs accept `?lang=en|ru|es` (default from server config / client).
 | GET | `/walkthroughs/{problemId}` | `{ problemId, walkthroughAscii }` |
 | GET | `/challenges` | Challenge list (pattern hidden) |
 | GET | `/challenges/{id}` | Challenge prompt + hints (pattern still hidden) |
-| GET | `/challenges/{id}/reveal` | Reveals `hiddenPattern` + complexities |
+| GET | `/challenges/{id}/reveal` | Reveals `hiddenPattern`, optional `alternatePatterns`, complexities |
 | GET | `/challenges/{id}/source` | Challenge solution source |
 | GET | `/quiz` | Guess-the-pattern questions |
 | POST | `/quiz/{questionId}/check` | Body: `{ "selectedPattern": "TWO_POINTERS" }` |
+
+### Overview difficulty fields
+
+```json
+{
+  "patternCount": 29,
+  "problemCount": 170,
+  "easyCount": 38,
+  "mediumCount": 82,
+  "hardCount": 50,
+  "patterns": [
+    {
+      "id": "TWO_POINTERS",
+      "problemCount": 6,
+      "easyCount": 2,
+      "mediumCount": 3,
+      "hardCount": 1
+    }
+  ]
+}
+```
+
+`hardCount` on the overview includes Challenge Yourself items (all HARD). Per-pattern counts cover catalog problems only.
 
 ### Problem fields (selected)
 

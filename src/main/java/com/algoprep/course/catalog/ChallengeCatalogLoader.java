@@ -51,6 +51,7 @@ public class ChallengeCatalogLoader {
             String prompt,
             String className,
             PatternId hiddenPattern,
+            List<PatternId> alternatePatterns,
             String timeComplexity,
             String spaceComplexity,
             List<String> hints
@@ -77,6 +78,7 @@ public class ChallengeCatalogLoader {
                     localizedPrompt,
                     className,
                     hiddenPattern,
+                    alternatePatterns == null ? List.of() : alternatePatterns,
                     timeComplexity,
                     spaceComplexity,
                     localizedHints == null ? List.of() : localizedHints

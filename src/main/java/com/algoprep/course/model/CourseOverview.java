@@ -9,6 +9,9 @@ public record CourseOverview(
         String description,
         int patternCount,
         int problemCount,
+        int easyCount,
+        int mediumCount,
+        int hardCount,
         List<WeekSummary> weeks,
         List<PatternSummary> patterns
 ) {
@@ -18,6 +21,9 @@ public record CourseOverview(
             int week,
             String title,
             int problemCount,
+            int easyCount,
+            int mediumCount,
+            int hardCount,
             String subtitle
     ) {
     }

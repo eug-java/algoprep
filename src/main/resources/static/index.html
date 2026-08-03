@@ -27,19 +27,25 @@
       <span class="mark" aria-hidden="true"></span>
       <span>AlgoPrep</span>
     </a>
-    <nav class="nav">
+    <nav class="nav nav-desktop" aria-label="Primary">
       <a href="#/patterns" data-link data-i18n="nav.patterns">Patterns</a>
       <a href="#/tracks" data-link data-i18n="nav.tracks">Tracks</a>
       <a href="#/daily" data-link data-i18n="nav.daily">Daily</a>
       <a href="#/review" data-link data-i18n="nav.review">Review</a>
       <a href="#/mock" data-link data-i18n="nav.mock">Mock</a>
       <a href="#/skills" data-link data-i18n="nav.skills">Skills</a>
-      <a href="#/metrics" data-link data-i18n="nav.metrics">Metrics</a>
-      <a href="#/quiz" data-link data-i18n="nav.quiz">Guess pattern</a>
-      <a href="#/challenge" data-link data-i18n="nav.challenge">Challenge</a>
-      <a href="#/spring" data-link data-i18n="nav.spring">Spring</a>
-      <a href="#/cheatsheet" data-link data-i18n="nav.cheatsheet">Cheatsheet</a>
-      <a href="#/settings" data-link data-i18n="nav.settings">Settings</a>
+      <a href="#/plans" data-link data-i18n="nav.plans">Plans</a>
+      <div class="nav-more">
+        <button type="button" class="nav-more-btn" id="nav-more-btn" aria-expanded="false" aria-haspopup="true" data-i18n="nav.more">More</button>
+        <div class="nav-more-menu" id="nav-more-menu" hidden>
+          <a href="#/quiz" data-link data-i18n="nav.quiz">Guess pattern</a>
+          <a href="#/challenge" data-link data-i18n="nav.challenge">Challenge</a>
+          <a href="#/spring" data-link data-i18n="nav.spring">Spring</a>
+          <a href="#/cheatsheet" data-link data-i18n="nav.cheatsheet">Cheatsheet</a>
+          <a href="#/metrics" data-link data-i18n="nav.metrics">Metrics</a>
+          <a href="#/settings" data-link data-i18n="nav.settings">Settings</a>
+        </div>
+      </div>
     </nav>
     <div class="toolbar">
       <div class="lang-switch" role="group" aria-label="Language">
@@ -58,6 +64,38 @@
   </header>
 
   <main id="app" class="app"></main>
+
+  <nav class="bottom-tabs" aria-label="Mobile">
+    <a href="#/patterns" data-link data-tab="patterns" data-i18n="nav.patterns">Patterns</a>
+    <a href="#/daily" data-link data-tab="daily" data-i18n="nav.daily">Daily</a>
+    <a href="#/mock" data-link data-tab="mock" data-i18n="nav.mock">Mock</a>
+    <a href="#/review" data-link data-tab="review" data-i18n="nav.review">Review</a>
+    <button type="button" class="bottom-tab-more" id="bottom-more-btn" data-i18n="nav.more">More</button>
+  </nav>
+
+  <div class="more-sheet" id="more-sheet" hidden>
+    <div class="more-sheet-backdrop" id="more-sheet-backdrop"></div>
+    <div class="more-sheet-panel" role="dialog" aria-modal="true" aria-labelledby="more-sheet-title">
+      <div class="more-sheet-head">
+        <h2 id="more-sheet-title" data-i18n="nav.more">More</h2>
+        <button type="button" class="btn btn-ghost" id="more-sheet-close" data-i18n="common.close">Close</button>
+      </div>
+      <div class="more-sheet-links">
+        <a href="#/tracks" data-link data-i18n="nav.tracks">Tracks</a>
+        <a href="#/skills" data-link data-i18n="nav.skills">Skills</a>
+        <a href="#/plans" data-link data-i18n="nav.plans">Plans</a>
+        <a href="#/quiz" data-link data-i18n="nav.quiz">Guess pattern</a>
+        <a href="#/challenge" data-link data-i18n="nav.challenge">Challenge</a>
+        <a href="#/spring" data-link data-i18n="nav.spring">Spring</a>
+        <a href="#/cheatsheet" data-link data-i18n="nav.cheatsheet">Cheatsheet</a>
+        <a href="#/metrics" data-link data-i18n="nav.metrics">Metrics</a>
+        <a href="#/settings" data-link data-i18n="nav.settings">Settings</a>
+        <a href="#/report" data-link data-i18n="nav.report">Weekly report</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="onboard-overlay" id="onboard-overlay" hidden></div>
 
   <footer class="site-footer">
     <p>Java 21 · Spring Boot · pattern-first interview prep</p>

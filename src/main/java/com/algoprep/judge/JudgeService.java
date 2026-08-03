@@ -3,6 +3,8 @@ package com.algoprep.judge;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,7 @@ public class JudgeService {
     private static final int MAX_SOURCE_LENGTH = 50_000;
     private static final Duration COMPILE_TIMEOUT = Duration.ofSeconds(6);
     private static final Duration RUN_TIMEOUT = Duration.ofSeconds(2);
+    private static final Duration DOCKER_TIMEOUT = Duration.ofSeconds(12);
     private static final List<String> FORBIDDEN = List.of(
             "Runtime.getRuntime", "ProcessBuilder", "FileWriter", "FileOutputStream",
             "java.nio.file", "java.net.", "Socket", "ServerSocket", "System.load", "System.exit",
@@ -35,6 +38,21 @@ public class JudgeService {
     private final ObjectMapper json = new ObjectMapper();
     private final JudgeMainGenerator generator = new JudgeMainGenerator();
     private final Semaphore concurrency = new Semaphore(2);
+    private final boolean dockerEnabled;
+    private final String dockerImage;
+
+    @Autowired
+    public JudgeService(
+            @Value("${algoprep.judge.docker:false}") boolean dockerEnabled,
+            @Value("${algoprep.judge.dockerImage:eclipse-temurin:21-jdk-jammy}") String dockerImage) {
+        this.dockerEnabled = dockerEnabled;
+        this.dockerImage = dockerImage;
+    }
+
+    /** Test-friendly constructor. */
+    public JudgeService() {
+        this(false, "eclipse-temurin:21-jdk-jammy");
+    }
 
     public JudgeResult judge(JudgeRequest request) {
         long started = System.nanoTime();
@@ -63,6 +81,16 @@ public class JudgeService {
                 Files.writeString(directory.resolve(helper + ".java"), generator.helperSource(helper), StandardCharsets.UTF_8);
             }
             Path projectClasses = projectClasses();
+            if (dockerEnabled && dockerAvailable()) {
+                ProcessResult docker = processDocker(directory, projectClasses);
+                if (docker.timedOut()) {
+                    return result(false, 0, spec.cases().size(), List.of(), "", "Docker judge timed out", started);
+                }
+                if (docker.exitCode() != 0 && !looksLikeJudgeNdjson(docker.output())) {
+                    return result(false, 0, spec.cases().size(), List.of(), docker.output(), "", started);
+                }
+                return parseExecution(docker, spec.cases().size(), started);
+            }
             String compileClasspath = projectClasses.toString();
             ProcessResult compile = process(
                     List.of(javac(), "-encoding", "UTF-8", "-cp", compileClasspath, "-d", ".", "*.java"),
@@ -89,22 +117,62 @@ public class JudgeService {
 
     public Map<String, String> template(String patternId, String problemId) {
         JudgeSpec spec = loadSpec(problemId);
-        StringBuilder parameters = new StringBuilder();
-        for (int i = 0; i < spec.params().size(); i++) {
-            if (i > 0) parameters.append(", ");
-            parameters.append(spec.params().get(i)).append(" arg").append(i);
-        }
-        String source = """
-                import java.util.*;
+        String source;
+        if (spec.opsMode()) {
+            source = opsTemplate(spec, patternId);
+        } else {
+            StringBuilder parameters = new StringBuilder();
+            List<String> params = safeList(spec.params());
+            for (int i = 0; i < params.size(); i++) {
+                if (i > 0) parameters.append(", ");
+                parameters.append(params.get(i)).append(" arg").append(i);
+            }
+            source = """
+                    import java.util.*;
 
-                public class Solution {
-                    public %s %s(%s) {
-                        // TODO: implement the %s approach.
-                        throw new UnsupportedOperationException("Not implemented");
+                    public class Solution {
+                        public %s %s(%s) {
+                            // TODO: implement the %s approach.
+                            throw new UnsupportedOperationException("Not implemented");
+                        }
                     }
-                }
-                """.formatted(spec.returns(), spec.method(), parameters, patternId);
+                    """.formatted(spec.returns(), spec.method(), parameters, patternId);
+        }
         return Map.of("className", spec.className(), "source", source, "language", "java");
+    }
+
+    private String opsTemplate(JudgeSpec spec, String patternId) {
+        StringBuilder body = new StringBuilder();
+        body.append("import java.util.*;\n\n");
+        body.append("public class ").append(spec.className()).append(" {\n");
+        List<String> ctorParams = safeList(spec.constructorParams());
+        if (!ctorParams.isEmpty()) {
+            body.append("    public ").append(spec.className()).append("(");
+            for (int i = 0; i < ctorParams.size(); i++) {
+                if (i > 0) body.append(", ");
+                body.append(ctorParams.get(i)).append(" arg").append(i);
+            }
+            body.append(") {\n");
+            body.append("        // TODO: initialize for ").append(patternId).append(".\n");
+            body.append("    }\n\n");
+        }
+        if (spec.methods() != null) {
+            for (JudgeSpec.MethodSig method : spec.methods()) {
+                body.append("    public ").append(method.returns() == null ? "void" : method.returns())
+                        .append(' ').append(method.name()).append('(');
+                List<String> params = safeList(method.params());
+                for (int i = 0; i < params.size(); i++) {
+                    if (i > 0) body.append(", ");
+                    body.append(params.get(i)).append(" arg").append(i);
+                }
+                body.append(") {\n");
+                body.append("        // TODO: implement ").append(method.name()).append(".\n");
+                body.append("        throw new UnsupportedOperationException(\"Not implemented\");\n");
+                body.append("    }\n\n");
+            }
+        }
+        body.append("}\n");
+        return body.toString();
     }
 
     private JudgeSpec loadSpec(String problemId) {
@@ -117,7 +185,10 @@ public class JudgeService {
             String content = new String(resource.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
             content = quoteArrayTokens(content);
             JudgeSpec spec = yaml.readValue(content, JudgeSpec.class);
-            if (spec.className() == null || spec.method() == null || spec.params() == null || spec.cases() == null) {
+            if (spec.className() == null || spec.cases() == null) {
+                throw new IllegalArgumentException("Invalid judge spec: " + problemId);
+            }
+            if (!spec.opsMode() && (spec.method() == null || spec.params() == null)) {
                 throw new IllegalArgumentException("Invalid judge spec: " + problemId);
             }
             return spec;
@@ -180,6 +251,50 @@ public class JudgeService {
         } catch (Exception ignored) {
         }
         return fromUserDir;
+    }
+
+    private boolean dockerAvailable() {
+        try {
+            Process process = new ProcessBuilder("docker", "version", "--format", "{{.Server.Version}}")
+                    .redirectErrorStream(true)
+                    .start();
+            boolean done = process.waitFor(2, TimeUnit.SECONDS);
+            return done && process.exitValue() == 0;
+        } catch (Exception exception) {
+            return false;
+        }
+    }
+
+    private boolean looksLikeJudgeNdjson(String output) {
+        return output != null && output.lines().anyMatch(line -> line.contains("\"pass\""));
+    }
+
+    /**
+     * Compile and run inside a disposable JDK container: no network, 128MB RAM, 1 CPU.
+     * Mounts only the temp work directory and project classes (read-only).
+     */
+    private ProcessResult processDocker(Path directory, Path projectClasses)
+            throws IOException, InterruptedException {
+        String work = directory.toAbsolutePath().toString();
+        String classes = projectClasses.toAbsolutePath().toString();
+        String script = "set -e; "
+                + "javac -encoding UTF-8 -cp /classes -d /work /work/*.java; "
+                + "java -Xmx64m -XX:MaxMetaspaceSize=32m -cp /work:/classes JudgeMain";
+        List<String> command = List.of(
+                "docker", "run", "--rm",
+                "--network", "none",
+                "--memory", "128m",
+                "--cpus", "1.0",
+                "--pids-limit", "64",
+                "--read-only",
+                "--tmpfs", "/tmp:rw,noexec,nosuid,size=16m",
+                "-v", work + ":/work",
+                "-v", classes + ":/classes:ro",
+                "-w", "/work",
+                dockerImage,
+                "bash", "-lc", script
+        );
+        return process(command, directory, DOCKER_TIMEOUT);
     }
 
     private ProcessResult process(List<String> command, Path directory, Duration timeout)

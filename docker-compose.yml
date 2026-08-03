@@ -1,0 +1,22 @@
+services:
+  algoprep:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      ALGOPREP_JUDGE_DOCKER: "false"
+      ALGOPREP_SYNC_DIR: /app/data/sync
+      JAVA_OPTS: "-Xms128m -Xmx512m"
+    volumes:
+      - algoprep-sync:/app/data/sync
+    restart: unless-stopped
+
+  # Optional: image used when ALGOPREP_JUDGE_DOCKER=true on a host with Docker socket.
+  # The main app container does not mount the Docker socket by default (safer for local demos).
+  judge-jdk:
+    image: eclipse-temurin:21-jdk-jammy
+    profiles: ["judge-tools"]
+    entrypoint: ["true"]
+
+volumes:
+  algoprep-sync:

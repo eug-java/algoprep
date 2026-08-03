@@ -1,0 +1,12 @@
+className: Solution
+method: characterReplacement
+params: [String, int]
+returns: int
+referenceClass: com.algoprep.patterns.challenge.LongestRepeatingReplacement
+referenceMethod: characterReplacement
+referenceStatic: true
+cases:
+  - name: example1
+    args: [ABAB, 2]
+  - name: example2
+    args: [AABABBA, 1]

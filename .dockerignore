@@ -1,0 +1,11 @@
+target/
+data/
+.idea/
+.vscode/
+.git/
+*.iml
+.m2/
+**/__pycache__/
+node_modules/
+e2e/node_modules/
+*.log

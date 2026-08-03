@@ -1,0 +1,20 @@
+className: Solution
+mode: ops
+methods:
+  - name: set
+    params: [String, String]
+    returns: void
+  - name: get
+    params: [String]
+    returns: String
+  - name: getOrDefault
+    params: [String, String]
+    returns: String
+cases:
+  - name: example1
+    ops:
+      - [set, theme, dark]
+      - [get, theme]
+      - [get, missing]
+      - [getOrDefault, missing, light]
+    expected: [null, dark, null, light]

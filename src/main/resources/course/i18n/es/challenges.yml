@@ -145,3 +145,31 @@ challenges:
     - Avanza hasta cubrir t como subsecuencia y luego encoge hacia atrás al inicio más temprano válido.
     - Guarda la ventana más corta y luego la más a la izquierda.
     - Un barrido de dos pasadas evita una tabla DP completa cuando m es pequeño.
+
+  count-of-smaller:
+    title: Conteo de menores a la derecha
+    prompt: >
+      Dado nums, devuelve counts donde counts[i] es cuántos elementos estrictamente menores hay a la
+      derecha. Merge-sort y Fenwick/segment tree son válidos en entrevista.
+    hints:
+    - Merge sort cuenta inversiones ordenando índices.
+    - Fenwick / segment tree sobre rangos también funciona.
+    - Explica el trade-off entre ambos enfoques.
+  palindrome-pairs:
+    title: Pares palíndromo
+    prompt: >
+      Dadas palabras únicas, devuelve pares (i, j) tales que words[i] + words[j] sea palíndromo.
+      Hash map de reversos o un trie de palabras invertidas aplican.
+    hints:
+    - Indexa palabras y busca complementos reverse de prefijos/sufijos.
+    - Un trie de reversos es un camino de reconocimiento igual de válido.
+    - Deduplica pares.
+  task-scheduler:
+    title: Planificador de tareas
+    prompt: >
+      Programa tareas de CPU con enfriamiento n entre iguales. Devuelve el tiempo mínimo.
+      Fórmula greedy por frecuencias o simulación con max-heap son aceptables.
+    hints:
+    - La tarea más frecuente domina la longitud.
+    - idleSlots = (maxFreq - 1) * n, luego rellena con otras.
+    - La simulación con heap también es válida.

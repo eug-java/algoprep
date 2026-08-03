@@ -1,5 +1,6 @@
 package com.algoprep.judge;
 
+import java.util.ArrayList;
 import java.util.List;
 
 final class JudgeMainGenerator {
@@ -36,6 +37,10 @@ final class JudgeMainGenerator {
                       return left.start == right.start && left.end == right.end;
                     }
                     if (a == null || b == null) return a == b;
+                    if (a instanceof Enum<?> && b instanceof String)
+                      return ((Enum<?>) a).name().equals(b);
+                    if (b instanceof Enum<?> && a instanceof String)
+                      return ((Enum<?>) b).name().equals(a);
                     if (a instanceof Double && b instanceof Number)
                       return Math.abs((Double) a - ((Number) b).doubleValue()) < 1e-6;
                     if (b instanceof Double && a instanceof Number)
@@ -68,6 +73,7 @@ final class JudgeMainGenerator {
                     if (value instanceof ListNode) return list((ListNode) value).toString();
                     if (value instanceof TreeNode) return "Tree";
                     if (value instanceof Interval interval) return "[" + interval.start + "," + interval.end + "]";
+                    if (value instanceof Enum<?> enumerated) return enumerated.name();
                     if (value instanceof List<?> values) {
                       List<String> out = new ArrayList<>();
                       for (Object item : values) out.add(display(item));
@@ -97,6 +103,9 @@ final class JudgeMainGenerator {
     }
 
     private String generateCase(JudgeSpec spec, JudgeSpec.JudgeCase testCase) {
+        if (testCase.ops() != null) {
+            return generateOpsCase(spec, testCase);
+        }
         String name = escape(testCase.name());
         boolean voidReturn = "void".equals(spec.returns());
         boolean hasExpected = testCase.expected() != null;
@@ -117,6 +126,97 @@ final class JudgeMainGenerator {
         }
         return "run(\"" + name + "\", () -> " + userCall + ", "
                 + referenceCall(spec, testCase) + ");\n";
+    }
+
+    private String generateOpsCase(JudgeSpec spec, JudgeSpec.JudgeCase testCase) {
+        String name = escape(testCase.name());
+        StringBuilder block = new StringBuilder();
+        block.append("run(\"").append(name).append("\", () -> {\n");
+        block.append("  ").append(spec.className()).append(" s = new ")
+                .append(spec.className()).append("(");
+        List<String> ctorParams = spec.constructorParams() == null ? List.of() : spec.constructorParams();
+        List<Object> ctorArgs = testCase.constructorArgs() == null ? List.of() : testCase.constructorArgs();
+        if (ctorParams.size() != ctorArgs.size()) {
+            throw new IllegalArgumentException("Case '" + testCase.name()
+                    + "' constructorArgs size must match constructorParams");
+        }
+        for (int i = 0; i < ctorParams.size(); i++) {
+            if (i > 0) block.append(", ");
+            block.append(value(ctorArgs.get(i), ctorParams.get(i)));
+        }
+        block.append(");\n");
+        block.append("  List<Object> results = new ArrayList<>();\n");
+        for (List<Object> op : testCase.ops()) {
+            if (op == null || op.isEmpty()) {
+                throw new IllegalArgumentException("Case '" + testCase.name() + "' has empty op");
+            }
+            String methodName = String.valueOf(op.get(0));
+            JudgeSpec.MethodSig signature = resolveMethod(spec, methodName, op);
+            List<String> paramTypes = signature.params() == null ? List.of() : signature.params();
+            if (paramTypes.size() != op.size() - 1) {
+                throw new IllegalArgumentException("Case '" + testCase.name() + "' op '" + methodName
+                        + "' arg count does not match method params");
+            }
+            StringBuilder args = new StringBuilder();
+            for (int i = 0; i < paramTypes.size(); i++) {
+                if (i > 0) args.append(", ");
+                args.append(value(op.get(i + 1), paramTypes.get(i)));
+            }
+            String call = "s." + methodName + "(" + args + ")";
+            if ("void".equals(signature.returns())) {
+                block.append("  ").append(call).append("; results.add(null);\n");
+            } else {
+                block.append("  results.add(").append(call).append(");\n");
+            }
+        }
+        block.append("  return results;\n");
+        block.append("}, ").append(opsExpected(testCase.expected())).append(");\n");
+        return block.toString();
+    }
+
+    private JudgeSpec.MethodSig resolveMethod(JudgeSpec spec, String methodName, List<Object> op) {
+        if (spec.methods() != null) {
+            for (JudgeSpec.MethodSig method : spec.methods()) {
+                if (methodName.equals(method.name())) return method;
+            }
+        }
+        List<String> inferredParams = new ArrayList<>();
+        for (int i = 1; i < op.size(); i++) {
+            inferredParams.add(inferType(op.get(i)));
+        }
+        return new JudgeSpec.MethodSig(methodName, inferredParams, "Object");
+    }
+
+    private String inferType(Object value) {
+        if (value == null) return "Object";
+        if (value instanceof Integer) return "int";
+        if (value instanceof Long) return "long";
+        if (value instanceof Double) return "double";
+        if (value instanceof Boolean) return "boolean";
+        if (value instanceof String) return "String";
+        if (value instanceof List<?>) return "List<Object>";
+        throw new IllegalArgumentException("Unable to infer judge type for: " + value.getClass());
+    }
+
+    private String opsExpected(Object expected) {
+        if (!(expected instanceof List<?> values)) {
+            throw new IllegalArgumentException("ops cases require a list expected value");
+        }
+        if (values.isEmpty()) return "java.util.List.of()";
+        StringBuilder out = new StringBuilder("java.util.Arrays.asList(");
+        for (int i = 0; i < values.size(); i++) {
+            if (i > 0) out.append(", ");
+            out.append(opsExpectedElement(values.get(i)));
+        }
+        return out.append(')').toString();
+    }
+
+    private String opsExpectedElement(Object value) {
+        if (value == null) return "null";
+        if (value instanceof String) return "\"" + escape(value.toString()) + "\"";
+        if (value instanceof Boolean || value instanceof Number) return value.toString();
+        if (value instanceof List<?>) return opsExpected(value);
+        throw new IllegalArgumentException("Unsupported ops expected element: " + value.getClass());
     }
 
     private String generateVoidCase(JudgeSpec spec, JudgeSpec.JudgeCase testCase, String name,
@@ -207,6 +307,13 @@ final class JudgeMainGenerator {
         if ("int".equals(type) || "long".equals(type) || "double".equals(type) || "boolean".equals(type)
                 || "Integer".equals(type) || "Long".equals(type) || "Double".equals(type)
                 || "Boolean".equals(type)) {
+            if ("double".equals(type) || "Double".equals(type)) {
+                return String.valueOf(((Number) raw).doubleValue());
+            }
+            if ("long".equals(type) || "Long".equals(type)) {
+                String text = raw.toString();
+                return text.endsWith("L") || text.endsWith("l") ? text : text + "L";
+            }
             return raw.toString();
         }
         if ("String".equals(type)) return "\"" + escape(raw.toString()) + "\"";

@@ -1,0 +1,14 @@
+className: Solution
+method: wordBreak
+params: [String, "List<String>"]
+returns: "List<String>"
+referenceClass: com.algoprep.patterns.challenge.WordBreakII
+referenceMethod: wordBreak
+referenceStatic: true
+cases:
+  - name: single
+    args: [a, [a]]
+    expected: [a]
+  - name: none
+    args: [catsandog, [cats, dog, sand, and, cat]]
+    expected: []

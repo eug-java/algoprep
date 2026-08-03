@@ -6,6 +6,7 @@ import { renderDiff } from './diff.js';
 import { pickDaily } from './daily.js';
 import { tipFor } from './speak.js';
 import { createEditor } from './editor.js';
+import { PLANS, planItemKey, planProgress } from './plans.js';
 
 const app = document.getElementById('app');
 const progressPill = document.getElementById('progress-pill');
@@ -17,6 +18,7 @@ let patternsCache = null;
 let activeEditor = null;
 let openProblemKey = null;
 
+const ONBOARD_KEY = 'algoprep.onboarded.v1';
 const COMPLEXITY_OPTS = ['O(1)', 'O(log n)', 'O(n)', 'O(n log n)', 'O(n^2)', 'O(2^n)'];
 const TRACK_PRESETS = [
   { id: 'Amazon', match: ['Amazon', 'FAANG'] },
@@ -26,6 +28,8 @@ const TRACK_PRESETS = [
   { id: 'Netflix', match: ['Netflix'] },
 ];
 const MOCK_CHECKS = ['restate', 'pattern', 'complexity', 'edges', 'code'];
+const INTERVIEW_CHECKS = ['restate', 'pattern', 'complexity', 'edges', 'example'];
+const MORE_HREFS = ['#/quiz', '#/challenge', '#/spring', '#/cheatsheet', '#/metrics', '#/settings', '#/report'];
 
 function t(key, vars = {}) {
   let value = chrome[key] ?? key;
@@ -46,6 +50,33 @@ function escapeHtml(value) {
 function badge(diff) {
   const d = (diff || '').toLowerCase();
   return `<span class="badge ${d}">${escapeHtml(diff)}</span>`;
+}
+
+function difficultyCounts(problems) {
+  const counts = { EASY: 0, MEDIUM: 0, HARD: 0 };
+  (problems || []).forEach((pr) => {
+    const key = String(pr.difficulty || '').toUpperCase();
+    if (key in counts) counts[key] += 1;
+  });
+  return counts;
+}
+
+function difficultyCountHtml(problemsOrCounts, { compact = false } = {}) {
+  const c = problemsOrCounts && typeof problemsOrCounts.EASY === 'number'
+    ? problemsOrCounts
+    : difficultyCounts(problemsOrCounts);
+  if (compact) {
+    return `<span class="diff-counts compact" title="${escapeHtml(t('difficulty.breakdown', c))}">
+      <span class="badge easy">E${c.EASY}</span>
+      <span class="badge medium">M${c.MEDIUM}</span>
+      <span class="badge hard">H${c.HARD}</span>
+    </span>`;
+  }
+  return `<span class="diff-counts" title="${escapeHtml(t('difficulty.breakdown', c))}">
+    <span class="badge easy">${escapeHtml(t('difficulty.easy'))} ${c.EASY}</span>
+    <span class="badge medium">${escapeHtml(t('difficulty.medium'))} ${c.MEDIUM}</span>
+    <span class="badge hard">${escapeHtml(t('difficulty.hard'))} ${c.HARD}</span>
+  </span>`;
 }
 
 function freqBadge(freq) {
@@ -150,10 +181,16 @@ function showComplexityPanel(problem) {
 
 function setNav() {
   const hash = location.hash || '#/';
-  document.querySelectorAll('.nav a[data-link]').forEach((a) => {
+  document.querySelectorAll('.nav a[data-link], .bottom-tabs a[data-link], .more-sheet-links a[data-link]').forEach((a) => {
     const href = a.getAttribute('href');
-    a.setAttribute('aria-current', hash.startsWith(href) ? 'page' : 'false');
+    const active = href === '#/' ? hash === '#/' || hash === '#' : hash.startsWith(href);
+    a.setAttribute('aria-current', active ? 'page' : 'false');
   });
+  const moreWrap = document.querySelector('.nav-more');
+  if (moreWrap) {
+    const moreActive = MORE_HREFS.some((h) => hash.startsWith(h));
+    moreWrap.classList.toggle('has-current', moreActive);
+  }
   document.querySelectorAll('[data-i18n]').forEach((el) => {
     el.textContent = t(el.getAttribute('data-i18n'));
   });
@@ -164,6 +201,130 @@ function setNav() {
   if (footer) footer.textContent = t('footer');
   const streakEl = document.getElementById('streak-pill');
   if (streakEl) streakEl.textContent = `${t('streak.label')}: ${progress.streak()}`;
+  document.body.classList.remove('print-cheatsheet', 'print-report');
+}
+
+function closeNavMenus() {
+  const menu = document.getElementById('nav-more-menu');
+  const btn = document.getElementById('nav-more-btn');
+  if (menu) menu.hidden = true;
+  if (btn) btn.setAttribute('aria-expanded', 'false');
+  const sheet = document.getElementById('more-sheet');
+  const bottomMore = document.getElementById('bottom-more-btn');
+  if (sheet) sheet.hidden = true;
+  if (bottomMore) bottomMore.setAttribute('aria-expanded', 'false');
+}
+
+function openMoreSheet() {
+  const sheet = document.getElementById('more-sheet');
+  const bottomMore = document.getElementById('bottom-more-btn');
+  if (sheet) sheet.hidden = false;
+  if (bottomMore) bottomMore.setAttribute('aria-expanded', 'true');
+  setNav();
+}
+
+function tipForJudgeMessage(message, runtimeErrors, compileErrors) {
+  const blob = `${message || ''} ${runtimeErrors || ''} ${compileErrors || ''}`.toLowerCase();
+  if (/unsupportedoperation|not implemented|todo|abstractmethod/.test(blob)) return 'judge.tip.unsupported';
+  if (/nullpointer|npe|null pointer/.test(blob)) return 'judge.tip.npe';
+  if (/timeout|timed out|time limit|took too long/.test(blob)) return 'judge.tip.timeout';
+  if (/wrong answer|expected|assert|mismatch|failed/.test(blob) || message) return 'judge.tip.wrong';
+  return 'judge.tip.generic';
+}
+
+function renderJudgeFailures(result) {
+  const failures = result.failures || [];
+  if (!failures.length && !result.runtimeErrors && !result.compileErrors) return '';
+  const first = failures[0] || {};
+  const tipKey = tipForJudgeMessage(
+    first.message || '',
+    result.runtimeErrors,
+    result.compileErrors,
+  );
+  const caseName = first.name || t('judge.tip.unknownCase');
+  const failRows = failures.map((f) =>
+    `<p><strong class="fail-case-name">${escapeHtml(f.name || '')}</strong>: ${escapeHtml(f.message || '')}<br>expected=${escapeHtml(JSON.stringify(f.expected))} actual=${escapeHtml(JSON.stringify(f.actual))}</p>`
+  ).join('');
+  return `
+    <div class="judge-insight">
+      <h4>${escapeHtml(t('judge.tip.title'))}</h4>
+      <p class="fail-case">${escapeHtml(t('judge.tip.case', { name: caseName }))}</p>
+      <p>${escapeHtml(t(tipKey))}</p>
+    </div>
+    ${failRows}`;
+}
+
+function bindInterviewChecklist(problemKey) {
+  const host = document.getElementById('interview-checklist');
+  if (!host) return;
+  const paint = () => {
+    const state = progress.getChecklist(problemKey);
+    const pct = progress.checklistPercent(problemKey, INTERVIEW_CHECKS);
+    host.innerHTML = `
+      <h3>${escapeHtml(t('checklist.title'))}</h3>
+      <p class="checklist-pct">${escapeHtml(t('checklist.pct', { n: pct }))}</p>
+      <div class="checklist-items">
+        ${INTERVIEW_CHECKS.map((id) => `
+          <label class="checklist-item">
+            <input type="checkbox" data-check="${id}" ${state[id] ? 'checked' : ''}/>
+            <span>${escapeHtml(t(`checklist.${id}`))}</span>
+          </label>`).join('')}
+      </div>`;
+    host.querySelectorAll('[data-check]').forEach((input) => {
+      input.addEventListener('change', () => {
+        progress.setChecklistItem(problemKey, input.dataset.check, input.checked);
+        paint();
+      });
+    });
+  };
+  paint();
+}
+
+function finishOnboarding() {
+  localStorage.setItem(ONBOARD_KEY, '1');
+  const el = document.getElementById('onboard-overlay');
+  if (el) {
+    el.hidden = true;
+    el.innerHTML = '';
+  }
+}
+
+function showOnboardingIfNeeded() {
+  if (localStorage.getItem(ONBOARD_KEY)) return;
+  const el = document.getElementById('onboard-overlay');
+  if (!el) return;
+  if (!el.hidden && el.querySelector('.onboard-card')) return;
+  const steps = [
+    { title: t('onboard.step1.title'), body: t('onboard.step1.body'), href: '#/patterns' },
+    { title: t('onboard.step2.title'), body: t('onboard.step2.body'), href: '#/patterns' },
+    { title: t('onboard.step3.title'), body: t('onboard.step3.body'), href: '#/mock' },
+  ];
+  let i = 0;
+  const paint = () => {
+    const step = steps[i];
+    const last = i === steps.length - 1;
+    el.hidden = false;
+    el.innerHTML = `
+      <div class="onboard-card">
+        <div class="onboard-steps">${steps.map((_, idx) => `<span class="${idx <= i ? 'on' : ''}"></span>`).join('')}</div>
+        <h2>${escapeHtml(step.title)}</h2>
+        <p>${escapeHtml(step.body)}</p>
+        <div class="onboard-actions">
+          <button type="button" class="btn btn-ghost" id="onboard-skip">${escapeHtml(t('onboard.skip'))}</button>
+          <a class="btn btn-ghost" href="${step.href}" data-link id="onboard-try">${escapeHtml(t('onboard.try'))}</a>
+          <button type="button" class="btn btn-primary" id="onboard-next">${escapeHtml(last ? t('onboard.finish') : t('onboard.next'))}</button>
+        </div>
+      </div>`;
+    document.getElementById('onboard-skip').onclick = finishOnboarding;
+    document.getElementById('onboard-next').onclick = () => {
+      if (last) finishOnboarding();
+      else { i += 1; paint(); }
+    };
+    document.getElementById('onboard-try').onclick = () => {
+      if (last) finishOnboarding();
+    };
+  };
+  paint();
 }
 
 function updateProgressUi() {
@@ -201,6 +362,8 @@ function parseRoute() {
   if (parts[0] === 'review') return { name: 'review' };
   if (parts[0] === 'tracks') return { name: 'tracks', company: parts[1] || null };
   if (parts[0] === 'metrics') return { name: 'metrics' };
+  if (parts[0] === 'plans') return { name: 'plans' };
+  if (parts[0] === 'report') return { name: 'report' };
   return { name: 'home' };
 }
 
@@ -244,6 +407,7 @@ async function mountPlaygroundEditor(starter) {
 
 async function render() {
   leaveOpenProblem();
+  closeNavMenus();
   setNav();
   app.innerHTML = `<div class="loading">${escapeHtml(t('common.loading'))}</div>`;
   try {
@@ -268,9 +432,12 @@ async function render() {
       review: renderReview,
       tracks: () => renderTracks(route.company),
       metrics: renderMetrics,
+      plans: renderPlans,
+      report: renderReport,
     };
     await (map[route.name] || renderHome)();
     updateProgressUi();
+    showOnboardingIfNeeded();
   } catch (err) {
     app.innerHTML = `<div class="error">${escapeHtml(t('common.failed'))}: ${escapeHtml(err.message)}</div>`;
   }
@@ -307,6 +474,11 @@ async function renderHome() {
         <p class="hero-brand">AlgoPrep</p>
         <h1>${escapeHtml(t('home.headline'))}</h1>
         <p class="lede">${escapeHtml(t('home.stats', { patterns: overview.patternCount, problems: overview.problemCount }))}</p>
+        <p class="lede-diff">${difficultyCountHtml({
+          EASY: overview.easyCount || 0,
+          MEDIUM: overview.mediumCount || 0,
+          HARD: overview.hardCount || 0,
+        })}</p>
         <div class="cta-row">
           <a class="btn btn-primary" href="#/patterns" data-link>${escapeHtml(t('home.cta.patterns'))}</a>
           <a class="btn btn-signal" href="#/daily" data-link>${escapeHtml(t('home.cta.daily'))}</a>
@@ -315,12 +487,14 @@ async function renderHome() {
       </div>
     </section>
     <div class="home-grid">
+      <a class="home-tile" href="#/plans" data-link><h3>${escapeHtml(t('nav.plans'))}</h3><p>${escapeHtml(t('plans.lede'))}</p></a>
       <a class="home-tile" href="#/skills" data-link><h3>${escapeHtml(t('nav.skills'))}</h3><p>${escapeHtml(t('skills.lede'))}</p></a>
       <a class="home-tile" href="#/tracks" data-link><h3>${escapeHtml(t('nav.tracks'))}</h3><p>${escapeHtml(t('tracks.lede'))}</p></a>
       <a class="home-tile" href="#/review" data-link><h3>${escapeHtml(t('nav.review'))}</h3><p>${escapeHtml(t('review.lede'))}</p></a>
       <a class="home-tile" href="#/spring" data-link><h3>${escapeHtml(t('nav.spring'))}</h3><p>${escapeHtml(t('spring.lede'))}</p></a>
       <a class="home-tile" href="#/quiz" data-link><h3>${escapeHtml(t('nav.quiz'))}</h3><p>${escapeHtml(t('quiz.lede'))}</p></a>
       <a class="home-tile" href="#/settings" data-link><h3>${escapeHtml(t('nav.settings'))}</h3><p>${escapeHtml(t('settings.lede'))}</p></a>
+      <a class="home-tile" href="#/report" data-link><h3>${escapeHtml(t('nav.report'))}</h3><p>${escapeHtml(t('report.lede'))}</p></a>
     </div>
   `;
 }
@@ -337,7 +511,10 @@ async function renderPatterns() {
         <h1>${escapeHtml(t('patterns.title'))}</h1>
         <p>${escapeHtml(t('patterns.lede'))}</p>
       </div>
-      <div class="meta-row"><span>${escapeHtml(t('patterns.modules', { n: patterns.length }))}</span></div>
+      <div class="meta-row">
+        <span>${escapeHtml(t('patterns.modules', { n: patterns.length }))}</span>
+        ${difficultyCountHtml(difficultyCounts(patterns.flatMap((p) => p.problems || [])))}
+      </div>
     </div>
     <div class="filters panel">
       <label>${escapeHtml(t('filters.company'))}
@@ -379,6 +556,7 @@ async function renderPatterns() {
         <div>
           <h3>${escapeHtml(p.title)}</h3>
           <p class="sub">${escapeHtml(p.subtitle)}</p>
+          ${difficultyCountHtml(p.problems, { compact: true })}
         </div>
         <span class="count">${escapeHtml(t('patterns.problems', { n: (company||freq||diff) ? p._match : p.problems.length }))}</span>
       </a>`).join('');
@@ -399,7 +577,11 @@ async function renderPattern(id) {
         <h1>${escapeHtml(p.title)}</h1>
         <p>${escapeHtml(p.subtitle)}</p>
       </div>
-      <div class="meta-row"><span>#${p.order}</span><span>${escapeHtml(t('patterns.problems', { n: p.problems.length }))}</span></div>
+      <div class="meta-row">
+        <span>#${p.order}</span>
+        <span>${escapeHtml(t('patterns.problems', { n: p.problems.length }))}</span>
+        ${difficultyCountHtml(p.problems)}
+      </div>
     </div>
     ${diagram}
     <div class="panel">
@@ -497,6 +679,7 @@ async function renderProblem(patternId, problemId) {
       <h3>${escapeHtml(t('speak.title'))}</h3>
       <p>${escapeHtml(tipFor(patternId, t))}</p>
     </div>
+    <div class="panel checklist-panel" id="interview-checklist"></div>
     ${hasJudge ? `
       <div class="panel playground">
         <div class="playground-head">
@@ -521,6 +704,8 @@ async function renderProblem(patternId, problemId) {
     <div id="source-panel" class="hidden"></div>
   `;
 
+  bindInterviewChecklist(key);
+
   const starter = template?.source || '';
   if (hasJudge) mountPlaygroundEditor(starter);
 
@@ -539,7 +724,7 @@ async function renderProblem(patternId, problemId) {
           <p>${escapeHtml(t('playground.score', { passed: result.passed ?? 0, total: result.total ?? 0 }))}</p>
           ${result.compileErrors ? `<pre class="code">${escapeHtml(result.compileErrors)}</pre>` : ''}
           ${result.runtimeErrors ? `<pre class="code">${escapeHtml(result.runtimeErrors)}</pre>` : ''}
-          ${(result.failures || []).map((f) => `<p><strong>${escapeHtml(f.name || '')}</strong>: ${escapeHtml(f.message || '')}<br>expected=${escapeHtml(JSON.stringify(f.expected))} actual=${escapeHtml(JSON.stringify(f.actual))}</p>`).join('')}
+          ${ok ? '' : renderJudgeFailures(result)}
         </div>`;
       if (ok) {
         progress.mark(key);
@@ -549,7 +734,13 @@ async function renderProblem(patternId, problemId) {
         showComplexityPanel(problem);
       }
     } catch (e) {
-      out.innerHTML = `<div class="error">${escapeHtml(e.message)}</div>`;
+      const tipKey = tipForJudgeMessage(e.message, e.message, '');
+      out.innerHTML = `
+        <div class="error">${escapeHtml(e.message)}</div>
+        <div class="judge-insight">
+          <h4>${escapeHtml(t('judge.tip.title'))}</h4>
+          <p>${escapeHtml(t(tipKey))}</p>
+        </div>`;
     }
   });
 
@@ -590,7 +781,10 @@ async function renderChallenges() {
     <a class="back-link" href="#/" data-link>${escapeHtml(t('common.home'))}</a>
     <div class="section-head">
       <div><h1>${escapeHtml(t('challenge.title'))}</h1><p>${escapeHtml(t('challenge.lede'))}</p></div>
-      <div class="meta-row"><span>${escapeHtml(t('challenge.drills', { n: list.length }))}</span></div>
+      <div class="meta-row">
+        <span>${escapeHtml(t('challenge.drills', { n: list.length }))}</span>
+        ${difficultyCountHtml({ EASY: 0, MEDIUM: 0, HARD: list.length })}
+      </div>
     </div>
     <div class="problem-list">
       ${list.map((c) => `
@@ -624,7 +818,11 @@ async function renderChallenge(id) {
   };
   document.getElementById('btn-reveal').onclick = async () => {
     const full = await api.revealChallenge(id);
-    extra.innerHTML = `<div class="panel"><h3>${escapeHtml(t('challenge.pattern'))}</h3><p><strong>${escapeHtml(full.hiddenPattern)}</strong></p><p>${escapeHtml(full.timeComplexity)} · ${escapeHtml(full.spaceComplexity)}</p></div>`;
+    const alts = (full.alternatePatterns || []).filter(Boolean);
+    extra.innerHTML = `<div class="panel"><h3>${escapeHtml(t('challenge.pattern'))}</h3>
+      <p><strong>${escapeHtml(full.hiddenPattern)}</strong></p>
+      ${alts.length ? `<p class="meta-mini">${escapeHtml(t('challenge.alsoValid'))}: ${alts.map(escapeHtml).join(', ')}</p>` : ''}
+      <p>${escapeHtml(full.timeComplexity)} · ${escapeHtml(full.spaceComplexity)}</p></div>`;
   };
   document.getElementById('btn-source').onclick = async () => {
     const src = await api.challengeSource(id);
@@ -713,7 +911,10 @@ async function renderSkills() {
     <a class="back-link" href="#/" data-link>${escapeHtml(t('common.home'))}</a>
     <div class="section-head">
       <div><h1>${escapeHtml(t('nav.skills'))}</h1><p>${escapeHtml(t('skills.lede'))}</p></div>
-      <div class="meta-row"><span>${escapeHtml(t('streak.label'))}: ${progress.streak()}</span></div>
+      <div class="meta-row">
+        <span>${escapeHtml(t('streak.label'))}: ${progress.streak()}</span>
+        <a class="btn btn-ghost" href="#/report" data-link>${escapeHtml(t('report.open'))}</a>
+      </div>
     </div>
     <div class="heatmap">
       ${stats.map((s) => {
@@ -732,6 +933,89 @@ async function renderSkills() {
         ${stats.filter((s) => s.ratio < 0.5).slice(0, 8).map((s) => `<li><a href="#/patterns/${s.id}" data-link>${escapeHtml(s.title)}</a> — ${s.done}/${s.total}</li>`).join('') || `<li>${escapeHtml(t('skills.strong'))}</li>`}
       </ul>
     </div>`;
+}
+
+async function renderPlans() {
+  const patterns = await getPatterns();
+  const titleMap = new Map();
+  patterns.forEach((p) => {
+    p.problems.forEach((pr) => titleMap.set(`${p.id}:${pr.id}`, pr.title));
+  });
+
+  app.innerHTML = `
+    <a class="back-link" href="#/" data-link>${escapeHtml(t('common.home'))}</a>
+    <div class="section-head">
+      <div><h1>${escapeHtml(t('plans.title'))}</h1><p>${escapeHtml(t('plans.lede'))}</p></div>
+    </div>
+    ${PLANS.map((plan) => {
+      const { done, total, pct } = planProgress(plan, (k) => progress.isDone(k));
+      return `
+        <div class="panel plan-block" id="plan-${escapeHtml(plan.id)}">
+          <h2>${escapeHtml(t(plan.titleKey))}</h2>
+          <p>${escapeHtml(t(plan.ledeKey))}</p>
+          <p class="meta-mini">${escapeHtml(t('plans.progress', { done, total, pct }))}</p>
+          ${plan.weeks.map((week) => `
+            <div class="plan-week">
+              <h3>${escapeHtml(t(week.labelKey, { n: week.week }))}</h3>
+              <div class="problem-list">
+                ${week.items.map((item) => {
+                  const key = planItemKey(item);
+                  const title = titleMap.get(key) || item.problemId;
+                  return `<a class="problem-item" href="#/patterns/${item.patternId}/problems/${item.problemId}" data-link>
+                    <div>
+                      <h3>${escapeHtml(title)}</h3>
+                      <p class="meta-mini">${escapeHtml(item.patternId)}</p>
+                    </div>
+                    <span class="done-dot ${progress.isDone(key) ? 'on' : ''}"></span>
+                  </a>`;
+                }).join('')}
+              </div>
+            </div>`).join('')}
+        </div>`;
+    }).join('')}`;
+}
+
+async function renderReport() {
+  await ensureTotals();
+  const patterns = await getPatterns();
+  const stats = progress.byPattern(patterns).sort((a, b) => a.ratio - b.ratio);
+  const weak = stats.filter((s) => s.ratio < 0.5).slice(0, 6);
+  const week = progress.dailyCompletionsThisWeek();
+  const weekDone = week.reduce((n, d) => n + d.completed, 0);
+  const weekTotal = week.reduce((n, d) => n + d.total, 0);
+  const pct = progress.percent(totalItems);
+
+  app.innerHTML = `
+    <a class="back-link" href="#/" data-link>${escapeHtml(t('common.home'))}</a>
+    <div class="section-head">
+      <div><h1>${escapeHtml(t('report.title'))}</h1><p>${escapeHtml(t('report.lede'))}</p></div>
+      <div class="actions">
+        <button class="btn btn-primary" id="btn-report-print" type="button">${escapeHtml(t('report.print'))}</button>
+      </div>
+    </div>
+    <div class="panel report-print print-area">
+      <h1>${escapeHtml(t('report.title'))}</h1>
+      <p class="meta-mini">${escapeHtml(new Date().toISOString().slice(0, 10))}</p>
+      <div class="report-grid">
+        <div class="report-stat"><strong>${progress.streak()}</strong><span>${escapeHtml(t('streak.label'))}</span></div>
+        <div class="report-stat"><strong>${pct}%</strong><span>${escapeHtml(t('report.progress'))}</span></div>
+        <div class="report-stat"><strong>${weekDone}/${weekTotal}</strong><span>${escapeHtml(t('report.dailyWeek'))}</span></div>
+      </div>
+      <h3>${escapeHtml(t('report.weak'))}</h3>
+      <ul class="bullet-list">
+        ${weak.map((s) => `<li>${escapeHtml(s.title)} — ${s.done}/${s.total}</li>`).join('') || `<li>${escapeHtml(t('skills.strong'))}</li>`}
+      </ul>
+      <h3>${escapeHtml(t('report.dailyDays'))}</h3>
+      <ul class="bullet-list">
+        ${week.map((d) => `<li>${escapeHtml(d.date)} — ${d.completed}/${d.total}</li>`).join('')}
+      </ul>
+    </div>`;
+
+  document.getElementById('btn-report-print').onclick = () => {
+    document.body.classList.add('print-report');
+    document.body.classList.remove('print-cheatsheet');
+    window.print();
+  };
 }
 
 async function renderDaily() {
@@ -1022,7 +1306,10 @@ async function renderTracks(company) {
     <a class="back-link" href="#/" data-link>${escapeHtml(t('common.home'))}</a>
     <div class="section-head">
       <div><h1>${escapeHtml(t('tracks.title'))}</h1><p>${escapeHtml(t('tracks.lede'))}</p></div>
-      <div class="meta-row"><span>${escapeHtml(t('tracks.problems', { n: total }))}</span></div>
+      <div class="meta-row">
+        <span>${escapeHtml(t('tracks.problems', { n: total }))}</span>
+        ${difficultyCountHtml(difficultyCounts(grouped.flatMap((g) => g.problems)))}
+      </div>
     </div>
     <div class="track-tabs">
       ${TRACK_PRESETS.map((p) =>
@@ -1112,10 +1399,14 @@ function renderCheatsheet() {
     <a class="back-link" href="#/" data-link>${escapeHtml(t('common.home'))}</a>
     <div class="section-head">
       <div><h1>${escapeHtml(t('cheatsheet.title'))}</h1><p>${escapeHtml(t('cheatsheet.lede'))}</p></div>
-      <div class="actions"><button class="btn btn-ghost" id="btn-print" type="button">${escapeHtml(t('cheatsheet.print'))}</button></div>
+      <div class="actions"><button class="btn btn-ghost" id="btn-print" type="button">${escapeHtml(t('cheatsheet.exportPdf'))}</button></div>
     </div>
     <div class="panel cheatsheet print-area">${rows}</div>`;
-  document.getElementById('btn-print').onclick = () => window.print();
+  document.getElementById('btn-print').onclick = () => {
+    document.body.classList.add('print-cheatsheet');
+    document.body.classList.remove('print-report');
+    window.print();
+  };
 }
 
 function renderSettings() {
@@ -1123,6 +1414,13 @@ function renderSettings() {
   app.innerHTML = `
     <a class="back-link" href="#/" data-link>${escapeHtml(t('common.home'))}</a>
     <div class="section-head"><div><h1>${escapeHtml(t('nav.settings'))}</h1><p>${escapeHtml(t('settings.lede'))}</p></div></div>
+    <div class="panel">
+      <h3>${escapeHtml(t('report.title'))}</h3>
+      <p>${escapeHtml(t('report.lede'))}</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="#/report" data-link>${escapeHtml(t('report.open'))}</a>
+      </div>
+    </div>
     <div class="panel">
       <h3>${escapeHtml(t('settings.export'))}</h3>
       <div class="actions">
@@ -1223,8 +1521,41 @@ document.querySelectorAll('[data-theme-btn]').forEach((btn) => {
   btn.addEventListener('click', () => applyTheme(btn.dataset.themeBtn));
 });
 
+document.getElementById('nav-more-btn')?.addEventListener('click', (ev) => {
+  ev.stopPropagation();
+  const menu = document.getElementById('nav-more-menu');
+  const btn = document.getElementById('nav-more-btn');
+  if (!menu || !btn) return;
+  const open = menu.hidden;
+  menu.hidden = !open;
+  btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+});
+
+document.getElementById('bottom-more-btn')?.addEventListener('click', (ev) => {
+  ev.stopPropagation();
+  const sheet = document.getElementById('more-sheet');
+  if (sheet?.hidden) openMoreSheet();
+  else closeNavMenus();
+});
+
+document.getElementById('more-sheet-close')?.addEventListener('click', closeNavMenus);
+document.getElementById('more-sheet-backdrop')?.addEventListener('click', closeNavMenus);
+
+document.addEventListener('click', (ev) => {
+  const more = document.querySelector('.nav-more');
+  if (more && !more.contains(ev.target)) {
+    const menu = document.getElementById('nav-more-menu');
+    const btn = document.getElementById('nav-more-btn');
+    if (menu) menu.hidden = true;
+    if (btn) btn.setAttribute('aria-expanded', 'false');
+  }
+});
+
 window.addEventListener('hashchange', render);
 window.addEventListener('beforeunload', leaveOpenProblem);
+window.addEventListener('afterprint', () => {
+  document.body.classList.remove('print-cheatsheet', 'print-report');
+});
 window.addEventListener('DOMContentLoaded', async () => {
   initTheme();
   if ('serviceWorker' in navigator) {

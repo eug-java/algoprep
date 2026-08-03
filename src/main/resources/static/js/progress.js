@@ -251,6 +251,42 @@ export const progress = {
       }))
       .sort((a, b) => b.count - a.count || b.openMs - a.openMs);
   },
+  getChecklist(problemKey) {
+    const meta = loadMeta();
+    const map = meta.checklist || {};
+    return { ...(map[problemKey] || {}) };
+  },
+  setChecklistItem(problemKey, itemId, checked) {
+    const meta = loadMeta();
+    meta.checklist = meta.checklist || {};
+    const row = { ...(meta.checklist[problemKey] || {}) };
+    if (checked) row[itemId] = true;
+    else delete row[itemId];
+    meta.checklist[problemKey] = row;
+    saveMeta(meta);
+    return row;
+  },
+  checklistPercent(problemKey, itemIds) {
+    if (!itemIds?.length) return 0;
+    const row = this.getChecklist(problemKey);
+    const done = itemIds.filter((id) => row[id]).length;
+    return Math.round((done / itemIds.length) * 100);
+  },
+  dailyCompletionsThisWeek() {
+    const meta = loadMeta();
+    const daily = meta.daily || {};
+    const done = load();
+    const days = [];
+    for (let i = 6; i >= 0; i -= 1) {
+      const d = new Date();
+      d.setDate(d.getDate() - i);
+      const key = d.toISOString().slice(0, 10);
+      const picks = daily[key] || [];
+      const completed = picks.filter((p) => done[`${p.patternId}:${p.problemId}`]).length;
+      days.push({ date: key, total: picks.length, completed });
+    }
+    return days;
+  },
   exportAll() {
     return {
       version: 1,

@@ -22,6 +22,8 @@ public class SpaController {
             "/review",
             "/tracks",
             "/metrics",
+            "/plans",
+            "/report",
             "/about"
     })
     public String spa() {

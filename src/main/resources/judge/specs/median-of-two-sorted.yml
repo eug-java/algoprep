@@ -1,0 +1,12 @@
+className: Solution
+method: findMedianSortedArrays
+params: ["int[]", "int[]"]
+returns: double
+referenceClass: com.algoprep.patterns.challenge.MedianOfTwoSortedArrays
+referenceMethod: findMedianSortedArrays
+referenceStatic: true
+cases:
+  - name: odd
+    args: [[1, 3], [2]]
+  - name: even
+    args: [[1, 2], [3, 4]]

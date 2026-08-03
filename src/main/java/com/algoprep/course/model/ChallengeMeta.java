@@ -12,8 +12,13 @@ public record ChallengeMeta(
         String prompt,
         String className,
         PatternId hiddenPattern,
+        List<PatternId> alternatePatterns,
         String timeComplexity,
         String spaceComplexity,
         List<String> hints
 ) {
+    public ChallengeMeta {
+        alternatePatterns = alternatePatterns == null ? List.of() : List.copyOf(alternatePatterns);
+        hints = hints == null ? List.of() : List.copyOf(hints);
+    }
 }

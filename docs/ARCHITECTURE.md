@@ -35,6 +35,10 @@ Spring Boot
 
 When `referenceClass` is set and a case omits `expected`, `JudgeMain` calls the reference method to compute the oracle. Tree/list problems usually ship explicit `expected` values because catalog node types differ from judge helpers.
 
+Stateful problems use `mode: ops` with LeetCode-style `ops` / `expected` arrays (MinStack, Trie, LRU, …).
+
+Optional Docker isolation (`algoprep.judge.docker=true`): compile+run in `docker run --network none --memory 128m` using `algoprep.judge.dockerImage`. Falls back to local `javac`/`java` if Docker is unavailable.
+
 ## Frontend modules
 
 | File | Role |

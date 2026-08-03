@@ -1,0 +1,12 @@
+className: Solution
+method: minWindow
+params: [String, String]
+returns: String
+referenceClass: com.algoprep.patterns.challenge.MinimumWindowSubsequence
+referenceMethod: minWindow
+referenceStatic: true
+cases:
+  - name: example1
+    args: [abcdebdde, bde]
+  - name: none
+    args: [abc, acx]

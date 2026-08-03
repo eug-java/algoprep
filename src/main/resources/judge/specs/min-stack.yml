@@ -1,0 +1,26 @@
+className: Solution
+mode: ops
+methods:
+  - name: push
+    params: [int]
+    returns: void
+  - name: pop
+    params: []
+    returns: void
+  - name: top
+    params: []
+    returns: int
+  - name: getMin
+    params: []
+    returns: int
+cases:
+  - name: example1
+    ops:
+      - [push, -2]
+      - [push, 0]
+      - [push, -3]
+      - [getMin]
+      - [pop]
+      - [top]
+      - [getMin]
+    expected: [null, null, null, -3, null, 0, -2]

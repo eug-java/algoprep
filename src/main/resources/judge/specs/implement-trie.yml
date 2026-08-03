@@ -1,0 +1,22 @@
+className: Solution
+mode: ops
+methods:
+  - name: insert
+    params: [String]
+    returns: void
+  - name: search
+    params: [String]
+    returns: boolean
+  - name: startsWith
+    params: [String]
+    returns: boolean
+cases:
+  - name: example1
+    ops:
+      - [insert, apple]
+      - [search, apple]
+      - [search, app]
+      - [startsWith, app]
+      - [insert, app]
+      - [search, app]
+    expected: [null, true, false, true, null, true]

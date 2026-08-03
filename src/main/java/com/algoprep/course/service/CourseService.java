@@ -46,11 +46,26 @@ public class CourseService {
         LocalizedBundle bundle = bundle(locale);
         List<CourseOverview.PatternSummary> summaries = bundle.patterns().values().stream()
                 .sorted(Comparator.comparingInt(PatternMeta::order))
-                .map(p -> new CourseOverview.PatternSummary(
-                        p.id(), p.order(), p.week(), p.title(), p.problems().size(), p.subtitle()))
+                .map(p -> {
+                    int[] byDiff = difficultyCounts(p.problems());
+                    return new CourseOverview.PatternSummary(
+                            p.id(),
+                            p.order(),
+                            p.week(),
+                            p.title(),
+                            p.problems().size(),
+                            byDiff[0],
+                            byDiff[1],
+                            byDiff[2],
+                            p.subtitle());
+                })
                 .toList();
 
-        int problemCount = summaries.stream().mapToInt(CourseOverview.PatternSummary::problemCount).sum()
+        int catalogProblems = summaries.stream().mapToInt(CourseOverview.PatternSummary::problemCount).sum();
+        int problemCount = catalogProblems + bundle.challenges().size();
+        int easyCount = summaries.stream().mapToInt(CourseOverview.PatternSummary::easyCount).sum();
+        int mediumCount = summaries.stream().mapToInt(CourseOverview.PatternSummary::mediumCount).sum();
+        int hardCount = summaries.stream().mapToInt(CourseOverview.PatternSummary::hardCount).sum()
                 + bundle.challenges().size();
 
         return new CourseOverview(
@@ -60,9 +75,27 @@ public class CourseService {
                 bundle.courseDescription(),
                 summaries.size(),
                 problemCount,
+                easyCount,
+                mediumCount,
+                hardCount,
                 List.of(),
                 summaries
         );
+    }
+
+    private static int[] difficultyCounts(List<ProblemMeta> problems) {
+        int easy = 0;
+        int medium = 0;
+        int hard = 0;
+        for (ProblemMeta problem : problems) {
+            if (problem.difficulty() == null) continue;
+            switch (problem.difficulty()) {
+                case EASY -> easy++;
+                case MEDIUM -> medium++;
+                case HARD -> hard++;
+            }
+        }
+        return new int[] {easy, medium, hard};
     }
 
     public List<PatternMeta> listPatterns(CourseLocale locale) {

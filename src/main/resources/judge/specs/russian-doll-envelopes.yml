@@ -1,0 +1,12 @@
+className: Solution
+method: maxEnvelopes
+params: ["int[][]"]
+returns: int
+referenceClass: com.algoprep.patterns.challenge.RussianDollEnvelopes
+referenceMethod: maxEnvelopes
+referenceStatic: true
+cases:
+  - name: example1
+    args: [[[5, 4], [6, 4], [6, 7], [2, 3]]]
+  - name: no-nest
+    args: [[[1, 1], [1, 1]]]

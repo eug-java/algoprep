@@ -1,0 +1,12 @@
+className: Solution
+method: trap
+params: ["int[]"]
+returns: int
+referenceClass: com.algoprep.patterns.challenge.TrapRainWater
+referenceMethod: trap
+referenceStatic: true
+cases:
+  - name: example1
+    args: [[0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]]
+  - name: example2
+    args: [[4, 2, 0, 3, 2, 5]]

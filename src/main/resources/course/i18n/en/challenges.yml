@@ -142,3 +142,32 @@ challenges:
     - Scan forward to cover t as a subsequence, then shrink backward to the earliest valid start.
     - Track the shortest then leftmost window.
     - Two-pass scanning avoids a full DP table when m is small.
+
+  count-of-smaller:
+    title: Count of Smaller Numbers After Self
+    prompt: >
+      Given an integer array nums, return counts where counts[i] is the number of smaller elements
+      to the right of nums[i]. Sorting-based divide-and-conquer and fenwick/segment-tree approaches
+      are both interview-valid.
+    hints:
+    - Merge sort can count inversions while sorting index arrays.
+    - A Fenwick / segment tree over ranked values also works.
+    - State the trade-offs between the two families.
+  palindrome-pairs:
+    title: Palindrome Pairs
+    prompt: >
+      Given unique words, return all pairs of distinct indices (i, j) such that words[i] + words[j]
+      is a palindrome. A hash map of reverses or a trie of reversed words both apply.
+    hints:
+    - Index every word and look up reverse complements of prefixes/suffixes.
+    - A trie of reversed words is an equally valid recognition path.
+    - Deduplicate pairs discovered via multiple cut positions.
+  task-scheduler:
+    title: Task Scheduler
+    prompt: >
+      Schedule CPU tasks with cooling interval n between equal tasks. Return the least units of time
+      to finish all tasks. Greedy frequency math or a max-heap simulation are both acceptable.
+    hints:
+    - The most frequent task dominates schedule length.
+    - idleSlots = (maxFreq - 1) * n, then fill with other tasks.
+    - Heap simulation of cooldown is also valid.

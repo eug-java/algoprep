@@ -1,0 +1,14 @@
+className: Solution
+method: alienOrder
+params: ["String[]"]
+returns: String
+referenceClass: com.algoprep.patterns.challenge.AlienDictionary
+referenceMethod: alienOrder
+referenceStatic: true
+cases:
+  - name: invalid-prefix
+    args: [[abc, ab]]
+    expected: ""
+  - name: cycle
+    args: [[z, x, z]]
+    expected: ""

@@ -8,6 +8,7 @@ challenges:
     about what determines the water level at each position before reaching for a specific pattern.
   className: com.algoprep.patterns.challenge.TrapRainWater
   hiddenPattern: TWO_POINTERS
+  alternatePatterns: [DYNAMIC_PROGRAMMING]
   timeComplexity: O(n)
   spaceComplexity: O(1)
   hints:
@@ -150,6 +151,7 @@ challenges:
     as the window slides.
   className: com.algoprep.patterns.challenge.SlidingWindowMaximum
   hiddenPattern: SLIDING_WINDOW
+  alternatePatterns: [TOP_K_ELEMENTS]
   timeComplexity: O(n)
   spaceComplexity: O(k)
   hints:
@@ -181,6 +183,7 @@ challenges:
     subsequence after a careful sort.
   className: com.algoprep.patterns.challenge.RussianDollEnvelopes
   hiddenPattern: DYNAMIC_PROGRAMMING
+  alternatePatterns: [MODIFIED_BINARY_SEARCH]
   timeComplexity: O(n log n)
   spaceComplexity: O(n)
   hints:
@@ -203,3 +206,50 @@ challenges:
     backward to the earliest start that still covers t.
   - Track the best (shortest, then leftmost) window across all such candidates.
   - Two pointers / two-pass scanning avoids a full DP table when m is small.
+
+- id: count-of-smaller
+  title: Count of Smaller Numbers After Self
+  difficulty: HARD
+  prompt: Given an integer array nums, return a new counts array where counts[i] is the number of smaller
+    elements to the right of nums[i]. Interviewers often accept more than one family of solutions — think
+    carefully about sorting-based divide-and-conquer versus fenwick/segment-tree approaches before committing.
+  className: com.algoprep.patterns.challenge.CountOfSmallerNumbers
+  hiddenPattern: SORT_AND_SEARCH
+  alternatePatterns: [DYNAMIC_PROGRAMMING]
+  timeComplexity: O(n log n)
+  spaceComplexity: O(n)
+  hints:
+  - Merge sort can count inversions while sorting index arrays.
+  - A Fenwick / segment tree over ranked values also works.
+  - Either approach is interview-valid; state the trade-offs.
+- id: palindrome-pairs
+  title: Palindrome Pairs
+  difficulty: HARD
+  prompt: Given a list of unique words, return all pairs of distinct indices (i, j) such that the concatenation
+    words[i] + words[j] is a palindrome. There may be empty strings in the list. Consider how a hash map of
+    reversed words interacts with checking palindromic prefixes and suffixes.
+  className: com.algoprep.patterns.challenge.PalindromePairs
+  hiddenPattern: HASH_MAPS
+  alternatePatterns: [TRIE]
+  timeComplexity: O(n * k^2)
+  spaceComplexity: O(n * k)
+  hints:
+  - Index every word in a hash map and look up reverse complements of prefixes/suffixes.
+  - A trie of reversed words is an equally valid recognition path.
+  - Deduplicate pairs — the same (i, j) can be discovered via multiple cut positions.
+- id: task-scheduler
+  title: Task Scheduler
+  difficulty: HARD
+  prompt: Given a characters array tasks representing the tasks a CPU needs to do, where each letter stands
+    for a different task. Tasks can be done in any order. Each task takes one unit of time. Between two
+    same tasks there must be at least n units of non-same tasks or idle time. Return the least number of
+    units of times the CPU will take to finish all the given tasks.
+  className: com.algoprep.patterns.challenge.TaskScheduler
+  hiddenPattern: GREEDY
+  alternatePatterns: [TOP_K_ELEMENTS]
+  timeComplexity: O(n)
+  spaceComplexity: O(1)
+  hints:
+  - Frequency of the most common task dominates the schedule length.
+  - idleSlots = (maxFreq - 1) * n, then fill with other tasks.
+  - A max-heap simulation of cooldown is also a valid interview answer.

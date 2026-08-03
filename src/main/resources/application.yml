@@ -18,6 +18,11 @@ algoprep:
     version: "1.0.0"
   sync:
     dir: ./data/sync
+  judge:
+    # When true and Docker is available, compile+run inside an isolated container
+    # (no network, memory/cpu capped). Falls back to local process otherwise.
+    docker: false
+    dockerImage: eclipse-temurin:21-jdk-jammy
 
 logging:
   level:

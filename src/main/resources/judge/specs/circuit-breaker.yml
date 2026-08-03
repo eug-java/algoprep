@@ -1,0 +1,28 @@
+className: Solution
+mode: ops
+constructorParams: [int, long]
+methods:
+  - name: allowRequest
+    params: []
+    returns: boolean
+  - name: recordFailure
+    params: []
+    returns: void
+  - name: recordSuccess
+    params: []
+    returns: void
+  - name: getState
+    params: []
+    returns: String
+cases:
+  - name: opens-after-threshold
+    constructorArgs: [2, 1000000]
+    ops:
+      - [getState]
+      - [recordFailure]
+      - [getState]
+      - [allowRequest]
+      - [recordFailure]
+      - [allowRequest]
+      - [getState]
+    expected: [CLOSED, null, CLOSED, true, null, false, OPEN]

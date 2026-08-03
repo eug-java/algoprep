@@ -27,6 +27,12 @@ class CourseControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.patternCount").value(greaterThanOrEqualTo(28)))
                 .andExpect(jsonPath("$.problemCount").value(greaterThanOrEqualTo(100)))
+                .andExpect(jsonPath("$.easyCount").value(greaterThanOrEqualTo(1)))
+                .andExpect(jsonPath("$.mediumCount").value(greaterThanOrEqualTo(1)))
+                .andExpect(jsonPath("$.hardCount").value(greaterThanOrEqualTo(1)))
+                .andExpect(jsonPath("$.patterns[0].easyCount").value(greaterThanOrEqualTo(0)))
+                .andExpect(jsonPath("$.patterns[0].mediumCount").value(greaterThanOrEqualTo(0)))
+                .andExpect(jsonPath("$.patterns[0].hardCount").value(greaterThanOrEqualTo(0)))
                 .andExpect(jsonPath("$.weeks", hasSize(0)))
                 .andExpect(jsonPath("$.language").value("en"));
     }

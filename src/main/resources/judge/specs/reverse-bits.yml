@@ -1,0 +1,10 @@
+className: Solution
+method: reverseBits
+params: [int]
+returns: int
+referenceClass: com.algoprep.patterns.bitwise.ReverseBits
+referenceMethod: reverseBits
+referenceStatic: true
+cases:
+  - name: case1
+    args: [43261596]

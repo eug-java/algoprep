@@ -1,0 +1,12 @@
+className: Solution
+method: findContentChildren
+params: ["int[]", "int[]"]
+returns: int
+referenceClass: com.algoprep.patterns.greedy.AssignCookies
+referenceMethod: findContentChildren
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[1, 2, 3], [1, 1]]
+  - name: case2
+    args: [[1, 2], [1, 2, 3]]

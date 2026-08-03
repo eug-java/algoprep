@@ -1,0 +1,12 @@
+className: Solution
+method: search
+params: ["int[]", int]
+returns: boolean
+referenceClass: com.algoprep.patterns.binarysearch.SearchRotatedDuplicates
+referenceMethod: search
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[2, 5, 6, 0, 0, 1, 2], 0]
+  - name: case2
+    args: [[1, 0, 1, 1, 1], 3]

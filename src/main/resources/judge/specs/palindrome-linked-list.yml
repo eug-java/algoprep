@@ -1,0 +1,14 @@
+className: Solution
+method: isPalindrome
+params: [ListNode]
+returns: boolean
+helpers: [ListNode]
+cases:
+  - name: palindrome
+    args: [[1, 2, 2, 1]]
+    expected: true
+...
+  - name: not
+    args: [[1, 2]]
+    expected: false
+...

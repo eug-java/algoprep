@@ -1,0 +1,14 @@
+className: Solution
+method: isAlienSorted
+params: ["String[]", String]
+returns: boolean
+referenceClass: com.algoprep.patterns.topo.VerifyAlienDictionary
+referenceMethod: isAlienSorted
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[hello, leetcode], hlabcdefgijkmnopqrstuvwxyz]
+  - name: case2
+    args: [[word, world, row], worldabcefghijkmnpqstuvxyz]
+  - name: case3
+    args: [[apple, app], abcdefghijklmnopqrstuvwxyz]

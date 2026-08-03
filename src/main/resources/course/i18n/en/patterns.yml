@@ -1,0 +1,2356 @@
+patterns:
+  TWO_POINTERS:
+    title: Two Pointers
+    subtitle: Move two indices toward a goal on sorted arrays, strings, or linked lists
+    intuition: 'When a brute-force solution compares every pair with nested loops, ask whether sorting
+      the input first would let two indices - one starting from each end, or both moving forward at different
+      speeds - replace the inner loop entirely. Two pointers exploit monotonic structure: as one side
+      of a sorted range grows, the other can only shrink or stay put, so each pointer sweeps the array
+      once for a combined O(n) pass instead of O(n^2).'
+    recognition: The input is sorted or can be sorted cheaply, you need pairs or triplets that hit a target,
+      you must reverse or partition data in place, or you compare characters from both ends of a string.
+    walkthrough: Start by asking whether the array is sorted; if not, decide whether sorting is legal
+      given the constraints, since sorting costs O(n log n) but often unlocks O(n) afterward. Place one
+      pointer at the front and one at the back for target-sum problems, or keep both moving forward at
+      different speeds for in-place compaction. On each step, compare the values at the two pointers against
+      your goal, then move only the pointer that can improve the comparison - this invariant guarantees
+      no valid answer is skipped. Narrate the invariant to your interviewer before coding, implement a
+      clear termination condition such as left crossing right, then trace a small example by hand, including
+      duplicates and edge cases like an empty or single-element array.
+    telltaleSigns:
+    - Sorted input, or sorting first is allowed and cheap enough
+    - Looking for a pair, triplet, or quadruplet that meets a sum or comparison target
+    - Need to reverse, partition, or de-duplicate an array in place with O(1) extra space
+    - Two positions moving toward each other, or a slow/fast pair moving the same direction
+    - Problem explicitly says "in-place" and forbids extra arrays
+    templateSteps:
+    - Sort the input first if order isn't already guaranteed and sorting won't break the problem
+    - Place pointers at the two ends (opposite direction) or both at the start (same direction)
+    - Compare the pointer values against the target/invariant and move the pointer that helps
+    - Skip duplicate values at each pointer to avoid duplicate results when uniqueness is required
+    - Stop when the pointers cross or the window becomes invalid
+    commonMistakes:
+    - Forgetting to skip duplicate values, producing duplicate pairs/triplets in the answer
+    - Moving both pointers every step instead of only the one that can fix the comparison
+    - Sorting the array when the problem requires preserving original indices or order
+    - Off-by-one errors in the crossing condition (left <= right vs left < right)
+    whenNotToUse:
+    - Input is unsorted and cannot be sorted because original indices/order must be preserved (use a hash
+      map instead)
+    - The relationship between elements isn't monotonic, so moving a pointer doesn't reliably narrow the
+      search space
+    problems:
+      pair-with-target-sum:
+        title: Pair with Target Sum
+        summary: Find the indices of two numbers in a sorted array that add up to a target value.
+        whenToUse: Sorted array plus pair-sum question is the textbook signal for opposite-direction two
+          pointers.
+        hints:
+        - Start left at index 0 and right at index n-1.
+        - If the sum is too small move left forward; if too large move right backward.
+      remove-duplicates:
+        title: Remove Duplicates from Sorted Array
+        summary: Compact a sorted array in-place so each element appears once, returning the new length.
+        whenToUse: In-place compaction with a slow write pointer and a fast scan pointer over sorted data.
+        hints:
+        - Keep a write index that only advances when a new unique value is found.
+        - The fast pointer scans every element; the slow pointer marks the next free slot.
+      triplet-sum-zero:
+        title: Triplet Sum to Zero
+        summary: Find all unique triplets in an array that sum to zero.
+        whenToUse: Sort, fix one index as an anchor, then run two pointers over the remaining range for
+          its complement pair.
+        hints:
+        - Sort first so two pointers and duplicate-skipping both become possible.
+        - After fixing nums[i], search for a pair summing to -nums[i] in the rest of the array.
+        - Skip over repeated values for i, left, and right to avoid duplicate triplets.
+      container-with-most-water:
+        title: Container With Most Water
+        summary: Find two lines that form a container with the max water area.
+        whenToUse: Heights on a line; opposite pointers maximize min(h)*width.
+        hints:
+        - Start at both ends
+        - Move the shorter side inward
+      dutch-national-flag:
+        title: Dutch National Flag / Sort Colors
+        summary: Sort an array of 0/1/2 in-place with one pass.
+        whenToUse: Three-way partition with low/mid/high pointers.
+        hints:
+        - Maintain [0..low) as 0s and (high..n] as 2s
+        - Swap mid with low/high based on value
+      quadruple-sum:
+        title: Quadruple Sum to Target
+        summary: Find all unique quadruplets that sum to target.
+        whenToUse: Sort + fix two indices + two pointers for the pair.
+        hints:
+        - Sort first and skip duplicates at every level
+        - Inner pair uses classic two pointers
+  FAST_SLOW_POINTERS:
+    title: Fast & Slow Pointers
+    subtitle: Detect cycles and find midpoints by moving two pointers at different speeds
+    intuition: 'Picture two runners on a track: a fast runner covering two steps for every one step of
+      the slow runner. If the track loops back on itself, the fast runner eventually laps the slow one
+      and they meet - proving a cycle exists without ever counting the track''s length. The same speed
+      trick locates the midpoint of a linked list, because when the fast pointer reaches the end, the
+      slow pointer is standing exactly halfway.'
+    recognition: The problem involves a linked list, or a sequence defined by repeatedly applying a function
+      (like summing squared digits), where you must detect a cycle, find a midpoint, or determine whether
+      a value eventually repeats without knowing the total length up front.
+    walkthrough: Initialize both slow and fast pointers at the head (or starting value), then advance
+      slow by one step and fast by two steps on every iteration. If fast ever reaches null without meeting
+      slow, there is no cycle, so return immediately. If slow and fast meet, a cycle is confirmed - for
+      the 'find the entry point' follow-up, reset one pointer to the head and advance both one step at
+      a time until they meet again, which lands exactly at the cycle's start due to Floyd's algorithm
+      distance math. For midpoint-style problems, simply stop when fast reaches the end; slow is then
+      at the middle, which you can verify against a couple of hand-traced examples.
+    telltaleSigns:
+    - Cycle detection in a linked list or functional graph
+    - Need the middle node without a separate length-counting pass
+    - A sequence from repeatedly applying a function (e.g., Happy Number) that may loop forever
+    - Checking whether a linked list is a palindrome by reversing its second half
+    - Interviewer forbids O(n) extra space for a linked-list problem
+    templateSteps:
+    - Initialize slow = head and fast = head
+    - Loop while fast and fast.next are non-null
+    - Advance slow by one node and fast by two nodes each iteration
+    - On meeting, reason about what it proves (cycle exists / midpoint found)
+    - For cycle start, reset one pointer to head and advance both by one until they meet
+    commonMistakes:
+    - Forgetting to null-check fast.next before dereferencing it, causing an NPE
+    - Confusing which pointer ends up at the middle for even- vs odd-length lists
+    - Not resetting a pointer to head when the entry point (not just existence) is required
+    - Applying fast/slow to a problem that really needs random access (an array fits better)
+    whenNotToUse:
+    - You need indexed/random access to elements, not just sequential traversal
+    - The structure has no notion of a 'next' step or speed difference for two pointers to diverge on
+    problems:
+      linked-list-cycle:
+        title: Linked List Cycle
+        summary: Detect whether a linked list contains a cycle.
+        whenToUse: Floyd's cycle detection gives O(1) space where a hash set would cost O(n).
+        hints:
+        - If fast ever meets slow, a cycle exists.
+        - If fast reaches null, the list is acyclic.
+      middle-of-linked-list:
+        title: Middle of the Linked List
+        summary: Return the middle node (the second middle for even length).
+        whenToUse: Fast reaches the end exactly when slow is at the middle - no length count needed.
+        hints:
+        - Advance fast by two and slow by one in the same loop.
+        - When fast is null or fast.next is null, slow is the answer.
+      happy-number:
+        title: Happy Number
+        summary: Determine if repeatedly summing squared digits eventually reaches 1.
+        whenToUse: The digit-square transform forms a functional graph; a cycle that isn't 1 means unhappy.
+        hints:
+        - Treat 'next value' as one step of a linked structure.
+        - Run fast/slow on that implicit sequence to detect a non-1 cycle.
+      cycle-start:
+        title: Start of Linked List Cycle
+        summary: Return the node where the cycle begins, or null.
+        whenToUse: Floyd meet + reset one pointer to head.
+        hints:
+        - After meeting, move one pointer to head
+        - Advance both one step until they meet again
+      palindrome-linked-list:
+        title: Palindrome Linked List
+        summary: Check if a linked list reads the same forward and backward.
+        whenToUse: Find middle, reverse second half, compare.
+        hints:
+        - Fast/slow to middle
+        - Reverse second half then compare
+      circular-array-loop:
+        title: Circular Array Loop
+        summary: Detect a cycle in a circular jump array of length > 1 in one direction.
+        whenToUse: Treat indices as a functional graph; fast/slow per start.
+        hints:
+        - Reject opposite-direction jumps
+        - Mark visited indices to avoid rework
+  SLIDING_WINDOW:
+    title: Sliding Window
+    subtitle: Maintain a contiguous window that grows and shrinks to satisfy a constraint
+    intuition: Whenever a problem asks about a contiguous subarray or substring, a brute-force approach
+      recomputes the same overlapping range from scratch for every start index. A sliding window keeps
+      a running window state - a sum, character counts, a distinct-element count - and updates it incrementally
+      as the window's right edge expands and its left edge contracts, turning an O(n^2) or worse scan
+      into a single O(n) pass.
+    recognition: Look for phrasing like longest/shortest/maximum/minimum contiguous subarray or substring,
+      "at most K distinct characters", anagram or permutation existence inside a larger string, or a fixed
+      window size K.
+    walkthrough: Identify what state the window must track - a running sum, a frequency map, or a distinct
+      count - and what condition makes the window valid or invalid. Expand the window by moving the right
+      pointer forward one step at a time, updating the state as each new element enters. Whenever the
+      window becomes invalid (or, for a fixed size, once it reaches size K), shrink from the left, removing
+      elements from the state until the window is valid again, then record the best answer so far. Repeat
+      until the right pointer has swept the entire input, and be explicit with your interviewer about
+      why each element enters and leaves the state exactly once, which is what gives the O(n) bound.
+    telltaleSigns:
+    - Contiguous subarray or substring (never re-orders elements)
+    - Longest / shortest / count-of-windows language
+    - A constraint on sum, distinct character count, or a frequency map ("at most K distinct")
+    - A fixed window size K stated explicitly in the problem
+    - Anagram or permutation detection inside a longer string
+    templateSteps:
+    - Pick the window state to track (sum, frequency map, distinct count) and the validity condition
+    - Expand the window by moving the right edge forward and updating state
+    - While the window is invalid (or exceeds a fixed size), shrink from the left and update state
+    - Update the best answer once the window is valid
+    - Continue until the right edge has covered the whole input
+    commonMistakes:
+    - Using the wrong shrink condition, causing missed valid windows
+    - Recomputing the frequency map from scratch instead of updating counts incrementally
+    - Off-by-one errors when computing window length (right - left + 1)
+    - Forgetting to update the best answer inside the shrink loop, not just after it
+    whenNotToUse:
+    - The subsequence does not need to be contiguous (usually a DP or two-pointer-on-sorted-data problem)
+    - The window's validity cannot be checked or updated in O(1) time as elements enter and leave
+    problems:
+      max-sum-subarray-k:
+        title: Maximum Sum Subarray of Size K
+        summary: Find the maximum sum of any contiguous subarray of a fixed size K.
+        whenToUse: 'Fixed window size K: add the entering element on the right, remove the leaving one
+          on the left.'
+        hints:
+        - Compute the first window's sum directly, then slide by one.
+        - Each slide only needs one addition and one subtraction, not a full re-sum.
+      longest-substring-k-distinct:
+        title: Longest Substring with K Distinct Characters
+        summary: Find the length of the longest substring containing at most K distinct characters.
+        whenToUse: Variable-size window plus a frequency map of distinct keys, shrinking whenever distinct
+          count exceeds K.
+        hints:
+        - Grow the window and add each new character to a frequency map.
+        - While the map has more than K keys, shrink from the left and decrement/remove counts.
+      find-all-anagrams:
+        title: Find All Anagrams in a String
+        summary: Return the start indices of all of p's anagrams found within s.
+        whenToUse: Fixed window equal to p's length, comparing running character counts against p's counts.
+        hints:
+        - Build a target frequency map for p once, up front.
+        - Slide a window of len(p) over s, comparing counts; matching counts means an anagram starts there.
+      longest-no-repeat:
+        title: Longest Substring Without Repeating Characters
+        summary: Longest substring with all unique characters.
+        whenToUse: Variable window + last-seen index map.
+        hints:
+        - Shrink left when a duplicate enters
+        - Track best window length
+      min-window-substring:
+        title: Minimum Window Substring
+        summary: Smallest substring of s covering all characters of t.
+        whenToUse: Shrinkable window with need/have counts.
+        hints:
+        - Expand until valid, then shrink greedily
+        - Track how many required chars are satisfied
+  INTERVALS:
+    title: Intervals
+    subtitle: Sort by start time and sweep once to merge, insert, or reason about ranges
+    intuition: Interval problems become tractable the moment you sort by start time, because overlap can
+      then only happen between an interval and the ones immediately before or after it in sorted order.
+      Once sorted, a single left-to-right sweep with one running 'current interval' is enough to merge,
+      count conflicts, or find gaps, since you never need to look backward more than one step.
+    recognition: Input given as a list of [start, end] pairs, and the question involves merging, inserting,
+      detecting conflicts or overlaps, counting meeting rooms, or finding free time across several interval
+      lists.
+    walkthrough: 'Sort all intervals by start time first - this single step is what makes the rest of
+      the algorithm linear. Keep a ''current'' interval initialized to the first one, then walk through
+      the rest: if the next interval''s start is less than or equal to current''s end, they overlap, so
+      merge by extending current''s end to the max of both ends. If it doesn''t overlap, push current
+      to the result and make the next interval the new current. For variants like insert-interval or employee-free-time,
+      adapt the same sweep: track intervals strictly before the new one, merge all overlapping ones, then
+      append everything strictly after. Always double check whether the problem uses inclusive or exclusive
+      boundaries, since that changes the overlap comparison operator.'
+    telltaleSigns:
+    - Input as a list of [start, end] pairs
+    - Overlap, merge, conflict, or 'free time' language
+    - Meeting rooms / scheduling style problems
+    - Need to insert one new interval into an already sorted, non-overlapping list
+    templateSteps:
+    - Sort intervals by start time (and by end time for tie-breaking if needed)
+    - Track a 'current' open interval, initialized from the first interval
+    - Merge into current when the next interval's start <= current's end
+    - Emit the current interval and start a new one when no overlap is found
+    - Handle insert / free-time variants as before / overlapping / after phases
+    commonMistakes:
+    - Forgetting to sort first, or sorting by end time when start time is required
+    - Using < instead of <= (or vice versa) at the overlap boundary, mishandling touching intervals
+    - Not merging the end as max(current.end, next.end) - just overwriting it
+    - Forgetting to flush the last 'current' interval after the loop ends
+    whenNotToUse:
+    - The intervals are already guaranteed disjoint and no merge/overlap logic is needed
+    - You need repeated point-in-time queries across many intervals (a segment tree or sorted map fits
+      better)
+    problems:
+      merge-intervals:
+        title: Merge Intervals
+        summary: Merge all overlapping intervals into a minimal set of non-overlapping ranges.
+        whenToUse: Classic sort-by-start plus a single linear merge sweep.
+        hints:
+        - Sort by start time before anything else.
+        - Compare each interval's start against the last merged interval's end.
+      insert-interval:
+        title: Insert Interval
+        summary: Insert a new interval into a sorted, non-overlapping list and merge where needed.
+        whenToUse: 'Three phases: copy intervals strictly before, merge all overlapping ones, copy the
+          rest.'
+        hints:
+        - No sorting needed - the input list is already sorted.
+        - Keep expanding the new interval's bounds while it overlaps the current one.
+      conflicting-appointments:
+        title: Conflicting Appointments
+        summary: Check whether any two appointments in a list overlap.
+        whenToUse: Sort then check each adjacent pair for overlap (the Meeting Rooms I question).
+        hints:
+        - After sorting by start, only adjacent pairs can possibly overlap.
+        - An overlap exists as soon as one appointment's start is before the previous one's end.
+      interval-intersection:
+        title: Interval List Intersections
+        summary: Return intersections of two sorted interval lists.
+        whenToUse: Two-pointer sweep over sorted intervals.
+        hints:
+        - Intersection start is max of starts
+        - Advance the list that ends first
+      minimum-meeting-rooms:
+        title: Minimum Meeting Rooms
+        summary: Find the minimum number of meeting rooms required.
+        whenToUse: Sort starts/ends or use a min-heap of end times.
+        hints:
+        - Sort by start
+        - Heap of ongoing meeting end times
+  IN_PLACE_LINKED_LIST:
+    title: In-place Linked List Manipulation
+    subtitle: Reverse, reorder, and transform lists with O(1) extra space
+    intuition: 'Reversing or reordering a linked list without extra space is really careful pointer bookkeeping:
+      before you overwrite a node''s next pointer, save where it used to point, or you lose the rest of
+      the list forever. Holding three references - previous, current, and next - at every step lets you
+      rewire links one at a time while keeping the whole list connected.'
+    recognition: The problem asks to reverse an entire list, reverse a sublist between two positions,
+      reverse in groups of k, or reorder/rearrange nodes, all under an O(1) extra space constraint.
+    walkthrough: 'Set up three pointers: prev (initially null), curr (initially head), and a temporary
+      next used to remember curr.next before overwriting it. On each iteration, save next = curr.next,
+      rewire curr.next = prev, then advance prev = curr and curr = next. For sublist or k-group variants,
+      first walk to the boundary node just before the segment you need to reverse, run the same three-pointer
+      reversal only within that segment, then reconnect the segment''s new head and tail to the surrounding
+      list - the node originally at the segment''s start becomes the tail and must point to whatever followed
+      the segment. Draw the list on paper with 4-5 nodes before coding, since almost every bug here is
+      a reconnection mistake at the segment boundary, not the core reversal loop.'
+    telltaleSigns:
+    - Reverse an entire linked list, a sublist, or groups of k nodes
+    - Reorder or interleave nodes (e.g., first half / second half zipper)
+    - Explicit O(1) extra space requirement on a linked list
+    - Combined with fast/slow pointers to find a midpoint before reversing
+    templateSteps:
+    - Track prev, curr, and a temporary next reference
+    - Save next = curr.next before mutating anything
+    - Rewire curr.next = prev, then advance prev and curr
+    - For sub-ranges, locate boundary nodes first and reconnect head/tail after reversing
+    - Use a dummy-head node when the list's actual head might change
+    commonMistakes:
+    - Losing the rest of the list by rewiring curr.next before saving the original next
+    - Forgetting a dummy head node, causing special-casing bugs when the head itself moves
+    - Not reconnecting the reversed segment's tail to the node that follows it
+    - Miscounting k or the sublist boundaries by one position
+    whenNotToUse:
+    - Random access or frequent lookups by value are needed (an array or hash map fits better)
+    - The list can be rebuilt with O(n) extra space with no space constraint from the interviewer, where
+      recursion may be clearer
+    problems:
+      reverse-linked-list:
+        title: Reverse Linked List
+        summary: Reverse a singly linked list iteratively and return the new head.
+        whenToUse: The foundational three-pointer reversal template for every variant in this pattern.
+        hints:
+        - Save curr.next before overwriting it.
+        - The last non-null curr becomes the new head once the loop ends.
+      reverse-sublist:
+        title: Reverse Sub List
+        summary: Reverse the nodes from position left to right (1-indexed) in a linked list.
+        whenToUse: Walk to the node just before 'left', reverse the segment, then reconnect both boundaries.
+        hints:
+        - Use a dummy head so left=1 doesn't need special-casing.
+        - The original 'left' node becomes the tail of the reversed segment - reconnect it to what follows
+          'right'.
+      reverse-every-k:
+        title: Reverse Every K-Element Sublist
+        summary: Reverse the nodes of a linked list in groups of k; any leftover group stays as-is.
+        whenToUse: Count k nodes ahead to confirm a full group exists, reverse it, then chain groups together.
+        hints:
+        - Before reversing a group, check that k nodes actually remain.
+        - Connect the previous group's tail to the current group's new head after each reversal.
+      rotate-list:
+        title: Rotate List
+        summary: Rotate the list to the right by k places.
+        whenToUse: Find length, connect cycle, break at new head.
+        hints:
+        - k %= n
+        - New tail is at n - k - 1 from head after cycle
+      reorder-list:
+        title: Reorder List
+        summary: Reorder L0→Ln→L1→Ln-1→… in-place.
+        whenToUse: Middle + reverse second half + merge.
+        hints:
+        - Find mid with fast/slow
+        - Reverse second half then weave
+  TWO_HEAPS:
+    title: Two Heaps
+    subtitle: Balance a max-heap and a min-heap for medians and greedy scheduling
+    intuition: 'Anything that asks for a running median, or for balancing ''low'' and ''high'' halves
+      of a data stream, becomes simple once you keep two heaps: a max-heap for the smaller half and a
+      min-heap for the larger half. Keeping the two heaps within one element of each other in size means
+      the median is always available at one or both heap tops in O(1).'
+    recognition: Find the median of a number stream arriving one at a time, sliding window median, or
+      scheduling/greedy problems where you must repeatedly pick the best of a 'ready' set gated by what
+      has become available (e.g., maximize capital).
+    walkthrough: 'Maintain a max-heap holding the smaller half of numbers seen so far and a min-heap holding
+      the larger half. When a new number arrives, decide which heap it belongs to by comparing it to the
+      max-heap''s top, insert it there, then rebalance: if one heap has more than one extra element compared
+      to the other, pop its top and push it to the other heap. The median is then either the top of the
+      larger heap (odd total count) or the average of both tops (even count). For sliding window median,
+      additionally track which elements need lazy deletion as the window moves; for ''maximize capital''
+      style problems, use one heap to track what''s currently affordable and another to always pick the
+      most profitable affordable option.'
+    telltaleSigns:
+    - Need a running / streaming median as elements arrive one at a time
+    - Splitting numbers into two ordered halves (smaller half vs larger half)
+    - Sliding window median
+    - Scheduling needing "best currently available option" (max heap) gated by "what has become available"
+      (min heap)
+    templateSteps:
+    - Maintain a max-heap for the lower half and a min-heap for the upper half
+    - Insert each new element into the correct heap based on comparison with the max-heap's top
+    - Rebalance so heap sizes differ by at most one element
+    - Read the median from the top(s) of the heaps in O(1)
+    - For scheduling variants, use one heap to gate availability and one heap to pick the best option
+    commonMistakes:
+    - Letting the two heaps drift more than one element apart in size
+    - Comparing the new element to the wrong heap's top when deciding where to insert
+    - Forgetting Java's PriorityQueue is a min-heap by default and needs a custom comparator for max-heap
+      behavior
+    - Not handling lazy deletion correctly in the sliding-window median variant, leaving stale elements
+      in a heap
+    whenNotToUse:
+    - You need the full sorted order, not just the median or top elements (a TreeMap fits better)
+    - Data doesn't need incremental updates - a one-time sort is simpler than maintaining two heaps
+    problems:
+      find-median-stream:
+        title: Find the Median of a Number Stream
+        summary: Support inserting numbers one at a time and returning the running median.
+        whenToUse: 'The textbook two-heaps problem: balance a max-heap and min-heap as numbers arrive.'
+        hints:
+        - Insert into the max-heap first, then move its top to the min-heap to keep order.
+        - Rebalance sizes after every insert so they differ by at most one.
+      maximize-capital:
+        title: Maximize Capital
+        summary: Pick at most k projects to maximize final capital (the IPO problem).
+        whenToUse: A min-heap by required capital to find affordable projects, paired with a max-heap
+          by profit to pick the best one.
+        hints:
+        - Push all projects affordable with current capital into a max-heap by profit.
+        - Always take the top of the profit max-heap, then unlock newly affordable projects.
+      sliding-window-median:
+        title: Sliding Window Median
+        summary: Medians of every contiguous window of size k.
+        whenToUse: Two heaps plus delayed lazy deletion.
+        hints:
+        - Balance max/min heaps for the window
+        - Lazy-delete outgoing elements
+      next-interval:
+        title: Next Interval
+        summary: For each interval, find the next interval with start >= end, else -1.
+        whenToUse: Max-heap on start / end to match greedily.
+        hints:
+        - Heap intervals by start descending
+        - Match against ends descending
+      static-median:
+        title: Median of an Unsorted Array
+        summary: Find the median of an unsorted array using two heaps.
+        whenToUse: Same two-heap balance idea as the stream median, but for a fixed array.
+        hints:
+        - Push into max/min heaps and rebalance
+        - Median is top or average of tops
+  K_WAY_MERGE:
+    title: K-way Merge
+    subtitle: Merge multiple sorted inputs using a min-heap of current candidates
+    intuition: 'Merging k already-sorted lists generalizes the two-list merge from merge sort: instead
+      of comparing two heads, keep the current head of every list in a min-heap and always pop the globally
+      smallest one. Because the heap only ever holds k elements at a time, this turns an O(n*k) naive
+      merge into O(n log k).'
+    recognition: Multiple sorted arrays or linked lists need to be combined into one sorted output, or
+      you need the k-th smallest/largest element across several sorted sources, or the smallest range
+      covering at least one element from each list.
+    walkthrough: Push the first element of each of the k sorted lists into a min-heap, tagging each heap
+      entry with which list (and index/node) it came from so you can find its successor. Repeatedly pop
+      the smallest element, append it to your result, and if the list it came from has a next element,
+      push that successor into the heap. Continue until the heap is empty, which guarantees the output
+      is fully sorted because you only ever emit the globally smallest available candidate. For 'kth smallest
+      in sorted matrix' or 'smallest range' variants, treat each row (or list) as one of the k sorted
+      sources and adapt the stopping condition - for smallest range, track the current max across all
+      heap entries and shrink the range every time you pop and refill.
+    telltaleSigns:
+    - Multiple sorted arrays, lists, or matrix rows need to be combined
+    - Need the k-th smallest/largest element across several sorted sources
+    - Smallest range covering at least one element from each of k sorted lists
+    - Explicit mention of merging linked lists or sorted streams
+    templateSteps:
+    - Push the first element of each of the k sources into a min-heap with source metadata
+    - Pop the minimum, append it to the result or advance a counter
+    - Push the popped element's successor from its source list, if one exists
+    - Repeat until the heap empties or the target k-th element is reached
+    - Adapt the stopping/tracking condition for range or matrix variants
+    commonMistakes:
+    - Forgetting to store which source (list/row/index) a heap entry came from, losing the ability to
+      find its successor
+    - Pushing an entire list into the heap upfront instead of one element at a time (blows up space to
+      O(n))
+    - Using the wrong comparator so the heap does not actually pop the global minimum
+    - Off-by-one when converting between a 1-indexed 'k-th smallest' and a zero-indexed pop count
+    whenNotToUse:
+    - Only two lists need merging (a simple two-pointer merge avoids heap overhead)
+    - The sources are not sorted and cannot be cheaply sorted first (heap merge relies on local order)
+    problems:
+      merge-k-sorted-lists:
+        title: Merge K Sorted Lists
+        summary: Merge k sorted linked lists into a single sorted linked list.
+        whenToUse: Min-heap of the k current list heads, always popping the smallest.
+        hints:
+        - Push each list's head node (not just its value) so you can advance it later.
+        - After popping a node, push its .next into the heap if it exists.
+      kth-smallest-sorted-matrix:
+        title: Kth Smallest in Sorted Matrix
+        summary: Find the k-th smallest element in a matrix sorted by row and column.
+        whenToUse: Treat rows as sorted lists and heap-merge them, or binary search directly on the value
+          range.
+        hints:
+        - Seed the heap with the first element of each row (up to k rows).
+        - Pop k times; the k-th pop is the answer.
+      k-smallest-pairs:
+        title: K Smallest Pairs
+        summary: K pairs (u,v) with smallest sums from two sorted arrays.
+        whenToUse: Min-heap of candidate pairs expanding indices.
+        hints:
+        - Seed heap with (i,0) for first k of nums1
+        - Push (i,j+1) when popping
+      smallest-range:
+        title: Smallest Range Covering Elements from K Lists
+        summary: Smallest range that includes at least one number from each list.
+        whenToUse: Min-heap across list heads tracking current max.
+        hints:
+        - Track global max among heap tops
+        - Advance the list of the min
+      merge-two-sorted-lists:
+        title: Merge Two Sorted Lists
+        summary: Merge two sorted linked lists into one sorted list.
+        whenToUse: K-way merge with k=2 — compare heads and advance.
+        hints:
+        - Use a dummy head
+        - Always attach the smaller current node
+  TOP_K_ELEMENTS:
+    title: Top K Elements
+    subtitle: Keep only K candidates alive using a heap of size K
+    intuition: When you only need the K largest, smallest, or most frequent elements out of N, sorting
+      all N does unnecessary work - a heap of size K is enough, because you only ever need to compare
+      new candidates against the current worst element that survived so far. This brings the cost down
+      from O(n log n) to O(n log k), which matters when K is small relative to N.
+    recognition: The problem explicitly asks for the top/largest/smallest/most-frequent K elements, K
+      closest points, or otherwise wants a bounded subset rather than a full ordering of everything.
+    walkthrough: 'Decide the heap orientation based on what you''re keeping: to find the K largest elements,
+      use a min-heap of size K, since the smallest element in that heap is your current ''worst kept''
+      candidate and the one to evict. Push each new element, and once the heap exceeds size K, pop the
+      top (the current minimum) to discard it. By the end, the heap holds exactly the K largest elements
+      seen, though not necessarily in sorted order - sort the final heap contents only if the problem
+      asks for an ordered result. For ''K most frequent'', first build a frequency map in one pass, then
+      run the same size-K heap logic over the map''s entries using frequency as the comparison key (or
+      use bucket sort by frequency for an O(n) alternative).'
+    telltaleSigns:
+    - '"Top K", "K largest/smallest/frequent", or "K closest" wording'
+    - A full sort would work but is more expensive than necessary
+    - Need a bounded-size result set out of a much larger input
+    - Frequency counting combined with a size limit (top K frequent)
+    templateSteps:
+    - Choose a min-heap for "K largest" or a max-heap for "K smallest" (invert the usual heap)
+    - Push elements one at a time, keeping the heap size capped at K
+    - Pop the heap's top whenever size exceeds K, discarding the current worst candidate
+    - Read off the final K elements (sort them only if order is required)
+    - For frequency variants, build counts first, then apply the same size-K heap over count values
+    commonMistakes:
+    - Using a max-heap of all N elements instead of a min-heap of size K, losing the efficiency gain
+    - Forgetting to cap the heap size, letting it grow past K
+    - Comparing by the wrong key (e.g., value instead of frequency, or distance instead of coordinate)
+    - Assuming heap order equals sorted order without an explicit final sort when required
+    whenNotToUse:
+    - K is close to N, so a full sort is simpler and not meaningfully slower
+    - You need the exact sorted order of every element, not just the top K
+    problems:
+      top-k-numbers:
+        title: Top K Numbers
+        summary: Return the K largest numbers from an unsorted array.
+        whenToUse: A min-heap of size K is the direct application of the pattern.
+        hints:
+        - Push the first K numbers, then compare every later number to the heap's top.
+        - Replace the top only if the new number is larger.
+      k-closest-points:
+        title: K Closest Points to Origin
+        summary: Return the K points with the smallest Euclidean distance to the origin.
+        whenToUse: A max-heap of size K by distance keeps the farthest of the kept points ready to evict.
+        hints:
+        - Compare squared distances to avoid unnecessary sqrt calls.
+        - Evict the max-heap's top whenever the heap grows past K.
+      top-k-frequent:
+        title: Top K Frequent Numbers
+        summary: Return the K most frequent elements in an array.
+        whenToUse: Build a frequency map first, then run a size-K heap keyed by frequency.
+        hints:
+        - Count frequencies with a hash map in one pass.
+        - Push (value, frequency) pairs into a min-heap ordered by frequency, capped at size K.
+      kth-largest:
+        title: Kth Largest Element
+        summary: Return the k-th largest element in an unsorted array.
+        whenToUse: Min-heap of size k (or quickselect).
+        hints:
+        - Keep a min-heap of size k
+        - Heap top is the answer
+      reorganize-string:
+        title: Reorganize String
+        summary: Rearrange so no two adjacent chars are equal; empty if impossible.
+        whenToUse: Max-heap by frequency; greedily place next.
+        hints:
+        - If max freq > (n+1)/2 impossible
+        - Always take the current most frequent available
+  MODIFIED_BINARY_SEARCH:
+    title: Modified Binary Search
+    subtitle: 'Binary search beyond simple target lookup: rotated arrays, boundaries, and answer spaces'
+    intuition: 'Standard binary search finds one target in a fully sorted array, but many interview problems
+      bend that idea: the array is rotated, you need the first or last position of a value, or you''re
+      searching an answer space rather than an array at all. The unifying trick is to keep an invariant
+      about which half of the current range is ''sorted'' or ''still could contain the answer'', and always
+      discard the half that provably cannot.'
+    recognition: The array is sorted or rotated-sorted with a known pivot, you need the first/last occurrence
+      of a value, you're searching a bitonic array, or the problem says 'find the minimum x such that
+      condition(x) holds' over a monotonic predicate.
+    walkthrough: 'Start with low and high pointers spanning the search range and compute mid on each iteration.
+      Before deciding to move left or right, figure out extra structure: for a rotated array, check whether
+      the left half or right half is the actually-sorted one by comparing nums[low] to nums[mid]. Then
+      check whether the target could lie within that sorted half''s value range; if so, search there,
+      otherwise search the other half. For ''find first/last occurrence'' problems, don''t stop at the
+      first match - keep searching left (or right) even after finding a match, narrowing high (or low)
+      toward the boundary. For ''search on answer'' problems, replace array comparisons with a boolean
+      predicate function, and binary search over the range of possible answers instead of array indices.'
+    telltaleSigns:
+    - Sorted array that has been rotated at an unknown pivot
+    - Need the first or last occurrence of a value, not just any occurrence
+    - Bitonic array (increases then decreases, or vice versa)
+    - Phrase "minimize/maximize x such that condition(x) is true/false" over a monotonic predicate
+    - Search space is conceptually infinite or unbounded
+    templateSteps:
+    - Set low/high to span the search range (array indices or an answer range)
+    - Compute mid and determine which half retains the useful invariant (sorted / target-range / predicate)
+    - Discard the half that cannot contain the answer
+    - For first/last occurrence, keep narrowing past the first match instead of returning immediately
+    - Repeat until low > high, then use the last valid candidate found
+    commonMistakes:
+    - Assuming the whole array is sorted after rotation instead of checking which half currently is
+    - Returning on the first match found instead of continuing to narrow toward first/last occurrence
+    - Off-by-one errors moving low = mid vs low = mid + 1, causing infinite loops
+    - Using array-index binary search logic directly on an answer-space search without adapting the predicate
+    whenNotToUse:
+    - The data has no monotonic or sorted structure at all to exploit
+    - The array is small enough, or searched so rarely, that a linear scan is simpler and equally fast
+      in practice
+    problems:
+      order-agnostic-binary-search:
+        title: Order-Agnostic Binary Search
+        summary: Search for a target in an array sorted either ascending or descending.
+        whenToUse: Detect the order from the two end elements once, then run standard binary search adapted
+          to that order.
+        hints:
+        - Compare the first and last elements to decide ascending vs descending.
+        - Flip the comparison direction based on which order was detected.
+      search-rotated-array:
+        title: Search in Rotated Sorted Array
+        summary: Find a target's index in a rotated sorted array with unique elements.
+        whenToUse: At mid, one side is always sorted - search there if the target falls in its range,
+          otherwise search the other side.
+        hints:
+        - Compare nums[low] to nums[mid] to find which half is sorted.
+        - Check if target lies within the sorted half's value range before recursing into it.
+      find-range:
+        title: Find First and Last Position
+        summary: Find the first and last index of a target value in a sorted array.
+        whenToUse: 'Run two binary searches: one biased to find the lower bound, one biased to find the
+          upper bound.'
+        hints:
+        - On finding a match while searching for the first position, keep narrowing left instead of stopping.
+        - Do the same but narrow right for the last position search.
+      find-peak-element:
+        title: Find Peak Element
+        summary: Return index of any peak element.
+        whenToUse: Binary search toward the greater neighbor.
+        hints:
+        - If mid < mid+1 go right
+        - Else go left including mid
+      search-rotated-duplicates:
+        title: Search Rotated Array II
+        summary: Search target in rotated sorted array that may contain duplicates.
+        whenToUse: Binary search with duplicate shrinkage at ends.
+        hints:
+        - When nums[lo]==nums[mid]==nums[hi] shrink both ends
+        - Otherwise same rotated half logic
+  SUBSETS:
+    title: Subsets
+    subtitle: Systematically generate all subsets, permutations, and combinations
+    intuition: Generating all subsets, permutations, or combinations is fundamentally about systematically
+      deciding, for each element, whether (and how) it participates in the result. A breadth-first 'take
+      what exists, then append a copy with the new element added' approach builds the full power set level
+      by level, while a depth-first backtracking approach builds one candidate at a time and backtracks
+      when it's complete or invalid.
+    recognition: The problem explicitly asks for all subsets (the power set), all permutations, all combinations,
+      letter-case permutations, or unique versions of these when the input may contain duplicates.
+    walkthrough: For breadth-first subset generation, start with a list containing just the empty subset,
+      then for each input element, iterate over all subsets currently in the list and append a new subset
+      equal to the existing one plus the new element - this doubles the list at each step and naturally
+      produces all 2^n subsets. For permutations, either backtrack by swapping elements into each position
+      and undoing the swap afterward, or build permutations by inserting the next element into every possible
+      position of each existing permutation. When duplicates are present, sort the input first so identical
+      values sit next to each other, then skip generating a subset/permutation from a duplicate value
+      unless it directly follows the previously used occurrence at the same recursion depth - this prevents
+      duplicate results without a post-processing de-duplication step.
+    telltaleSigns:
+    - '"All subsets", "power set", "all permutations", or "all combinations" wording'
+    - Letter-case permutation or similar all-possible-variants generation
+    - Duplicate handling needed to avoid repeated subsets/permutations
+    - No heavy pruning needed - the goal is enumeration, not optimization
+    templateSteps:
+    - Start from the empty subset (BFS) or an empty partial candidate (backtracking DFS)
+    - 'For BFS: for each new element, append it to every subset built so far to double the list'
+    - 'For DFS: choose an element, recurse, then undo the choice (backtrack) before trying the next'
+    - Sort first and skip duplicate siblings at the same recursion depth to avoid duplicate results
+    - Collect a result once a subset/permutation reaches the required size or all elements are placed
+    commonMistakes:
+    - Forgetting to skip duplicate elements at the same depth, producing duplicate subsets/permutations
+    - Not sorting the input first when duplicate-handling logic depends on identical values being adjacent
+    - Mutating a shared list/array without undoing the mutation before backtracking to the next branch
+    - Confusing subset generation (order doesn't matter) with permutation generation (order matters)
+    whenNotToUse:
+    - N is large enough that 2^n or n! enumeration is computationally infeasible and only a count or optimal
+      value is needed
+    - The problem needs one valid answer under constraints rather than every possible arrangement
+    problems:
+      subsets:
+        title: Subsets
+        summary: Return all subsets (the power set) of an array of distinct integers.
+        whenToUse: 'Textbook cascading BFS: double the subset list for every new element.'
+        hints:
+        - Start the result list with just the empty subset.
+        - For each number, append it to a copy of every subset already in the result.
+      subsets-with-duplicates:
+        title: Subsets With Duplicates
+        summary: Return all unique subsets when the input array may contain duplicate values.
+        whenToUse: Sort first, then only extend subsets created in the previous round when handling a
+          repeated value.
+        hints:
+        - Sort the array so duplicate values become adjacent.
+        - When nums[i] equals nums[i-1], only append it to subsets added during the previous number's
+          round.
+      permutations:
+        title: Permutations
+        summary: Return all permutations of an array of distinct numbers.
+        whenToUse: Backtracking swap-and-undo, or BFS by inserting the next number at every position.
+        hints:
+        - Swap the current index with each later index, recurse, then swap back.
+        - 'Base case: when the current index reaches the array''s end, record a full permutation.'
+      generate-parentheses:
+        title: Generate Parentheses
+        summary: All combinations of n pairs of well-formed parentheses.
+        whenToUse: Backtracking / subset-style build with counts.
+        hints:
+        - Add '(' if open < n
+        - Add ')' if close < open
+      unique-permutations:
+        title: Permutations II
+        summary: All unique permutations of an array that may contain duplicates.
+        whenToUse: Backtracking with sorted skip of identical siblings.
+        hints:
+        - Sort first
+        - Skip a duplicate if previous identical not used
+      subsets-size-k:
+        title: Combinations of Size K
+        summary: Return all combinations of k numbers chosen from 1..n.
+        whenToUse: Subset/backtracking generation with a fixed size limit.
+        hints:
+        - Choose or skip each number from start..n
+        - Stop when path size is k
+  GREEDY:
+    title: Greedy Techniques
+    subtitle: Commit to the locally optimal choice that provably preserves a global invariant
+    intuition: A greedy algorithm commits to the choice that looks best right now and never revisits it,
+      which only works when you can argue (or recall from experience) that this local choice never rules
+      out a globally optimal solution. In interviews, greedy problems usually reduce to sorting by the
+      right key and then scanning once while maintaining a small running invariant, such as the farthest
+      index reachable so far.
+    recognition: The problem mentions scheduling, intervals, resource allocation, or reachability, and
+      a locally-obvious choice (earliest deadline, farthest reach, smallest cost) seems 'safe' - often
+      confirmed by trying a small counterexample and failing to break it.
+    walkthrough: First state the greedy rule out loud to your interviewer in one sentence, such as 'always
+      jump to the position that extends my farthest reach the most.' Sanity-check it against a small example,
+      including an adversarial-looking one, to convince both yourself and the interviewer it doesn't miss
+      better options. Sort the input by whatever key the rule depends on (start time, deadline, ratio,
+      etc.) if it isn't already ordered that way. Finally, scan once, updating a small amount of running
+      state (a farthest-reach variable, a count, a running sum) and making the greedy decision at each
+      step without ever looking back - if you find yourself needing to undo a decision, the problem likely
+      isn't greedy and needs DP or backtracking instead.
+    telltaleSigns:
+    - A locally optimal choice seems safe and doesn't appear to block better future options
+    - Sorting by a key (start time, deadline, ratio, end time) then scanning once solves it
+    - Reachability / jump-style problems tracking a 'farthest so far' value
+    - Interval scheduling to maximize count or minimize resources
+    templateSteps:
+    - State the greedy rule explicitly and sanity check it against a tricky example
+    - Sort the input by the key the greedy rule depends on
+    - Scan once left to right, maintaining minimal running state
+    - Apply the greedy decision at each step without revisiting earlier choices
+    - Return the accumulated result (count, farthest reach, total cost) at the end
+    commonMistakes:
+    - Assuming greedy works without testing it against a counterexample first
+    - Sorting by the wrong key (e.g., start time when the rule actually depends on end time)
+    - Needing to 'undo' a greedy choice later - a sign the problem actually needs DP, not greedy
+    - Off-by-one errors in the running invariant (e.g., updating farthest reach before checking reachability)
+    whenNotToUse:
+    - You can't argue the local choice preserves optimality, and a small counterexample breaks it (use
+      DP instead)
+    - The problem requires considering combinations of choices together, not one independent decision
+      at a time
+    problems:
+      jump-game:
+        title: Jump Game
+        summary: Determine whether you can reach the last index given max-jump lengths at each position.
+        whenToUse: Track the farthest reachable index while scanning; if the current index ever exceeds
+          it, you're stuck.
+        hints:
+        - Update farthest = max(farthest, i + nums[i]) at each index.
+        - If i ever exceeds farthest, the last index is unreachable.
+      jump-game-ii:
+        title: Jump Game II
+        summary: Find the minimum number of jumps required to reach the last index.
+        whenToUse: 'BFS-like level expansion: track the current jump''s farthest end and the overall farthest
+          reach.'
+        hints:
+        - When i reaches the current jump's end, increment jumps and set the end to the farthest seen
+          so far.
+        - This greedily expands one 'level' at a time, similar to BFS on an implicit graph.
+      gas-station:
+        title: Gas Station
+        summary: Starting station index to complete the circuit, or -1.
+        whenToUse: Greedy reset of start when tank goes negative.
+        hints:
+        - If total gas < total cost impossible
+        - When tank < 0, start = i+1 and reset tank
+      candy:
+        title: Candy
+        summary: Minimum candies so higher-rated neighbors get more.
+        whenToUse: Two-pass greedy left-to-right and right-to-left.
+        hints:
+        - Ensure rising slopes left→right
+        - Then enforce rising slopes right→left with max
+      assign-cookies:
+        title: Assign Cookies
+        summary: Maximize content children by assigning cookies greedily.
+        whenToUse: Sort both arrays and assign the smallest sufficient cookie.
+        hints:
+        - Sort greed and cookie sizes
+        - 'Two pointers: give cookie only when it fits'
+  BACKTRACKING:
+    title: Backtracking
+    subtitle: Choose, explore, undo - search the decision tree with pruning
+    intuition: Backtracking explores a decision tree of partial solutions, committing to a choice, recursing
+      deeper, and undoing ('unchoosing') that choice the moment it proves invalid or once all its children
+      have been explored. The undo step is what separates backtracking from plain DFS - it lets you reuse
+      the same mutable state across every branch instead of copying it.
+    recognition: The problem is a constraint-satisfaction or combinatorial search task - N-Queens, Sudoku,
+      word search on a grid, combination sum, or palindrome partitioning - and asks for all valid solutions,
+      any one valid solution, or a count of them.
+    walkthrough: 'Design your recursive function to represent one decision point: try a candidate value,
+      mark whatever state needs marking (place a queen, mark a grid cell visited, add a number to the
+      running combination), and recurse into the next decision. If the recursion reaches a complete, valid
+      solution, record it; if it reaches a state that can never become valid, return immediately (this
+      is your pruning). Either way, before trying the next sibling candidate, undo the exact state changes
+      you made so the next branch starts from a clean, correct state. Add pruning as early as possible,
+      checking partial constraints before recursing further rather than only checking full-board or full-combination
+      validity at the leaves, since that''s what keeps runtime from exploding on larger inputs.'
+    telltaleSigns:
+    - Constraint-satisfaction or combinatorial search (N-Queens, Sudoku, word search)
+    - Need all valid solutions, or any one valid arrangement, or a count of solutions
+    - A partial candidate can be checked for validity before it's complete (enabling pruning)
+    - Explicit grid/board/path exploration with a 'visited' or 'used' marker to undo
+    templateSteps:
+    - Choose a candidate value or move for the current decision point
+    - Apply it to the shared state (mark visited, add to path, place a piece)
+    - Recurse into the next decision, or record the solution if complete
+    - Undo the exact change made before trying the next candidate
+    - Prune early by checking partial validity, not just full-solution validity
+    commonMistakes:
+    - Forgetting to undo a state change, corrupting subsequent branches of the search
+    - Copying large state structures at every recursive call instead of mutating and undoing in place
+    - Checking validity only at the leaves instead of pruning early, causing unnecessary exponential blowup
+    - Off-by-one errors in loop bounds when trying the next candidate (e.g., reusing an index already
+      used)
+    whenNotToUse:
+    - The search space is provably enormous with no effective pruning, and only an approximate/greedy
+      answer is needed
+    - Overlapping subproblems exist and can be memoized - dynamic programming will be far faster than
+      exhaustive backtracking
+    problems:
+      combination-sum:
+        title: Combination Sum
+        summary: Find all unique combinations of candidates that sum to a target; numbers can be reused.
+        whenToUse: Classic backtracking with a start index that prevents generating permutations of the
+          same combination.
+        hints:
+        - Pass the same start index (not start+1) when reusing a number.
+        - Prune the branch as soon as the running sum exceeds the target.
+      word-search:
+        title: Word Search
+        summary: Determine whether a word exists in a grid via adjacent cells, each used at most once.
+        whenToUse: DFS/backtracking from each cell, marking visited cells and unmarking them on backtrack.
+        hints:
+        - Mark a cell visited before recursing into its neighbors, and unmark it right after.
+        - Prune immediately if the current cell's letter doesn't match the needed character.
+      n-queens:
+        title: N-Queens
+        summary: All distinct solutions to the n-queens puzzle.
+        whenToUse: Place row by row; prune columns/diagonals.
+        hints:
+        - Track cols and both diagonals
+        - Build board strings at leaves
+      sudoku-solver:
+        title: Sudoku Solver
+        summary: Fill a 9×9 sudoku board in-place.
+        whenToUse: Try digits 1-9 with box/row/col constraints.
+        hints:
+        - Find next empty cell
+        - Check row, column, and 3x3 box
+      letter-case-permutation:
+        title: Letter Case Permutation
+        summary: Return all strings formed by toggling letter case.
+        whenToUse: Simple backtracking / branching on letters only.
+        hints:
+        - Digits stay fixed
+        - Branch lower/upper for each letter
+  DYNAMIC_PROGRAMMING:
+    title: Dynamic Programming
+    subtitle: Overlapping subproblems and optimal substructure, solved once and reused
+    intuition: Dynamic programming applies when a problem has optimal substructure (the best answer is
+      built from the best answers to smaller subproblems) and overlapping subproblems (the same smaller
+      subproblem is needed multiple times). Instead of recomputing those overlapping subproblems from
+      scratch, you store each subproblem's answer once, either top-down with memoization or bottom-up
+      by filling a table in dependency order.
+    recognition: The problem asks for an optimal count, minimum/maximum value, or number of ways, and
+      a brute-force recursive solution would revisit the exact same smaller inputs repeatedly - classic
+      examples include knapsack variants, longest increasing subsequence, house robber, edit distance,
+      and counting unique paths.
+    walkthrough: 'Start by defining what dp[i] (or dp[i][j]) actually represents in plain English - this
+      is the single most important step and should be stated before any code is written. Write the recurrence
+      relating dp[i] to smaller subproblems, and identify the base case(s) that need no further recursion.
+      Decide on a fill order so every value a recurrence depends on is already computed when needed, then
+      implement either top-down memoized recursion or a bottom-up loop. Once correct, look for a space
+      optimization: if dp[i] only depends on the last one or two rows/values, you can often collapse an
+      O(n^2) space table down to O(n) or O(1) - but only after the naive version works and you''ve explained
+      the recurrence clearly to your interviewer.'
+    telltaleSigns:
+    - Asks for an optimal (min/max) value or a count of ways, not just any valid arrangement
+    - A brute-force recursive solution would recompute identical smaller subproblems repeatedly
+    - Choices at each step interact with a running budget/capacity/target (knapsack-style)
+    - Problem can be phrased as 'best answer using the first i elements' or similar prefix framing
+    templateSteps:
+    - Define the meaning of dp[i] or dp[i][j] in one clear sentence
+    - Write the recurrence relating it to smaller subproblems, plus base case(s)
+    - Choose an iteration order where dependencies are always computed first
+    - Implement bottom-up (table) or top-down (memoized recursion)
+    - Optimize space afterward if dp only depends on a small window of previous states
+    commonMistakes:
+    - Writing code before clearly stating what dp[i] means, leading to a wrong or unprovable recurrence
+    - Missing or incorrect base cases, causing off-by-one errors throughout the table
+    - Iterating in the wrong order so a dependency hasn't been computed yet when needed
+    - Prematurely optimizing space before the straightforward version is verified correct
+    whenNotToUse:
+    - Subproblems don't actually overlap - plain divide and conquer or greedy will be simpler and just
+      as fast
+    - The problem only needs a single feasible answer, not an optimum, and pruned backtracking is more
+      direct
+    problems:
+      climbing-stairs:
+        title: Climbing Stairs
+        summary: Count the distinct ways to climb n steps, taking 1 or 2 steps at a time.
+        whenToUse: 'A Fibonacci-shaped DP intro: dp[i] = dp[i-1] + dp[i-2].'
+        hints:
+        - The base cases are dp[1]=1 and dp[2]=2.
+        - Only the last two values are ever needed, so O(1) space works.
+      house-robber:
+        title: House Robber
+        summary: Find the maximum money you can rob without robbing two adjacent houses.
+        whenToUse: dp[i] = max(dp[i-1], dp[i-2] + nums[i]) - decide to skip or take each house.
+        hints:
+        - At each house, either skip it (keep dp[i-1]) or rob it (dp[i-2] + nums[i]).
+        - Only the previous two dp values need to be kept.
+      0-1-knapsack:
+        title: 0/1 Knapsack
+        summary: Maximize value packed into a weight capacity when each item can be used at most once.
+        whenToUse: Classic 2D (or 1D reverse-iteration) knapsack DP over item index and remaining capacity.
+        hints:
+        - dp[c] represents the best value achievable with capacity c.
+        - Iterate capacity from high to low in the 1D version so each item is only used once.
+      coin-change:
+        title: Coin Change
+        summary: Fewest coins to make amount, or -1.
+        whenToUse: Unbounded knapsack DP on amount.
+        hints:
+        - dp[x] = min over coins of dp[x-c]+1
+        - Init dp[0]=0, others +inf
+      edit-distance:
+        title: Edit Distance
+        summary: Minimum insert/delete/replace ops to transform word1 to word2.
+        whenToUse: Classic 2D DP on prefixes.
+        hints:
+        - If chars equal take diagonal
+        - Else 1+min(insert,delete,replace)
+  CYCLIC_SORT:
+    title: Cyclic Sort
+    subtitle: Place each number in range [1..n] at its home index value-1
+    intuition: When an array's values are guaranteed to fall in a known small range like 1..n (or 0..n),
+      each value has a 'correct' home index it belongs at. Repeatedly swapping each out-of-place value
+      into its correct index sorts the array in O(n) without extra space, and a leftover second pass instantly
+      reveals missing or duplicate numbers because their slots either point to the wrong value or hold
+      the wrong count.
+    recognition: The array contains n (or close to n) numbers drawn from a small, known range like 1..n
+      or 0..n-1, and the question is about finding a missing number, duplicate numbers, a corrupt pair,
+      or the first missing positive - all under O(n) time and O(1) extra space constraints.
+    walkthrough: 'Walk through the array with an index i, and while nums[i] is not already at its correct
+      position (nums[i] - 1 != i, assuming values 1..n), swap nums[i] with the element currently sitting
+      at nums[i]''s correct home index. Repeat this swapping at the same index i until the value there
+      is either correctly placed or is a duplicate/out-of-range value that would swap with itself - only
+      then advance i. After this single pass, do a second pass: any index i where nums[i] != i + 1 reveals
+      either a missing number (i + 1 is missing) or, if looking for duplicates, the value that appears
+      twice. Guard against infinite loops when duplicates exist, since a duplicate can never actually
+      reach a ''correct'' position already occupied by itself.'
+    telltaleSigns:
+    - Numbers in a known, small range tightly related to array indices (1..n or 0..n)
+    - Need to find missing number(s), duplicate number(s), or a corrupt pair
+    - O(n) time and O(1) extra space are explicitly required
+    - '''First missing positive'' or similar index-mapping framing'
+    templateSteps:
+    - For each index i, check whether nums[i] is at its correct home index (value - 1)
+    - If not, swap nums[i] with the element at its correct home index
+    - Repeat the swap at index i until it holds a correctly placed or duplicate value, then advance
+    - Make a second pass to detect any index whose value doesn't match its expected value
+    - Report missing/duplicate numbers based on that mismatch
+    commonMistakes:
+    - Advancing i after only one swap instead of repeating swaps at i until it's settled
+    - Infinite looping when a duplicate value keeps trying to swap into an already-correct slot
+    - Off-by-one errors converting between value and index (value - 1 vs value)
+    - Forgetting the array might use 0-indexed values instead of 1-indexed, changing the mapping formula
+    whenNotToUse:
+    - Values are not confined to a small range tied to the array's length (a hash set or sort is needed
+      instead)
+    - The array must not be mutated, and no extra O(n) space is allowed for a read-only copy
+    problems:
+      cyclic-sort:
+        title: Cyclic Sort
+        summary: Sort an array containing numbers from 1 to n in-place.
+        whenToUse: The direct, textbook application of the pattern.
+        hints:
+        - While nums[i] isn't at index nums[i]-1, swap it there.
+        - Each element is swapped at most once into its final place, keeping it O(n).
+      find-missing-number:
+        title: Find the Missing Number
+        summary: Given n distinct numbers taken from 0..n, find the one number missing from the array.
+        whenToUse: Cyclic-place the numbers (or use sum/XOR math); here, cyclic sort then scan for the
+          mismatch.
+        hints:
+        - Place each value v at index v when v < n.
+        - After placing, the first index i where nums[i] != i is the missing number.
+      find-all-duplicates:
+        title: Find All Duplicate Numbers
+        summary: Given numbers from 1..n where some appear twice, return all the duplicates.
+        whenToUse: Place each value by index; whatever can't be placed because its slot is taken is a
+          duplicate.
+        hints:
+        - Run cyclic sort placement as usual.
+        - After placement, any index i where nums[i] != i + 1 holds a duplicate value.
+      find-duplicate-number:
+        title: Find the Duplicate Number
+        summary: Array of n+1 ints in 1..n with one duplicate; find it without modifying.
+        whenToUse: Floyd cycle on index→value graph (or cyclic place).
+        hints:
+        - Treat as linked list where next = nums[i]
+        - Find cycle entrance
+      first-missing-positive:
+        title: First Missing Positive
+        summary: Smallest missing positive integer in unsorted array.
+        whenToUse: Place each value v at index v-1 when in range.
+        hints:
+        - Ignore non-positive and >n
+        - Scan for first index i with nums[i]!=i+1
+  TOPOLOGICAL_SORT:
+    title: Topological Sort
+    subtitle: Order tasks with prerequisites using indegree-driven BFS on a DAG
+    intuition: 'Whenever tasks have prerequisites, that dependency relationship is a directed graph, and
+      any valid execution order is a topological sort of that graph - which only exists if the graph has
+      no cycles. Kahn''s algorithm makes this concrete: repeatedly peel off nodes that currently have
+      zero unmet prerequisites (indegree zero), since those are always safe to schedule next.'
+    recognition: The problem talks about prerequisites, dependencies, or 'must happen before' relationships
+      between items - course schedules, build systems, alien dictionary letter ordering - and asks for
+      a valid order, whether one exists at all, or detection of an impossible (cyclic) dependency.
+    walkthrough: Build an adjacency list representing 'A must come before B' edges, and simultaneously
+      compute the indegree (number of unmet prerequisites) for every node. Initialize a queue with every
+      node whose indegree is zero, since those have no unmet prerequisites and can be scheduled immediately.
+      Repeatedly pop a node, add it to your output order, then decrement the indegree of each of its neighbors
+      - any neighbor whose indegree drops to zero gets pushed into the queue. If the number of nodes processed
+      ends up less than the total node count, a cycle exists and no valid order is possible - exactly
+      the answer for 'can all courses be finished' questions. For alien-dictionary-style problems, first
+      derive the edges by comparing each pair of adjacent words character by character to find the first
+      differing letter, then run the same topological sort over the alphabet.
+    telltaleSigns:
+    - Prerequisites, dependencies, or 'must come before' relationships between items
+    - Need a valid processing order, or to detect whether a valid order exists at all
+    - Directed graph where cycles make the task impossible
+    - Alien dictionary / lexicographic letter-ordering derivation problems
+    templateSteps:
+    - Build an adjacency list of 'before' edges and an indegree count per node
+    - Seed a queue with all nodes that currently have indegree zero
+    - Pop a node, append it to the order, and decrement neighbors' indegree
+    - Push any neighbor whose indegree reaches zero into the queue
+    - If fewer nodes were processed than exist, report a cycle / impossible ordering
+    commonMistakes:
+    - Building edges in the wrong direction, reversing the intended 'before' relationship
+    - Forgetting to check whether all nodes were processed, missing cycle detection entirely
+    - Not initializing indegree for nodes with zero incoming edges before the queue seeding step
+    - For alien dictionary problems, missing the edge case where one word is a prefix of another but appears
+      after it (invalid ordering)
+    whenNotToUse:
+    - The graph is guaranteed acyclic and unordered access is fine - a simple DFS/BFS traversal suffices
+    - The relationships aren't really a dependency/precedence graph, just general connectivity (plain
+      BFS/DFS or union-find fits better)
+    problems:
+      course-schedule:
+        title: Course Schedule
+        summary: Determine whether you can finish all courses given a list of prerequisite pairs.
+        whenToUse: Cycle detection via topological sort - if not all nodes get processed, a cycle blocks
+          completion.
+        hints:
+        - Build the graph as prerequisite -> course.
+        - If the processed-node count ends up less than the total course count, a cycle exists.
+      course-schedule-order:
+        title: Course Schedule Order
+        summary: Return one valid course order, or an empty array if no valid order exists.
+        whenToUse: Kahn's algorithm, collecting the popped nodes directly into the output order.
+        hints:
+        - Seed the queue with all zero-indegree courses.
+        - If the final order's length is less than the course count, return an empty array.
+      tasks-scheduling:
+        title: Tasks Scheduling
+        summary: Can all tasks finish given prerequisites?
+        whenToUse: Same as course schedule — cycle detection via topo.
+        hints:
+        - Build indegree graph
+        - BFS Kahn; fail if processed < tasks
+      alien-dictionary-order:
+        title: Alien Dictionary
+        summary: Derive alien letter order from sorted dictionary words.
+        whenToUse: Extract edges from adjacent words; topo sort.
+        hints:
+        - Compare adjacent pairs for first difference
+        - Invalid if longer word is prefix after shorter
+      verify-alien-dictionary:
+        title: Verifying an Alien Dictionary
+        summary: Check whether words are sorted by a given alien alphabet order.
+        whenToUse: Compare adjacent words using a custom alphabet ranking.
+        hints:
+        - Map each letter to its rank
+        - Invalid if longer word is a prefix after a shorter equal prefix
+  SORT_AND_SEARCH:
+    title: Sort and Search
+    subtitle: Sort by the right key to unlock adjacent comparisons or binary search
+    intuition: Many problems that look complicated become simple once you sort the data by the right key,
+      because sorting exposes structure - equal or related items become adjacent, and searching within
+      sorted data can drop from O(n) to O(log n). The skill here is recognizing which key to sort by (not
+      necessarily the raw value) and what becomes possible - grouping, adjacent comparison, or binary
+      search - once the data is ordered.
+    recognition: The problem doesn't fit a specific classic pattern, but sorting by a cleverly chosen
+      key (a normalized string, a coordinate, a ratio) turns it into an easy adjacent-comparison or binary-search
+      problem.
+    walkthrough: Ask what key, if sorted, would bring related items next to each other or expose a useful
+      order - for grouping anagrams, that key is each word's letters sorted alphabetically; for scheduling,
+      it might be start or end time; for search-suggestion problems, simple lexicographic order of the
+      product list. Sort once using that key, accepting the O(n log n) cost up front. Then either do a
+      single linear scan comparing adjacent elements (for grouping/counting problems) or run binary search
+      for each query (for repeated lookups), rather than re-scanning the whole dataset per query. When
+      a custom comparator is needed, write it explicitly and test it on a tricky pair of elements before
+      wiring it into the full sort, since a subtly wrong comparator silently produces wrong groupings
+      or search results without throwing any error.
+    telltaleSigns:
+    - The natural order of the input doesn't matter for the answer's correctness
+    - A well-chosen sort key turns the problem into adjacent comparisons or binary search
+    - Custom comparator needed (by string signature, by ratio, by a derived value)
+    - Repeated lookups into a dataset that doesn't change between queries
+    templateSteps:
+    - Identify the key that, once sorted, groups or orders the data usefully
+    - Sort once by that key (with a custom comparator if needed)
+    - Scan adjacently for grouping/counting, or binary search per query for lookups
+    - Use a hash map alongside the sort when grouping by the sort key
+    - Validate the comparator on a hand-picked tricky pair before trusting the full sort
+    commonMistakes:
+    - Sorting by the raw value when a derived key (signature, ratio) is what actually matters
+    - Writing a comparator with an inconsistent (non-transitive) ordering, producing subtly wrong sorts
+    - Re-sorting on every query instead of sorting once and reusing the result
+    - Forgetting stability requirements when the problem needs ties broken by original order
+    whenNotToUse:
+    - The data must remain in its original order for correctness (sorting would destroy needed information)
+    - Sorting costs more than the problem's required time complexity allows (e.g., an O(n) target with
+      no way to avoid a full sort)
+    problems:
+      group-anagrams:
+        title: Group Anagrams
+        summary: Group an array of strings so that all anagrams of each other end up together.
+        whenToUse: Sort each word's characters to build a canonical key, then group by that key in a hash
+          map.
+        hints:
+        - Two strings are anagrams exactly when their sorted character sequences are equal.
+        - Use the sorted string (or a character-count signature) as the hash map key.
+      search-suggestions:
+        title: Search Suggestions (sorted prefix)
+        summary: For each prefix of a search word, return up to 3 lexicographically smallest matching
+          products.
+        whenToUse: Sort products once, then binary search each growing prefix's lower bound instead of
+          rescanning.
+        hints:
+        - Sort the product list lexicographically up front.
+        - For each prefix, binary search for its lower bound and take up to 3 matches from there.
+      wiggle-sort:
+        title: Wiggle Sort
+        summary: Reorder so nums[0] <= nums[1] >= nums[2] <= nums[3] ….
+        whenToUse: One-pass swap based on even/odd positions.
+        hints:
+        - For even i ensure nums[i] <= nums[i+1]
+        - For odd i ensure nums[i] >= nums[i+1]
+      count-smaller-after-self:
+        title: Count of Smaller Numbers After Self
+        summary: For each element, count smaller elements to its right.
+        whenToUse: Merge sort tree counting inversions while merging.
+        hints:
+        - Merge sort indices
+        - When taking from right half, add mid-i+1 to left counts
+      intersection-two-arrays:
+        title: Intersection of Two Arrays
+        summary: Return unique intersection of two arrays.
+        whenToUse: Sort + two pointers, or hash set membership.
+        hints:
+        - Put one array into a set
+        - Filter unique hits from the other
+  MATRICES:
+    title: Matrices
+    subtitle: Traverse, transform, and search 2D grids systematically
+    intuition: Grid and matrix problems are usually about controlling exactly how you traverse - spiral
+      order, layer by layer, or via direction vectors - and matrices can also be treated as an implicit
+      graph where each cell is a node connected to its (up to four) neighbors. Getting the index math
+      right for boundaries (top/bottom/left/right, or row/col deltas) is most of the battle.
+    recognition: The input is a 2D grid or matrix, and the task involves traversing it in a specific order
+      (spiral, diagonal, zigzag), transforming it in place (rotate, set zeroes), or searching/flood-filling
+      through connected cells.
+    walkthrough: 'First clarify the traversal or transformation required: is it index-based (spiral, rotate,
+      diagonal) or connectivity-based (flood fill, search)? For index-based traversal, maintain explicit
+      boundary variables (top, bottom, left, right) and shrink them as you consume each layer, or use
+      a small array of direction vectors that you cycle through when hitting a wall. For in-place transforms
+      like rotate-by-90-degrees, look for a two-step decomposition (transpose then reverse each row) rather
+      than computing the final position of every cell directly. For connectivity-based problems, treat
+      the grid as a graph: run DFS or BFS from each unvisited ''interesting'' cell, marking visited cells
+      to avoid reprocessing, and always bounds-check row/col before recursing or enqueueing a neighbor.'
+    telltaleSigns:
+    - Input is a 2D grid or matrix requiring systematic traversal or transformation
+    - Spiral order, diagonal traversal, or rotate-in-place requirements
+    - Flood fill / connected component style problems on a grid
+    - Search within a row-and-column sorted matrix
+    templateSteps:
+    - Decide whether the task is index-based traversal or graph-style connectivity
+    - 'For index-based: track shrinking boundaries or cycle through direction vectors'
+    - 'For in-place rotation: decompose into transpose + reverse (or an equivalent two-step transform)'
+    - 'For connectivity: run DFS/BFS with a visited marker and bounds checks on every neighbor'
+    - Clarify whether the grid can be mutated in place or needs a separate visited structure
+    commonMistakes:
+    - Off-by-one errors when shrinking spiral boundaries, skipping or duplicating an edge cell
+    - Forgetting to bounds-check row/col before accessing a neighbor, causing out-of-range errors
+    - Mutating the grid as a visited marker without restoring it when the original grid must be preserved
+    - Attempting to compute a rotated matrix's positions directly instead of using the transpose+reverse
+      trick
+    whenNotToUse:
+    - The grid is effectively 1D or sparse, and a simpler array/hash-based approach avoids unnecessary
+      2D bookkeeping
+    - The grid is far too large to fit in memory, requiring a streaming or on-disk approach instead of
+      full traversal
+    problems:
+      spiral-order:
+        title: Spiral Matrix
+        summary: Return all elements of a matrix in clockwise spiral order.
+        whenToUse: Shrink top/bottom/left/right boundaries after fully consuming each edge of the current
+          layer.
+        hints:
+        - Traverse top row, right column, bottom row, left column, in that cyclic order.
+        - After each edge, move the corresponding boundary inward by one.
+      rotate-image:
+        title: Rotate Image
+        summary: Rotate an n x n matrix 90 degrees clockwise, in-place.
+        whenToUse: Transpose the matrix first, then reverse each row - two simple O(n^2) passes instead
+          of tricky index math.
+        hints:
+        - Transpose swaps matrix[i][j] with matrix[j][i] for i < j.
+        - Reversing each row after transposing produces the clockwise rotation.
+      set-matrix-zeroes:
+        title: Set Matrix Zeroes
+        summary: If a cell is 0, set its entire row and column to 0, in-place.
+        whenToUse: Use the first row and first column themselves as markers instead of allocating extra
+          arrays.
+        hints:
+        - Use two boolean flags to remember whether the first row/column originally had a zero.
+        - Mark row i and column j via matrix[i][0] and matrix[0][j] as you scan the rest of the grid.
+      search-2d-matrix:
+        title: Search a 2D Matrix II
+        summary: Search in a matrix sorted per row and column.
+        whenToUse: Start top-right; move left/down by comparison.
+        hints:
+        - From top-right corner
+        - Too big → left; too small → down
+      shortest-path-binary-matrix:
+        title: Shortest Path in Binary Matrix
+        summary: Shortest clear path from (0,0) to (n-1,n-1) with 8-direction moves.
+        whenToUse: BFS on grid graph.
+        hints:
+        - Only walk 0-cells
+        - BFS distance from start
+      matrix-diagonal-sum:
+        title: Matrix Diagonal Sum
+        summary: Sum primary and secondary diagonals without double-counting the center.
+        whenToUse: Direct index walk on a square matrix.
+        hints:
+        - Add mat[i][i] and mat[i][n-1-i]
+        - Subtract center once if n is odd
+  STACKS:
+    title: Stacks
+    subtitle: LIFO for matching pairs, next-greater elements, and monotonic structures
+    intuition: A stack is the natural fit whenever the answer to 'what does this element resolve?' depends
+      on the most recently seen unresolved candidate - like the most recent unmatched opening bracket,
+      or the closest previous element still waiting for something bigger to appear. Keeping the stack
+      monotonic (always increasing or always decreasing) lets you resolve many elements in a single amortized
+      O(n) pass instead of comparing every pair.
+    recognition: The problem involves matching pairs (parentheses/brackets), finding the next/previous
+      greater or smaller element, computing spans until a condition changes (daily temperatures), or computing
+      areas/heights that depend on nearby taller/shorter elements (largest rectangle in histogram).
+    walkthrough: 'For matching problems, push opening symbols onto the stack and, on each closing symbol,
+      check that it matches the top of the stack before popping - a mismatch or an empty stack at the
+      wrong time means the input is invalid. For next/previous-greater-element problems, iterate through
+      the array while maintaining a monotonic stack of indices: before pushing the current element, pop
+      everything smaller than it, since the current element is precisely the ''next greater'' answer for
+      each popped index. Record that resolution as you pop, then push the current index. For histogram-style
+      area problems, use the same monotonic stack idea but additionally compute a width whenever you pop,
+      using the new stack top (or -1) as the left boundary and the current index as the right boundary.
+      Always finish by draining any elements still left on the stack after the main loop, since they may
+      represent unresolved candidates that reach the end of the array.'
+    telltaleSigns:
+    - Matching pairs of symbols (parentheses, brackets, tags)
+    - '"Next greater/smaller element" or "previous greater/smaller element" wording'
+    - Days/positions until a condition changes (daily temperatures style)
+    - Largest rectangle, area, or span computations dependent on nearby elements
+    - Explicit monotonic-stack opportunity in an array/sequence
+    templateSteps:
+    - 'For matching: push openers, and validate/pop against the top on each closer'
+    - 'For next/previous greater: maintain a monotonic stack of indices, popping and resolving when the
+      current element beats the top'
+    - Record the resolution (distance, value, area) at the moment of popping, not before
+    - For area/width problems, use the new stack top after popping as the boundary
+    - Drain any remaining stack entries after the main loop to resolve leftover candidates
+    commonMistakes:
+    - Popping without recording the resolution for the popped element first
+    - Using a stack of values instead of indices when distances/spans are required
+    - Forgetting to drain the stack after the loop, leaving some elements unresolved
+    - Getting the monotonic direction backwards (increasing vs decreasing) for the specific variant
+    whenNotToUse:
+    - The relationship between elements isn't about the 'most recent unresolved candidate' (a hash map
+      or two-pointer approach may be simpler)
+    - Random access into the middle of the pending-candidate sequence is needed (a stack only exposes
+      the top)
+    problems:
+      valid-parentheses:
+        title: Valid Parentheses
+        summary: Check whether a string of brackets is properly matched and nested.
+        whenToUse: The classic stack matching template for any bracket-validity question.
+        hints:
+        - Push opening brackets; on a closing bracket, pop and check it matches.
+        - The string is valid only if the stack is empty at the very end.
+      daily-temperatures:
+        title: Daily Temperatures
+        summary: For each day, find how many days until a warmer temperature occurs.
+        whenToUse: A monotonic decreasing stack of indices resolves each day the moment a warmer one appears.
+        hints:
+        - Keep indices on the stack, not temperatures, so you can compute day differences.
+        - Pop and resolve every stacked index whose temperature is less than the current day's.
+      next-greater-element:
+        title: Next Greater Element
+        summary: For each element of nums1, find its next greater element in nums2 (nums1 is a subset
+          of nums2).
+        whenToUse: Precompute next-greater for every value in nums2 with a monotonic stack, then map nums1's
+          answers via a hash map.
+        hints:
+        - Build the full next-greater mapping for nums2 in one monotonic-stack pass.
+        - Look up each nums1 value in that mapping instead of rescanning nums2 per query.
+      decode-string:
+        title: Decode String
+        summary: Decode encoded string like 3[a2[c]] → accaccacc.
+        whenToUse: Stack of counts and partial strings.
+        hints:
+        - Push on '['
+        - Pop and repeat on ']'
+      basic-calculator:
+        title: Basic Calculator
+        summary: Evaluate expression with +, -, parentheses, and spaces.
+        whenToUse: Sign stack for nested parentheses.
+        hints:
+        - Keep running result and sign
+        - On '(' push result/sign; on ')' pop
+  GRAPHS:
+    title: Graphs
+    subtitle: BFS/DFS traversal on explicit or implicit graphs
+    intuition: Any problem involving nodes connected by relationships - explicit edges or implicit adjacency,
+      like grid cells next to each other - is a graph problem underneath. Building or imagining the adjacency
+      structure and then choosing BFS (shortest path in an unweighted graph, or level-by-level exploration)
+      versus DFS (connectivity, path existence, exhaustive exploration) covers the overwhelming majority
+      of interview graph questions.
+    recognition: The problem mentions explicit nodes and edges, or an implicit graph such as a grid where
+      cells are connected to their neighbors, and asks about connectivity, components, shortest paths
+      (unweighted), cloning, or reachability.
+    walkthrough: 'First determine whether the graph is given explicitly (adjacency list/matrix, edge list)
+      or implicitly (grid neighbors, word transformations); build an explicit adjacency representation
+      if it doesn''t already exist, since almost every graph algorithm assumes O(1) neighbor lookup. Decide
+      BFS vs DFS based on what you need: BFS if you need the shortest path length or level-by-level structure
+      in an unweighted graph, DFS if you need to explore fully, detect components, or the problem is naturally
+      recursive (like cloning). Maintain a visited set to avoid revisiting nodes and causing infinite
+      loops, and process nodes systematically - a queue for BFS, a stack or recursion for DFS. For ''number
+      of components'' style problems, iterate over every unvisited node, launching a fresh BFS/DFS from
+      each one and incrementing a counter.'
+    telltaleSigns:
+    - Explicit nodes/edges, or an implicit graph like a grid of connected cells
+    - Connectivity, number of connected components, or reachability questions
+    - Shortest path in an unweighted graph (BFS) or need for full exploration (DFS)
+    - Cloning, copying, or transforming a graph structure
+    templateSteps:
+    - Build an explicit adjacency list/map if the graph isn't already represented that way
+    - Choose BFS for shortest-path/level structure, DFS for exhaustive exploration/components
+    - Maintain a visited set (or in-place grid marking) to prevent revisiting nodes
+    - Process with a queue (BFS) or recursion/stack (DFS), enqueuing/recursing into unvisited neighbors
+    - For 'count of components' problems, loop over all nodes and start a fresh traversal from each unvisited
+      one
+    commonMistakes:
+    - Forgetting to mark a node visited before (not after) enqueuing it in BFS, causing duplicate enqueues
+    - Mixing up BFS and DFS when the problem specifically needs shortest unweighted path (must be BFS)
+    - Not handling disconnected components, only exploring from a single starting node
+    - Stack overflow from deep DFS recursion on large graphs - consider converting to an explicit stack
+    whenNotToUse:
+    - Edges have weights and you need shortest weighted path (use Dijkstra's or Bellman-Ford instead of
+      plain BFS/DFS)
+    - The structure is actually a tree or DAG with a more specialized pattern available (tree traversal
+      or topological sort)
+    problems:
+      number-of-islands:
+        title: Number of Islands
+        summary: Count the number of land components ('1's) in a 2D grid of water and land.
+        whenToUse: DFS or BFS flood fill from each unvisited land cell, counting how many fills are needed.
+        hints:
+        - Mark a land cell visited (or sink it to '0') as soon as you enqueue/visit it.
+        - Each flood fill from a fresh unvisited land cell represents exactly one island.
+      clone-graph:
+        title: Clone Graph
+        summary: Create a deep copy of an undirected, connected graph given a reference node.
+        whenToUse: A hash map from original node to its clone, filled while doing BFS or DFS.
+        hints:
+        - Create a node's clone the first time you see it and store it in the map immediately.
+        - When wiring neighbors, look up (or create) their clones through the same map to avoid infinite
+          recursion.
+      pacific-atlantic:
+        title: Pacific Atlantic Water Flow
+        summary: Cells from which water can flow to both oceans.
+        whenToUse: Multi-source DFS/BFS inland from ocean borders.
+        hints:
+        - Flow only to >= height neighbors
+        - Intersect reachable sets
+      critical-connections:
+        title: Critical Connections in a Network
+        summary: Find all bridges in an undirected graph.
+        whenToUse: Tarjan DFS discovery/low-link times.
+        hints:
+        - Bridge when low[nei] > disc[u]
+        - Ignore parent edge
+      find-center-star:
+        title: Find Center of Star Graph
+        summary: Find the center node of a star graph given edges.
+        whenToUse: Center appears in every edge — compare first two edges.
+        hints:
+        - Look at edges[0] and edges[1]
+        - The shared node is the center
+  TREE_DFS:
+    title: Tree Depth-First Search
+    subtitle: Recurse through root-to-leaf and subtree problems
+    intuition: 'Most binary tree problems are naturally recursive: process the current node, recurse into
+      the left and right children, and combine their results into an answer for the current node. The
+      recursion''s return value is the key design decision - deciding exactly what a subtree''s recursive
+      call should hand back to its parent is what makes path-sum, diameter, and LCA problems click.'
+    recognition: The problem is about a binary (or general) tree and asks about root-to-leaf paths, subtree
+      properties, diameter/longest-path, lowest common ancestor, serialization, or any property naturally
+      computed by combining left and right subtree results.
+    walkthrough: 'Define precisely what your recursive function returns for a given node - a boolean,
+      a list, or a numeric value. Write the base case first: what happens at a null node, since that''s
+      always the simplest case and anchors the recursion. Then write the recursive case: call the function
+      on the left and right children, and combine their two results according to the problem''s rule (sum,
+      max, boolean AND/OR, list concatenation). For problems needing an answer that isn''t the direct
+      return value (like diameter, a path possibly not through the root), maintain a separate ''best answer
+      so far'' variable updated as a side effect during the recursion, while the return value itself stays
+      focused on what the parent needs (e.g., height). Trace through a small 3-4 node tree by hand to
+      confirm both the base case and the combination step before trusting the code.'
+    telltaleSigns:
+    - Binary tree with a path, subtree property, or combined-left-right-result question
+    - Root-to-leaf path sum or path enumeration
+    - Diameter, longest path, or 'max path sum' (possibly not through the root)
+    - Lowest common ancestor or serialize/deserialize style problems
+    templateSteps:
+    - Decide exactly what the recursive call returns for a given node
+    - Write the null/base case first
+    - Recurse into left and right children
+    - Combine the two children's results according to the problem's rule
+    - Track any 'best answer so far' as a side variable when the answer isn't simply the return value
+    commonMistakes:
+    - Forgetting the null/base case, causing NullPointerExceptions
+    - Conflating what the function returns to its parent with the actual final answer needed (e.g., diameter
+      vs height)
+    - Not resetting or properly scoping a 'best so far' variable when it needs to persist across the whole
+      traversal
+    - Recomputing subtree properties instead of reusing the values already computed in the recursive call
+    whenNotToUse:
+    - The tree is extremely unbalanced/deep, risking stack overflow, and an iterative approach with an
+      explicit stack is safer
+    - The problem needs level-by-level information (depth, level order) - tree BFS is the more natural
+      fit
+    problems:
+      path-sum:
+        title: Path Sum
+        summary: Determine whether a root-to-leaf path exists whose values sum to a given target.
+        whenToUse: DFS subtracting the current node's value from the remaining target as you descend.
+        hints:
+        - At a leaf, check whether the remaining target equals the leaf's value.
+        - Recurse into children with target minus the current node's value.
+      all-path-sum:
+        title: All Paths for a Sum
+        summary: Return every root-to-leaf path whose values sum to a given target.
+        whenToUse: DFS while building a running path list, backtracking (removing the last element) after
+          each recursive call.
+        hints:
+        - Add the current node to a shared path list before recursing, remove it after.
+        - Only copy the path into the result list when a leaf matches the remaining target exactly.
+      tree-diameter:
+        title: Binary Tree Diameter
+        summary: Find the length (in edges) of the longest path between any two nodes.
+        whenToUse: DFS computing subtree height while updating a separate 'best diameter' variable from
+          left+right heights.
+        hints:
+        - The function should return height, but update a side variable with left_height + right_height.
+        - The diameter at a node may not pass through the root, so track the max across every node.
+      lowest-common-ancestor:
+        title: Lowest Common Ancestor
+        summary: LCA of two nodes in a binary tree.
+        whenToUse: 'Post-order: if both sides nonempty, root is LCA.'
+        hints:
+        - Return non-null from subtree containing p/q
+        - If both left and right non-null, root is answer
+      max-path-sum:
+        title: Binary Tree Maximum Path Sum
+        summary: Maximum path sum between any two nodes (path may not pass root).
+        whenToUse: DFS returning best downward gain; update global with left+right+node.
+        hints:
+        - Ignore negative child gains
+        - Global tracks left+node+right
+  TREE_BFS:
+    title: Tree Breadth-First Search
+    subtitle: Level-order traversal with a queue, one full level at a time
+    intuition: 'Whenever a tree problem talks about levels, depth, or ''the closest X'', level-order traversal
+      with a queue is the natural fit: process one full level at a time by capturing the queue''s size
+      at the start of each iteration, since that size tells you exactly how many nodes belong to the current
+      level before any children get enqueued.'
+    recognition: The problem asks for level-order traversal, values grouped by depth, zigzag ordering,
+      the rightmost/leftmost visible node per level, or connecting nodes at the same level via pointers.
+    walkthrough: Initialize a queue containing just the root, then loop while the queue is non-empty.
+      At the start of each iteration, record the current queue size - this is the exact number of nodes
+      in the current level, which is the key trick that separates tree BFS from generic graph BFS. Poll
+      exactly that many nodes, process each one (add to the current level's result list, track the last
+      one for right-side-view, etc.), and enqueue each polled node's non-null children as you go. Once
+      the level's fixed count of nodes has been fully processed, move to the next iteration of the outer
+      loop, which now handles the next level. For zigzag traversal, keep a direction flag and reverse
+      alternate levels' result lists; for right-side view, simply keep the last node processed in each
+      level's inner loop.
+    telltaleSigns:
+    - Level order, depth, or 'per level' wording
+    - Zigzag / alternating direction traversal
+    - Rightmost or leftmost visible node per level
+    - Connecting sibling nodes at the same depth via next pointers
+    templateSteps:
+    - Initialize a queue with the root node
+    - At the start of each outer loop iteration, capture the current queue size as the level width
+    - Poll exactly that many nodes, processing each and enqueuing its non-null children
+    - Collect or use the level's results (list, last node, reversed order) as required
+    - Repeat until the queue is empty
+    commonMistakes:
+    - Not capturing the level size before the inner loop, causing level boundaries to blur together
+    - Enqueuing null children, requiring extra null checks later instead of checking before enqueueing
+    - Forgetting to reverse alternate levels for zigzag traversal, or reversing every level instead of
+      every other one
+    - Using recursion with a depth parameter when a queue-based approach is clearer for genuinely level-based
+      questions
+    whenNotToUse:
+    - The problem is about paths or subtree aggregates rather than levels (tree DFS is the more natural
+      and often simpler fit)
+    - The tree is extremely wide, making per-level queue size potentially very large - consider whether
+      DFS with a depth counter avoids that memory spike
+    problems:
+      level-order:
+        title: Binary Tree Level Order Traversal
+        summary: Return node values grouped level by level, top to bottom.
+        whenToUse: 'The classic tree BFS template: capture queue size per level.'
+        hints:
+        - Capture queue.size() before the inner loop to know the current level's width.
+        - Build one list per level and append it to the outer result list.
+      zigzag-level-order:
+        title: Zigzag Level Order
+        summary: Traverse level by level, alternating left-to-right and right-to-left.
+        whenToUse: Standard level-order BFS, plus a direction flag that reverses every other level's list.
+        hints:
+        - Build each level's list normally, then reverse it when the direction flag says right-to-left.
+        - Flip the direction flag after finishing each level.
+      right-side-view:
+        title: Binary Tree Right Side View
+        summary: Return the values of the nodes visible from the right side of the tree.
+        whenToUse: Standard level-order BFS, keeping only the last node processed at each level.
+        hints:
+        - Within each level's inner loop, overwrite a 'lastInLevel' variable on every poll.
+        - After finishing a level's inner loop, append 'lastInLevel' to the result.
+      min-depth:
+        title: Minimum Depth of Binary Tree
+        summary: Number of nodes along shortest root-to-leaf path.
+        whenToUse: BFS; first leaf found is minimum depth.
+        hints:
+        - Level-order until a leaf
+        - Depth increments per level
+      vertical-order:
+        title: Vertical Order Traversal
+        summary: Column-wise values top-to-bottom, sorted within cell.
+        whenToUse: BFS with (row,col) keys into TreeMap.
+        hints:
+        - Track column index
+        - Sort each column by row then value
+  TRIE:
+    title: Trie
+    subtitle: Prefix tree for word dictionaries, autocomplete, and shared-prefix search
+    intuition: A trie shares common prefixes across many words in a single tree structure, so words with
+      the same beginning literally share the same path from the root - this makes prefix search, autocomplete,
+      and dictionary lookups take time proportional to the word's length rather than the number of words
+      stored.
+    recognition: The problem needs repeated prefix queries against a fixed dictionary of words - implement
+      a Trie, word search II (multiple words in a grid), replace words with their shortest root, or autocomplete
+      suggestions.
+    walkthrough: Design a trie node with a children map (or fixed-size array keyed by character) and a
+      boolean flag marking whether a complete word ends at that node. To insert a word, walk character
+      by character from the root, creating a new child node whenever the current character isn't already
+      present, and mark the final node's end-of-word flag true. To search for an exact word, walk the
+      same way, but only return true if you both reach the end of the word and that final node's end-of-word
+      flag is set - reaching the last character alone only proves the prefix exists, not the whole word.
+      For startsWith/prefix queries, the check is identical except you skip the end-of-word flag check
+      entirely. For word-search-in-grid problems, build a trie of all target words first, then DFS through
+      the grid while simultaneously walking down the trie, pruning any grid path whose corresponding trie
+      path doesn't exist - this shares work across all target words instead of searching each one independently.
+    telltaleSigns:
+    - Many repeated prefix queries against the same fixed dictionary
+    - Implement Trie / autocomplete / typeahead functionality
+    - Word search across a grid for multiple dictionary words simultaneously
+    - Replace words with their shortest matching dictionary root
+    templateSteps:
+    - Design a node with a children map/array and an end-of-word flag
+    - 'Insert: walk character by character, creating missing child nodes, then mark the end flag'
+    - 'Search: walk the same way, but require both full traversal and the end flag to be true'
+    - 'StartsWith: walk the same way but skip the end flag check'
+    - For grid search, DFS the grid and the trie together, pruning paths with no matching trie node
+    commonMistakes:
+    - Confusing search() (needs the end-of-word flag) with startsWith() (doesn't need it)
+    - Not sharing the trie across multiple target words in word-search-style problems, losing the pattern's
+      main benefit
+    - Using a fixed 26-letter array when the alphabet is actually larger (unicode, mixed case)
+    - Forgetting to mark or check the end-of-word flag, causing prefixes to be reported as full matches
+    whenNotToUse:
+    - Only a handful of one-off string comparisons are needed - building a trie has more overhead than
+      a simple set/map lookup
+    - Memory is tightly constrained and the dictionary is large, since tries can use significantly more
+      memory than a hash set of the same words
+    problems:
+      implement-trie:
+        title: Implement Trie (Prefix Tree)
+        summary: Implement insert, search, and startsWith operations for a trie.
+        whenToUse: The core Trie ADT that every other trie problem builds on.
+        hints:
+        - Each node needs a children map and a boolean end-of-word flag.
+        - search() requires the end flag to be true; startsWith() does not.
+      word-break-dict:
+        title: Extra Characters in a String (Trie dict)
+        summary: Find the minimum number of extra characters left over after breaking a string using dictionary
+          words.
+        whenToUse: DP over string positions, using a trie to quickly check which dictionary words start
+          at each position.
+        hints:
+        - dp[i] = minimum extra characters for the substring starting at i.
+        - At each position, try every dictionary word that matches as a prefix via the trie, then recurse
+          past it.
+      replace-words:
+        title: Replace Words
+        summary: Replace words with their shortest dictionary root prefix.
+        whenToUse: Trie of roots; walk each word until end mark.
+        hints:
+        - Insert all roots
+        - Stop at first isEnd along the word
+      word-search-ii:
+        title: Word Search II
+        summary: Find all dictionary words on the board via adjacent cells.
+        whenToUse: Trie of words + DFS pruning on board.
+        hints:
+        - Build trie of words
+        - Remove word from trie when found to dedupe
+      longest-common-prefix:
+        title: Longest Common Prefix
+        summary: Find the longest common prefix among strings.
+        whenToUse: Trie of words or vertical scan until mismatch.
+        hints:
+        - Compare characters column by column
+        - Stop at first mismatch or end of a word
+  HASH_MAPS:
+    title: Hash Maps
+    subtitle: O(1) average lookup for complements, frequencies, and prefix counts
+    intuition: A hash map trades a bit of memory for average O(1) lookup, letting you remember what you've
+      already seen (or need) and instantly check it against future elements as you scan, rather than re-scanning
+      the whole input for every query. This single trick - store while scanning, check what I need against
+      what I've stored - solves a surprisingly large fraction of easy-to-medium interview problems.
+    recognition: The problem needs a fast complement/membership check (two sum), a running count or grouping
+      (subarray sum equals K, group anagrams), or a mapping between two related values (isomorphic strings),
+      typically solvable in one linear pass.
+    walkthrough: Decide, before writing any code, exactly what the map's key and value should represent
+      for this problem - this single decision determines almost everything else. For pair-finding problems
+      like two sum, the key is the value you've seen and the value is its index, checked against 'target
+      minus current element' on every step. For counting/frequency problems, the key is the value or a
+      derived signature and the value is a running count, incremented as you scan. For prefix-sum style
+      problems like subarray sum equals K, the key is a running prefix sum and the value is how many times
+      that prefix sum has occurred, letting you answer 'how many earlier prefixes equal currentSum - K'
+      in O(1) per step. In all cases, get the check-then-update order right deliberately - usually check
+      first, then insert, to avoid using the current element as its own answer.
+    telltaleSigns:
+    - Need fast membership, frequency, or complement checks while scanning once
+    - Two-sum-style "does the complement exist" questions
+    - Prefix sum + count-of-occurrences problems (subarray sum equals K)
+    - Grouping or mapping between related values (isomorphic strings, group anagrams)
+    templateSteps:
+    - Decide precisely what the map's key and value represent for this problem
+    - Scan the input once, checking the current element against the map first
+    - Update the map with the current element's contribution (count, index, prefix sum)
+    - Get the check-then-update order right to avoid self-matching bugs
+    - Return the accumulated answer once the scan completes
+    commonMistakes:
+    - Updating the map before checking, causing an element to incorrectly match against itself
+    - Using the wrong key (raw value instead of a derived signature, or vice versa)
+    - Forgetting to initialize prefix-sum-style maps with a base entry (e.g., prefix sum 0 occurring once)
+    - Assuming worst-case O(1) hash map operations when a poor hash function or heavy collisions could
+      degrade performance
+    whenNotToUse:
+    - The problem needs elements in sorted order or range queries, where a TreeMap fits better than a
+      plain hash map
+    - Memory is severely constrained and the value range is small enough that a fixed-size array works
+      just as well
+    problems:
+      two-sum:
+        title: Two Sum
+        summary: Return the indices of two numbers in an array that add up to a target.
+        whenToUse: Value-to-index map while scanning; check the complement before inserting the current
+          value.
+        hints:
+        - For each number, check if target - number is already in the map.
+        - Insert the current number's index only after checking, to avoid matching an element with itself.
+      subarray-sum-equals-k:
+        title: Subarray Sum Equals K
+        summary: Count the number of contiguous subarrays whose elements sum to K.
+        whenToUse: Running prefix sum plus a map of how many times each prefix sum value has occurred.
+        hints:
+        - Initialize the map with prefix sum 0 occurring once, to handle subarrays starting at index 0.
+        - At each step, add map.get(currentSum - K) to the answer before updating the map with currentSum.
+      isomorphic-strings:
+        title: Isomorphic Strings
+        summary: Check if s and t are isomorphic via bijection of chars.
+        whenToUse: Two maps (or map+set) for forward/backward mapping.
+        hints:
+        - Map s→t and ensure consistency
+        - Also ensure two s chars don't map to same t
+      longest-consecutive-already:
+        title: Contiguous Array
+        summary: Max length of contiguous subarray with equal 0s and 1s.
+        whenToUse: Prefix balance + first-seen index map.
+        hints:
+        - Treat 0 as -1
+        - If balance seen before, update max length
+      four-sum-ii:
+        title: 4Sum II
+        summary: Count tuples (i,j,k,l) with sum zero across four arrays.
+        whenToUse: Hash all sums of A+B; probe -(C+D).
+        hints:
+        - Map sum→count for first two arrays
+        - For each c+d look up -(c+d)
+  KNOWING_WHAT_TO_TRACK:
+    title: Knowing What to Track
+    subtitle: Solve one-pass problems by identifying the right running counters
+    intuition: A surprising number of interview problems aren't about a fancy algorithm at all - they're
+      solved the moment you identify the one or two running statistics that matter and update them incrementally
+      as you scan, instead of recomputing anything from scratch. This pattern is less about a fixed template
+      and more about the habit of asking 'what small piece of state, updated in O(1) per step, would let
+      me answer this in one pass?'
+    recognition: The problem can be solved with a single pass if you track the right counters or state
+      - majority element (a candidate and a count), longest consecutive sequence (only start scanning
+      from sequence beginnings), or fruit-into-baskets-style 'at most K types' tracking.
+    walkthrough: 'Before reaching for a known pattern, ask explicitly what small amount of state, if tracked
+      and updated as you scan, would let you answer the question without ever looking backward. For majority
+      element, that''s a single candidate value and a running count (Boyer-Moore voting): increment when
+      you see the candidate, decrement otherwise, and swap candidates when the count hits zero. For longest
+      consecutive sequence, the insight is to only start counting a sequence from a number that has no
+      predecessor in the set, so each number is visited a bounded number of times overall despite looking
+      like nested loops. Once you''ve identified the tracked state, verify with a couple of hand-traced
+      examples that updating it incrementally really does preserve enough information to answer correctly,
+      since this pattern''s main risk is discovering partway through that you''re missing one more piece
+      of state.'
+    telltaleSigns:
+    - A single linear pass would work if you tracked the right small piece of state
+    - Majority/frequency-threshold questions (appears more than n/2 times, etc.)
+    - '''Longest consecutive run'' or similar sequence-based counting'
+    - At-most-K-types / at-most-K-distinct tracking without an explicit sliding window framing
+    templateSteps:
+    - Identify the minimal state that needs to be tracked to answer the question
+    - Decide the O(1) update rule for that state as each element is processed
+    - Scan once, applying the update rule and checking/recording the answer as needed
+    - Verify with hand-traced examples that no additional state is silently needed
+    - Avoid recomputing from scratch - always update incrementally
+    commonMistakes:
+    - Recomputing counts or state from scratch each iteration instead of updating incrementally
+    - Missing an edge case that requires one more piece of tracked state than originally planned
+    - Applying Boyer-Moore voting without a required verification pass when majority isn't guaranteed
+      to exist
+    - Confusing 'starts of sequences' with 'all elements' when the trick relies on visiting each number
+      a bounded number of times
+    whenNotToUse:
+    - The relationships between elements aren't simple enough to reduce to a small fixed set of running
+      counters
+    - Sorting or a data structure (heap, hash map) more naturally captures the needed state than ad hoc
+      counters
+    problems:
+      majority-element:
+        title: Majority Element
+        summary: Find the element that appears more than n/2 times in an array.
+        whenToUse: 'Boyer-Moore voting: track a single candidate and a count instead of a full frequency
+          map.'
+        hints:
+        - Increment the count when the current number matches the candidate, decrement otherwise.
+        - When the count hits zero, switch the candidate to the current number.
+      longest-consecutive:
+        title: Longest Consecutive Sequence
+        summary: Find the length of the longest run of consecutive integers in an unsorted array.
+        whenToUse: Put everything in a hash set, then only start counting a run from numbers with no predecessor
+          present.
+        hints:
+        - Only begin extending a sequence from a number x where x-1 is not in the set.
+        - From each valid start, keep checking x+1, x+2, ... to measure the run's length.
+      majority-element-ii:
+        title: Majority Element II
+        summary: All elements appearing more than ⌊n/3⌋ times.
+        whenToUse: Boyer-Moore with two candidates.
+        hints:
+        - At most two answers
+        - Verify counts in second pass
+      max-points-on-line:
+        title: Max Points on a Line
+        summary: Maximum number of points that lie on the same straight line.
+        whenToUse: For each origin, track slopes via reduced fractions.
+        hints:
+        - Normalize slope by GCD
+        - Handle vertical/duplicate points
+  UNION_FIND:
+    title: Union Find (DSU)
+    subtitle: Dynamic connectivity with near-O(1) unions via path compression and rank
+    intuition: 'Union-Find (Disjoint Set Union) answers ''are these two things connected?'' and ''merge
+      these two groups'' in near-constant time by keeping a parent pointer for every element and letting
+      each element''s ultimate ''root'' represent its group. Two optimizations make this fast in practice:
+      path compression (flatten the path to the root every time you look it up) and union by rank/size
+      (always attach the smaller tree under the larger one''s root).'
+    recognition: The problem involves merging or connecting things dynamically and later needs to answer
+      connectivity questions - number of provinces/connected components, detecting a redundant connection
+      that creates a cycle, or merging accounts/groups by shared attributes.
+    walkthrough: Initialize a parent array where every element is its own parent, representing n separate
+      singleton groups initially. For each given connection or edge, find the root of both endpoints;
+      if the roots differ, union them by attaching one root under the other (using rank or size to decide
+      which stays on top for balance), and decrement your running count of distinct components. For find,
+      always follow parent pointers up to the root, applying path compression on the way - point every
+      visited node directly at the root - which keeps future lookups from that node fast. For 'redundant
+      connection' style problems, process edges in the given order and the first edge whose two endpoints
+      already share a root is your answer. For grouping/merging problems like accounts merge, union by
+      whatever shared attribute defines the relationship, then group final results by each element's root.
+    telltaleSigns:
+    - Merge or connect elements dynamically, then answer connectivity questions
+    - Number of connected components / provinces in a graph
+    - Detecting the edge that creates a cycle (redundant connection) in a tree-plus-one-edge graph
+    - Merging groups by a shared attribute (accounts merge, similar string groups)
+    templateSteps:
+    - Initialize each element as its own parent/root, tracking a component count
+    - Implement find() with path compression (point nodes directly at the root)
+    - Implement union() by rank/size, decrementing the component count on a successful merge
+    - Process edges/relationships one at a time, unioning connected elements
+    - Use the final root-per-element mapping to answer connectivity or grouping queries
+    commonMistakes:
+    - Forgetting path compression, degrading find() toward O(n) on skewed trees
+    - Unioning without checking whether the two elements already share a root, double-counting components
+    - Ignoring union by rank/size, leading to a tall skewed tree in adversarial input orders
+    - Off-by-one errors in 1-indexed vs 0-indexed element numbering in the parent array
+    whenNotToUse:
+    - The connectivity structure never changes after being built (a plain graph traversal computed once
+      is simpler)
+    - You need the shortest path between two connected nodes, not just whether they're connected - union-find
+      doesn't track path length
+    problems:
+      number-of-provinces:
+        title: Number of Provinces
+        summary: Count connected components in an undirected graph given as an adjacency matrix.
+        whenToUse: Union every direct connection in the matrix, then count how many distinct roots remain.
+        hints:
+        - Only need to scan the upper (or lower) triangle of the symmetric matrix.
+        - The final answer is the number of elements that are their own root.
+      redundant-connection:
+        title: Redundant Connection
+        summary: Find the edge that can be removed so the graph becomes a tree again (a tree plus one
+          extra edge).
+        whenToUse: Process edges in order; the first edge whose endpoints already share a root is the
+          redundant one.
+        hints:
+        - Union endpoints one edge at a time, in the given input order.
+        - As soon as find(u) == find(v) before unioning, that edge is the answer.
+      accounts-merge:
+        title: Accounts Merge
+        summary: Merge accounts that share emails.
+        whenToUse: Union emails; group by root.
+        hints:
+        - Map email→name
+        - Union consecutive emails in an account
+      number-of-islands-ii:
+        title: Number of Islands II
+        summary: After each land add, return current island count.
+        whenToUse: Online Union-Find as cells become land.
+        hints:
+        - Add land then union 4-neighbors
+        - Increment count on add; decrement on each successful union
+      path-exists:
+        title: Find if Path Exists in Graph
+        summary: Return whether a path exists between source and destination.
+        whenToUse: Union all edges, then check same component.
+        hints:
+        - Union endpoints of each edge
+        - find(source)==find(destination)
+  CUSTOM_DATA_STRUCTURES:
+    title: Custom Data Structures
+    subtitle: Compose well-known building blocks to meet per-operation complexity constraints
+    intuition: Many interview 'design' questions are really asking whether you can decompose a set of
+      required operations and their complexity bounds into a combination of simpler, well-known building
+      blocks - a hash map for O(1) lookup, a doubly linked list for O(1) reordering, a heap for priority
+      access - wired together so each operation only touches the structures it needs.
+    recognition: The question asks you to design a data structure or class supporting multiple operations
+      (get/put, push/pop/getMin, insert/delete/getRandom) under specific time-complexity constraints,
+      such as LRU/LFU caches, min stacks, or time-based key-value stores.
+    walkthrough: 'Start by listing every required operation and its target time complexity exactly as
+      stated in the problem - this list drives every design decision that follows. For each operation,
+      ask which single data structure gives you that complexity for free: O(1) average lookup usually
+      means a hash map, O(1) insertion/removal at both ends usually means a doubly linked list, O(1) access
+      to a minimum/maximum usually means an auxiliary stack or heap. Combine structures so each one is
+      only responsible for the operations it''s naturally good at - for an LRU cache, the hash map gives
+      O(1) lookup by key while the doubly linked list gives O(1) reordering to mark recency, with the
+      map storing direct references to linked-list nodes to avoid any O(n) search. Once the combination
+      handles every listed operation at its required complexity, trace through a short sequence of operations
+      by hand to confirm state stays consistent across the combined structures, especially at edge cases
+      like an empty structure or capacity of one.'
+    telltaleSigns:
+    - '"Design a data structure that supports..." with multiple operations and complexity targets'
+    - LRU/LFU cache, min stack, time-based key-value store, snapshot array
+    - Multiple operations that seemingly need different single data structures at once
+    - Explicit Big-O requirements per operation rather than for the whole algorithm
+    templateSteps:
+    - List every required operation and its target time complexity
+    - For each operation, identify the single structure that gives that complexity naturally
+    - Combine structures so state stays consistent (e.g., map storing references into a linked list)
+    - Wire updates so every operation touches only the structures it actually needs
+    - Trace a short operation sequence by hand, including edge cases (empty, capacity one)
+    commonMistakes:
+    - Using one structure for everything, sacrificing the complexity of at least one required operation
+    - Letting two combined structures drift out of sync (e.g., a map pointing to a stale linked-list node)
+    - Not handling capacity/eviction edge cases (empty structure, at-capacity insert) explicitly
+    - Overcomplicating the design instead of composing well-known building blocks
+    whenNotToUse:
+    - A single existing built-in structure already meets every required operation's complexity
+    - The operations don't actually have meaningfully different complexity needs, so a simpler unified
+      structure suffices
+    problems:
+      min-stack:
+        title: Min Stack
+        summary: Design a stack supporting push, pop, top, and getMin, all in O(1).
+        whenToUse: An auxiliary stack (or encoded value pairs) tracks the running minimum alongside the
+          main stack.
+        hints:
+        - Push the new minimum onto an auxiliary stack every time it changes (or on every push, tracking
+          duplicates).
+        - Pop from both stacks together to keep them in sync.
+      lru-cache:
+        title: LRU Cache
+        summary: Design a cache with O(1) get and put that evicts the least-recently-used entry when full.
+        whenToUse: A hash map for O(1) key lookup, combined with a doubly linked list for O(1) recency
+          reordering.
+        hints:
+        - Store map values as direct references to doubly linked list nodes, not just raw values.
+        - On every get/put, move the touched node to the front (or back) of the list to mark it most-recently-used.
+      time-map:
+        title: Time Based Key-Value Store
+        summary: Store values by timestamp; get latest at or before timestamp.
+        whenToUse: HashMap + binary search on timestamp lists.
+        hints:
+        - Append-only timestamps are sorted
+        - Binary search upper bound
+      lfu-cache:
+        title: LFU Cache
+        summary: O(1) get/put with least-frequently-used eviction (tie → LRU).
+        whenToUse: Maps + freq buckets of doubly linked lists.
+        hints:
+        - Track min frequency
+        - On get bump frequency bucket
+      design-hashmap:
+        title: Design HashMap
+        summary: Implement a simple HashMap without built-in map libraries.
+        whenToUse: Array of buckets + chaining for interview design warmup.
+        hints:
+        - Use an array of linked lists
+        - Hash with key % bucketCount
+  BITWISE:
+    title: Bitwise Manipulation
+    subtitle: Use XOR, shifts, and masks for sets, parity, and constant-space tricks
+    intuition: 'Bit manipulation tricks come from a small set of core identities: XOR-ing a number with
+      itself cancels to zero (useful for finding unpaired elements), shifting left/right multiplies/divides
+      by powers of two, and AND-ing with a mask isolates specific bits or checks flags. Recognizing which
+      identity maps to a problem usually turns an O(n) extra-space solution into an O(1) extra-space one.'
+    recognition: The problem involves finding a single unique element among duplicates, counting set bits,
+      checking whether a number is a power of two, or otherwise hints that a constant-space arithmetic
+      trick exists instead of a hash set or array.
+    walkthrough: 'First identify which bitwise identity applies: if every element appears an even number
+      of times except one, XOR-ing everything together isolates the odd one out, since a XOR a equals
+      zero for any a. If you need to count set bits, remember that n & (n - 1) clears exactly the lowest
+      set bit, so repeating that operation until n becomes zero counts the bits in a number of iterations
+      equal to the popcount. If you need to check a power of two, note that powers of two have exactly
+      one set bit, so n & (n - 1) equal to zero (for positive n) confirms it directly. Once matched, implement
+      it carefully in Java specifically, watching for sign-bit behavior on negative numbers and int overflow,
+      since >> is an arithmetic (sign-extending) shift while >>> is logical - picking the wrong one silently
+      produces incorrect results for negative inputs.'
+    telltaleSigns:
+    - Every element appears in pairs except exactly one (or a similar parity pattern)
+    - Counting set bits ("Hamming weight") or checking powers of two
+    - Generating or iterating over subset bitmasks
+    - A hash set/array solution exists but O(1) extra space is requested or implied
+    templateSteps:
+    - Identify which core bitwise identity fits (XOR cancellation, AND masking, shifting)
+    - Map the problem's requirement to that identity explicitly before coding
+    - Implement carefully, watching Java's signed integers and >> vs >>> behavior
+    - Verify against a small example including negative numbers or edge values (0, Integer.MIN_VALUE)
+    - Fall back to a hash set/array approach if no clean bitwise identity actually fits
+    commonMistakes:
+    - Using >> when >>> (unsigned shift) was needed, or vice versa, breaking negative-number cases
+    - Forgetting operator precedence, mixing bitwise operators with arithmetic ones incorrectly
+    - Assuming a bitwise trick generalizes when the problem's actual constraint doesn't match the identity
+    - Not testing edge cases like 0, negative numbers, or Integer.MIN_VALUE where shifts and masks behave
+      unexpectedly
+    whenNotToUse:
+    - No convenient bit-level identity actually matches the problem's structure - forcing one produces
+      obscure, hard-to-verify code for no real gain
+    - The interviewer or problem cares more about readability than the last constant factor of space,
+      and a hash set is clearer
+    problems:
+      single-number:
+        title: Single Number
+        summary: Every element in an array appears twice except one - find that one.
+        whenToUse: XOR every element together; paired values cancel to zero, leaving only the unpaired
+          one.
+        hints:
+        - a XOR a = 0 and a XOR 0 = a, so pairs vanish regardless of order.
+        - No extra space or sorting is needed - a single pass of XOR suffices.
+      number-of-1-bits:
+        title: Number of 1 Bits
+        summary: Count the number of set bits (Hamming weight) in an integer.
+        whenToUse: n &= n-1 clears the lowest set bit each time, so looping until n is zero counts the
+          bits directly.
+        hints:
+        - Each iteration of n &= (n - 1) removes exactly one set bit.
+        - The loop runs exactly popcount(n) times, which is already efficient without checking every bit
+          position.
+      single-number-ii:
+        title: Single Number II
+        summary: Every element appears thrice except one — find it.
+        whenToUse: Bit counts mod 3, or ones/twos state machine.
+        hints:
+        - Count each bit mod 3
+        - Or maintain ones/twos masks
+      sum-of-two-integers:
+        title: Sum of Two Integers
+        summary: Sum two integers without + or - operators.
+        whenToUse: XOR for sum bits, AND<<1 for carry loop.
+        hints:
+        - a^b sum without carry
+        - (a&b)<<1 is carry
+      reverse-bits:
+        title: Reverse Bits
+        summary: Reverse bits of a 32-bit unsigned integer.
+        whenToUse: Shift/accumulate bit by bit.
+        hints:
+        - Loop 32 times
+        - result = (result<<1) | (n&1); n>>>=1
+      bitwise-and-range:
+        title: Bitwise AND of Numbers Range
+        summary: Bitwise AND of all numbers in [left, right].
+        whenToUse: Shift until left==right to clear differing low bits.
+        hints:
+        - While left < right, right &= right-1 or shift both
+        - Common prefix bits survive
+  MATH_GEOMETRY:
+    title: Math & Geometry
+    subtitle: Number theory and coordinate geometry identities for interviews
+    intuition: A meaningful slice of interview problems are really about knowing a specific mathematical
+      identity or geometric formula rather than a data-structure trick - GCD/LCM relationships, modular
+      arithmetic, prime factorization, or coordinate formulas for area, distance, and rotation. Spotting
+      which identity applies and reducing the problem to it before coding usually saves far more time
+      than debugging an ad hoc numerical approach.
+    recognition: The problem is framed in terms of pure numbers or coordinates rather than a data structure
+      - palindrome numbers, GCD of strings, computing powers efficiently, rectangle/point geometry, or
+      determining whether points form a valid shape.
+    walkthrough: 'Before writing any code, ask whether the problem reduces to a known identity: does it
+      involve divisibility (GCD/LCM), exponentiation (fast power via repeated squaring), modular arithmetic
+      (mod for cycling or overflow avoidance), or coordinate geometry (distance formula, cross product
+      for orientation, shoelace formula for area)? Once identified, reduce the problem statement to that
+      identity explicitly - for example, ''string a is the GCD of two strings'' reduces to checking str1+str2
+      == str2+str1 and then taking the GCD of the two lengths. Implement the identity carefully, paying
+      attention to overflow (use long instead of int for intermediate products), sign handling for negative
+      exponents or coordinates, and edge cases like zero, negative numbers, or degenerate shapes. Finally,
+      verify your formula against two or three hand-computed small examples before trusting it on the
+      full input, since a math-based solution that''s subtly wrong tends to fail silently rather than
+      crash.'
+    telltaleSigns:
+    - Pure number theory or arithmetic framing without a natural data-structure fit
+    - Coordinates, shapes, or geometric relationships between points
+    - Efficient exponentiation, GCD/LCM, or modular arithmetic requirements
+    - Overflow-prone computations that need long/mod handling
+    templateSteps:
+    - Identify the mathematical or geometric identity the problem reduces to
+    - Rewrite the problem statement explicitly in terms of that identity
+    - Implement carefully, watching for overflow (use long) and sign/edge cases
+    - Handle degenerate inputs explicitly (zero, negative values, collinear points)
+    - Verify the formula against a few small hand-computed examples before trusting it
+    commonMistakes:
+    - Integer overflow from not using long for intermediate products or sums
+    - Missing edge cases like zero, negative numbers, or degenerate geometric shapes
+    - Reimplementing a well-known formula (GCD, fast power) incorrectly instead of using the standard
+      recursive/iterative form
+    - Not verifying the derived identity against a small hand-worked example before coding the general
+      case
+    whenNotToUse:
+    - The problem is fundamentally about data organization or search rather than a numeric/geometric identity
+    - A brute-force numeric approach is already fast enough given the input constraints, so a clever identity
+      adds risk without meaningful benefit
+    problems:
+      pow-x-n:
+        title: Pow(x, n)
+        summary: Compute x raised to the power n efficiently using binary exponentiation.
+        whenToUse: Fast power via repeated squaring; halve the exponent each step instead of multiplying
+          n times.
+        hints:
+        - If n is even, x^n = (x*x)^(n/2); if odd, peel off one factor of x first.
+        - Handle negative n by computing 1 / x^(-n), and watch for Integer.MIN_VALUE overflow when negating.
+      gcd-of-strings:
+        title: Greatest Common Divisor of Strings
+        summary: Find the largest string that divides both of two given strings.
+        whenToUse: Check str1+str2 == str2+str1 first, then take the substring of length gcd(len1, len2).
+        hints:
+        - Two strings share a divisor string only if concatenating them in either order gives the same
+          result.
+        - If that check passes, the answer is the prefix of length gcd(str1.length(), str2.length()).
+      sqrt:
+        title: Sqrt(x)
+        summary: Integer square root of x (floor).
+        whenToUse: Binary search on answer space.
+        hints:
+        - Search mid*mid <= x
+        - Watch overflow with long
+      integer-to-roman:
+        title: Integer to Roman
+        summary: Convert integer to Roman numeral.
+        whenToUse: Greedy subtract largest Roman values including subtractives.
+        hints:
+        - Table 1000,900,500,400,...
+        - Append while num >= value
+      max-points-line-math:
+        title: Valid Square
+        summary: Check whether four points form a square.
+        whenToUse: 'Distances: 2 diagonals equal, 4 sides equal, no zero.'
+        hints:
+        - Compute 6 pairwise squared distances
+        - Need 4 equal sides + 2 equal diagonals
+      max-points-on-a-line:
+        title: Max Points on a Line
+        summary: Maximum number of points that lie on the same line.
+        whenToUse: For each origin count slopes with reduced fractions.
+        hints:
+        - Normalize slope by GCD
+        - Handle duplicates and vertical lines
+  SPRING_BOOT_INTERVIEW:
+    title: Spring Boot Interview Lab
+    subtitle: Backend Java topics that appear alongside algorithms in interview loops
+    intuition: 'Java backend interviews increasingly blend classic DSA with practical Spring Boot know-how:
+      can you design a small REST resource, reason about bean lifecycle and scopes, explain when @Transactional
+      actually commits or rolls back, and build concurrency-safe or idempotent behavior for a busy API?
+      This module treats those questions the same way as an algorithm pattern - recognizable, teachable,
+      and practiced with runnable code.'
+    recognition: 'The interview is for a Java/Spring backend role and mixes coding with system-design-lite
+      questions: designing an endpoint, discussing caching/eviction, explaining transaction boundaries,
+      or implementing rate limiting/idempotency for reliability.'
+    walkthrough: 'Treat each backend design question the same way you''d treat an algorithm problem: clarify
+      requirements first (expected request volume, consistency needs, failure modes), then map those requirements
+      onto known Spring/Java building blocks rather than inventing something from scratch. For a rate
+      limiter, recognize it as a token-bucket or sliding-window counter problem and discuss where state
+      lives (in-memory for a single instance, or a shared store like Redis for multiple instances). For
+      idempotency, recognize the need to store a key-to-result mapping with a TTL so retried requests
+      return the original result instead of re-executing a side effect. For questions about @Transactional
+      or bean scopes, be ready to explain the underlying mechanism (proxying, propagation, rollback rules)
+      rather than just naming the annotation. Always connect the concurrency or reliability concern back
+      to a concrete implementation choice - a ConcurrentHashMap, an atomic counter, or a scheduled cleanup
+      task - the same way you''d justify a data structure choice in a pure algorithm interview.'
+    telltaleSigns:
+    - Java backend or Spring-focused interview loop
+    - Mix of "design a small API" system-design-lite with coding
+    - Questions about bean lifecycle, @Transactional, or dependency injection scopes
+    - 'Reliability concerns: idempotency, rate limiting, caching with eviction'
+    templateSteps:
+    - Clarify requirements (scale, consistency, single vs multi-instance) before designing
+    - Map the requirement onto a known building block (token bucket, TTL map, ConcurrentHashMap)
+    - Explain the underlying Spring mechanism, not just the annotation name, when asked
+    - Keep services testable with clear side effects, separated from framework plumbing
+    - Justify concurrency/reliability choices the same way you'd justify a data structure choice
+    commonMistakes:
+    - Naming an annotation (@Transactional, @Cacheable) without explaining the mechanism behind it
+    - Designing for a single instance when the question implies a distributed/multi-instance deployment
+    - Ignoring thread-safety in shared in-memory state (plain HashMap instead of ConcurrentHashMap)
+    - Skipping requirement clarification and jumping straight to an implementation that doesn't match
+      the actual constraints
+    whenNotToUse:
+    - The interview is purely algorithmic with no backend/system-design component (focus on the core DSA
+      patterns instead)
+    - The role doesn't use Spring specifically - the underlying concepts still apply, but framework-specific
+      annotation trivia won't
+    problems:
+      rate-limiter:
+        title: Token Bucket Rate Limiter
+        summary: Allow at most N requests per time window per key using token bucket semantics.
+        whenToUse: A classic API gateway / interview concurrency design question about controlling request
+          rate per client.
+        hints:
+        - Track available tokens and a last-refill timestamp per key.
+        - Refill tokens lazily based on elapsed time instead of running a background timer.
+      idempotency-store:
+        title: Idempotency Key Store
+        summary: Store request results keyed by an idempotency key with TTL semantics so retries are safe.
+        whenToUse: Safe POST retries in payment-like APIs, where re-sending a request must not duplicate
+          a side effect.
+        hints:
+        - Store (result, expiryTimestamp) pairs keyed by the client-supplied idempotency key.
+        - On a repeated key within the TTL window, return the stored result instead of re-executing the
+          operation.
+      circuit-breaker:
+        title: Circuit Breaker
+        summary: Simple circuit breaker with failure threshold and open-state timeout.
+        whenToUse: Protect callers from cascading failures.
+        hints:
+        - Trip open after N failures
+        - After timeout allow trial in HALF_OPEN
+      lru-http-cache:
+        title: HTTP Response Cache
+        summary: TTL cache for idempotent GET responses with capacity eviction.
+        whenToUse: Cache-aside for read-heavy REST endpoints.
+        hints:
+        - Store expiry timestamp
+        - Evict expired on get; LRU when full
+      config-store:
+        title: In-Memory Config Store
+        summary: Thread-safe in-memory configuration key/value store.
+        whenToUse: Simple Spring-style config bean for interviews.
+        hints:
+        - ConcurrentHashMap under the hood
+        - getOrDefault for missing keys
+      request-id-filter:
+        title: Request Id Filter
+        summary: Generate or propagate an X-Request-Id per inbound request and expose it to downstream
+          calls and logs.
+        whenToUse: Every request needs a stable correlation id for tracing across services, whether
+          or not the caller already supplied one.
+        hints:
+        - If the incoming header is present and non-blank, reuse it; otherwise generate a new id.
+        - Store the resolved id somewhere request-scoped so later code can read it without re-threading
+          a parameter.
+      transactional-outbox:
+        title: Transactional Outbox
+        summary: In-memory outbox queue that enqueues events with a DB write and publishes only the
+          ones that are due.
+        whenToUse: Reliably publish an event after a transactional write without a distributed transaction,
+          by writing the event to an outbox table/queue in the same transaction and publishing it separately.
+        hints:
+        - Enqueue stores the event with a status and an eligible-at timestamp instead of publishing
+          immediately.
+        - publishDue scans for PENDING events that are eligible now, hands each to the publisher, then
+          marks it PUBLISHED (or leaves it PENDING to retry if the publisher throws).
+      optimistic-lock-service:
+        title: Optimistic Lock Service
+        summary: Versioned record update that fails when the caller's expected version is stale.
+        whenToUse: Concurrent updates to the same row without taking a database lock, analogous to a
+          JPA @Version column and OptimisticLockException.
+        hints:
+        - Store a version number alongside each record's value; every successful update increments
+          it.
+        - Reject an update whose expected version does not match the stored version instead of overwriting
+          silently.
+      concurrent-login-tracker:
+        title: Concurrent Login Tracker
+        summary: Track active sessions per user and enforce a maximum number of concurrent logins.
+        whenToUse: 'Enforce a "max N devices logged in" policy: a new login should either be rejected
+          or evict the oldest session, depending on policy, once the per-user limit is reached.'
+        hints:
+        - Keep an ordered per-user collection of active session ids so the oldest session is easy to
+          find.
+        - On a new login past the limit, either reject it or evict-and-replace the oldest session depending
+          on the configured policy; make eviction and insertion atomic under one lock per user.
+      sql-injection-safe-query:
+        title: SQL Injection Safe Query Builder
+        summary: Build parameterized query placeholders from a column-to-value map, validating identifiers
+          instead of concatenating raw input.
+        whenToUse: Discuss/implement how a repository layer builds dynamic WHERE clauses safely - validate
+          column names against an allow-list and always bind values as parameters, never string-concatenate
+          them into SQL.
+        hints:
+        - Validate every identifier (column name) against an allow-list pattern before using it in the
+          generated SQL text.
+        - Never inline the value itself - always emit a `?` placeholder and return the value list separately
+          for a PreparedStatement to bind.

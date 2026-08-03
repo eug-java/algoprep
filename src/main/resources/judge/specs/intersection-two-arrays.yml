@@ -1,0 +1,12 @@
+className: Solution
+method: intersection
+params: ["int[]", "int[]"]
+returns: "int[]"
+referenceClass: com.algoprep.patterns.sortsearch.IntersectionTwoArrays
+referenceMethod: intersection
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[4, 9, 5, 9], [9, 4, 9, 8, 4]]
+  - name: case2
+    args: [[1, 2], [3, 4]]

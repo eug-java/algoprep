@@ -1,0 +1,10 @@
+className: Solution
+method: wiggleSort
+params: ["int[]"]
+returns: void
+referenceClass: com.algoprep.patterns.sortsearch.WiggleSort
+referenceMethod: wiggleSort
+referenceStatic: true
+cases:
+  - name: wiggle
+    args: [[3, 5, 2, 1, 6, 4]]

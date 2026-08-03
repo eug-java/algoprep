@@ -1,0 +1,12 @@
+className: Solution
+method: reorganizeString
+params: [String]
+returns: String
+referenceClass: com.algoprep.patterns.topk.ReorganizeString
+referenceMethod: reorganizeString
+referenceStatic: true
+cases:
+  - name: case1
+    args: [aab]
+  - name: case2
+    args: [aaab]

@@ -1,0 +1,10 @@
+className: Solution
+method: minDepth
+params: [TreeNode]
+returns: int
+helpers: [TreeNode]
+cases:
+  - name: example
+    args: [[1, 2, 3, 4]]
+    expected: 2
+...

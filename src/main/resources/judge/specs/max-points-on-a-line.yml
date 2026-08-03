@@ -1,0 +1,16 @@
+className: Solution
+method: maxPoints
+params: ["int[][]"]
+returns: int
+referenceClass: com.algoprep.patterns.math.MaxPointsOnALine
+referenceMethod: maxPoints
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[[1, 1], [2, 2], [3, 3], [4, 4], [1, 2]]]
+  - name: case2
+    args: [[[2, 1], [2, 2], [2, 1], [2, 3], [0, 0]]]
+  - name: case3
+    args: [[]]
+  - name: case4
+    args: [[[5, -1]]]

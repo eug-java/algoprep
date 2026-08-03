@@ -1,0 +1,12 @@
+className: Solution
+method: findCombinations
+params: ["int[]", int]
+returns: "List<List<Integer>>"
+referenceClass: com.algoprep.patterns.backtracking.CombinationSum
+referenceMethod: findCombinations
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[2, 3, 6, 7], 7]
+  - name: case2
+    args: [[2], 1]

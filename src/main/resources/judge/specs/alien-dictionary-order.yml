@@ -1,0 +1,14 @@
+className: Solution
+method: alienOrder
+params: ["String[]"]
+returns: String
+referenceClass: com.algoprep.patterns.topo.AlienDictionaryOrder
+referenceMethod: alienOrder
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[wrt, wrf, er, ett, rftt]]
+  - name: case2
+    args: [[abc, ab]]
+  - name: case3
+    args: [[z, x, z]]

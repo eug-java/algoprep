@@ -1,0 +1,141 @@
+questions:
+  q-rain-water:
+    prompt: >
+      Given elevation heights, compute how much rain water can be trapped between the bars.
+    explanation: >
+      Opposite pointers track left/right max heights while scanning inward — classic Two Pointers.
+  q-min-window:
+    prompt: >
+      Find the smallest substring of s that contains every character of t (including duplicates).
+    explanation: >
+      Expand/shrink a contiguous window while maintaining character need counts — Sliding Window.
+  q-course-order:
+    prompt: >
+      There are n courses with prerequisite pairs. Return a valid order to finish all courses, or detect impossibility.
+    explanation: >
+      Prerequisites form a DAG ordering problem — Topological Sort (and cycle detection).
+  q-median-stream:
+    prompt: >
+      Design a structure that supports inserting numbers and retrieving the running median efficiently.
+    explanation: >
+      Balance a max-heap and min-heap for the two halves — Two Heaps.
+  q-islands:
+    prompt: >
+      Count connected groups of land cells ('1') in a 2D grid of water and land.
+    explanation: >
+      Grid adjacency is an implicit graph; flood-fill each component — Graphs (DFS/BFS).
+  q-lca:
+    prompt: >
+      Find the lowest common ancestor of two nodes in a binary tree (not necessarily a BST).
+    explanation: >
+      Recurse into left/right subtrees and combine results — Tree DFS.
+  q-level-order:
+    prompt: >
+      Return the values of a binary tree grouped level by level from top to bottom.
+    explanation: >
+      Process nodes with a queue one level at a time — Tree BFS.
+  q-word-search-ii:
+    prompt: >
+      Given a board and a dictionary of words, return all words that can be formed by adjacent cells.
+    explanation: >
+      Many prefix queries on a board call for a Trie + DFS pruning.
+  q-merge-intervals:
+    prompt: >
+      Merge all overlapping [start, end] intervals into a minimal non-overlapping list.
+    explanation: >
+      Sort by start and sweep merging overlaps — Intervals.
+  q-n-queens:
+    prompt: >
+      Place n queens on an n×n chessboard so no two share a row, column, or diagonal. Return all boards.
+    explanation: >
+      Explore placements with pruning — Backtracking.
+  q-edit-distance:
+    prompt: >
+      Compute the minimum insert/delete/replace operations to transform word1 into word2.
+    explanation: >
+      Optimal substructure on prefixes — Dynamic Programming.
+  q-first-missing-positive:
+    prompt: >
+      Find the smallest missing positive integer in an unsorted array using constant extra space.
+    explanation: >
+      Place each value v at index v-1 when in range — Cyclic Sort style indexing.
+  q-accounts-merge:
+    prompt: >
+      Merge user accounts that share any email address, returning grouped emails per person.
+    explanation: >
+      Emails are elements to union into connected components — Union Find.
+  q-lru:
+    prompt: >
+      Design a cache with O(1) get/put that evicts the least recently used key when full.
+    explanation: >
+      Combine a hashmap with an ordered list — Custom Data Structures.
+  q-next-greater:
+    prompt: >
+      For each day, how many days until a warmer temperature? Return 0 if none.
+    explanation: >
+      Monotonic stack of unresolved indices — Stacks.
+  q-kth-largest:
+    prompt: >
+      Find the k-th largest element in an unsorted array without fully sorting if possible.
+    explanation: >
+      Maintain a heap of size k — Top K Elements.
+  q-search-rotated:
+    prompt: >
+      Search a target in a rotated sorted array in logarithmic time.
+    explanation: >
+      Decide which half is sorted and discard the other — Modified Binary Search.
+  q-permutations:
+    prompt: >
+      Generate all unique permutations of an array of (possibly duplicate) integers.
+    explanation: >
+      Cascading / backtracking generation of arrangements — Subsets pattern family.
+  q-gas-station:
+    prompt: >
+      On a circular route, find a starting gas station to complete the circuit, or determine it's impossible.
+    explanation: >
+      Local reset of start when tank goes negative — Greedy.
+  q-cycle-list:
+    prompt: >
+      Detect whether a singly linked list contains a cycle using constant extra memory.
+    explanation: >
+      Fast and slow runners meet if a cycle exists — Fast & Slow Pointers.
+  q-subarray-sum-k:
+    prompt: >
+      Count contiguous subarrays whose elements sum to k (array may contain negatives).
+    explanation: >
+      Prefix sums with a frequency map of seen prefixes — Hash Maps.
+  q-majority:
+    prompt: >
+      Find the element that appears more than n/2 times (guaranteed to exist) in linear time and O(1) space.
+    explanation: >
+      Track a candidate and a running count — Knowing What to Track (Boyer-Moore).
+  q-single-number:
+    prompt: >
+      Every number appears twice except one. Find the single number in O(1) space.
+    explanation: >
+      XOR cancels pairs — Bitwise Manipulation.
+  q-pow:
+    prompt: >
+      Compute x raised to the power n efficiently (including negative n).
+    explanation: >
+      Binary exponentiation is a Math technique.
+  q-merge-k-lists:
+    prompt: >
+      Merge k sorted linked lists into one sorted list efficiently.
+    explanation: >
+      Always pull the current minimum among k heads — K-way Merge.
+  q-spiral:
+    prompt: >
+      Return all elements of a matrix in spiral order starting from the top-left.
+    explanation: >
+      Layer/boundary traversal of a grid — Matrices.
+  q-reverse-k-group:
+    prompt: >
+      Reverse nodes of a linked list in groups of k; leftover nodes stay as-is.
+    explanation: >
+      In-place pointer rewiring by groups — In-Place Linked List Manipulation.
+  q-rate-limiter:
+    prompt: >
+      Design an API component that allows at most N requests per client per time window.
+    explanation: >
+      Backend/system design for Spring services — Spring Boot Interview Lab.

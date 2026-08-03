@@ -1,0 +1,11 @@
+className: Solution
+method: lengthOfLongestSubstring
+params: [String]
+returns: int
+cases:
+  - name: repeated
+    args: [aabccbb]
+    expected: 3
+  - name: all-unique
+    args: [abcdef]
+    expected: 6

@@ -1,0 +1,9 @@
+className: Solution
+method: reorderList
+params: [ListNode]
+returns: void
+helpers: [ListNode]
+cases:
+  - name: reorder
+    args: [[1, 2, 3, 4]]
+    expected: [1, 4, 2, 3]

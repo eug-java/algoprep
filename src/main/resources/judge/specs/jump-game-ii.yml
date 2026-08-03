@@ -1,0 +1,14 @@
+className: Solution
+method: countMinJumps
+params: ["int[]"]
+returns: int
+referenceClass: com.algoprep.patterns.greedy.JumpGameII
+referenceMethod: countMinJumps
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[2, 3, 1, 1, 4]]
+  - name: case2
+    args: [[0]]
+  - name: case3
+    args: [[1, 0, 1]]

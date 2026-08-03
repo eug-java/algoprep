@@ -1,0 +1,14 @@
+className: Solution
+method: longestCommonPrefix
+params: ["String[]"]
+returns: String
+referenceClass: com.algoprep.patterns.trie.LongestCommonPrefix
+referenceMethod: longestCommonPrefix
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[flower, flow, flight]]
+  - name: case2
+    args: [[dog, racecar, car]]
+  - name: case3
+    args: [[]]

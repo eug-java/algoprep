@@ -1,0 +1,12 @@
+className: Solution
+method: minExtraChar
+params: [String, "String[]"]
+returns: int
+referenceClass: com.algoprep.patterns.trie.ExtraCharacters
+referenceMethod: minExtraChar
+referenceStatic: true
+cases:
+  - name: case1
+    args: [leetscode, [leet, code, leetcode]]
+  - name: case2
+    args: [applepenapple, [apple, pen]]

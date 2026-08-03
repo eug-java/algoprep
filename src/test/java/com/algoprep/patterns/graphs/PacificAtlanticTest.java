@@ -1,0 +1,3 @@
+package com.algoprep.patterns.graphs;
+import static org.junit.jupiter.api.Assertions.*; import org.junit.jupiter.api.Test;
+class PacificAtlanticTest { @Test void findsCellsReachingBothOceans() { var result = PacificAtlantic.pacificAtlantic(new int[][] {{1,2,2,3,5},{3,2,3,4,4},{2,4,5,3,1},{6,7,1,4,5},{5,1,1,2,4}}); assertEquals(7, result.size()); assertTrue(result.contains(java.util.List.of(0,4))); assertTrue(result.contains(java.util.List.of(4,0))); } @Test void handlesSingleCell() { assertEquals(java.util.List.of(java.util.List.of(0,0)), PacificAtlantic.pacificAtlantic(new int[][] {{7}})); } }

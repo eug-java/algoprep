@@ -1,0 +1,11 @@
+className: Solution
+method: isValid
+params: [String]
+returns: boolean
+cases:
+  - name: valid
+    args: ["{[]}"]
+    expected: true
+  - name: invalid
+    args: ["([)]"]
+    expected: false

@@ -1,0 +1,12 @@
+className: Solution
+method: isSchedulingPossible
+params: [int, "int[][]"]
+returns: boolean
+referenceClass: com.algoprep.patterns.topo.TasksScheduling
+referenceMethod: isSchedulingPossible
+referenceStatic: true
+cases:
+  - name: case1
+    args: [3, [[0, 1], [1, 2]]]
+  - name: case2
+    args: [3, [[0, 1], [1, 2], [2, 0]]]

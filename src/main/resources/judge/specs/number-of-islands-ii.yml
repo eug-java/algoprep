@@ -1,0 +1,12 @@
+className: Solution
+method: numIslands2
+params: [int, int, "int[][]"]
+returns: "List<Integer>"
+referenceClass: com.algoprep.patterns.unionfind.NumberOfIslandsII
+referenceMethod: numIslands2
+referenceStatic: true
+cases:
+  - name: case1
+    args: [3, 3, [[0, 0], [0, 1], [1, 2], [2, 1], [1, 1]]]
+  - name: case2
+    args: [1, 1, [[0, 0], [0, 0]]]

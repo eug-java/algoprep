@@ -1,0 +1,10 @@
+className: Solution
+method: maxPathSum
+params: [TreeNode]
+returns: int
+helpers: [TreeNode]
+cases:
+  - name: example
+    args: [[1, 2, 3]]
+    expected: 6
+...

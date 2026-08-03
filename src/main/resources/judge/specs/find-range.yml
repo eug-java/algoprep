@@ -1,0 +1,14 @@
+className: Solution
+method: findRange
+params: ["int[]", int]
+returns: "int[]"
+referenceClass: com.algoprep.patterns.binarysearch.FindRange
+referenceMethod: findRange
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[4, 6, 6, 6, 9], 6]
+  - name: case2
+    args: [[1], 2]
+  - name: case3
+    args: [[], 1]

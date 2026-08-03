@@ -1,0 +1,13 @@
+className: Solution
+method: accountsMerge
+params: ["List<List<String>>"]
+returns: "List<List<String>>"
+referenceClass: com.algoprep.patterns.unionfind.AccountsMerge
+referenceMethod: accountsMerge
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[[John, johnsmith@mail.com, john_newyork@mail.com], [John, johnsmith@mail.com, john00@mail.com],
+    [Mary, mary@mail.com]]]
+  - name: case2
+    args: [[[A, a@x], [B, b@x]]]

@@ -1,0 +1,147 @@
+challenges:
+  trap-rain-water:
+    title: Atrapar agua de lluvia
+    prompt: Dados n enteros no negativos que representan un mapa de elevación donde el ancho de cada barra
+      es 1, calcula cuánta agua puede atrapar después de llover. El agua sobre una barra solo se mantiene
+      hasta la altura permitida por la más baja entre la barra más alta a su izquierda y la más alta a
+      su derecha, así que piensa con cuidado qué determina el nivel de agua en cada posición antes de
+      recurrir a un patrón específico.
+    hints:
+    - El agua en el índice i está limitada por la menor entre max-izquierda y max-derecha.
+    - Dos punteros desde ambos extremos pueden rastrear los máximos en curso sin precalcular dos arreglos
+      completos.
+    - Mueve el puntero del lado con el máximo en curso más pequeño, ya que el nivel de agua de ese lado
+      ya está determinado.
+  longest-repeating-replacement:
+    title: Reemplazo más largo de caracteres repetidos
+    prompt: Se te da una cadena s y un entero k. Puedes elegir cualquier carácter de la cadena y cambiarlo
+      por cualquier otra letra mayúscula del inglés, y puedes realizar esta operación como máximo k veces.
+      Devuelve la longitud de la subcadena más larga con la misma letra que puedas obtener tras realizar
+      las operaciones. Piensa qué hace que una ventana de la cadena sea 'alcanzable' con a lo sumo k reemplazos
+      antes de decidir un enfoque.
+    hints:
+    - Una ventana es válida mientras windowLength - maxFrequencyInWindow <= k.
+    - Rastrea un conteo de frecuencia de caracteres en curso mientras se expande el borde derecho de la
+      ventana.
+    - La ventana nunca necesita reducirse por debajo de su tamaño máximo histórico, así que puedes deslizarla
+      en vez de recalcular por completo el borde izquierdo.
+  employee-free-time:
+    title: Tiempo libre de empleados
+    prompt: Se nos da una lista de horarios de empleados, que representa el tiempo de trabajo de cada
+      empleado. Cada empleado tiene una lista de intervalos sin solapamiento, ordenados dentro de su propio
+      horario. Devuelve la lista de intervalos libres comunes finitos para todos los empleados, ordenados
+      por hora de inicio. Considera cómo combinar los horarios de varios empleados en una sola línea de
+      tiempo antes de buscar huecos.
+    hints:
+    - Aplana los intervalos de todos los empleados en una gran lista y luego ordénala por hora de inicio.
+    - Fusiona los intervalos solapados en esa lista combinada de la misma forma que lo harías para un
+      solo horario.
+    - Cualquier hueco entre el fin de un intervalo fusionado y el inicio del siguiente es tiempo libre
+      común.
+  median-of-two-sorted:
+    title: Mediana de dos arreglos ordenados
+    prompt: Dados dos arreglos ordenados nums1 y nums2 de tamaño m y n respectivamente, devuelve la mediana
+      de los dos arreglos ordenados. La complejidad temporal general debe ser O(log (m+n)), lo cual descarta
+      simplemente fusionar los arreglos. Piensa qué propiedad de un punto de partición válido en ambos
+      arreglos te permitiría ubicar la mediana sin fusionarlos por completo.
+    hints:
+    - Aplica búsqueda binaria del punto de partición en el arreglo más corto, no en el más largo, para
+      mantener pequeño el espacio de búsqueda.
+    - Una partición correcta tiene todos los elementos del lado izquierdo <= todos los del lado derecho,
+      combinando ambos arreglos.
+    - Una vez que la partición es correcta, la mediana se obtiene directamente de los cuatro elementos
+      límite alrededor de la partición.
+  word-ladder:
+    title: Escalera de palabras
+    prompt: Una secuencia de transformación de la palabra beginWord a la palabra endWord usando un diccionario
+      wordList es una secuencia de palabras beginWord -> s1 -> s2 -> ... -> sk tal que cada par de palabras
+      adyacentes difiere en una sola letra, y cada palabra intermedia existe en wordList. Devuelve el
+      número de palabras en la secuencia de transformación más corta de beginWord a endWord, o 0 si no
+      existe tal secuencia. Piensa qué implica la relación de 'difiere en una letra' entre palabras sobre
+      la estructura general que las conecta.
+    hints:
+    - Modela cada palabra como un nodo y conecta dos palabras con una arista si difieren en exactamente
+      una letra.
+    - La secuencia de transformación más corta en un grafo no ponderado se encuentra con BFS, no con DFS.
+    - Generar todas las variaciones de una letra de la palabra actual (en vez de comparar contra cada
+      palabra del diccionario) mantiene cada paso eficiente.
+  serialize-binary-tree:
+    title: Serializar y deserializar árbol binario
+    prompt: Diseña un algoritmo para serializar y deserializar un árbol binario. No hay restricción sobre
+      cómo funciona tu algoritmo de serialización/deserialización -solo necesitas asegurar que un árbol
+      binario pueda serializarse a una cadena y que esa cadena pueda deserializarse de vuelta a la estructura
+      de árbol original. Piensa qué orden de recorrido preserva suficiente información estructural para
+      reconstruir el árbol sin ambigüedad, incluyendo dónde van los hijos nulos.
+    hints:
+    - Marcadores explícitos de null en la salida serializada permiten que la deserialización sepa exactamente
+      dónde termina cada subárbol.
+    - Un recorrido por niveles (o preorden) que incluya marcadores para hijos nulos puede reconstruirse
+      sin ninguna ambigüedad.
+    - Durante la deserialización, procesa los tokens en el mismo orden en que se produjeron, reconstruyendo
+      los enlaces padre-hijo a medida que consumes marcadores.
+  largest-rectangle-histogram:
+    title: Rectángulo más grande en un histograma
+    prompt: Dado un arreglo de enteros heights que representa las alturas de las barras de un histograma
+      donde el ancho de cada barra es 1, devuelve el área del rectángulo más grande que se puede formar
+      dentro del histograma. Piensa, para cada barra, hasta dónde podría extenderse a la izquierda y derecha
+      mientras siga siendo la barra más baja en ese tramo, en vez de verificar directamente cada rectángulo
+      posible.
+    hints:
+    - Para cada barra, el rectángulo más grande usándola como la más baja se extiende hasta la primera
+      barra más baja a cada lado.
+    - Una pila monótona creciente de índices te permite encontrar, para la barra que se extrae, exactamente
+      dónde están esos límites.
+    - Al extraer una barra porque aparece una más baja, el ancho abarca desde la nueva cima de la pila
+      (exclusiva) hasta el índice actual (exclusivo).
+  alien-dictionary:
+    title: Diccionario alienígena
+    prompt: Existe un nuevo idioma alienígena que usa el alfabeto inglés, pero el orden entre las letras
+      te es desconocido. Se te da una lista de palabras del diccionario de ese idioma, ordenadas lexicográficamente
+      según las reglas de este nuevo idioma. Deriva el orden de las letras en este idioma a partir de
+      esa lista de palabras. Si el orden es inválido, devuelve una cadena vacía; si existen múltiples
+      órdenes válidos, devuelve cualquiera de ellos. Piensa qué te puede decir comparar cada par de palabras
+      adyacentes sobre el orden de letras individuales.
+    hints:
+    - Compara cada par de palabras adyacentes carácter por carácter para hallar la primera posición donde
+      difieren.
+    - Ese primer par de caracteres distintos te da una arista de 'va antes de' entre dos letras.
+    - Una vez recolectadas todas las aristas, un ordenamiento topológico sobre las 26 letras (solo las
+      presentes) da un orden válido.
+
+  sliding-window-maximum:
+    title: Máximo en ventana deslizante
+    prompt: >
+      Dado un array nums y una ventana de tamaño k que se mueve de izquierda a derecha, devuelve el máximo
+      de cada posición de la ventana. Un escaneo anidado es demasiado lento; piensa cómo reutilizar trabajo
+      al deslizar.
+    hints:
+    - Una deque monótona decreciente de índices guarda candidatos al máximo.
+    - Elimina índices fuera de la ventana por el frente; valores menores por atrás antes de insertar.
+    - El frente de la deque es siempre el índice del máximo actual.
+  word-break-ii:
+    title: Word Break II
+    prompt: >
+      Dada una cadena s y un diccionario wordDict, inserta espacios en s para formar frases donde cada
+      palabra esté en el diccionario. Devuelve todas las frases posibles en cualquier orden.
+    hints:
+    - Haz backtracking sobre cortes; solo recurre si el prefijo está en el diccionario.
+    - Memoiza índices de inicio fallidos para no reexplorar el mismo sufijo.
+    - Une las palabras con espacios solo al llegar al final de s.
+  russian-doll-envelopes:
+    title: Sobres matrioska
+    prompt: >
+      Dados sobres [wi, hi], uno cabe en otro solo si ancho y alto son estrictamente mayores. Devuelve
+      el máximo número de sobres anidados. No se permite rotar.
+    hints:
+    - Ordena por ancho ascendente y alto descendente para que anchos iguales no aniden.
+    - La respuesta es la LIS sobre las alturas tras esa ordenación.
+    - Búsqueda binaria sobre tails da LIS en O(n log n).
+  minimum-window-subsequence:
+    title: Ventana mínima como subsecuencia
+    prompt: >
+      Dadas s y t, devuelve la ventana contigua mínima de s tal que t sea subsecuencia de esa ventana.
+      Si no existe, cadena vacía; si hay varias, la más a la izquierda.
+    hints:
+    - Avanza hasta cubrir t como subsecuencia y luego encoge hacia atrás al inicio más temprano válido.
+    - Guarda la ventana más corta y luego la más a la izquierda.
+    - Un barrido de dos pasadas evita una tabla DP completa cuando m es pequeño.

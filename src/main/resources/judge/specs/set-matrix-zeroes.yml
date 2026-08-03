@@ -1,0 +1,11 @@
+className: Solution
+method: setZeroes
+params: ["int[][]"]
+returns: void
+referenceClass: com.algoprep.patterns.matrices.SetMatrixZeroes
+referenceMethod: setZeroes
+referenceStatic: true
+cases:
+  - name: zero
+    args: [[[1, 1, 1], [1, 0, 1], [1, 1, 1]]]
+    expected: [[1, 0, 1], [0, 0, 0], [1, 0, 1]]

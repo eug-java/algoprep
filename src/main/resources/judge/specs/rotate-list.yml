@@ -1,0 +1,9 @@
+className: Solution
+method: rotateRight
+params: [ListNode, int]
+returns: ListNode
+helpers: [ListNode]
+cases:
+  - name: rotate
+    args: [[1, 2, 3, 4, 5], 2]
+    expected: [4, 5, 1, 2, 3]

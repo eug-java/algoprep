@@ -1,0 +1,12 @@
+className: Solution
+method: findPermutations
+params: ["int[]"]
+returns: "List<List<Integer>>"
+referenceClass: com.algoprep.patterns.subsets.Permutations
+referenceMethod: findPermutations
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[1, 2, 3]]
+  - name: case2
+    args: [[]]

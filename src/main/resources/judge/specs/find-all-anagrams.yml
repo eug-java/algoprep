@@ -1,0 +1,14 @@
+className: Solution
+method: findAnagrams
+params: [String, String]
+returns: "List<Integer>"
+referenceClass: com.algoprep.patterns.slidingwindow.FindAllAnagrams
+referenceMethod: findAnagrams
+referenceStatic: true
+cases:
+  - name: case1
+    args: [cbaebabacd, abc]
+  - name: case2
+    args: [abab, ab]
+  - name: case3
+    args: [a, '']

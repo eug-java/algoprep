@@ -1,0 +1,14 @@
+className: Solution
+method: search
+params: ["int[]", int]
+returns: int
+referenceClass: com.algoprep.patterns.binarysearch.OrderAgnosticBinarySearch
+referenceMethod: search
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[4, 6, 10], 10]
+  - name: case2
+    args: [[10, 6, 4], 4]
+  - name: case3
+    args: [[], 1]

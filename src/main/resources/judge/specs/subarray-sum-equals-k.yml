@@ -1,0 +1,12 @@
+className: Solution
+method: findSubarrayCount
+params: ["int[]", int]
+returns: int
+referenceClass: com.algoprep.patterns.hashmaps.SubarraySumEqualsK
+referenceMethod: findSubarrayCount
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[1, 1, 1], 2]
+  - name: case2
+    args: [[1, -1, 0], 0]

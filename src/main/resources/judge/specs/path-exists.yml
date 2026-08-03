@@ -1,0 +1,14 @@
+className: Solution
+method: validPath
+params: [int, "int[][]", int, int]
+returns: boolean
+referenceClass: com.algoprep.patterns.unionfind.PathExists
+referenceMethod: validPath
+referenceStatic: true
+cases:
+  - name: case1
+    args: [6, [[0, 1], [1, 2], [2, 5], [3, 4]], 0, 5]
+  - name: case2
+    args: [4, [[0, 1], [2, 3]], 0, 3]
+  - name: case3
+    args: [1, [], 0, 0]

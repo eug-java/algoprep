@@ -1,0 +1,12 @@
+className: Solution
+method: criticalConnections
+params: [int, "List<List<Integer>>"]
+returns: "List<List<Integer>>"
+referenceClass: com.algoprep.patterns.graphs.CriticalConnections
+referenceMethod: criticalConnections
+referenceStatic: true
+cases:
+  - name: case1
+    args: [4, [[0, 1], [1, 2], [2, 0], [1, 3]]]
+  - name: case2
+    args: [3, [[0, 1], [1, 2], [2, 0]]]

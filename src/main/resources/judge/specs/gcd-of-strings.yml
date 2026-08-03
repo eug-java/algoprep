@@ -1,0 +1,12 @@
+className: Solution
+method: gcdOfStrings
+params: [String, String]
+returns: String
+referenceClass: com.algoprep.patterns.math.GcdOfStrings
+referenceMethod: gcdOfStrings
+referenceStatic: true
+cases:
+  - name: case1
+    args: [ABCABC, ABC]
+  - name: case2
+    args: [LEET, CODE]

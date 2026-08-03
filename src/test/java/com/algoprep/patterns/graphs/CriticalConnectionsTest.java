@@ -1,0 +1,3 @@
+package com.algoprep.patterns.graphs;
+import static org.junit.jupiter.api.Assertions.*; import org.junit.jupiter.api.Test;
+class CriticalConnectionsTest { @Test void findsBridgeOutsideCycle() { var bridges = CriticalConnections.criticalConnections(4, java.util.List.of(java.util.List.of(0,1), java.util.List.of(1,2), java.util.List.of(2,0), java.util.List.of(1,3))); assertEquals(java.util.List.of(java.util.List.of(1,3)), bridges); } @Test void findsNoBridgeInCycle() { assertTrue(CriticalConnections.criticalConnections(3, java.util.List.of(java.util.List.of(0,1), java.util.List.of(1,2), java.util.List.of(2,0))).isEmpty()); } }

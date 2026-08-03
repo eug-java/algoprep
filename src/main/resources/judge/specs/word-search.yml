@@ -1,0 +1,12 @@
+className: Solution
+method: exist
+params: ["char[][]", String]
+returns: boolean
+referenceClass: com.algoprep.patterns.backtracking.WordSearch
+referenceMethod: exist
+referenceStatic: true
+cases:
+  - name: found
+    args: [[ABCE, SFCS, ADEE], ABCCED]
+  - name: missing
+    args: [[ABCE, SFCS, ADEE], ABCB]

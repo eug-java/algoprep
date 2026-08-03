@@ -1,0 +1,14 @@
+className: Solution
+method: validSquare
+params: ["int[]", "int[]", "int[]", "int[]"]
+returns: boolean
+referenceClass: com.algoprep.patterns.math.ValidSquare
+referenceMethod: validSquare
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[0, 1], [1, 0], [0, -1], [-1, 0]]
+  - name: case2
+    args: [[0, 0], [2, 0], [2, 1], [0, 1]]
+  - name: case3
+    args: [[0, 0], [0, 0], [1, 1], [1, -1]]

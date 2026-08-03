@@ -1,0 +1,14 @@
+className: Solution
+method: findLength
+params: [String, int]
+returns: int
+referenceClass: com.algoprep.patterns.slidingwindow.LongestSubstringKDistinct
+referenceMethod: findLength
+referenceStatic: true
+cases:
+  - name: case1
+    args: [araaci, 2]
+  - name: case2
+    args: [abc, 0]
+  - name: case3
+    args: ['', 2]

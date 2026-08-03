@@ -1,0 +1,12 @@
+className: Solution
+method: searchMatrix
+params: ["int[][]", int]
+returns: boolean
+referenceClass: com.algoprep.patterns.matrices.Search2DMatrix
+referenceMethod: searchMatrix
+referenceStatic: true
+cases:
+  - name: found
+    args: [[[1, 4, 7, 11], [2, 5, 8, 12], [3, 6, 9, 16]], 8]
+  - name: missing
+    args: [[[1, 4, 7, 11], [2, 5, 8, 12], [3, 6, 9, 16]], 10]

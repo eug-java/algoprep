@@ -1,0 +1,12 @@
+className: Solution
+method: getSum
+params: [int, int]
+returns: int
+referenceClass: com.algoprep.patterns.bitwise.SumOfTwoIntegers
+referenceMethod: getSum
+referenceStatic: true
+cases:
+  - name: case1
+    args: [1, 2]
+  - name: case2
+    args: [-2, 3]

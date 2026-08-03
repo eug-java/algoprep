@@ -1,0 +1,3 @@
+package com.algoprep.patterns.spring;
+import static org.junit.jupiter.api.Assertions.*; import java.time.Duration; import org.junit.jupiter.api.Test;
+class HttpResponseCacheTest { @Test void evictsLeastRecentlyUsedEntry(){HttpResponseCache cache=new HttpResponseCache(2);cache.put("a","A",Duration.ofSeconds(1));cache.put("b","B",Duration.ofSeconds(1));assertEquals("A",cache.get("a"));cache.put("c","C",Duration.ofSeconds(1));assertNull(cache.get("b"));assertEquals("A",cache.get("a"));} @Test void expiresEntries(){HttpResponseCache cache=new HttpResponseCache(1);cache.put("a","A",Duration.ZERO);assertNull(cache.get("a"));} }

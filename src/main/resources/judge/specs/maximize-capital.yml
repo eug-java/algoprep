@@ -1,0 +1,12 @@
+className: Solution
+method: findMaximumCapital
+params: ["int[]", "int[]", int, int]
+returns: int
+referenceClass: com.algoprep.patterns.twoheaps.MaximizeCapital
+referenceMethod: findMaximumCapital
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[0, 1, 2], [1, 2, 3], 3, 0]
+  - name: case2
+    args: [[1], [5], 2, 0]

@@ -1,0 +1,10 @@
+className: Solution
+method: smallestRange
+params: ["List<List<Integer>>"]
+returns: "int[]"
+referenceClass: com.algoprep.patterns.kwaymerge.SmallestRange
+referenceMethod: smallestRange
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[[4, 10, 15, 24, 26], [0, 9, 12, 20], [5, 18, 22, 30]]]

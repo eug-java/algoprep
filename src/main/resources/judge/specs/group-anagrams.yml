@@ -1,0 +1,12 @@
+className: Solution
+method: group
+params: ["String[]"]
+returns: "List<List<String>>"
+referenceClass: com.algoprep.patterns.sortsearch.GroupAnagrams
+referenceMethod: group
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[eat, tea, tan, ate, nat, bat]]
+  - name: case2
+    args: [['']]

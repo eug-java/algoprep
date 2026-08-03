@@ -1,0 +1,10 @@
+className: Solution
+method: findMajority
+params: ["int[]"]
+returns: int
+referenceClass: com.algoprep.patterns.tracking.MajorityElement
+referenceMethod: findMajority
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[2, 2, 1, 1, 1, 2, 2]]

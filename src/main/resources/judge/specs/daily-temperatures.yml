@@ -1,0 +1,12 @@
+className: Solution
+method: dailyTemperatures
+params: ["int[]"]
+returns: "int[]"
+referenceClass: com.algoprep.patterns.stacks.DailyTemperatures
+referenceMethod: dailyTemperatures
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[73, 74, 75, 71, 69, 72, 76, 73]]
+  - name: case2
+    args: [[80, 70, 60]]

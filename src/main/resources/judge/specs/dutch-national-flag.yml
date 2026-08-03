@@ -1,0 +1,14 @@
+className: Solution
+method: sortColors
+params: ["int[]"]
+returns: void
+referenceClass: com.algoprep.patterns.twopointers.DutchNationalFlag
+referenceMethod: sortColors
+referenceStatic: true
+cases:
+  - name: mixed
+    args: [[1, 0, 2, 1, 0]]
+    expected: [0, 0, 1, 1, 2]
+  - name: sorted
+    args: [[0, 1, 2]]
+    expected: [0, 1, 2]

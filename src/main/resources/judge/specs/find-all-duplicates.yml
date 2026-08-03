@@ -1,0 +1,12 @@
+className: Solution
+method: findNumbers
+params: ["int[]"]
+returns: "List<Integer>"
+referenceClass: com.algoprep.patterns.cyclicsort.FindAllDuplicates
+referenceMethod: findNumbers
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[4, 3, 2, 7, 8, 2, 3, 1]]
+  - name: case2
+    args: [[1, 2, 3]]

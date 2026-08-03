@@ -1,0 +1,12 @@
+className: Solution
+method: firstMissingPositive
+params: ["int[]"]
+returns: int
+referenceClass: com.algoprep.patterns.cyclicsort.FirstMissingPositive
+referenceMethod: firstMissingPositive
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[3, 4, -1, 1]]
+  - name: case2
+    args: [[1, 2, 3]]

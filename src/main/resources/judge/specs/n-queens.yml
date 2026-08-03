@@ -1,0 +1,12 @@
+className: Solution
+method: solveNQueens
+params: [int]
+returns: "List<List<String>>"
+referenceClass: com.algoprep.patterns.backtracking.NQueens
+referenceMethod: solveNQueens
+referenceStatic: true
+cases:
+  - name: case1
+    args: [4]
+  - name: case2
+    args: [1]

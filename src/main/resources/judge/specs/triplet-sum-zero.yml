@@ -1,0 +1,12 @@
+className: Solution
+method: searchTriplets
+params: ["int[]"]
+returns: "List<List<Integer>>"
+referenceClass: com.algoprep.patterns.twopointers.TripletSumToZero
+referenceMethod: searchTriplets
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[-3, 0, 1, 2, -1, 1, -2]]
+  - name: case2
+    args: [[1, 2]]

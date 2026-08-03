@@ -1,0 +1,12 @@
+className: Solution
+method: shortestPathBinaryMatrix
+params: ["int[][]"]
+returns: int
+referenceClass: com.algoprep.patterns.matrices.ShortestPathBinaryMatrix
+referenceMethod: shortestPathBinaryMatrix
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[[0, 1], [1, 0]]]
+  - name: case2
+    args: [[[0, 1], [1, 1]]]

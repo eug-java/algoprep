@@ -1,0 +1,12 @@
+className: Solution
+method: minDistance
+params: [String, String]
+returns: int
+referenceClass: com.algoprep.patterns.dp.EditDistance
+referenceMethod: minDistance
+referenceStatic: true
+cases:
+  - name: case1
+    args: [horse, ros]
+  - name: case2
+    args: ['', abc]

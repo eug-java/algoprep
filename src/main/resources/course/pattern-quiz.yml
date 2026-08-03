@@ -1,0 +1,85 @@
+questions:
+  - id: q-rain-water
+    correctPattern: TWO_POINTERS
+    options: [TWO_POINTERS, SLIDING_WINDOW, DYNAMIC_PROGRAMMING, STACKS]
+  - id: q-min-window
+    correctPattern: SLIDING_WINDOW
+    options: [HASH_MAPS, SLIDING_WINDOW, TWO_POINTERS, TRIE]
+  - id: q-course-order
+    correctPattern: TOPOLOGICAL_SORT
+    options: [GRAPHS, TOPOLOGICAL_SORT, UNION_FIND, BACKTRACKING]
+  - id: q-median-stream
+    correctPattern: TWO_HEAPS
+    options: [TOP_K_ELEMENTS, TWO_HEAPS, SORT_AND_SEARCH, DYNAMIC_PROGRAMMING]
+  - id: q-islands
+    correctPattern: GRAPHS
+    options: [MATRICES, GRAPHS, UNION_FIND, TREE_BFS]
+  - id: q-lca
+    correctPattern: TREE_DFS
+    options: [TREE_BFS, TREE_DFS, GRAPHS, BACKTRACKING]
+  - id: q-level-order
+    correctPattern: TREE_BFS
+    options: [TREE_DFS, TREE_BFS, GRAPHS, STACKS]
+  - id: q-word-search-ii
+    correctPattern: TRIE
+    options: [BACKTRACKING, TRIE, HASH_MAPS, GRAPHS]
+  - id: q-merge-intervals
+    correctPattern: INTERVALS
+    options: [SORT_AND_SEARCH, INTERVALS, TWO_POINTERS, GREEDY]
+  - id: q-n-queens
+    correctPattern: BACKTRACKING
+    options: [DYNAMIC_PROGRAMMING, BACKTRACKING, SUBSETS, GREEDY]
+  - id: q-edit-distance
+    correctPattern: DYNAMIC_PROGRAMMING
+    options: [GREEDY, DYNAMIC_PROGRAMMING, TWO_POINTERS, MATH_GEOMETRY]
+  - id: q-first-missing-positive
+    correctPattern: CYCLIC_SORT
+    options: [HASH_MAPS, CYCLIC_SORT, SORT_AND_SEARCH, BITWISE]
+  - id: q-accounts-merge
+    correctPattern: UNION_FIND
+    options: [GRAPHS, HASH_MAPS, UNION_FIND, CUSTOM_DATA_STRUCTURES]
+  - id: q-lru
+    correctPattern: CUSTOM_DATA_STRUCTURES
+    options: [HASH_MAPS, CUSTOM_DATA_STRUCTURES, STACKS, TOP_K_ELEMENTS]
+  - id: q-next-greater
+    correctPattern: STACKS
+    options: [STACKS, TWO_POINTERS, GREEDY, HASH_MAPS]
+  - id: q-kth-largest
+    correctPattern: TOP_K_ELEMENTS
+    options: [SORT_AND_SEARCH, TOP_K_ELEMENTS, TWO_HEAPS, MODIFIED_BINARY_SEARCH]
+  - id: q-search-rotated
+    correctPattern: MODIFIED_BINARY_SEARCH
+    options: [SORT_AND_SEARCH, MODIFIED_BINARY_SEARCH, TWO_POINTERS, GREEDY]
+  - id: q-permutations
+    correctPattern: SUBSETS
+    options: [BACKTRACKING, SUBSETS, DYNAMIC_PROGRAMMING, GREEDY]
+  - id: q-gas-station
+    correctPattern: GREEDY
+    options: [DYNAMIC_PROGRAMMING, GREEDY, TWO_POINTERS, MATH_GEOMETRY]
+  - id: q-cycle-list
+    correctPattern: FAST_SLOW_POINTERS
+    options: [HASH_MAPS, FAST_SLOW_POINTERS, TWO_POINTERS, CUSTOM_DATA_STRUCTURES]
+  - id: q-subarray-sum-k
+    correctPattern: HASH_MAPS
+    options: [SLIDING_WINDOW, HASH_MAPS, DYNAMIC_PROGRAMMING, TWO_POINTERS]
+  - id: q-majority
+    correctPattern: KNOWING_WHAT_TO_TRACK
+    options: [HASH_MAPS, KNOWING_WHAT_TO_TRACK, SORT_AND_SEARCH, BITWISE]
+  - id: q-single-number
+    correctPattern: BITWISE
+    options: [HASH_MAPS, BITWISE, MATH_GEOMETRY, KNOWING_WHAT_TO_TRACK]
+  - id: q-pow
+    correctPattern: MATH_GEOMETRY
+    options: [BITWISE, MATH_GEOMETRY, DYNAMIC_PROGRAMMING, MODIFIED_BINARY_SEARCH]
+  - id: q-merge-k-lists
+    correctPattern: K_WAY_MERGE
+    options: [TWO_HEAPS, K_WAY_MERGE, SORT_AND_SEARCH, TOP_K_ELEMENTS]
+  - id: q-spiral
+    correctPattern: MATRICES
+    options: [MATRICES, GRAPHS, STACKS, TWO_POINTERS]
+  - id: q-reverse-k-group
+    correctPattern: IN_PLACE_LINKED_LIST
+    options: [FAST_SLOW_POINTERS, IN_PLACE_LINKED_LIST, STACKS, TWO_POINTERS]
+  - id: q-rate-limiter
+    correctPattern: SPRING_BOOT_INTERVIEW
+    options: [CUSTOM_DATA_STRUCTURES, SPRING_BOOT_INTERVIEW, HASH_MAPS, STACKS]

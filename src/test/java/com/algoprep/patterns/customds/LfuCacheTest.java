@@ -1,0 +1,3 @@
+package com.algoprep.patterns.customds;
+import static org.junit.jupiter.api.Assertions.*; import org.junit.jupiter.api.Test;
+class LfuCacheTest { @Test void evictsLeastFrequentlyUsed(){LfuCache cache=new LfuCache(2);cache.put(1,1);cache.put(2,2);assertEquals(1,cache.get(1));cache.put(3,3);assertEquals(-1,cache.get(2));assertEquals(3,cache.get(3));} @Test void usesLruToBreakFrequencyTies(){LfuCache cache=new LfuCache(2);cache.put(1,1);cache.put(2,2);cache.put(3,3);assertEquals(-1,cache.get(1));assertEquals(2,cache.get(2));} @Test void supportsZeroCapacity(){LfuCache cache=new LfuCache(0);cache.put(1,1);assertEquals(-1,cache.get(1));} }

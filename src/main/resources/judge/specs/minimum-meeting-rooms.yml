@@ -1,0 +1,14 @@
+className: Solution
+method: minMeetingRooms
+params: ["Interval[]"]
+returns: int
+helpers: [Interval]
+cases:
+  - name: two-rooms
+    args: [[[1, 4], [2, 5], [7, 9]]]
+    expected: 2
+...
+  - name: empty
+    args: [[]]
+    expected: 0
+...

@@ -1,0 +1,12 @@
+className: Solution
+method: canCompleteCircuit
+params: ["int[]", "int[]"]
+returns: int
+referenceClass: com.algoprep.patterns.greedy.GasStation
+referenceMethod: canCompleteCircuit
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[1, 2, 3, 4, 5], [3, 4, 5, 1, 2]]
+  - name: case2
+    args: [[2, 3, 4], [3, 4, 3]]

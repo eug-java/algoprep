@@ -1,0 +1,14 @@
+className: Solution
+method: combine
+params: [int, int]
+returns: "List<List<Integer>>"
+referenceClass: com.algoprep.patterns.subsets.CombinationsOfSizeK
+referenceMethod: combine
+referenceStatic: true
+cases:
+  - name: case1
+    args: [4, 2]
+  - name: case2
+    args: [3, 0]
+  - name: case3
+    args: [2, 3]

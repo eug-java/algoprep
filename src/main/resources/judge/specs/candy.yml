@@ -1,0 +1,12 @@
+className: Solution
+method: candy
+params: ["int[]"]
+returns: int
+referenceClass: com.algoprep.patterns.greedy.Candy
+referenceMethod: candy
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[1, 0, 2]]
+  - name: case2
+    args: [[1, 2, 2]]

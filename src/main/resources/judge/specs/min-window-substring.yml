@@ -1,0 +1,12 @@
+className: Solution
+method: minWindow
+params: [String, String]
+returns: String
+referenceClass: com.algoprep.patterns.slidingwindow.MinWindowSubstring
+referenceMethod: minWindow
+referenceStatic: true
+cases:
+  - name: case1
+    args: [ADOBECODEBANC, ABC]
+  - name: case2
+    args: [a, aa]

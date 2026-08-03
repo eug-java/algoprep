@@ -1,0 +1,12 @@
+className: Solution
+method: singleNumber
+params: ["int[]"]
+returns: int
+referenceClass: com.algoprep.patterns.bitwise.SingleNumberII
+referenceMethod: singleNumber
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[2, 2, 3, 2]]
+  - name: case2
+    args: [[-7, 4, 4, 4]]

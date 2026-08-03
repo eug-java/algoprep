@@ -1,0 +1,12 @@
+className: Solution
+method: hasPath
+params: [TreeNode, int]
+returns: boolean
+helpers: [TreeNode]
+cases:
+  - name: path-exists
+    args: [[5, 4, 8, 11, null, 13, 4, 7, 2, null, null, null, 1], 22]
+    expected: true
+  - name: path-missing
+    args: [[1, 2, 3], 5]
+    expected: false

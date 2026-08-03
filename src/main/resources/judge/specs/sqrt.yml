@@ -1,0 +1,10 @@
+className: Solution
+method: mySqrt
+params: [int]
+returns: int
+referenceClass: com.algoprep.patterns.math.SqrtX
+referenceMethod: mySqrt
+referenceStatic: true
+cases:
+  - name: case1
+    args: [8]

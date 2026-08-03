@@ -1,0 +1,14 @@
+className: Solution
+method: findMissingNumber
+params: ["int[]"]
+returns: int
+referenceClass: com.algoprep.patterns.cyclicsort.FindMissingNumber
+referenceMethod: findMissingNumber
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[4, 0, 3, 1]]
+  - name: case2
+    args: [[1, 2, 3]]
+  - name: case3
+    args: [[0, 1, 2]]

@@ -1,0 +1,14 @@
+className: Solution
+method: find
+params: [int]
+returns: boolean
+referenceClass: com.algoprep.patterns.fastslow.HappyNumber
+referenceMethod: find
+referenceStatic: true
+cases:
+  - name: case1
+    args: [23]
+  - name: case2
+    args: [12]
+  - name: case3
+    args: [0]

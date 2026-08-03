@@ -1,0 +1,14 @@
+className: Solution
+method: isIsomorphic
+params: [String, String]
+returns: boolean
+referenceClass: com.algoprep.patterns.hashmaps.IsomorphicStrings
+referenceMethod: isIsomorphic
+referenceStatic: true
+cases:
+  - name: case1
+    args: [egg, add]
+  - name: case2
+    args: [foo, bar]
+  - name: case3
+    args: [ab, aa]

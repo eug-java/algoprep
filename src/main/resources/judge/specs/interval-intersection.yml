@@ -1,0 +1,9 @@
+className: Solution
+method: intervalIntersection
+params: ["List<Interval>", "List<Interval>"]
+returns: "List<Interval>"
+helpers: [Interval]
+cases:
+  - name: overlap
+    args: [[[0, 2], [5, 10]], [[1, 5], [8, 12]]]
+    expected: [[1, 2], [5, 5], [8, 10]]

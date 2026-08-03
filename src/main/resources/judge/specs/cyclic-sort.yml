@@ -1,0 +1,11 @@
+className: Solution
+method: sort
+params: ["int[]"]
+returns: void
+referenceClass: com.algoprep.patterns.cyclicsort.CyclicSort
+referenceMethod: sort
+referenceStatic: true
+cases:
+  - name: sort
+    args: [[3, 1, 5, 4, 2]]
+    expected: [1, 2, 3, 4, 5]

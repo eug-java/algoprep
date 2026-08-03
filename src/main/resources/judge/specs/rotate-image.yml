@@ -1,0 +1,11 @@
+className: Solution
+method: rotate
+params: ["int[][]"]
+returns: void
+referenceClass: com.algoprep.patterns.matrices.RotateImage
+referenceMethod: rotate
+referenceStatic: true
+cases:
+  - name: 3x3
+    args: [[[1, 2, 3], [4, 5, 6], [7, 8, 9]]]
+    expected: [[7, 4, 1], [8, 5, 2], [9, 6, 3]]

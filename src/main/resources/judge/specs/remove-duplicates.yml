@@ -1,0 +1,11 @@
+className: Solution
+method: remove
+params: [int[]]
+returns: int
+cases:
+  - name: duplicates
+    args: [[2, 3, 3, 3, 6, 9, 9]]
+    expected: 4
+  - name: all-unique
+    args: [[1, 2, 3]]
+    expected: 3

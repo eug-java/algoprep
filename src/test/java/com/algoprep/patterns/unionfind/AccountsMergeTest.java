@@ -1,0 +1,3 @@
+package com.algoprep.patterns.unionfind;
+import static org.junit.jupiter.api.Assertions.*; import java.util.List; import org.junit.jupiter.api.Test;
+class AccountsMergeTest { @Test void mergesSharedEmails(){var merged=AccountsMerge.accountsMerge(List.of(List.of("John","johnsmith@mail.com","john_newyork@mail.com"),List.of("John","johnsmith@mail.com","john00@mail.com"),List.of("Mary","mary@mail.com")));assertTrue(merged.contains(List.of("John","john00@mail.com","john_newyork@mail.com","johnsmith@mail.com")));assertTrue(merged.contains(List.of("Mary","mary@mail.com")));} @Test void keepsSeparateAccounts(){assertEquals(2,AccountsMerge.accountsMerge(List.of(List.of("A","a@x"),List.of("B","b@x"))).size());} }

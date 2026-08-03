@@ -1,0 +1,10 @@
+className: Solution
+method: findDiameter
+params: [TreeNode]
+returns: int
+helpers: [TreeNode]
+cases:
+  - name: diameter
+    args: [[1, 2, 3, 4, 5]]
+    expected: 3
+...

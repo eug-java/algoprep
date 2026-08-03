@@ -1,0 +1,12 @@
+className: Solution
+method: fourSumCount
+params: ["int[]", "int[]", "int[]", "int[]"]
+returns: int
+referenceClass: com.algoprep.patterns.hashmaps.FourSumII
+referenceMethod: fourSumCount
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[1, 2], [-2, -1], [-1, 2], [0, 2]]
+  - name: case2
+    args: [[0, 0], [0, 0], [0, 0], [0, 0]]

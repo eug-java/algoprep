@@ -1,0 +1,12 @@
+className: Solution
+method: findKthLargest
+params: ["int[]", int]
+returns: int
+referenceClass: com.algoprep.patterns.topk.KthLargest
+referenceMethod: findKthLargest
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[3, 2, 1, 5, 6, 4], 2]
+  - name: case2
+    args: [[1], 0]

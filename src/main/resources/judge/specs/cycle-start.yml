@@ -1,0 +1,9 @@
+className: Solution
+method: findCycleStart
+params: [ListNode]
+returns: ListNode
+helpers: [ListNode]
+cases:
+  - name: acyclic
+    args: [[1, 2]]
+    expected: null

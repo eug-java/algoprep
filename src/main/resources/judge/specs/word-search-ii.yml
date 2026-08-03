@@ -1,0 +1,10 @@
+className: Solution
+method: findWords
+params: ["char[][]", "String[]"]
+returns: "List<String>"
+referenceClass: com.algoprep.patterns.trie.WordSearchII
+referenceMethod: findWords
+referenceStatic: true
+cases:
+  - name: words
+    args: [[oaan, etae, ihkr, iflv], [oath, pea, eat, rain]]

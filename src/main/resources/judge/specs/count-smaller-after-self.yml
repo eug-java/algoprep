@@ -1,0 +1,12 @@
+className: Solution
+method: countSmaller
+params: ["int[]"]
+returns: "List<Integer>"
+referenceClass: com.algoprep.patterns.sortsearch.CountSmallerAfterSelf
+referenceMethod: countSmaller
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[5, 2, 6, 1]]
+  - name: case2
+    args: [[2, 2]]

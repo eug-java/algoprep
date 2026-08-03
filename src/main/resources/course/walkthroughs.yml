@@ -1,0 +1,157 @@
+# ASCII walkthroughs for selected HARD problems (problemId -> multiline string)
+"quadruple-sum": |
+  nums = [1, 0, -1, 0, -2, 2], target = 0
+  sort -> [-2, -1, 0, 0, 1, 2]
+
+  i=0 (-2), j=1 (-1)
+    L=2 (0), R=5 (2)
+    sum=-2-1+0+2=-1 < 0 -> L++
+    L=3 (0), R=5 (2)
+    sum=-2-1+0+2=-1 < 0 -> L++
+    L=4 (1), R=5 (2)
+    sum=-2-1+1+2=0  OK  [-2,-1,1,2]
+
+  Skip duplicate pairs; advance i/j similarly.
+  Result: [[-2,-1,1,2],[-2,0,0,2],[-1,0,0,1]]
+
+"min-window-substring": |
+  s = "ADOBECODEBANC", t = "ABC"
+  need = {A:1, B:1, C:1}, missing = 3
+
+  expand R:
+    A D O B E C ...  -> have A,B,C; missing=0
+    window "ADOBEC" (0..5)
+
+  shrink L while valid:
+    drop A -> missing=1; best still len 6
+  continue...
+    later window "BANC" (9..12) len 4  BEST
+
+  Answer: "BANC"
+
+"minimum-meeting-rooms": |
+  meetings: [0,30], [5,10], [15,20]
+  starts: 0, 5, 15
+  ends:   10, 20, 30
+
+  i/j scan:
+    0 start -> rooms=1 (max=1)
+    5 start -> rooms=2 (max=2)
+   10 end   -> rooms=1
+   15 start -> rooms=2 (max=2)
+   20 end   -> rooms=1
+   30 end   -> rooms=0
+
+  Answer: 2
+
+"merge-k-sorted-lists": |
+  lists: [1,4,5], [1,3,4], [2,6]
+  min-heap seed: (1,a0), (1,b0), (2,c0)
+
+  pop 1(a) -> next push 4(a)
+  pop 1(b) -> next push 3(b)
+  pop 2(c) -> next push 6(c)
+  pop 3(b) -> next push 4(b)
+  ...
+  out: 1 -> 1 -> 2 -> 3 -> 4 -> 4 -> 5 -> 6
+
+"n-queens": |
+  n=4 board, place row by row
+
+  row0: try col0..3
+    place (0,1)
+  row1: attack on 0,1,2? try col3
+    place (1,3)
+  row2: try col0
+    place (2,0)
+  row3: try col2
+    place (3,2)  SOLUTION
+
+  Backtrack when no safe column remains.
+
+"edit-distance": |
+  word1="horse", word2="ros"
+
+  dp table (rows=horse, cols=ros):
+       ''  r  o  s
+  ''    0  1  2  3
+  h     1  1  2  3
+  o     2  2  1  2
+  r     3  2  2  2
+  s     4  3  3  2
+  e     5  4  4  3
+
+  dp[i][j] = replace/insert/delete min
+  Answer: 3  (horse -> rorse -> rose -> ros)
+
+"alien-dictionary-order": |
+  words: ["wrt","wrf","er","ett","rftt"]
+
+  edges from adjacent pairs:
+    t -> f   (wrt < wrf)
+    w -> e   (wrf < er)
+    r -> t   (er < ett)
+    e -> r   (ett < rftt)
+
+  Kahn topo:
+    indeg: w0 e1 r1 t1 f1
+    order seed w -> e -> r -> t -> f
+  Answer: "wertf"
+
+"max-path-sum": |
+  tree (root=-10, left=9, right=20, right.left=15, right.right=7)
+
+  gain(node) = node + max(0, gain(L), gain(R))
+  best through node = node + max(0,L) + max(0,R)
+
+  leaf 15 -> 15, leaf 7 -> 7
+  20: through=20+15+7=42  BEST
+  root: through=-10+9+20 = 19 < 42
+
+  Answer: 42
+
+"lru-cache": |
+  capacity=2
+  put(1,a)  map{1}  list: 1
+  put(2,b)  map{1,2} list: 2-1
+  get(1)    promote 1   list: 1-2
+  put(3,c)  evict 2     list: 3-1
+  get(2)    -1
+  put(4,d)  evict 1     list: 4-3
+  get(1)    -1
+  get(3)    c
+  get(4)    d
+
+"sudoku-solver": |
+  Find first empty cell (r,c)
+  Try digit 1..9 if row/col/box free:
+    board[r][c]=d
+    recurse
+    if fail: board[r][c]='.'  (undo)
+  No empty cells -> solved
+
+  Box index = (r/3)*3 + (c/3)
+
+"word-search-ii": |
+  words=["oath","pea","eat","rain"]
+  board rows share prefix tree (trie)
+
+  DFS from each cell:
+    move to child trie node
+    if node.word: collect and clear (dedupe)
+    mark visited '#', explore 4-dir, restore
+
+  Prune empty trie branches after finds.
+  Answer: ["oath","eat"]
+
+"first-missing-positive": |
+  nums = [3,4,-1,1]  n=4
+  place each x in range at index x-1:
+
+  i=0: 3 -> swap with nums[2] => [-1,4,3,1]
+  i=1: 4 -> swap with nums[3] => [-1,1,3,4]
+       1 -> swap with nums[0] => [1,-1,3,4]
+  i=2,3 already set
+
+  scan: index 1 holds -1 != 2
+  Answer: 2

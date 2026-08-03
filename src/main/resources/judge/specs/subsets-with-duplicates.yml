@@ -1,0 +1,10 @@
+className: Solution
+method: findSubsets
+params: ["int[]"]
+returns: "List<List<Integer>>"
+referenceClass: com.algoprep.patterns.subsets.SubsetsWithDuplicates
+referenceMethod: findSubsets
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[1, 2, 2]]

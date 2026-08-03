@@ -1,0 +1,14 @@
+className: Solution
+method: spiralOrder
+params: ["int[][]"]
+returns: "List<Integer>"
+referenceClass: com.algoprep.patterns.matrices.SpiralOrder
+referenceMethod: spiralOrder
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[[1, 2, 3], [4, 5, 6], [7, 8, 9]]]
+  - name: case2
+    args: [[[1, 2, 3]]]
+  - name: case3
+    args: [[]]

@@ -1,0 +1,14 @@
+className: Solution
+method: rangeBitwiseAnd
+params: [int, int]
+returns: int
+referenceClass: com.algoprep.patterns.bitwise.BitwiseAndRange
+referenceMethod: rangeBitwiseAnd
+referenceStatic: true
+cases:
+  - name: case1
+    args: [5, 7]
+  - name: case2
+    args: [0, 1]
+  - name: case3
+    args: [12, 12]

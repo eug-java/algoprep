@@ -1,0 +1,11 @@
+className: Solution
+method: countWays
+params: [int]
+returns: int
+cases:
+  - name: five-steps
+    args: [5]
+    expected: 8
+  - name: zero-steps
+    args: [0]
+    expected: 1

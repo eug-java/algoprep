@@ -1,0 +1,12 @@
+className: Solution
+method: letterCasePermutation
+params: [String]
+returns: "List<String>"
+referenceClass: com.algoprep.patterns.backtracking.LetterCasePermutation
+referenceMethod: letterCasePermutation
+referenceStatic: true
+cases:
+  - name: case1
+    args: [a1b2]
+  - name: case2
+    args: ['123']

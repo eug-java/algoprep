@@ -1,0 +1,12 @@
+className: Solution
+method: intToRoman
+params: [int]
+returns: String
+referenceClass: com.algoprep.patterns.math.IntegerToRoman
+referenceMethod: intToRoman
+referenceStatic: true
+cases:
+  - name: case1
+    args: [1994]
+  - name: case2
+    args: [58]

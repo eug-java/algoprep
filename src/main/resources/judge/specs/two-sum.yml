@@ -1,0 +1,8 @@
+className: Solution
+method: findPair
+params: [int[], int]
+returns: int[]
+cases:
+  - name: example
+    args: [[2, 7, 11, 15], 9]
+    expected: [0, 1]

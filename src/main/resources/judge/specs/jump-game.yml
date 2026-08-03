@@ -1,0 +1,14 @@
+className: Solution
+method: canJump
+params: ["int[]"]
+returns: boolean
+referenceClass: com.algoprep.patterns.greedy.JumpGame
+referenceMethod: canJump
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[2, 3, 1, 1, 4]]
+  - name: case2
+    args: [[3, 2, 1, 0, 4]]
+  - name: case3
+    args: [[0]]

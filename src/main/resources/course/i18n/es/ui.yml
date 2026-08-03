@@ -1,0 +1,44 @@
+courseDescription: AlgoPrep prepara para entrevistas técnicas mediante patrones reutilizables, no soluciones
+  memorizadas. Cada patrón incluye señales de reconocimiento, una guía paso a paso para aplicarlo en la
+  entrevista, una plantilla en Java, errores comunes y problemas de dificultad creciente respaldados por
+  pruebas JUnit. Recorre la hoja de ruta de cuatro semanas y luego ponte a prueba en el modo 'Challenge
+  Yourself', donde el patrón no se revela de antemano. Un módulo adicional cubre temas de entrevistas
+  de Spring Boot para roles backend en Java.
+weeks:
+  1: Semana 1 — Fundamentos de punteros y heaps
+  2: Semana 2 — Búsqueda, recursión y programación dinámica
+  3: Semana 3 — Grafos, árboles y matrices
+  4: Semana 4 — Seguimiento de estado, diseño, bits y bono Spring Boot
+cheatsheet:
+- q: ¿Subarreglo/subcadena contigua con restricción de suma o de distintos?
+  a: Ventana deslizante
+- q: ¿Arreglo ordenado, necesitas un par/trío con un objetivo, o inversión en el lugar?
+  a: Dos punteros
+- q: ¿Ciclo en lista enlazada, nodo medio, o una secuencia de valores que podría ciclar?
+  a: Punteros rápido y lento
+- q: ¿Necesitas una mediana en curso o equilibrar dos mitades ordenadas de un flujo?
+  a: Dos heaps
+- q: ¿Fusionar varias listas/arreglos ya ordenados, o hallar el k-ésimo entre ellos?
+  a: Fusión de K vías
+- q: ¿Solo necesitas los K elementos superiores/más grandes/pequeños/frecuentes, no todo ordenado?
+  a: Los K elementos principales
+- q: ¿Arreglo ordenado o rotado; necesitas primera/última ocurrencia, o buscar sobre una respuesta?
+  a: Búsqueda binaria modificada
+- q: ¿Generar todos los subconjuntos, permutaciones o combinaciones?
+  a: Subconjuntos
+- q: ¿Una elección localmente óptima, tras ordenar por la clave correcta, nunca parece fallar?
+  a: Técnicas voraces (greedy)
+- q: ¿Necesitas todas las soluciones/tableros válidos vía elegir-explorar-deshacer?
+  a: Backtracking
+- q: ¿Valor/conteo óptimo con subproblemas superpuestos y subestructura óptima?
+  a: Programación dinámica
+- q: ¿Números confinados al rango 1..n; necesitas valores faltantes/duplicados en espacio O(1)?
+  a: Ordenamiento cíclico
+- q: ¿Tareas con prerrequisitos; necesitas un orden válido o detectar un ciclo?
+  a: Ordenamiento topológico
+- q: ¿Grafo explícito o implícito; conectividad, componentes, o camino más corto no ponderado?
+  a: Grafos
+- q: ¿Suma de camino en árbol binario, diámetro, o ancestro común más bajo?
+  a: DFS en árboles
+- q: ¿Verificación rápida de complemento/frecuencia, o conteo por suma de prefijos, en una pasada?
+  a: Mapas hash

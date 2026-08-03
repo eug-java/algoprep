@@ -1,0 +1,12 @@
+className: Solution
+method: findMaxLength
+params: ["int[]"]
+returns: int
+referenceClass: com.algoprep.patterns.hashmaps.ContiguousArray
+referenceMethod: findMaxLength
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[0, 1, 0, 1, 1]]
+  - name: case2
+    args: [[1, 1]]

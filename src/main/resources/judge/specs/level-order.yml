@@ -1,0 +1,12 @@
+className: Solution
+method: traverse
+params: [TreeNode]
+returns: "List<List<Integer>>"
+helpers: [TreeNode]
+cases:
+  - name: example
+    args: [[1, 2, 3, 4, 5]]
+    expected: [[1], [2, 3], [4, 5]]
+  - name: empty
+    args: [null]
+    expected: []

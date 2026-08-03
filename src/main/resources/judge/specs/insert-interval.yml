@@ -1,0 +1,9 @@
+className: Solution
+method: insert
+params: ["List<Interval>", Interval]
+returns: "List<Interval>"
+helpers: [Interval]
+cases:
+  - name: insert
+    args: [[[1, 3], [6, 9]], [2, 5]]
+    expected: [[1, 5], [6, 9]]

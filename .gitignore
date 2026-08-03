@@ -1,0 +1,16 @@
+target/
+data/
+__pycache__/
+*.pyc
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+.vscode/
+*.class
+*.log
+.DS_Store
+*.swp
+.factorypath
+.m2/

@@ -1,0 +1,12 @@
+className: Solution
+method: permuteUnique
+params: ["int[]"]
+returns: "List<List<Integer>>"
+referenceClass: com.algoprep.patterns.subsets.UniquePermutations
+referenceMethod: permuteUnique
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[1, 1, 2]]
+  - name: case2
+    args: [[]]

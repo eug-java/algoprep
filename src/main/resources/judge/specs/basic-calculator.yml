@@ -1,0 +1,12 @@
+className: Solution
+method: calculate
+params: [String]
+returns: int
+referenceClass: com.algoprep.patterns.stacks.BasicCalculator
+referenceMethod: calculate
+referenceStatic: true
+cases:
+  - name: case1
+    args: [(1+(4+5+2)-3)+(6+8)]
+  - name: case2
+    args: [' 2-1 + 2 ']

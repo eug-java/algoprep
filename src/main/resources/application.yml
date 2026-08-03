@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: algoprep
+
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+algoprep:
+  course:
+    title: "AlgoPrep: Grokking Coding Interview Patterns"
+    language: Java
+    version: "1.0.0"
+  sync:
+    dir: ./data/sync
+
+logging:
+  level:
+    com.algoprep: INFO

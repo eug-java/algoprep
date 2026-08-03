@@ -1,0 +1,10 @@
+className: Solution
+method: findCircleNum
+params: ["int[][]"]
+returns: int
+referenceClass: com.algoprep.patterns.unionfind.NumberOfProvinces
+referenceMethod: findCircleNum
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[[1, 1, 0], [1, 1, 0], [0, 0, 1]]]

@@ -1,0 +1,12 @@
+className: Solution
+method: replaceWords
+params: ["List<String>", String]
+returns: String
+referenceClass: com.algoprep.patterns.trie.ReplaceWords
+referenceMethod: replaceWords
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[cat, bat, rat], the cattle was rattled by the battery]
+  - name: case2
+    args: [[cat], hello]

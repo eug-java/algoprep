@@ -1,0 +1,12 @@
+className: Solution
+method: circularArrayLoop
+params: ["int[]"]
+returns: boolean
+referenceClass: com.algoprep.patterns.fastslow.CircularArrayLoop
+referenceMethod: circularArrayLoop
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[1, 2, -1, 2, 2]]
+  - name: case2
+    args: [[2, 1, -1, -2]]

@@ -1,0 +1,14 @@
+className: Solution
+method: canFinish
+params: [int, "int[][]"]
+returns: boolean
+referenceClass: com.algoprep.patterns.topo.CourseSchedule
+referenceMethod: canFinish
+referenceStatic: true
+cases:
+  - name: case1
+    args: [2, [[1, 0]]]
+  - name: case2
+    args: [2, [[1, 0], [0, 1]]]
+  - name: case3
+    args: [3, []]

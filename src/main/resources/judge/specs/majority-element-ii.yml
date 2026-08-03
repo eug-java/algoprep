@@ -1,0 +1,12 @@
+className: Solution
+method: majorityElement
+params: ["int[]"]
+returns: "List<Integer>"
+referenceClass: com.algoprep.patterns.tracking.MajorityElementII
+referenceMethod: majorityElement
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[1, 2, 1, 2, 1, 2, 3]]
+  - name: case2
+    args: [[1, 2, 3, 4]]

@@ -1,0 +1,12 @@
+className: Solution
+method: myPow
+params: [double, int]
+returns: double
+referenceClass: com.algoprep.patterns.math.PowXN
+referenceMethod: myPow
+referenceStatic: true
+cases:
+  - name: case1
+    args: [2, 10]
+  - name: case2
+    args: [2, -2]

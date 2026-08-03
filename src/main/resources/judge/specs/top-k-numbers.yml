@@ -1,0 +1,12 @@
+className: Solution
+method: findKLargestNumbers
+params: ["int[]", int]
+returns: "List<Integer>"
+referenceClass: com.algoprep.patterns.topk.TopKNumbers
+referenceMethod: findKLargestNumbers
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[3, 1, 5, 12, 2, 11], 3]
+  - name: case2
+    args: [[1], 0]

@@ -1,0 +1,12 @@
+className: Solution
+method: suggestedProducts
+params: ["String[]", String]
+returns: "List<List<String>>"
+referenceClass: com.algoprep.patterns.sortsearch.SearchSuggestions
+referenceMethod: suggestedProducts
+referenceStatic: true
+cases:
+  - name: case1
+    args: [[mobile, mouse, moneypot, monitor, mousepad], mouse]
+  - name: case2
+    args: [[bags], box]

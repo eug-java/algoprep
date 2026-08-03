@@ -1,0 +1,12 @@
+className: Solution
+method: decodeString
+params: [String]
+returns: String
+referenceClass: com.algoprep.patterns.stacks.DecodeString
+referenceMethod: decodeString
+referenceStatic: true
+cases:
+  - name: case1
+    args: ['3[a2[c]]']
+  - name: case2
+    args: ['10[a]']

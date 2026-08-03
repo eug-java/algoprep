@@ -1,0 +1,12 @@
+className: Solution
+method: generateParenthesis
+params: [int]
+returns: "List<String>"
+referenceClass: com.algoprep.patterns.subsets.GenerateParentheses
+referenceMethod: generateParenthesis
+referenceStatic: true
+cases:
+  - name: case1
+    args: [3]
+  - name: case2
+    args: [0]

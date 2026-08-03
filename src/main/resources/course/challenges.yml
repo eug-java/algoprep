@@ -1,0 +1,205 @@
+challenges:
+- id: trap-rain-water
+  title: Trapping Rain Water
+  difficulty: HARD
+  prompt: Given n non-negative integers representing an elevation map where the width of each bar is 1,
+    compute how much water it can trap after raining. Water sits above a bar only up to the height allowed
+    by the shorter of the tallest bar to its left and the tallest bar to its right, so think carefully
+    about what determines the water level at each position before reaching for a specific pattern.
+  className: com.algoprep.patterns.challenge.TrapRainWater
+  hiddenPattern: TWO_POINTERS
+  timeComplexity: O(n)
+  spaceComplexity: O(1)
+  hints:
+  - Water at index i is limited by the shorter of max-left and max-right.
+  - Two pointers from both ends can track running maxima without precomputing two full arrays.
+  - Move the pointer on the side with the smaller running maximum, since that side's water level is already
+    determined.
+- id: longest-repeating-replacement
+  title: Longest Repeating Character Replacement
+  difficulty: HARD
+  prompt: You are given a string s and an integer k. You can choose any character of the string and change
+    it to any other uppercase English character, and you may perform this operation at most k times. Return
+    the length of the longest substring containing the same letter you can get after performing the operations.
+    Think about what makes a window of the string 'achievable' with at most k replacements before deciding
+    on an approach.
+  className: com.algoprep.patterns.challenge.LongestRepeatingReplacement
+  hiddenPattern: SLIDING_WINDOW
+  timeComplexity: O(n)
+  spaceComplexity: O(1)
+  hints:
+  - A window is valid while windowLength - maxFrequencyInWindow <= k.
+  - Track a running character frequency count as the window's right edge expands.
+  - The window never needs to shrink below its historical maximum size, so you can slide rather than fully
+    recompute the left edge.
+- id: employee-free-time
+  title: Employee Free Time
+  difficulty: HARD
+  prompt: We are given a list schedule of employees, which represents the working time for each employee.
+    Each employee has a list of non-overlapping Intervals, and these intervals are sorted within each
+    employee's own schedule. Return the list of finite common free intervals for all employees, sorted
+    by start time. Consider how you might combine multiple employees' schedules into a single timeline
+    before looking for gaps.
+  className: com.algoprep.patterns.challenge.EmployeeFreeTime
+  hiddenPattern: INTERVALS
+  timeComplexity: O(n log n)
+  spaceComplexity: O(n)
+  hints:
+  - Flatten every employee's intervals into one big list, then sort by start time.
+  - Merge overlapping intervals across the flattened list the same way you would for a single schedule.
+  - Any gap between the end of one merged interval and the start of the next merged interval is common
+    free time.
+- id: median-of-two-sorted
+  title: Median of Two Sorted Arrays
+  difficulty: HARD
+  prompt: Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the
+    two sorted arrays. The overall runtime complexity should be O(log (m+n)), which rules out simply merging
+    the arrays. Think about what property of a valid partition point across both arrays would let you
+    locate the median without ever fully merging.
+  className: com.algoprep.patterns.challenge.MedianOfTwoSortedArrays
+  hiddenPattern: MODIFIED_BINARY_SEARCH
+  timeComplexity: O(log(min(m,n)))
+  spaceComplexity: O(1)
+  hints:
+  - Binary search the partition point on the shorter array, not the longer one, to keep the search space
+    small.
+  - A correct partition has every element on the left side <= every element on the right side, across
+    both arrays combined.
+  - Once the partition is correct, the median comes directly from the four boundary elements around the
+    partition.
+- id: word-ladder
+  title: Word Ladder
+  difficulty: HARD
+  prompt: A transformation sequence from word beginWord to word endWord using a dictionary wordList is
+    a sequence of words beginWord -> s1 -> s2 -> ... -> sk such that every adjacent pair of words differs
+    by a single letter, and every intermediate word exists in wordList. Return the number of words in
+    the shortest such transformation sequence from beginWord to endWord, or 0 if no such sequence exists.
+    Think about what a 'one letter different' relationship between words implies about the overall structure
+    connecting them.
+  className: com.algoprep.patterns.challenge.WordLadder
+  hiddenPattern: GRAPHS
+  timeComplexity: O(N * L^2)
+  spaceComplexity: O(N * L)
+  hints:
+  - Model each word as a node and connect two words with an edge if they differ by exactly one letter.
+  - The shortest transformation sequence in an unweighted graph is found with BFS, not DFS.
+  - Generating all single-letter variations of the current word (rather than comparing against every dictionary
+    word) keeps each step efficient.
+- id: serialize-binary-tree
+  title: Serialize and Deserialize Binary Tree
+  difficulty: HARD
+  prompt: Design an algorithm to serialize and deserialize a binary tree. There is no restriction on how
+    your serialization/deserialization algorithm works - you just need to ensure a binary tree can be
+    serialized to a string and this string can be deserialized back to the original tree structure. Think
+    about which traversal order preserves enough structural information to rebuild the tree unambiguously,
+    including where null children belong.
+  className: com.algoprep.patterns.challenge.SerializeBinaryTree
+  hiddenPattern: TREE_BFS
+  timeComplexity: O(n)
+  spaceComplexity: O(n)
+  hints:
+  - Explicit null markers in the serialized output let deserialization know exactly where each subtree
+    ends.
+  - A level-order (or preorder) traversal that includes markers for null children can be reconstructed
+    without any ambiguity.
+  - During deserialization, process the tokens in the same order they were produced, rebuilding parent-child
+    links as you consume markers.
+- id: largest-rectangle-histogram
+  title: Largest Rectangle in Histogram
+  difficulty: HARD
+  prompt: Given an array of integers heights representing a histogram's bar heights where the width of
+    each bar is 1, return the area of the largest rectangle that can be formed within the histogram. Think
+    about, for each bar, how far it could extend left and right while still being the shortest bar in
+    that span, rather than checking every possible rectangle directly.
+  className: com.algoprep.patterns.challenge.LargestRectangleHistogram
+  hiddenPattern: STACKS
+  timeComplexity: O(n)
+  spaceComplexity: O(n)
+  hints:
+  - For each bar, the largest rectangle using it as the shortest bar extends until the first shorter bar
+    on each side.
+  - A monotonic increasing stack of indices lets you find, for the bar being popped, exactly where those
+    boundaries are.
+  - When you pop a bar because a shorter one appears, the width spans from the new stack top (exclusive)
+    to the current index (exclusive).
+- id: alien-dictionary
+  title: Alien Dictionary
+  difficulty: HARD
+  prompt: There is a new alien language that uses the English alphabet, but the order among the letters
+    is unknown to you. You are given a list of words from the alien language's dictionary, where the words
+    are sorted lexicographically according to the rules of this new language. Derive the order of letters
+    in this language from that word list. If the order is invalid, return an empty string; if multiple
+    valid orders exist, return any one of them. Think about what comparing each pair of adjacent words
+    can tell you about individual letter ordering.
+  className: com.algoprep.patterns.challenge.AlienDictionary
+  hiddenPattern: TOPOLOGICAL_SORT
+  timeComplexity: O(C)
+  spaceComplexity: O(1) alphabet-bounded
+  hints:
+  - Compare each pair of adjacent words character by character to find the first position where they differ.
+  - That first differing character pair gives you a 'comes before' edge between two letters.
+  - Once all edges are collected, a topological sort over the 26 letters (only those actually present)
+    gives a valid order.
+- id: sliding-window-maximum
+  title: Sliding Window Maximum
+  difficulty: HARD
+  prompt: You are given an array of integers nums and an integer sliding window of size k which is moving
+    from the very left of the array to the very right. You can only see the k numbers in the window. Each
+    time the sliding window moves right by one position, return an array of the maximum value in each window.
+    A nested scan of every window is too slow for interview expectations — think about how to reuse work
+    as the window slides.
+  className: com.algoprep.patterns.challenge.SlidingWindowMaximum
+  hiddenPattern: SLIDING_WINDOW
+  timeComplexity: O(n)
+  spaceComplexity: O(k)
+  hints:
+  - A monotonic decreasing deque of indices keeps candidates for the window maximum.
+  - Drop indices that fall out of the window from the front; drop smaller values from the back before inserting.
+  - The front of the deque is always the index of the current window's maximum.
+- id: word-break-ii
+  title: Word Break II
+  difficulty: HARD
+  prompt: Given a string s and a dictionary of strings wordDict, add spaces in s to construct a sentence
+    where each word is a valid dictionary word. Return all such possible sentences in any order. Note that
+    the same word in the dictionary may be reused multiple times in the segmentation. Before coding, decide
+    how you will explore every valid cut without recomputing dead-end prefixes forever.
+  className: com.algoprep.patterns.challenge.WordBreakII
+  hiddenPattern: BACKTRACKING
+  timeComplexity: O(2^n * n) worst-case
+  spaceComplexity: O(n)
+  hints:
+  - Backtrack over cut positions; only recurse when the current prefix is in the dictionary.
+  - Memoizing failed start indices (or caching sentence lists per index) avoids exploring the same suffix twice.
+  - Join the chosen words with spaces only when you reach the end of s.
+- id: russian-doll-envelopes
+  title: Russian Doll Envelopes
+  difficulty: HARD
+  prompt: You are given a 2D array of integers envelopes where envelopes[i] = [wi, hi] represents the width
+    and the height of an envelope. One envelope can fit into another if and only if both the width and height
+    of one envelope are greater than the other. Return the maximum number of envelopes you can Russian doll
+    (put one inside the other). Rotation is not allowed. Think about how this relates to longest increasing
+    subsequence after a careful sort.
+  className: com.algoprep.patterns.challenge.RussianDollEnvelopes
+  hiddenPattern: DYNAMIC_PROGRAMMING
+  timeComplexity: O(n log n)
+  spaceComplexity: O(n)
+  hints:
+  - Sort by width ascending and height descending so equal widths cannot nest.
+  - The answer is the LIS length on the height sequence after that sort.
+  - Patience-sorting / binary-search tails keeps LIS in O(n log n).
+- id: minimum-window-subsequence
+  title: Minimum Window Subsequence
+  difficulty: HARD
+  prompt: Given strings s and t, return the minimum contiguous window substring of s so that t is a subsequence
+    of that window. If there is no such window, return the empty string. If there are multiple minimum-length
+    windows, return the one with the leftmost starting index. This is not the classic minimum window substring
+    problem — t need not appear as a contiguous block inside the window.
+  className: com.algoprep.patterns.challenge.MinimumWindowSubsequence
+  hiddenPattern: TWO_POINTERS
+  timeComplexity: O(n * m)
+  spaceComplexity: O(1)
+  hints:
+  - Scan forward to find a window that covers t as a subsequence, then shrink from the right by walking
+    backward to the earliest start that still covers t.
+  - Track the best (shortest, then leftmost) window across all such candidates.
+  - Two pointers / two-pass scanning avoids a full DP table when m is small.

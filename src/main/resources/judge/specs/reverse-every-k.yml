@@ -1,0 +1,9 @@
+className: Solution
+method: reverse
+params: [ListNode, int]
+returns: ListNode
+helpers: [ListNode]
+cases:
+  - name: k2
+    args: [[1, 2, 3, 4, 5], 2]
+    expected: [2, 1, 4, 3, 5]

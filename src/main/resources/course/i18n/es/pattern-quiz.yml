@@ -1,0 +1,141 @@
+questions:
+  q-rain-water:
+    prompt: >
+      Dadas las alturas de un relieve, calcula cuánta agua de lluvia puede quedar atrapada entre las barras.
+    explanation: >
+      Dos punteros opuestos rastrean los máximos izquierdo y derecho mientras avanzan hacia el centro — el clásico patrón de dos punteros.
+  q-min-window:
+    prompt: >
+      Encuentra la subcadena más pequeña de s que contenga todos los caracteres de t (incluyendo duplicados).
+    explanation: >
+      Expande y reduce una ventana contigua manteniendo los conteos de caracteres necesarios — Ventana deslizante.
+  q-course-order:
+    prompt: >
+      Hay n cursos con pares de requisitos previos. Devuelve un orden válido para completar todos los cursos, o detecta si es imposible.
+    explanation: >
+      Los requisitos previos forman un problema de ordenamiento en un DAG — Ordenamiento topológico (y detección de ciclos).
+  q-median-stream:
+    prompt: >
+      Diseña una estructura que permita insertar números y obtener la mediana actual de forma eficiente.
+    explanation: >
+      Equilibra un montículo máximo y uno mínimo para las dos mitades — Dos montículos (Two Heaps).
+  q-islands:
+    prompt: >
+      Cuenta los grupos conectados de celdas de tierra ('1') en una cuadrícula 2D de agua y tierra.
+    explanation: >
+      La adyacencia de la cuadrícula es un grafo implícito; recorre cada componente con flood-fill — Grafos (DFS/BFS).
+  q-lca:
+    prompt: >
+      Encuentra el ancestro común más bajo de dos nodos en un árbol binario (no necesariamente un BST).
+    explanation: >
+      Recorre recursivamente los subárboles izquierdo y derecho y combina los resultados — DFS en árboles.
+  q-level-order:
+    prompt: >
+      Devuelve los valores de un árbol binario agrupados nivel por nivel de arriba hacia abajo.
+    explanation: >
+      Procesa los nodos con una cola, un nivel a la vez — BFS en árboles.
+  q-word-search-ii:
+    prompt: >
+      Dado un tablero y un diccionario de palabras, devuelve todas las palabras que se pueden formar con celdas adyacentes.
+    explanation: >
+      Muchas consultas de prefijos sobre un tablero requieren un Trie combinado con poda mediante DFS.
+  q-merge-intervals:
+    prompt: >
+      Combina todos los intervalos [start, end] que se superponen en una lista mínima sin solapamientos.
+    explanation: >
+      Ordena por el inicio y recorre combinando las superposiciones — Intervalos.
+  q-n-queens:
+    prompt: >
+      Coloca n reinas en un tablero n×n de modo que ninguna comparta fila, columna o diagonal. Devuelve todas las configuraciones.
+    explanation: >
+      Explora las colocaciones podando las ramas inválidas — Backtracking.
+  q-edit-distance:
+    prompt: >
+      Calcula el número mínimo de operaciones de inserción, eliminación y reemplazo para transformar word1 en word2.
+    explanation: >
+      Subestructura óptima sobre los prefijos — Programación dinámica.
+  q-first-missing-positive:
+    prompt: >
+      Encuentra el menor entero positivo faltante en un arreglo desordenado usando espacio extra constante.
+    explanation: >
+      Coloca cada valor v en el índice v-1 cuando esté dentro del rango — indexación al estilo Cyclic Sort.
+  q-accounts-merge:
+    prompt: >
+      Combina las cuentas de usuario que comparten alguna dirección de correo, devolviendo los correos agrupados por persona.
+    explanation: >
+      Los correos son elementos que se unen en componentes conectados — Union-Find.
+  q-lru:
+    prompt: >
+      Diseña una caché con get/put en O(1) que expulse la clave usada menos recientemente cuando esté llena.
+    explanation: >
+      Combina una tabla hash con una lista ordenada — Estructuras de datos personalizadas.
+  q-next-greater:
+    prompt: >
+      Para cada día, determina cuántos días faltan hasta que haga más calor. Devuelve 0 si no ocurre.
+    explanation: >
+      Una pila monótona de índices aún sin resolver — Pilas (Stacks).
+  q-kth-largest:
+    prompt: >
+      Encuentra el k-ésimo elemento más grande en un arreglo desordenado, evitando ordenarlo por completo si es posible.
+    explanation: >
+      Mantén un montículo de tamaño k — Top K Elements.
+  q-search-rotated:
+    prompt: >
+      Busca un valor objetivo en un arreglo ordenado y rotado en tiempo logarítmico.
+    explanation: >
+      Determina qué mitad está ordenada y descarta la otra — Búsqueda binaria modificada.
+  q-permutations:
+    prompt: >
+      Genera todas las permutaciones únicas de un arreglo de enteros (posiblemente con duplicados).
+    explanation: >
+      Generación en cascada o mediante backtracking de las disposiciones — familia del patrón Subsets.
+  q-gas-station:
+    prompt: >
+      En una ruta circular, encuentra la gasolinera de partida que permite completar el circuito, o determina que es imposible.
+    explanation: >
+      Reinicio local del punto de partida cuando el tanque se vuelve negativo — Algoritmo voraz (Greedy).
+  q-cycle-list:
+    prompt: >
+      Detecta si una lista enlazada simple contiene un ciclo usando memoria extra constante.
+    explanation: >
+      Los punteros rápido y lento se encuentran si existe un ciclo — Punteros rápido y lento (Fast & Slow).
+  q-subarray-sum-k:
+    prompt: >
+      Cuenta los subarreglos contiguos cuyos elementos suman k (el arreglo puede contener negativos).
+    explanation: >
+      Sumas de prefijos con un mapa de frecuencias de los prefijos vistos — Hash Maps.
+  q-majority:
+    prompt: >
+      Encuentra el elemento que aparece más de n/2 veces (se garantiza que existe) en tiempo lineal y espacio O(1).
+    explanation: >
+      Rastrea un candidato y un contador en ejecución — Saber qué rastrear (Boyer-Moore).
+  q-single-number:
+    prompt: >
+      Cada número aparece dos veces excepto uno. Encuentra ese número usando espacio O(1).
+    explanation: >
+      El XOR cancela los pares — Manipulación de bits (Bitwise).
+  q-pow:
+    prompt: >
+      Calcula x elevado a la potencia n de forma eficiente (incluyendo n negativo).
+    explanation: >
+      La exponenciación binaria es una técnica del patrón de Matemáticas.
+  q-merge-k-lists:
+    prompt: >
+      Combina eficientemente k listas enlazadas ordenadas en una sola lista ordenada.
+    explanation: >
+      Extrae siempre el mínimo actual entre las k cabezas — K-way Merge (fusión de k listas).
+  q-spiral:
+    prompt: >
+      Devuelve todos los elementos de una matriz en orden espiral, comenzando desde la esquina superior izquierda.
+    explanation: >
+      Recorrido de la cuadrícula por capas/bordes — Matrices.
+  q-reverse-k-group:
+    prompt: >
+      Invierte los nodos de una lista enlazada en grupos de k; los nodos sobrantes quedan tal cual.
+    explanation: >
+      Reconexión de punteros en el lugar, por grupos — Manipulación in-place de listas enlazadas.
+  q-rate-limiter:
+    prompt: >
+      Diseña un componente de API que permita como máximo N solicitudes por cliente en una ventana de tiempo.
+    explanation: >
+      Diseño de backend/sistema para servicios Spring — Spring Boot Interview Lab.

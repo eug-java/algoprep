@@ -30,19 +30,19 @@ fi
 
 JAVA_VER="$(java -version 2>&1 | head -n1)"
 echo "→ Java: $JAVA_VER"
-echo "→ Starting AlgoPrep on http://localhost:8080"
-echo "→ UI:     http://localhost:8080"
-echo "→ API:    http://localhost:8080/api/v1/course"
+echo "→ Starting AlgoPrep on http://localhost:18080"
+echo "→ UI:     http://localhost:18080"
+echo "→ API:    http://localhost:18080/api/v1/course"
 echo
 
 # Open browser shortly after boot (best-effort, non-blocking)
 (
   for _ in $(seq 1 60); do
-    if curl -sf "http://localhost:8080/actuator/health" >/dev/null 2>&1; then
+    if curl -sf "http://localhost:18080/actuator/health" >/dev/null 2>&1; then
       if command -v xdg-open >/dev/null 2>&1; then
-        xdg-open "http://localhost:8080" >/dev/null 2>&1 || true
+        xdg-open "http://localhost:18080" >/dev/null 2>&1 || true
       elif command -v open >/dev/null 2>&1; then
-        open "http://localhost:8080" >/dev/null 2>&1 || true
+        open "http://localhost:18080" >/dev/null 2>&1 || true
       fi
       break
     fi

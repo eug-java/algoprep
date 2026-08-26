@@ -18,7 +18,7 @@ COPY --from=build /app/target/algoprep-1.0.0-SNAPSHOT.jar /app/app.jar
 RUN mkdir -p /app/data/sync && chown -R algoprep:algoprep /app
 USER algoprep
 ENV JAVA_OPTS="-Xms128m -Xmx512m"
-EXPOSE 8080
+EXPOSE 18080
 HEALTHCHECK --interval=15s --timeout=5s --retries=10 CMD \
-  curl -fsS http://127.0.0.1:8080/actuator/health || exit 1
+  curl -fsS http://127.0.0.1:18080/actuator/health || exit 1
 ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar /app/app.jar"]

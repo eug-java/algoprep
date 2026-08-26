@@ -8,7 +8,7 @@ Self-contained **Java 21** interview training: reusable problem patterns, runnab
 ./start.sh
 ```
 
-Open [http://localhost:8080](http://localhost:8080).
+Open [http://localhost:18080](http://localhost:18080).
 
 Requirements: **JDK 21+**. `start.sh` auto-detects common OpenJDK 21 installs and sets `JAVA_HOME`.
 
@@ -24,7 +24,7 @@ java -jar target/algoprep-1.0.0-SNAPSHOT.jar
 docker compose up --build
 ```
 
-Same UI at [http://localhost:8080](http://localhost:8080). Sync files persist in the `algoprep-sync` volume.
+Same UI at [http://localhost:18080](http://localhost:18080). Sync files persist in the `algoprep-sync` volume.
 
 Optional harder judge isolation on the **host** (Docker available):
 
@@ -37,7 +37,7 @@ Runs compile+execute inside `eclipse-temurin:21-jdk` with `--network none`, memo
 
 ### Playwright e2e
 
-With the app already on `:8080`:
+With the app already on `:18080`:
 
 ```bash
 cd e2e && npm i && npx playwright install chromium
@@ -127,7 +127,7 @@ Full tables and judge details: [docs/API.md](docs/API.md). Architecture notes: [
 
 `src/main/resources/application.yml`:
 
-- `server.port` — default `8080`
+- `server.port` — default `18080`
 - `algoprep.sync.dir` — sync payload directory (`./data/sync`, gitignored)
 - `algoprep.judge.docker` — optional containerized judge
 - Actuator: `health`, `info` under `/actuator`

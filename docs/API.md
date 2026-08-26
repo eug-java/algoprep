@@ -1,6 +1,6 @@
 # AlgoPrep API
 
-Base URL: `http://localhost:8080`
+Base URL: `http://localhost:18080`
 
 Most course GETs accept `?lang=en|ru|es` (default from server config / client).
 

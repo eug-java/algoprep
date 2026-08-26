@@ -14,9 +14,9 @@
     <groupId>com.algoprep</groupId>
     <artifactId>algoprep</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <name>AlgoPrep — Grokking Coding Interview Patterns (Java)</name>
+    <name>AlgoPrep — Java Interview Patterns</name>
     <description>
-        Pattern-based coding interview course for Java: 28 patterns, runnable solutions, JUnit tests, Spring Boot API + UI.
+        Pattern-based Java interview course: reusable strategies, runnable solutions, JUnit tests, Spring Boot API + UI.
     </description>
 
     <properties>

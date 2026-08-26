@@ -67,10 +67,11 @@ patterns:
       container-with-most-water:
         title: Container With Most Water
         summary: Find two lines that form a container with the max water area.
-        whenToUse: Heights on a line; opposite pointers maximize min(h)*width.
+        whenToUse: Two ends of a height line; area is min(height)*width, so move the shorter pointer inward.
         hints:
-        - Start at both ends
-        - Move the shorter side inward
+        - Start left=0 and right=n-1; the widest container is the first candidate.
+        - Area = min(h[left], h[right]) * (right-left). Track the maximum.
+        - Only advancing the shorter side can improve the min height; advancing the taller side never helps.
       dutch-national-flag:
         title: Dutch National Flag / Sort Colors
         summary: Sort an array of 0/1/2 in-place with one pass.
@@ -88,27 +89,34 @@ patterns:
   FAST_SLOW_POINTERS:
     title: Fast & Slow Pointers
     subtitle: Detect cycles and find midpoints by moving two pointers at different speeds
-    intuition: 'Picture two runners on a track: a fast runner covering two steps for every one step of
-      the slow runner. If the track loops back on itself, the fast runner eventually laps the slow one
-      and they meet - proving a cycle exists without ever counting the track''s length. The same speed
-      trick locates the midpoint of a linked list, because when the fast pointer reaches the end, the
-      slow pointer is standing exactly halfway.'
-    recognition: The problem involves a linked list, or a sequence defined by repeatedly applying a function
-      (like summing squared digits), where you must detect a cycle, find a midpoint, or determine whether
-      a value eventually repeats without knowing the total length up front.
-    walkthrough: Initialize both slow and fast pointers at the head (or starting value), then advance
-      slow by one step and fast by two steps on every iteration. If fast ever reaches null without meeting
-      slow, there is no cycle, so return immediately. If slow and fast meet, a cycle is confirmed - for
-      the 'find the entry point' follow-up, reset one pointer to the head and advance both one step at
-      a time until they meet again, which lands exactly at the cycle's start due to Floyd's algorithm
-      distance math. For midpoint-style problems, simply stop when fast reaches the end; slow is then
-      at the middle, which you can verify against a couple of hand-traced examples.
+    intuition: 'Picture two runners on a track: a fast runner covering two steps for every one step
+      of the slow runner. If the track loops back on itself, the fast runner eventually laps the
+      slow one and they meet - proving a cycle exists without ever counting the track''s length. The
+      same speed trick locates the midpoint of a linked list, because when the fast pointer reaches
+      the end, the slow pointer is standing exactly halfway. In interviews this is the go-to
+      O(1)-space answer whenever a hash set of visited nodes would otherwise work but the
+      interviewer wants constant extra memory.'
+    recognition: The problem involves a linked list, or a sequence defined by repeatedly applying a
+      function (like summing squared digits), where you must detect a cycle, find a midpoint, or
+      determine whether a value eventually repeats without knowing the total length up front.
+    walkthrough: 'Initialize both slow and fast pointers at the head (or starting value), then
+      advance slow by one step and fast by two steps on every iteration. If fast ever reaches null
+      without meeting slow, there is no cycle, so return immediately. If slow and fast meet, a cycle
+      is confirmed - for the ''find the entry point'' follow-up, reset one pointer to the head and
+      advance both one step at a time until they meet again, which lands exactly at the cycle''s
+      start due to Floyd''s algorithm distance math. For midpoint-style problems, simply stop when
+      fast reaches the end; slow is then at the middle, which you can verify against a couple of
+      hand-traced examples. Narrate to your interviewer why the speeds matter: the relative speed of
+      one step per iteration guarantees a meet inside any cycle, and the equal-distance argument
+      after reset is what proves the entry point - sketch that on the whiteboard before coding if
+      the follow-up is asked.'
     telltaleSigns:
     - Cycle detection in a linked list or functional graph
     - Need the middle node without a separate length-counting pass
     - A sequence from repeatedly applying a function (e.g., Happy Number) that may loop forever
     - Checking whether a linked list is a palindrome by reversing its second half
     - Interviewer forbids O(n) extra space for a linked-list problem
+    - Need to split a list into two halves before reversing or weaving them
     templateSteps:
     - Initialize slow = head and fast = head
     - Loop while fast and fast.next are non-null
@@ -120,6 +128,7 @@ patterns:
     - Confusing which pointer ends up at the middle for even- vs odd-length lists
     - Not resetting a pointer to head when the entry point (not just existence) is required
     - Applying fast/slow to a problem that really needs random access (an array fits better)
+    - Advancing both pointers at the same speed by accident, which never proves a cycle
     whenNotToUse:
     - You need indexed/random access to elements, not just sequential traversal
     - The structure has no notion of a 'next' step or speed difference for two pointers to diverge on
@@ -169,31 +178,39 @@ patterns:
   SLIDING_WINDOW:
     title: Sliding Window
     subtitle: Maintain a contiguous window that grows and shrinks to satisfy a constraint
-    intuition: Whenever a problem asks about a contiguous subarray or substring, a brute-force approach
-      recomputes the same overlapping range from scratch for every start index. A sliding window keeps
-      a running window state - a sum, character counts, a distinct-element count - and updates it incrementally
-      as the window's right edge expands and its left edge contracts, turning an O(n^2) or worse scan
-      into a single O(n) pass.
-    recognition: Look for phrasing like longest/shortest/maximum/minimum contiguous subarray or substring,
-      "at most K distinct characters", anagram or permutation existence inside a larger string, or a fixed
-      window size K.
-    walkthrough: Identify what state the window must track - a running sum, a frequency map, or a distinct
-      count - and what condition makes the window valid or invalid. Expand the window by moving the right
-      pointer forward one step at a time, updating the state as each new element enters. Whenever the
-      window becomes invalid (or, for a fixed size, once it reaches size K), shrink from the left, removing
-      elements from the state until the window is valid again, then record the best answer so far. Repeat
-      until the right pointer has swept the entire input, and be explicit with your interviewer about
-      why each element enters and leaves the state exactly once, which is what gives the O(n) bound.
+    intuition: 'Whenever a problem asks about a contiguous subarray or substring, a brute-force
+      approach recomputes the same overlapping range from scratch for every start index. A sliding
+      window keeps a running window state - a sum, character counts, a distinct-element count - and
+      updates it incrementally as the window''s right edge expands and its left edge contracts,
+      turning an O(n^2) or worse scan into a single O(n) pass. The key interview insight is
+      monotonicity of the constraint: once a window is invalid, growing it further cannot help, so
+      you only ever move the left edge forward.'
+    recognition: Look for phrasing like longest/shortest/maximum/minimum contiguous subarray or
+      substring, "at most K distinct characters", anagram or permutation existence inside a larger
+      string, or a fixed window size K.
+    walkthrough: Identify what state the window must track - a running sum, a frequency map, or a
+      distinct count - and what condition makes the window valid or invalid. Expand the window by
+      moving the right pointer forward one step at a time, updating the state as each new element
+      enters. Whenever the window becomes invalid (or, for a fixed size, once it reaches size K),
+      shrink from the left, removing elements from the state until the window is valid again, then
+      record the best answer so far. Repeat until the right pointer has swept the entire input, and
+      be explicit with your interviewer about why each element enters and leaves the state exactly
+      once, which is what gives the O(n) bound. Distinguish fixed-size windows (advance left in
+      lockstep with right) from variable-size ones (shrink only while invalid), and state which
+      answer you update - max length, min length, or a count of valid windows - before coding.
     telltaleSigns:
     - Contiguous subarray or substring (never re-orders elements)
     - Longest / shortest / count-of-windows language
     - A constraint on sum, distinct character count, or a frequency map ("at most K distinct")
     - A fixed window size K stated explicitly in the problem
     - Anagram or permutation detection inside a longer string
+    - Need the minimum window that covers a required multiset of characters
     templateSteps:
-    - Pick the window state to track (sum, frequency map, distinct count) and the validity condition
+    - Pick the window state to track (sum, frequency map, distinct count) and the validity
+      condition
     - Expand the window by moving the right edge forward and updating state
-    - While the window is invalid (or exceeds a fixed size), shrink from the left and update state
+    - While the window is invalid (or exceeds a fixed size), shrink from the left and update
+      state
     - Update the best answer once the window is valid
     - Continue until the right edge has covered the whole input
     commonMistakes:
@@ -201,6 +218,8 @@ patterns:
     - Recomputing the frequency map from scratch instead of updating counts incrementally
     - Off-by-one errors when computing window length (right - left + 1)
     - Forgetting to update the best answer inside the shrink loop, not just after it
+    - Shrinking past validity for "at most K" problems when you should stop as soon as the
+      window is valid again
     whenNotToUse:
     - The subsequence does not need to be contiguous (usually a DP or two-pointer-on-sorted-data problem)
     - The window's validity cannot be checked or updated in O(1) time as elements enter and leave
@@ -231,17 +250,20 @@ patterns:
       longest-no-repeat:
         title: Longest Substring Without Repeating Characters
         summary: Longest substring with all unique characters.
-        whenToUse: Variable window + last-seen index map.
+        whenToUse: Variable window with a last-seen index map so you can jump left past duplicates in O(1).
         hints:
-        - Shrink left when a duplicate enters
-        - Track best window length
+        - Keep a map from character → last index seen inside (or just before) the current window.
+        - When s[right] was seen at index j ≥ left, set left = j+1 so the window stays duplicate-free.
+        - Update best = max(best, right-left+1) after each expansion.
       min-window-substring:
         title: Minimum Window Substring
         summary: Smallest substring of s covering all characters of t.
-        whenToUse: Shrinkable window with need/have counts.
+        whenToUse: Shrinkable window with need/have frequency maps until every required character is satisfied.
         hints:
-        - Expand until valid, then shrink greedily
-        - Track how many required chars are satisfied
+        - Build a need map for t and track how many distinct required characters are currently satisfied.
+        - Expand right until the window is valid (satisfied == need.size), then shrink left while it stays valid.
+        - Whenever the window is valid, compare its length to the best answer and keep the shortest (leftmost on ties if required).
+        - Decrement have counts carefully when shrinking so satisfied drops only when a required count falls below need.
   INTERVALS:
     title: Intervals
     subtitle: Sort by start time and sweep once to merge, insert, or reason about ranges
@@ -299,24 +321,26 @@ patterns:
       conflicting-appointments:
         title: Conflicting Appointments
         summary: Check whether any two appointments in a list overlap.
-        whenToUse: Sort then check each adjacent pair for overlap (the Meeting Rooms I question).
+        whenToUse: Sort by start, then check each adjacent pair — after sorting, only neighbors can overlap.
         hints:
         - After sorting by start, only adjacent pairs can possibly overlap.
-        - An overlap exists as soon as one appointment's start is before the previous one's end.
+        - 'An overlap exists as soon as one appointment''s start is before the previous one''s end.'
       interval-intersection:
         title: Interval List Intersections
         summary: Return intersections of two sorted interval lists.
-        whenToUse: Two-pointer sweep over sorted intervals.
+        whenToUse: Two-pointer sweep over two already-sorted interval lists; emit overlap then advance the one that ends first.
         hints:
-        - Intersection start is max of starts
-        - Advance the list that ends first
+        - Intersection start is max(starts); intersection end is min(ends). Emit only when start < end (or ≤ if inclusive).
+        - Advance the pointer of the interval that ends first — it cannot intersect any later intervals from the other list.
       minimum-meeting-rooms:
         title: Minimum Meeting Rooms
         summary: Find the minimum number of meeting rooms required.
-        whenToUse: Sort starts/ends or use a min-heap of end times.
+        whenToUse: 'Track concurrent meetings: sort by start and keep a min-heap of ongoing end times (or sweep starts/ends).'
         hints:
-        - Sort by start
-        - Heap of ongoing meeting end times
+        - Sort meetings by start time so you always schedule the next earliest meeting.
+        - Keep a min-heap of end times for rooms currently in use; free a room when heap.min ≤ next.start.
+        - If no room is free, allocate one (push the new end). The heap size is the rooms needed so far.
+        - 'Alternatively: sort starts and ends separately and sweep — increment on a start, decrement on an end.'
   IN_PLACE_LINKED_LIST:
     title: In-place Linked List Manipulation
     subtitle: Reverse, reorder, and transform lists with O(1) extra space
@@ -395,39 +419,46 @@ patterns:
     title: Two Heaps
     subtitle: Balance a max-heap and a min-heap for medians and greedy scheduling
     intuition: 'Anything that asks for a running median, or for balancing ''low'' and ''high'' halves
-      of a data stream, becomes simple once you keep two heaps: a max-heap for the smaller half and a
-      min-heap for the larger half. Keeping the two heaps within one element of each other in size means
-      the median is always available at one or both heap tops in O(1).'
-    recognition: Find the median of a number stream arriving one at a time, sliding window median, or
-      scheduling/greedy problems where you must repeatedly pick the best of a 'ready' set gated by what
-      has become available (e.g., maximize capital).
-    walkthrough: 'Maintain a max-heap holding the smaller half of numbers seen so far and a min-heap holding
-      the larger half. When a new number arrives, decide which heap it belongs to by comparing it to the
-      max-heap''s top, insert it there, then rebalance: if one heap has more than one extra element compared
-      to the other, pop its top and push it to the other heap. The median is then either the top of the
-      larger heap (odd total count) or the average of both tops (even count). For sliding window median,
-      additionally track which elements need lazy deletion as the window moves; for ''maximize capital''
-      style problems, use one heap to track what''s currently affordable and another to always pick the
-      most profitable affordable option.'
+      of a data stream, becomes simple once you keep two heaps: a max-heap for the smaller half and
+      a min-heap for the larger half. Keeping the two heaps within one element of each other in size
+      means the median is always available at one or both heap tops in O(1). The same two-heap shape
+      also shows up in greedy scheduling: one heap gates what has become available, the other picks
+      the best option among it.'
+    recognition: 'Find the median of a number stream arriving one at a time, sliding window median,
+      or scheduling/greedy problems where you must repeatedly pick the best of a ''ready'' set gated
+      by what has become available (e.g., maximize capital).'
+    walkthrough: 'Maintain a max-heap holding the smaller half of numbers seen so far and a min-heap
+      holding the larger half. When a new number arrives, decide which heap it belongs to by
+      comparing it to the max-heap''s top, insert it there, then rebalance: if one heap has more
+      than one extra element compared to the other, pop its top and push it to the other heap. The
+      median is then either the top of the larger heap (odd total count) or the average of both tops
+      (even count). State the size invariant out loud before coding - sizes differ by at most one,
+      and every value in the max-heap is ≤ every value in the min-heap. For sliding window median,
+      additionally track which elements need lazy deletion as the window moves; for ''maximize
+      capital'' style problems, use one heap to track what''s currently affordable and another to
+      always pick the most profitable affordable option.'
     telltaleSigns:
     - Need a running / streaming median as elements arrive one at a time
     - Splitting numbers into two ordered halves (smaller half vs larger half)
     - Sliding window median
-    - Scheduling needing "best currently available option" (max heap) gated by "what has become available"
-      (min heap)
+    - Scheduling needing "best currently available option" (max heap) gated by "what has become
+      available" (min heap)
+    - 'Need both "what''s unlocked now" and "best among unlocked" in the same loop'
     templateSteps:
     - Maintain a max-heap for the lower half and a min-heap for the upper half
-    - Insert each new element into the correct heap based on comparison with the max-heap's top
+    - 'Insert each new element into the correct heap based on comparison with the max-heap''s top'
     - Rebalance so heap sizes differ by at most one element
     - Read the median from the top(s) of the heaps in O(1)
-    - For scheduling variants, use one heap to gate availability and one heap to pick the best option
+    - For scheduling variants, use one heap to gate availability and one heap to pick the best
+      option
     commonMistakes:
     - Letting the two heaps drift more than one element apart in size
-    - Comparing the new element to the wrong heap's top when deciding where to insert
-    - Forgetting Java's PriorityQueue is a min-heap by default and needs a custom comparator for max-heap
-      behavior
-    - Not handling lazy deletion correctly in the sliding-window median variant, leaving stale elements
-      in a heap
+    - 'Comparing the new element to the wrong heap''s top when deciding where to insert'
+    - 'Forgetting Java''s PriorityQueue is a min-heap by default and needs a custom comparator
+      for max-heap behavior'
+    - Not handling lazy deletion correctly in the sliding-window median variant, leaving stale
+      elements in a heap
+    - Averaging tops as ints and truncating when the problem expects a double median
     whenNotToUse:
     - You need the full sorted order, not just the median or top elements (a TreeMap fits better)
     - Data doesn't need incremental updates - a one-time sort is simpler than maintaining two heaps
@@ -471,39 +502,45 @@ patterns:
   K_WAY_MERGE:
     title: K-way Merge
     subtitle: Merge multiple sorted inputs using a min-heap of current candidates
-    intuition: 'Merging k already-sorted lists generalizes the two-list merge from merge sort: instead
-      of comparing two heads, keep the current head of every list in a min-heap and always pop the globally
-      smallest one. Because the heap only ever holds k elements at a time, this turns an O(n*k) naive
-      merge into O(n log k).'
-    recognition: Multiple sorted arrays or linked lists need to be combined into one sorted output, or
-      you need the k-th smallest/largest element across several sorted sources, or the smallest range
-      covering at least one element from each list.
-    walkthrough: Push the first element of each of the k sorted lists into a min-heap, tagging each heap
-      entry with which list (and index/node) it came from so you can find its successor. Repeatedly pop
-      the smallest element, append it to your result, and if the list it came from has a next element,
-      push that successor into the heap. Continue until the heap is empty, which guarantees the output
-      is fully sorted because you only ever emit the globally smallest available candidate. For 'kth smallest
-      in sorted matrix' or 'smallest range' variants, treat each row (or list) as one of the k sorted
-      sources and adapt the stopping condition - for smallest range, track the current max across all
-      heap entries and shrink the range every time you pop and refill.
+    intuition: 'Merging k already-sorted lists generalizes the two-list merge from merge sort:
+      instead of comparing two heads, keep the current head of every list in a min-heap and always
+      pop the globally smallest one. Because the heap only ever holds k elements at a time, this
+      turns an O(n*k) naive merge into O(n log k). Say that tradeoff out loud in interviews - you
+      pay log k per emitted element and never need more than k candidates live at once.'
+    recognition: Multiple sorted arrays or linked lists need to be combined into one sorted output,
+      or you need the k-th smallest/largest element across several sorted sources, or the smallest
+      range covering at least one element from each list.
+    walkthrough: 'Push the first element of each of the k sorted lists into a min-heap, tagging each
+      heap entry with which list (and index/node) it came from so you can find its successor.
+      Repeatedly pop the smallest element, append it to your result, and if the list it came from
+      has a next element, push that successor into the heap. Continue until the heap is empty, which
+      guarantees the output is fully sorted because you only ever emit the globally smallest
+      available candidate. For ''kth smallest in sorted matrix'' or ''smallest range'' variants,
+      treat each row (or list) as one of the k sorted sources and adapt the stopping condition - for
+      smallest range, track the current max across all heap entries and shrink the range every time
+      you pop and refill. Always explain why the invariant holds: every unprocessed element is ≥ its
+      list''s current heap entry, so the heap minimum is globally next.'
     telltaleSigns:
     - Multiple sorted arrays, lists, or matrix rows need to be combined
     - Need the k-th smallest/largest element across several sorted sources
     - Smallest range covering at least one element from each of k sorted lists
     - Explicit mention of merging linked lists or sorted streams
+    - Pairing candidates from two sorted arrays by expanding neighbor indices via a heap
     templateSteps:
     - Push the first element of each of the k sources into a min-heap with source metadata
     - Pop the minimum, append it to the result or advance a counter
-    - Push the popped element's successor from its source list, if one exists
+    - 'Push the popped element''s successor from its source list, if one exists'
     - Repeat until the heap empties or the target k-th element is reached
     - Adapt the stopping/tracking condition for range or matrix variants
     commonMistakes:
-    - Forgetting to store which source (list/row/index) a heap entry came from, losing the ability to
-      find its successor
-    - Pushing an entire list into the heap upfront instead of one element at a time (blows up space to
-      O(n))
+    - Forgetting to store which source (list/row/index) a heap entry came from, losing the
+      ability to find its successor
+    - Pushing an entire list into the heap upfront instead of one element at a time (blows up
+      space to O(n))
     - Using the wrong comparator so the heap does not actually pop the global minimum
-    - Off-by-one when converting between a 1-indexed 'k-th smallest' and a zero-indexed pop count
+    - 'Off-by-one when converting between a 1-indexed ''k-th smallest'' and a zero-indexed pop
+      count'
+    - Skipping empty lists when seeding the heap and later NPEing on a null head
     whenNotToUse:
     - Only two lists need merging (a simple two-pointer merge avoids heap overhead)
     - The sources are not sorted and cannot be cheaply sorted first (heap merge relies on local order)
@@ -605,10 +642,11 @@ patterns:
       kth-largest:
         title: Kth Largest Element
         summary: Return the k-th largest element in an unsorted array.
-        whenToUse: Min-heap of size k (or quickselect).
+        whenToUse: Min-heap of size k (interview-safe) or quickselect for average O(n); state the tradeoff out loud.
         hints:
-        - Keep a min-heap of size k
-        - Heap top is the answer
+        - Maintain a min-heap of the k largest values seen so far; the heap top is the current k-th largest.
+        - Push each number; if size exceeds k, poll the smallest — that value can never be the answer.
+        - Quickselect is an average O(n) follow-up; mention worst-case O(n²) unless you add median-of-medians.
       reorganize-string:
         title: Reorganize String
         summary: Rearrange so no two adjacent chars are equal; empty if impossible.
@@ -683,11 +721,14 @@ patterns:
         - Do the same but narrow right for the last position search.
       find-peak-element:
         title: Find Peak Element
-        summary: Return index of any peak element.
-        whenToUse: Binary search toward the greater neighbor.
+        summary: Return the index of any peak — an element strictly greater than its neighbors (ends
+          compare against one neighbor).
+        whenToUse: Binary search on the slope — move toward the greater neighbor, which must contain
+          a peak.
         hints:
-        - If mid < mid+1 go right
-        - Else go left including mid
+        - If nums[mid] < nums[mid+1], a peak exists on the right (search mid+1..hi).
+        - Otherwise a peak exists on the left including mid (search lo..mid).
+        - Any valid peak index is accepted; you do not need the global maximum.
       search-rotated-duplicates:
         title: Search Rotated Array II
         summary: Search target in rotated sorted array that may contain duplicates.
@@ -761,10 +802,11 @@ patterns:
       generate-parentheses:
         title: Generate Parentheses
         summary: All combinations of n pairs of well-formed parentheses.
-        whenToUse: Backtracking / subset-style build with counts.
+        whenToUse: Backtracking with open/close counts — prune any prefix that could never become valid.
         hints:
-        - Add '(' if open < n
-        - Add ')' if close < open
+        - 'Add ''('' only while open_used < n; you never need more opens than n.'
+        - 'Add '')'' only while close_used < open_used; this keeps every prefix balanced.'
+        - Record a string only when open_used == close_used == n. Raw subset generation without these guards explodes and produces invalid strings.
       unique-permutations:
         title: Permutations II
         summary: All unique permutations of an array that may contain duplicates.
@@ -923,11 +965,14 @@ patterns:
         - Build board strings at leaves
       sudoku-solver:
         title: Sudoku Solver
-        summary: Fill a 9×9 sudoku board in-place.
-        whenToUse: Try digits 1-9 with box/row/col constraints.
+        summary: Fill every empty cell of a 9×9 Sudoku board in-place so each row, column, and 3×3
+          box contains digits 1–9 once.
+        whenToUse: Backtracking — try digits 1–9 in the next empty cell, pruning with row/col/box
+          occupancy.
         hints:
-        - Find next empty cell
-        - Check row, column, and 3x3 box
+        - 'Scan for the next ''.'' cell; if none remain, the board is solved.'
+        - Before placing digit d, confirm it is unused in that row, column, and 3×3 box.
+        - 'Place, recurse, then restore ''.'' on failure so sibling branches stay clean.'
       letter-case-permutation:
         title: Letter Case Permutation
         summary: Return all strings formed by toggling letter case.
@@ -1000,18 +1045,24 @@ patterns:
         - Iterate capacity from high to low in the 1D version so each item is only used once.
       coin-change:
         title: Coin Change
-        summary: Fewest coins to make amount, or -1.
-        whenToUse: Unbounded knapsack DP on amount.
+        summary: Return the fewest coins needed to make up amount using unlimited coins of the given
+          denominations, or -1 if impossible.
+        whenToUse: Unbounded-knapsack DP over amounts — for each total, try every coin and keep the
+          minimum count.
         hints:
-        - dp[x] = min over coins of dp[x-c]+1
-        - Init dp[0]=0, others +inf
+        - Let dp[x] be fewest coins for amount x; dp[x] = min(dp[x-c]+1) over coins c ≤ x.
+        - Initialize dp[0]=0 and other entries to a sentinel larger than any valid answer (e.g.
+          amount+1).
+        - After filling, if dp[amount] is still the sentinel, return -1.
       edit-distance:
         title: Edit Distance
-        summary: Minimum insert/delete/replace ops to transform word1 to word2.
-        whenToUse: Classic 2D DP on prefixes.
+        summary: Minimum number of insert, delete, and replace operations to transform word1 into
+          word2.
+        whenToUse: 2D DP on prefixes of both strings (Levenshtein); each cell is insert / delete / replace from neighbors.
         hints:
-        - If chars equal take diagonal
-        - Else 1+min(insert,delete,replace)
+        - 'dp[i][j] is the distance between word1[:i] and word2[:j]; matching chars take the diagonal.'
+        - On mismatch, take 1 + min(insert=dp[i][j-1], delete=dp[i-1][j], replace=dp[i-1][j-1]).
+        - Keep only the previous row to match the O(n) space bound after the 2D recurrence is clear.
   CYCLIC_SORT:
     title: Cyclic Sort
     subtitle: Place each number in range [1..n] at its home index value-1
@@ -1078,17 +1129,19 @@ patterns:
       find-duplicate-number:
         title: Find the Duplicate Number
         summary: Array of n+1 ints in 1..n with one duplicate; find it without modifying.
-        whenToUse: Floyd cycle on index→value graph (or cyclic place).
+        whenToUse: Treat indices→values as a functional graph and find the cycle entrance (Floyd), without modifying the array.
         hints:
-        - Treat as linked list where next = nums[i]
-        - Find cycle entrance
+        - Each index i points to nums[i]; because one value is duplicated, the graph has exactly one cycle.
+        - 'Run Floyd: slow = nums[slow], fast = nums[nums[fast]] until they meet.'
+        - Reset one pointer to the start and advance both one step at a time; the meeting point is the duplicate.
       first-missing-positive:
         title: First Missing Positive
         summary: Smallest missing positive integer in unsorted array.
-        whenToUse: Place each value v at index v-1 when in range.
+        whenToUse: 'In-place placement: put each value v in [1..n] at index v-1, then scan for the first mismatch.'
         hints:
-        - Ignore non-positive and >n
-        - Scan for first index i with nums[i]!=i+1
+        - Ignore non-positive values and values > n — they cannot be the first missing positive within 1..n+1.
+        - While nums[i] is in range and not already at home, swap it into index nums[i]-1 (guard against infinite self-swaps).
+        - After placement, the first index i with nums[i] != i+1 means the answer is i+1; if all match, answer is n+1.
   TOPOLOGICAL_SORT:
     title: Topological Sort
     subtitle: Order tasks with prerequisites using indegree-driven BFS on a DAG
@@ -1319,11 +1372,15 @@ patterns:
         - Too big → left; too small → down
       shortest-path-binary-matrix:
         title: Shortest Path in Binary Matrix
-        summary: Shortest clear path from (0,0) to (n-1,n-1) with 8-direction moves.
-        whenToUse: BFS on grid graph.
+        summary: Length of the shortest clear path from (0,0) to (n-1,n-1) on a binary grid, moving
+          in all 8 directions through 0-cells (return -1 if impossible).
+        whenToUse: BFS from the top-left on the grid graph — unweighted shortest path needs
+          level-order distance.
         hints:
-        - Only walk 0-cells
-        - BFS distance from start
+        - If grid[0][0] or the destination is blocked (1), return -1 immediately.
+        - Enqueue all 8 neighbors of each 0-cell; mark visited when enqueueing to avoid duplicate
+          work.
+        - Distance counts cells on the path (start is 1), not the number of edges.
       matrix-diagonal-sum:
         title: Matrix Diagonal Sum
         summary: Sum primary and secondary diagonals without double-counting the center.
@@ -1401,11 +1458,16 @@ patterns:
         - Look up each nums1 value in that mapping instead of rescanning nums2 per query.
       decode-string:
         title: Decode String
-        summary: Decode encoded string like 3[a2[c]] → accaccacc.
-        whenToUse: Stack of counts and partial strings.
+        summary: Decode a nested encoding like "3[a2[c]]" into "accaccacc", where k[encoded] means
+          the substring repeated k times.
+        whenToUse: 'Two stacks (or one stack of pairs) — push the current count and buffer on ''['',
+          pop and repeat on '']''.'
         hints:
-        - Push on '['
-        - Pop and repeat on ']'
+        - 'Accumulate multi-digit counts before each ''[''; do not treat each digit as its own
+          factor.'
+        - 'On '']'', pop the previous string and count, then append current.repeat(count) onto the
+          previous string.'
+        - Letters append to the current buffer; digits never belong in the decoded output.
       basic-calculator:
         title: Basic Calculator
         summary: Evaluate expression with +, -, parentheses, and spaces.
@@ -1480,11 +1542,16 @@ patterns:
         - Intersect reachable sets
       critical-connections:
         title: Critical Connections in a Network
-        summary: Find all bridges in an undirected graph.
-        whenToUse: Tarjan DFS discovery/low-link times.
+        summary: Find every bridge in an undirected network — edges whose removal increases the
+          number of connected components.
+        whenToUse: Tarjan-style DFS with discovery and low-link times; edge u–v is a bridge when
+          low[v] > disc[u].
         hints:
-        - Bridge when low[nei] > disc[u]
-        - Ignore parent edge
+        - Track disc[u] (first visit time) and low[u] (earliest reachable discovery via tree/back
+          edges).
+        - After exploring child v, if low[v] > disc[u], the edge (u,v) is a bridge.
+        - Ignore the parent edge when updating low from neighbors so you do not falsely cancel a
+          bridge.
       find-center-star:
         title: Find Center of Star Graph
         summary: Find the center node of a star graph given edges.
@@ -1568,46 +1635,55 @@ patterns:
       max-path-sum:
         title: Binary Tree Maximum Path Sum
         summary: Maximum path sum between any two nodes (path may not pass root).
-        whenToUse: DFS returning best downward gain; update global with left+right+node.
+        whenToUse: DFS returns the best downward gain through the node; a global tracks the best path that may bend through it.
         hints:
-        - Ignore negative child gains
-        - Global tracks left+node+right
+        - For each child, take max(0, child_gain) — a negative child can never improve a path.
+        - 'A path through the node may use both children: candidate = node.val + left_gain + right_gain; update a global max.'
+        - 'Return to the parent only a single-branch gain: node.val + max(left_gain, right_gain), so paths stay simple.'
   TREE_BFS:
     title: Tree Breadth-First Search
     subtitle: Level-order traversal with a queue, one full level at a time
-    intuition: 'Whenever a tree problem talks about levels, depth, or ''the closest X'', level-order traversal
-      with a queue is the natural fit: process one full level at a time by capturing the queue''s size
-      at the start of each iteration, since that size tells you exactly how many nodes belong to the current
-      level before any children get enqueued.'
-    recognition: The problem asks for level-order traversal, values grouped by depth, zigzag ordering,
-      the rightmost/leftmost visible node per level, or connecting nodes at the same level via pointers.
-    walkthrough: Initialize a queue containing just the root, then loop while the queue is non-empty.
-      At the start of each iteration, record the current queue size - this is the exact number of nodes
-      in the current level, which is the key trick that separates tree BFS from generic graph BFS. Poll
-      exactly that many nodes, process each one (add to the current level's result list, track the last
-      one for right-side-view, etc.), and enqueue each polled node's non-null children as you go. Once
-      the level's fixed count of nodes has been fully processed, move to the next iteration of the outer
-      loop, which now handles the next level. For zigzag traversal, keep a direction flag and reverse
-      alternate levels' result lists; for right-side view, simply keep the last node processed in each
-      level's inner loop.
+    intuition: 'Whenever a tree problem talks about levels, depth, or ''the closest X'', level-order
+      traversal with a queue is the natural fit: process one full level at a time by capturing the
+      queue''s size at the start of each iteration, since that size tells you exactly how many nodes
+      belong to the current level before any children get enqueued. That size-capture trick is the
+      whole pattern - without it, tree BFS collapses into an unordered stream of nodes.'
+    recognition: The problem asks for level-order traversal, values grouped by depth, zigzag
+      ordering, the rightmost/leftmost visible node per level, or connecting nodes at the same level
+      via pointers.
+    walkthrough: 'Initialize a queue containing just the root, then loop while the queue is
+      non-empty. At the start of each iteration, record the current queue size - this is the exact
+      number of nodes in the current level, which is the key trick that separates tree BFS from
+      generic graph BFS. Poll exactly that many nodes, process each one (add to the current level''s
+      result list, track the last one for right-side-view, etc.), and enqueue each polled node''s
+      non-null children as you go. Once the level''s fixed count of nodes has been fully processed,
+      move to the next iteration of the outer loop, which now handles the next level. For zigzag
+      traversal, keep a direction flag and reverse alternate levels'' result lists; for right-side
+      view, simply keep the last node processed in each level''s inner loop. Handle a null root up
+      front, and mention that space is O(width) - the widest level dominates the queue.'
     telltaleSigns:
-    - Level order, depth, or 'per level' wording
+    - 'Level order, depth, or ''per level'' wording'
     - Zigzag / alternating direction traversal
     - Rightmost or leftmost visible node per level
     - Connecting sibling nodes at the same depth via next pointers
+    - Minimum / maximum depth phrasing that is naturally answered level by level
     templateSteps:
     - Initialize a queue with the root node
-    - At the start of each outer loop iteration, capture the current queue size as the level width
+    - At the start of each outer loop iteration, capture the current queue size as the level
+      width
     - Poll exactly that many nodes, processing each and enqueuing its non-null children
-    - Collect or use the level's results (list, last node, reversed order) as required
+    - 'Collect or use the level''s results (list, last node, reversed order) as required'
     - Repeat until the queue is empty
     commonMistakes:
-    - Not capturing the level size before the inner loop, causing level boundaries to blur together
-    - Enqueuing null children, requiring extra null checks later instead of checking before enqueueing
-    - Forgetting to reverse alternate levels for zigzag traversal, or reversing every level instead of
-      every other one
-    - Using recursion with a depth parameter when a queue-based approach is clearer for genuinely level-based
-      questions
+    - Not capturing the level size before the inner loop, causing level boundaries to blur
+      together
+    - Enqueuing null children, requiring extra null checks later instead of checking before
+      enqueueing
+    - Forgetting to reverse alternate levels for zigzag traversal, or reversing every level
+      instead of every other one
+    - Using recursion with a depth parameter when a queue-based approach is clearer for
+      genuinely level-based questions
+    - Forgetting the null-root guard and immediately polling from an empty queue
     whenNotToUse:
     - The problem is about paths or subtree aggregates rather than levels (tree DFS is the more natural
       and often simpler fit)
@@ -1652,40 +1728,49 @@ patterns:
   TRIE:
     title: Trie
     subtitle: Prefix tree for word dictionaries, autocomplete, and shared-prefix search
-    intuition: A trie shares common prefixes across many words in a single tree structure, so words with
-      the same beginning literally share the same path from the root - this makes prefix search, autocomplete,
-      and dictionary lookups take time proportional to the word's length rather than the number of words
-      stored.
-    recognition: The problem needs repeated prefix queries against a fixed dictionary of words - implement
-      a Trie, word search II (multiple words in a grid), replace words with their shortest root, or autocomplete
-      suggestions.
-    walkthrough: Design a trie node with a children map (or fixed-size array keyed by character) and a
-      boolean flag marking whether a complete word ends at that node. To insert a word, walk character
-      by character from the root, creating a new child node whenever the current character isn't already
-      present, and mark the final node's end-of-word flag true. To search for an exact word, walk the
-      same way, but only return true if you both reach the end of the word and that final node's end-of-word
-      flag is set - reaching the last character alone only proves the prefix exists, not the whole word.
-      For startsWith/prefix queries, the check is identical except you skip the end-of-word flag check
-      entirely. For word-search-in-grid problems, build a trie of all target words first, then DFS through
-      the grid while simultaneously walking down the trie, pruning any grid path whose corresponding trie
-      path doesn't exist - this shares work across all target words instead of searching each one independently.
+    intuition: 'A trie shares common prefixes across many words in a single tree structure, so words
+      with the same beginning literally share the same path from the root - this makes prefix
+      search, autocomplete, and dictionary lookups take time proportional to the word''s length
+      rather than the number of words stored. In interviews, reach for a trie when a hash set of
+      whole words would force you to re-check every candidate''s prefixes from scratch.'
+    recognition: The problem needs repeated prefix queries against a fixed dictionary of words -
+      implement a Trie, word search II (multiple words in a grid), replace words with their shortest
+      root, or autocomplete suggestions.
+    walkthrough: 'Design a trie node with a children map (or fixed-size array keyed by character) and
+      a boolean flag marking whether a complete word ends at that node. To insert a word, walk
+      character by character from the root, creating a new child node whenever the current character
+      isn''t already present, and mark the final node''s end-of-word flag true. To search for an
+      exact word, walk the same way, but only return true if you both reach the end of the word and
+      that final node''s end-of-word flag is set - reaching the last character alone only proves the
+      prefix exists, not the whole word. For startsWith/prefix queries, the check is identical
+      except you skip the end-of-word flag check entirely. For word-search-in-grid problems, build a
+      trie of all target words first, then DFS through the grid while simultaneously walking down
+      the trie, pruning any grid path whose corresponding trie path doesn''t exist - this shares
+      work across all target words instead of searching each one independently. Call out the
+      end-flag vs prefix distinction explicitly - that single boolean is what most buggy trie
+      implementations get wrong.'
     telltaleSigns:
     - Many repeated prefix queries against the same fixed dictionary
     - Implement Trie / autocomplete / typeahead functionality
     - Word search across a grid for multiple dictionary words simultaneously
     - Replace words with their shortest matching dictionary root
+    - Need to test many string prefixes quickly from the same dictionary
     templateSteps:
     - Design a node with a children map/array and an end-of-word flag
     - 'Insert: walk character by character, creating missing child nodes, then mark the end flag'
     - 'Search: walk the same way, but require both full traversal and the end flag to be true'
     - 'StartsWith: walk the same way but skip the end flag check'
-    - For grid search, DFS the grid and the trie together, pruning paths with no matching trie node
+    - For grid search, DFS the grid and the trie together, pruning paths with no matching trie
+      node
     commonMistakes:
-    - Confusing search() (needs the end-of-word flag) with startsWith() (doesn't need it)
-    - Not sharing the trie across multiple target words in word-search-style problems, losing the pattern's
-      main benefit
+    - 'Confusing search() (needs the end-of-word flag) with startsWith() (doesn''t need it)'
+    - 'Not sharing the trie across multiple target words in word-search-style problems, losing
+      the pattern''s main benefit'
     - Using a fixed 26-letter array when the alphabet is actually larger (unicode, mixed case)
-    - Forgetting to mark or check the end-of-word flag, causing prefixes to be reported as full matches
+    - Forgetting to mark or check the end-of-word flag, causing prefixes to be reported as full
+      matches
+    - Returning true from search() just because the path exists, without checking the
+      end-of-word flag
     whenNotToUse:
     - Only a handful of one-off string comparisons are needed - building a trie has more overhead than
       a simple set/map lookup
@@ -1871,11 +1956,15 @@ patterns:
         - From each valid start, keep checking x+1, x+2, ... to measure the run's length.
       majority-element-ii:
         title: Majority Element II
-        summary: All elements appearing more than ⌊n/3⌋ times.
-        whenToUse: Boyer-Moore with two candidates.
+        summary: Find every element that appears more than ⌊n/3⌋ times (at most two such elements).
+        whenToUse: Boyer-Moore voting with two candidate slots, then a second counting pass to
+          verify.
         hints:
-        - At most two answers
-        - Verify counts in second pass
+        - At most two answers — three values each > n/3 would exceed the array length.
+        - Maintain two candidates and counts; a third distinct value decrements both (pairwise
+          cancel).
+        - Always verify final candidates with an exact frequency pass; voting alone can leave
+          false survivors.
       max-points-on-line:
         title: Max Points on a Line
         summary: Maximum number of points that lie on the same straight line.
@@ -1943,11 +2032,16 @@ patterns:
         - As soon as find(u) == find(v) before unioning, that edge is the answer.
       accounts-merge:
         title: Accounts Merge
-        summary: Merge accounts that share emails.
-        whenToUse: Union emails; group by root.
+        summary: 'Given accounts as [name, email…], merge any accounts that share at least one email
+          and return each group''s emails sorted under the account name.'
+        whenToUse: Union-Find (or DFS on an email graph) — emails that co-occur are connected, then
+          group by root.
         hints:
-        - Map email→name
-        - Union consecutive emails in an account
+        - Map each email to its account name once, and union consecutive emails within the same
+          account.
+        - After all unions, collect emails by find(root), sort each group, and prepend the name.
+        - Same display name with no shared email stays separate — connectivity is by email, not by
+          name.
       number-of-islands-ii:
         title: Number of Islands II
         summary: After each land add, return current island count.
@@ -2016,18 +2110,20 @@ patterns:
       lru-cache:
         title: LRU Cache
         summary: Design a cache with O(1) get and put that evicts the least-recently-used entry when full.
-        whenToUse: A hash map for O(1) key lookup, combined with a doubly linked list for O(1) recency
-          reordering.
+        whenToUse: Bounded cache with O(1) get/put — LinkedHashMap in access-order (or HashMap + doubly linked list).
         hints:
-        - Store map values as direct references to doubly linked list nodes, not just raw values.
-        - On every get/put, move the touched node to the front (or back) of the list to mark it most-recently-used.
+        - Use LinkedHashMap in access-order mode (or an equivalent ordered map).
+        - On get/put, refresh the key so it becomes most recently used.
+        - When size exceeds capacity, remove the eldest (least recently used) entry.
+        - 'Interview alternate: HashMap<node> + doubly linked list for explicit O(1) splice-to-front / evict-tail.'
       time-map:
         title: Time Based Key-Value Store
         summary: Store values by timestamp; get latest at or before timestamp.
-        whenToUse: HashMap + binary search on timestamp lists.
+        whenToUse: Map each key to an append-only list of (timestamp, value) pairs; binary-search the latest stamp ≤ query.
         hints:
-        - Append-only timestamps are sorted
-        - Binary search upper bound
+        - Timestamps for a key are inserted in non-decreasing order, so each list stays sorted for binary search.
+        - get should return the rightmost value with timestamp ≤ query (upper_bound - 1), or empty if none.
+        - Store pairs or parallel arrays; avoid resorting on every get.
       lfu-cache:
         title: LFU Cache
         summary: O(1) get/put with least-frequently-used eviction (tie → LRU).
@@ -2110,18 +2206,23 @@ patterns:
         - Or maintain ones/twos masks
       sum-of-two-integers:
         title: Sum of Two Integers
-        summary: Sum two integers without + or - operators.
-        whenToUse: XOR for sum bits, AND<<1 for carry loop.
+        summary: Return the sum of two integers without using the + or - operators.
+        whenToUse: Bitwise half-adder loop — XOR builds sum bits, AND<<1 builds carry, repeat until
+          carry is 0.
         hints:
-        - a^b sum without carry
-        - (a&b)<<1 is carry
+        - a ^ b is the sum ignoring carry; (a & b) << 1 is the carry to add next.
+        - Loop setting a = sumWithoutCarry and b = carry until b becomes 0.
+        - 'Negatives work the same in two''s complement under the language''s fixed-width int
+          semantics.'
       reverse-bits:
         title: Reverse Bits
-        summary: Reverse bits of a 32-bit unsigned integer.
-        whenToUse: Shift/accumulate bit by bit.
+        summary: Reverse the 32 bits of an unsigned integer (bit 0 becomes bit 31, and so on).
+        whenToUse: 'Fixed-width bit walk — build the result by shifting in n''s low bit 32 times.'
         hints:
-        - Loop 32 times
-        - result = (result<<1) | (n&1); n>>>=1
+        - 'Loop exactly 32 times: result = (result << 1) | (n & 1), then unsigned-shift n right by
+          1.'
+        - Leading zeros still matter — process all 32 positions; do not stop early.
+        - Prefer >>> (unsigned shift) so the high bit of n does not sign-extend incorrectly.
       bitwise-and-range:
         title: Bitwise AND of Numbers Range
         summary: Bitwise AND of all numbers in [left, right].
@@ -2192,11 +2293,14 @@ patterns:
         - If that check passes, the answer is the prefix of length gcd(str1.length(), str2.length()).
       sqrt:
         title: Sqrt(x)
-        summary: Integer square root of x (floor).
-        whenToUse: Binary search on answer space.
+        summary: Return the floor of the square root of a non-negative integer x (largest integer
+          whose square is ≤ x).
+        whenToUse: Binary search over the answer range [0..x] rather than testing every candidate
+          linearly.
         hints:
-        - Search mid*mid <= x
-        - Watch overflow with long
+        - Search for the largest mid where mid*mid ≤ x; if mid*mid > x, search the left half.
+        - Cast mid*mid to long (or use division) to avoid 32-bit overflow when mid is large.
+        - For x < 2 the answer is x itself — handle that before the search loop.
       integer-to-roman:
         title: Integer to Roman
         summary: Convert integer to Roman numeral.

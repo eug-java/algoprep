@@ -169,9 +169,10 @@
 "reorder-list": |
   1 -> 2 -> 3 -> 4 -> 5
 
-  mid (slow/fast): 3
-  reverse second: 5 -> 4 -> 3
-  weave:
+  mid (slow/fast stops at 3)
+  cut after mid: first = 1->2->3 , second = 4->5
+  reverse second only: 5 -> 4
+  weave first with reversed second:
     1 -> 5 -> 2 -> 4 -> 3
 
 "critical-connections": |

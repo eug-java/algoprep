@@ -43,7 +43,7 @@ Most course GETs accept `?lang=en|ru|es` (default from server config / client).
 }
 ```
 
-`hardCount` on the overview includes Challenge Yourself items (all HARD). Per-pattern counts cover catalog problems only.
+`hardCount` on the overview includes Blind Spot items (all HARD). Per-pattern counts cover catalog problems only.
 
 ### Problem fields (selected)
 

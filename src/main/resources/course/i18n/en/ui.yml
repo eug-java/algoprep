@@ -1,13 +1,13 @@
-courseDescription: AlgoPrep teaches coding interviews through reusable patterns, not memorized solutions.
-  Each pattern comes with recognition cues, a step-by-step interview walkthrough, a Java template, common
-  pitfalls, and progressively harder problems backed by JUnit tests. Work through the four-week roadmap,
-  then test yourself with the unlabeled Challenge Yourself set. A bonus module covers Spring Boot interview
-  topics for Java backend roles.
+courseDescription: AlgoPrep is a self-contained Java interview training ground. Each pattern module teaches
+  how to recognize a problem class, explain the approach out loud, apply a reusable Java template, avoid
+  common traps, and practice with Easy → Medium → Hard drills backed by JUnit. Finish a pattern, then
+  stress-test recognition in Blind Spot mode (no pattern labels). A bonus track covers Spring Boot topics
+  for Java backend interviews.
 weeks:
-  1: Week 1 — Two-pointer & heap foundations
-  2: Week 2 — Search, recursion & dynamic programming
-  3: Week 3 — Graphs, trees & matrices
-  4: Week 4 — Tracking, design, bits & bonus Spring Boot
+  1: Foundations — pointers, windows, heaps
+  2: Search, recursion & dynamic programming
+  3: Graphs, trees & matrices
+  4: Tracking, design, bits & Spring Boot lab
 cheatsheet:
 - q: Contiguous subarray/substring with a sum or distinct-count constraint?
   a: Sliding Window

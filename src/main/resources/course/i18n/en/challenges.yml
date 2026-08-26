@@ -71,10 +71,12 @@ challenges:
     hints:
     - Explicit null markers in the serialized output let deserialization know exactly where each subtree
       ends.
-    - A level-order (or preorder) traversal that includes markers for null children can be reconstructed
-      without any ambiguity.
-    - During deserialization, process the tokens in the same order they were produced, rebuilding parent-child
-      links as you consume markers.
+    - Prefer a preorder DFS that writes node values and null markers — it rebuilds unambiguously from a
+      token stream.
+    - Level-order with null markers is a valid alternate; whichever you choose, deserialize in the same
+      order you wrote.
+    - During deserialization, consume tokens left-to-right, recursively (or with a queue) rebuilding
+      parent-child links as markers appear.
   largest-rectangle-histogram:
     title: Largest Rectangle in Histogram
     prompt: Given an array of integers heights representing a histogram's bar heights where the width

@@ -75,10 +75,12 @@ challenges:
     hints:
     - Marcadores explícitos de null en la salida serializada permiten que la deserialización sepa exactamente
       dónde termina cada subárbol.
-    - Un recorrido por niveles (o preorden) que incluya marcadores para hijos nulos puede reconstruirse
-      sin ninguna ambigüedad.
-    - Durante la deserialización, procesa los tokens en el mismo orden en que se produjeron, reconstruyendo
-      los enlaces padre-hijo a medida que consumes marcadores.
+    - Prefiere un DFS en preorden que escriba valores y marcadores null — reconstruye sin ambigüedad desde
+      un flujo de tokens.
+    - El recorrido por niveles con marcadores null es una alternativa válida; deserializa en el mismo
+      orden en que escribiste.
+    - Durante la deserialización, consume tokens de izquierda a derecha, recursivamente (o con cola),
+      reconstruyendo enlaces padre-hijo conforme aparecen marcadores.
   largest-rectangle-histogram:
     title: Rectángulo más grande en un histograma
     prompt: Dado un arreglo de enteros heights que representa las alturas de las barras de un histograma

@@ -1,8 +1,6 @@
 # AlgoPrep
 
-Pattern-first coding interview course for **Java 21**, packaged as a single **Spring Boot 3.4** app with a local SPA, in-browser judge, quizzes, mock interviews, and EN/RU/ES i18n.
-
-Inspired by Educative’s *Grokking the Coding Interview Patterns*, with fuller explanations, more problems per pattern, Challenge Yourself, and a Spring Boot interview lab.
+Self-contained **Java 21** interview training: reusable problem patterns, runnable solutions, JUnit tests, an in-browser judge, quizzes, timed mocks, and EN/RU/ES UI — all in one **Spring Boot 3.4** app.
 
 ## Quick start
 
@@ -50,16 +48,16 @@ ALGOPREP_E2E_NO_SERVER=1 npm test
 
 | Area | Content |
 |------|---------|
-| Patterns | **29** modules (28 classic + Spring Boot Interview Lab) |
-| Problems | **155** catalog + **15** challenges (**170** total) |
-| By difficulty | Catalog **38** Easy · **82** Medium · **35** Hard (every pattern has all three); challenges count as Hard |
+| Patterns | **29** modules (classic DSA patterns + Spring Boot Interview Lab) |
+| Problems | **155** catalog + **15** Blind Spot drills (**170** total) |
+| By difficulty | Catalog **38** Easy · **82** Medium · **35** Hard (every pattern has all three); Blind Spot counts as Hard |
 | Judge | **156** runnable specs (incl. ops-mode for Trie/LRU/MinStack/…) + Monaco playground |
-| Challenges | **15** unlabeled hard drills (some with `alternatePatterns`) |
+| Blind Spot | **15** unlabeled hard drills (some with alternate valid patterns) |
 | Quiz | Guess-the-pattern recognition set |
 | Locales | EN · RU · ES |
 | Themes | Light / Dark |
 
-Difficulty counts (Easy / Medium / Hard) show on the home hero, pattern list, pattern detail, tracks, and challenges.
+Difficulty counts (Easy / Medium / Hard) show on the home hero, pattern list, pattern detail, tracks, and Blind Spot.
 
 ### Study modes in the UI
 
@@ -71,7 +69,7 @@ Difficulty counts (Easy / Medium / Hard) show on the home hero, pattern list, pa
 - **Mock** — timed hard session, timeline + speak checklist
 - **Skills / Metrics** — heatmap and abandonment stats
 - **Tracks** — company presets (Amazon, Google, Meta, …)
-- **Challenge / Quiz / Cheatsheet / Spring / Settings**
+- **Blind Spot / Quiz / Cheatsheet / Spring / Settings**
 - **Sync** — create a sync key, push/pull progress between browsers (`/api/v1/sync`)
 
 Progress is stored in `localStorage` by default; export/import and optional server sync live under Settings.
@@ -82,7 +80,7 @@ Progress is stored in `localStorage` by default; export/import and optional serv
 2. Solve Easy → Medium → Hard (or use Daily / Tracks).
 3. Use the playground when a judge spec exists; otherwise reveal the reference solution.
 4. Mark done, answer the complexity check, schedule SRS grades in Review.
-5. Drill recognition with Quiz and unlabeled Challenges; run Mock under a timer.
+5. Drill recognition with Quiz and Blind Spot; run Mock under a timer.
 
 Reference solutions and JUnit tests live under `src/main/java/com/algoprep/patterns/**` and `src/test/java/...`.
 
@@ -117,7 +115,7 @@ docs/                         # deeper documentation
 | GET | `/api/v1/course/patterns/{id}/problems/{pid}/source` | Java source |
 | GET | `/api/v1/course/walkthroughs/{pid}` | ASCII walkthrough |
 | GET/POST | `/api/v1/course/quiz…` | Guess-the-pattern |
-| GET | `/api/v1/course/challenges…` | Challenges + reveal |
+| GET | `/api/v1/course/challenges…` | Blind Spot drills + reveal |
 | POST | `/api/v1/judge` | Run submitted Java |
 | GET | `/api/v1/judge/template/{pattern}/{problem}` | Starter source |
 | POST/PUT/GET | `/api/v1/sync…` | Progress sync key |
@@ -131,12 +129,13 @@ Full tables and judge details: [docs/API.md](docs/API.md). Architecture notes: [
 
 - `server.port` — default `8080`
 - `algoprep.sync.dir` — sync payload directory (`./data/sync`, gitignored)
+- `algoprep.judge.docker` — optional containerized judge
 - Actuator: `health`, `info` under `/actuator`
 
 ## CI
 
-GitHub Actions (`.github/workflows/ci.yml`) runs `./mvnw test`, packages the jar, boots the app, and smokes course/judge/sync/metrics endpoints.
+GitHub Actions (`.github/workflows/ci.yml`) runs `./mvnw test`, packages the jar, boots the app, smokes APIs, and runs Playwright e2e.
 
 ## License / intent
 
-Personal interview-prep project. Not affiliated with Educative.
+Personal interview-prep project for local study.

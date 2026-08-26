@@ -3,7 +3,7 @@ package com.algoprep.course.model;
 import java.util.List;
 
 /**
- * A problem presented without pattern labels — used in Challenge Yourself mode.
+ * A problem presented without pattern labels — used in Blind Spot mode.
  */
 public record ChallengeMeta(
         String id,

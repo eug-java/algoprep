@@ -70,10 +70,11 @@ patterns:
       container-with-most-water:
         title: Contenedor con más agua
         summary: Encuentra dos líneas que formen un contenedor con el área de agua máxima.
-        whenToUse: Alturas en una línea; punteros opuestos maximizan min(h)*ancho.
+        whenToUse: 'Dos extremos de una línea de alturas; el área es min(altura)*ancho, así que mueve el puntero más corto hacia dentro.'
         hints:
-        - Empieza en ambos extremos
-        - Mueve hacia adentro el lado más corto
+        - Empieza con left=0 y right=n-1; el contenedor más ancho es el primer candidato.
+        - 'Área = min(h[left], h[right]) * (right-left). Guarda el máximo.'
+        - Solo avanzar el lado más corto puede mejorar la altura mínima; avanzar el alto no ayuda.
       dutch-national-flag:
         title: Bandera holandesa / Ordenar colores
         summary: Ordena un arreglo de 0/1/2 en el lugar con una sola pasada.
@@ -242,17 +243,20 @@ patterns:
       longest-no-repeat:
         title: Subcadena más larga sin caracteres repetidos
         summary: Encuentra la subcadena más larga con todos los caracteres únicos.
-        whenToUse: Ventana de tamaño variable más un mapa de la última posición vista de cada carácter.
+        whenToUse: Ventana variable con mapa de último índice para saltar left pasado un duplicado en O(1).
         hints:
-        - Reduce por la izquierda cuando aparece un duplicado
-        - Registra la mejor longitud de ventana
+        - Mantén un mapa carácter → último índice dentro (o justo antes) de la ventana actual.
+        - 'Si s[right] se vio en j ≥ left, pon left = j+1 para que la ventana quede sin repetidos.'
+        - Tras cada expansión, actualiza best = max(best, right-left+1).
       min-window-substring:
         title: Subcadena de ventana mínima
         summary: La subcadena más pequeña de s que cubre todos los caracteres de t.
-        whenToUse: Ventana reducible con conteos de lo necesario y lo disponible.
+        whenToUse: Ventana encogible con mapas need/have hasta satisfacer todos los caracteres requeridos.
         hints:
-        - Expande hasta que sea válida y luego reduce con avidez
-        - Registra cuántos caracteres requeridos ya se cumplen
+        - Construye need para t y cuenta cuántos caracteres distintos requeridos ya están satisfechos.
+        - Expande right hasta que la ventana sea válida (satisfied == need.size), luego encoge left mientras siga válida.
+        - En cada ventana válida compara la longitud con la mejor respuesta y quédate con la más corta.
+        - 'Al encoger, decrementa have con cuidado: satisfied baja solo cuando un contador requerido cae por debajo de need.'
   INTERVALS:
     title: Intervalos
     subtitle: Ordena por inicio y recorre una vez para fusionar, insertar o razonar sobre rangos
@@ -313,25 +317,26 @@ patterns:
       conflicting-appointments:
         title: Citas en conflicto
         summary: Verifica si dos citas cualesquiera en una lista se solapan.
-        whenToUse: Ordena y luego revisa cada par adyacente en busca de solapamiento (el problema Meeting
-          Rooms I).
+        whenToUse: 'Ordena por inicio y comprueba cada par adyacente — tras ordenar solo los vecinos pueden solaparse.'
         hints:
-        - Tras ordenar por inicio, solo los pares adyacentes pueden solaparse.
-        - Hay solapamiento en cuanto el inicio de una cita es anterior al fin de la previa.
+        - Tras ordenar por start, solo los pares adyacentes pueden solaparse.
+        - Hay solape en cuanto el start de uno es anterior al end del anterior.
       interval-intersection:
         title: Intersecciones de listas de intervalos
         summary: Devuelve las intersecciones de dos listas de intervalos ordenadas.
-        whenToUse: Barrido con dos punteros sobre intervalos ordenados.
+        whenToUse: Dos punteros sobre dos listas de intervalos ya ordenadas; emite el solape y avanza la que termina antes.
         hints:
-        - El inicio de la intersección es el máximo de los inicios
-        - Avanza la lista cuyo intervalo termina primero
+        - Inicio del solape = max(starts); fin = min(ends). Emite solo si start < end (o ≤ si es inclusivo).
+        - 'Avanza el puntero del intervalo que termina primero — no puede solapar intervalos posteriores de la otra lista.'
       minimum-meeting-rooms:
         title: Mínimo de salas de reunión
         summary: Encuentra el número mínimo de salas de reunión necesarias.
-        whenToUse: Ordena inicios/finales o usa un montículo mínimo de horas de fin.
+        whenToUse: 'Cuenta reuniones concurrentes: ordena por start y un min-heap de ends en curso (o barrido starts/ends).'
         hints:
-        - Ordena las reuniones por hora de inicio
-        - Mantén un montículo con las horas de fin de las reuniones en curso
+        - Ordena las reuniones por start para siempre tomar la siguiente más temprana.
+        - Mantén un min-heap de ends de salas ocupadas; libera cuando heap.min ≤ next.start.
+        - Si no hay sala libre, asigna una (push end). El tamaño del heap es las salas necesarias.
+        - 'Alternativa: ordena starts y ends por separado y barre — +1 en start, −1 en end.'
   IN_PLACE_LINKED_LIST:
     title: Manipulación de lista enlazada en el lugar
     subtitle: Invierte, reordena y transforma listas con espacio extra O(1)
@@ -637,10 +642,11 @@ patterns:
       kth-largest:
         title: K-ésimo elemento más grande
         summary: Devuelve el k-ésimo elemento más grande de un arreglo desordenado.
-        whenToUse: Montículo mínimo de tamaño k (o quickselect).
+        whenToUse: Min-heap de tamaño k (seguro en entrevista) o quickselect con O(n) medio; di el tradeoff en voz alta.
         hints:
-        - Mantén un montículo mínimo de tamaño k
-        - La cima del montículo es la respuesta
+        - Mantén un min-heap de los k mayores vistos; la cima es el k-ésimo mayor actual.
+        - 'Inserta cada número; si el tamaño supera k, saca el menor — ya no puede ser la respuesta.'
+        - Quickselect es un follow-up O(n) medio; menciona O(n²) en el peor caso sin median-of-medians.
       reorganize-string:
         title: Reorganizar cadena
         summary: Reordena la cadena para que no haya dos caracteres adyacentes iguales; devuelve vacío
@@ -811,10 +817,11 @@ patterns:
       generate-parentheses:
         title: Generar paréntesis
         summary: Todas las combinaciones válidas de n pares de paréntesis bien formados.
-        whenToUse: Backtracking / construcción al estilo subsets con contadores.
+        whenToUse: 'Backtracking con contadores open/close — poda cualquier prefijo que ya no pueda ser válido.'
         hints:
-        - Agrega '(' si los abiertos son menos que n
-        - Agrega ')' si los cerrados son menos que los abiertos
+        - Añade '(' solo mientras open_used < n.
+        - Añade ')' solo mientras close_used < open_used; así cada prefijo queda balanceado.
+        - Registra la cadena solo cuando open_used == close_used == n. Generar subconjuntos sin estas reglas explota y produce inválidas.
       unique-permutations:
         title: Permutaciones II
         summary: Todas las permutaciones únicas de un arreglo que puede contener duplicados.
@@ -1073,10 +1080,11 @@ patterns:
         title: Distancia de edición
         summary: Número mínimo de operaciones de inserción, eliminación y reemplazo para transformar word1
           en word2.
-        whenToUse: DP 2D clásica sobre los prefijos.
+        whenToUse: DP 2D sobre prefijos de ambas cadenas; cada celda es insert / delete / replace desde vecinos.
         hints:
-        - Si los caracteres coinciden, toma el valor diagonal
-        - Si no, 1 + el mínimo entre insertar, eliminar y reemplazar
+        - 'dp[i][j] es la distancia entre word1[:i] y word2[:j]; caracteres iguales toman la diagonal.'
+        - 'Si no coinciden: 1 + min(insert=dp[i][j-1], delete=dp[i-1][j], replace=dp[i-1][j-1]).'
+        - Conserva solo la fila anterior para respetar O(n) de espacio tras aclarar la recurrencia 2D.
   CYCLIC_SORT:
     title: Ordenamiento cíclico
     subtitle: Coloca cada número del rango [1..n] en su índice de origen valor-1
@@ -1146,17 +1154,19 @@ patterns:
         title: Encontrar el número duplicado
         summary: Un arreglo de n+1 enteros entre 1 y n tiene un duplicado; encuéntralo sin modificar el
           arreglo.
-        whenToUse: Ciclo de Floyd sobre el grafo índice→valor (o colocación cíclica).
+        whenToUse: Trata índices→valores como grafo funcional y halla la entrada del ciclo (Floyd), sin modificar el array.
         hints:
-        - Trátalo como una lista enlazada donde next = nums[i]
-        - Encuentra la entrada del ciclo
+        - 'Cada índice i apunta a nums[i]; por un duplicado hay exactamente un ciclo.'
+        - 'Floyd: slow = nums[slow], fast = nums[nums[fast]] hasta que se encuentren.'
+        - Reinicia un puntero al inicio y avanza ambos de uno en uno; el encuentro es el duplicado.
       first-missing-positive:
         title: Primer entero positivo faltante
         summary: El menor entero positivo faltante en un arreglo desordenado.
-        whenToUse: Coloca cada valor v en el índice v-1 cuando esté dentro del rango.
+        whenToUse: 'Colocación in-place: pon cada v en [1..n] en el índice v-1, luego escanea el primer desajuste.'
         hints:
-        - Ignora los valores no positivos y los mayores que n
-        - Busca el primer índice i tal que nums[i] != i+1
+        - 'Ignora no positivos y > n — no pueden ser el primer positivo faltante en 1..n+1.'
+        - 'Mientras nums[i] esté en rango y no en casa, intercámbialo con el índice nums[i]-1 (evita self-swap infinito).'
+        - 'Tras colocar, el primer i con nums[i] != i+1 da i+1; si todos encajan, la respuesta es n+1.'
   TOPOLOGICAL_SORT:
     title: Ordenamiento topológico
     subtitle: Ordena tareas con prerrequisitos usando BFS guiado por grado de entrada en un DAG
@@ -1666,10 +1676,11 @@ patterns:
         title: Suma máxima de camino en árbol binario
         summary: Suma máxima de un camino entre dos nodos cualesquiera (el camino puede no pasar por la
           raíz).
-        whenToUse: DFS que devuelve la mejor ganancia hacia abajo; actualiza el máximo global con left+right+node.
+        whenToUse: DFS devuelve la mejor ganancia hacia abajo; un global guarda el mejor camino que puede doblar por el nodo.
         hints:
-        - Ignora las ganancias negativas de los hijos
-        - El máximo global considera left+node+right
+        - 'Para cada hijo toma max(0, child_gain) — un hijo negativo nunca mejora el camino.'
+        - 'Un camino por el nodo puede usar ambos hijos: candidate = node.val + left_gain + right_gain; actualiza el global.'
+        - 'Devuelve al padre solo una rama: node.val + max(left_gain, right_gain), para que el camino sea simple.'
   TREE_BFS:
     title: BFS en árboles
     subtitle: Recorrido por niveles con una cola, un nivel completo a la vez
@@ -2143,20 +2154,20 @@ patterns:
         title: Caché LRU
         summary: Diseña una caché con get y put en O(1) que desaloje la entrada usada menos recientemente
           cuando esté llena.
-        whenToUse: Un mapa hash para búsqueda de clave en O(1), combinado con una lista doblemente enlazada
-          para reordenar por uso reciente en O(1).
+        whenToUse: 'Caché acotada con get/put O(1) — LinkedHashMap en access-order (o HashMap + lista doblemente enlazada).'
         hints:
-        - Guarda los valores del mapa como referencias directas a nodos de la lista doblemente enlazada,
-          no solo valores crudos.
-        - En cada get/put, mueve el nodo tocado al frente (o al final) de la lista para marcarlo como
-          el más recientemente usado.
+        - Usa LinkedHashMap en modo access-order (o un mapa ordenado equivalente).
+        - En get/put refresca la clave para que sea la más reciente.
+        - Si el tamaño supera capacity, elimina la entrada eldest (menos reciente).
+        - 'Alternativa de entrevista: HashMap<node> + lista doblemente enlazada para splice-to-front / evict-tail explícitos.'
       time-map:
         title: Almacén clave-valor con marcas de tiempo
         summary: Guarda valores por marca de tiempo y obtén el último valor en o antes de una marca dada.
-        whenToUse: Tabla hash más búsqueda binaria sobre listas de marcas de tiempo.
+        whenToUse: Mapa clave → lista append-only de (timestamp, value); búsqueda binaria del último stamp ≤ query.
         hints:
-        - Las marcas de tiempo solo se agregan al final, por lo que ya están ordenadas
-        - Usa búsqueda binaria del límite superior
+        - Los timestamps de una clave se insertan no decrecientes, así la lista queda ordenada para binary search.
+        - get debe devolver el valor más a la derecha con timestamp ≤ query (upper_bound − 1), o vacío si no hay.
+        - Guarda pares o arrays paralelos; no reordenes en cada get.
       lfu-cache:
         title: Caché LFU
         summary: get/put en O(1) con expulsión del menos frecuentemente usado (empate → LRU).

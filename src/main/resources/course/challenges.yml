@@ -95,16 +95,14 @@ challenges:
     about which traversal order preserves enough structural information to rebuild the tree unambiguously,
     including where null children belong.
   className: com.algoprep.patterns.challenge.SerializeBinaryTree
-  hiddenPattern: TREE_BFS
+  hiddenPattern: TREE_DFS
   timeComplexity: O(n)
   spaceComplexity: O(n)
   hints:
-  - Explicit null markers in the serialized output let deserialization know exactly where each subtree
-    ends.
-  - A level-order (or preorder) traversal that includes markers for null children can be reconstructed
-    without any ambiguity.
-  - During deserialization, process the tokens in the same order they were produced, rebuilding parent-child
-    links as you consume markers.
+  - Explicit null markers in the serialized output let deserialization know exactly where each subtree ends.
+  - Prefer a preorder DFS that writes node values and null markers — it rebuilds unambiguously from a token stream.
+  - Level-order with null markers is a valid alternate; whichever you choose, deserialize in the same order you wrote.
+  - During deserialization, consume tokens left-to-right, recursively (or with a queue) rebuilding parent-child links as markers appear.
 - id: largest-rectangle-histogram
   title: Largest Rectangle in Histogram
   difficulty: HARD
@@ -171,7 +169,8 @@ challenges:
   spaceComplexity: O(n)
   hints:
   - Backtrack over cut positions; only recurse when the current prefix is in the dictionary.
-  - Memoizing failed start indices (or caching sentence lists per index) avoids exploring the same suffix twice.
+  - The reference solution is plain DFS — for large inputs, memoizing failed start indices (or caching
+    sentence lists per index) is a useful follow-up optimization to discuss.
   - Join the chosen words with spaces only when you reach the end of s.
 - id: russian-doll-envelopes
   title: Russian Doll Envelopes
@@ -199,7 +198,7 @@ challenges:
     problem — t need not appear as a contiguous block inside the window.
   className: com.algoprep.patterns.challenge.MinimumWindowSubsequence
   hiddenPattern: TWO_POINTERS
-  timeComplexity: O(n * m)
+  timeComplexity: O(n^2)
   spaceComplexity: O(1)
   hints:
   - Scan forward to find a window that covers t as a subsequence, then shrink from the right by walking

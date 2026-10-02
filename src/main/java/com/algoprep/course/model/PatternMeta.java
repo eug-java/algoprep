@@ -16,6 +16,8 @@ public record PatternMeta(
         List<String> templateSteps,
         List<String> commonMistakes,
         List<String> whenNotToUse,
+        String constraints,
+        String followUp,
         List<ProblemMeta> problems
 ) {
 }

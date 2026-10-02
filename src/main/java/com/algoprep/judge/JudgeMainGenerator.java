@@ -317,6 +317,7 @@ final class JudgeMainGenerator {
             return raw.toString();
         }
         if ("String".equals(type)) return "\"" + escape(raw.toString()) + "\"";
+        if ("char[]".equals(type)) return "\"" + escape(raw.toString()) + "\".toCharArray()";
         if ("char[][]".equals(type)) {
             List<?> rows = (List<?>) raw;
             return "new char[][]{" + rows.stream()

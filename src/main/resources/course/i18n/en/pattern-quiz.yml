@@ -3,7 +3,7 @@ questions:
     prompt: >
       Given elevation heights, compute how much rain water can be trapped between the bars.
     explanation: >
-      Opposite pointers track left/right max heights while scanning inward — classic Two Pointers.
+      Opposite pointers track left/right max heights while scanning inward — classic Two Pointers. DP with two max arrays, and a monotonic stack, are also accepted.
   q-min-window:
     prompt: >
       Find the smallest substring of s that contains every character of t (including duplicates).
@@ -23,7 +23,7 @@ questions:
     prompt: >
       Count connected groups of land cells ('1') in a 2D grid of water and land.
     explanation: >
-      Grid adjacency is an implicit graph; flood-fill each component — Graphs (DFS/BFS).
+      Grid adjacency is an implicit graph; flood-fill each component — Graphs (DFS/BFS). Union-Find and a matrix flood-fill are the same idea and also count.
   q-lca:
     prompt: >
       Find the lowest common ancestor of two nodes in a binary tree (not necessarily a BST).
@@ -38,7 +38,7 @@ questions:
     prompt: >
       Given a board and a dictionary of words, return all words that can be formed by adjacent cells.
     explanation: >
-      Many prefix queries on a board call for a Trie + DFS pruning.
+      Many prefix queries on a board call for a Trie + DFS pruning. Plain backtracking without a trie is slower and still a fair first answer.
   q-merge-intervals:
     prompt: >
       Merge all overlapping [start, end] intervals into a minimal non-overlapping list.
@@ -78,7 +78,7 @@ questions:
     prompt: >
       Find the k-th largest element in an unsorted array without fully sorting if possible.
     explanation: >
-      Maintain a heap of size k — Top K Elements.
+      Maintain a heap of size k — Top K Elements. Two heaps are a valid cousin when you need order statistics, not only the k-th.
   q-search-rotated:
     prompt: >
       Search a target in a rotated sorted array in logarithmic time.
@@ -88,7 +88,7 @@ questions:
     prompt: >
       Generate all unique permutations of an array of (possibly duplicate) integers.
     explanation: >
-      Cascading / backtracking generation of arrangements — Subsets pattern family.
+      Cascading generation of arrangements — Subsets. Backtracking is the same tree of choices and also counts.
   q-gas-station:
     prompt: >
       On a circular route, find a starting gas station to complete the circuit, or determine it's impossible.
@@ -139,3 +139,23 @@ questions:
       Design an API component that allows at most N requests per client per time window.
     explanation: >
       Backend/system design for Spring services — Spring Boot Interview Lab.
+  q-group-anagrams:
+    prompt: >
+      Group words that are anagrams of each other. Original order inside a group does not matter.
+    explanation: >
+      Sort each word and bucket by the sorted key — Sort and Search. A character-count signature in a hash map is the same idea and also counts.
+  q-coin-not-greedy:
+    prompt: >
+      Coins are [1,3,4] and the amount is 6. Return the fewest coins. Taking the largest coin first uses three coins.
+    explanation: >
+      The greedy choice is wrong here. dp[x] = min over coins of dp[x-coin]+1 — Dynamic Programming.
+  q-longest-substring:
+    prompt: >
+      Longest substring without repeating characters. The array is not sorted, and you need a contiguous span.
+    explanation: >
+      Expand the right edge and shrink the left when a character repeats — Sliding Window, not two pointers from the ends.
+  q-bipartite:
+    prompt: >
+      Decide whether an undirected graph's vertices can be split into two sets so every edge crosses the sets.
+    explanation: >
+      Color with BFS. A neighbor that already has your color means an odd cycle — Graphs.

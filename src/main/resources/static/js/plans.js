@@ -73,13 +73,9 @@ export const PLANS = [
         labelKey: 'plans.spring.week',
         week: 1,
         items: [
-          { patternId: 'SPRING_BOOT_INTERVIEW', problemId: 'request-id-filter' },
           { patternId: 'SPRING_BOOT_INTERVIEW', problemId: 'rate-limiter' },
           { patternId: 'SPRING_BOOT_INTERVIEW', problemId: 'idempotency-store' },
           { patternId: 'SPRING_BOOT_INTERVIEW', problemId: 'transactional-outbox' },
-          { patternId: 'SPRING_BOOT_INTERVIEW', problemId: 'optimistic-lock-service' },
-          { patternId: 'SPRING_BOOT_INTERVIEW', problemId: 'concurrent-login-tracker' },
-          { patternId: 'SPRING_BOOT_INTERVIEW', problemId: 'sql-injection-safe-query' },
           { patternId: 'SPRING_BOOT_INTERVIEW', problemId: 'circuit-breaker' },
           { patternId: 'HASH_MAPS', problemId: 'two-sum' },
           { patternId: 'HASH_MAPS', problemId: 'subarray-sum-equals-k' },

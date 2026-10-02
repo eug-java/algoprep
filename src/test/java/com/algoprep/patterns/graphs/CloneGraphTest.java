@@ -21,6 +21,12 @@ class CloneGraphTest {
 
   @Test
   void handlesNull() {
-    assertNull(CloneGraph.cloneGraph(null));
+    assertNull(CloneGraph.cloneGraph((GraphNode) null));
+  }
+
+  @Test
+  void clonesAdjacencyWithSortedNeighbors() {
+    int[][] adj = {{2, 4}, {1, 3}, {2, 4}, {1, 3}};
+    assertArrayEquals(adj, CloneGraph.cloneGraph(adj));
   }
 }

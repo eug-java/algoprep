@@ -64,6 +64,27 @@ test.describe('AlgoPrep smoke', () => {
     expect(remote.progress['demo:a']).toBe(1);
   });
 
+  test('problem page stages hints and shows an example', async ({ page }) => {
+    await openApp(page, '/#/patterns/HASH_MAPS/problems/two-sum');
+    await expect(page.locator('#hint-box li')).toHaveCount(1, { timeout: 15_000 });
+    await page.locator('#btn-next-hint').click();
+    await expect(page.locator('#hint-box li')).toHaveCount(2);
+    await expect(page.locator('pre.ascii-walk').first()).toContainText('[2, 7, 11, 15]');
+  });
+
+  test('review and mock routes render', async ({ page }) => {
+    await openApp(page, '/#/review');
+    await expect(page.getByRole('heading').first()).toBeVisible({ timeout: 15_000 });
+    await openApp(page, '/#/mock');
+    await expect(page.getByRole('heading').first()).toBeVisible({ timeout: 15_000 });
+  });
+
+  test('spring discussion problem has no run button', async ({ page }) => {
+    await openApp(page, '/#/patterns/SPRING_BOOT_INTERVIEW/problems/idempotency-store');
+    await expect(page.getByRole('heading').first()).toBeVisible({ timeout: 15_000 });
+    await expect(page.locator('#btn-run')).toHaveCount(0);
+  });
+
   test('plans and report routes render', async ({ page }) => {
     await openApp(page, '/#/plans');
     await expect(page.getByRole('heading').first()).toBeVisible({ timeout: 15_000 });

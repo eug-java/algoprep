@@ -17,6 +17,9 @@ public class MetricsService {
     private final AtomicLong totalEvents = new AtomicLong();
 
     public void record(MetricsController.MetricEvent event) {
+        if (counts.size() >= 64 && !counts.containsKey(event.type())) {
+            return;
+        }
         totalEvents.incrementAndGet();
         counts.computeIfAbsent(event.type(), k -> new AtomicLong()).incrementAndGet();
         if (event.patternId() != null && !event.patternId().isBlank()) {

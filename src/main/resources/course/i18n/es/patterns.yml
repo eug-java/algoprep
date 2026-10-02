@@ -1,5 +1,7 @@
 patterns:
   TWO_POINTERS:
+    constraints: "Tras un orden permitido, el límite interesante es lineal, no cuadrático."
+    followUp: "¿Y si hay que devolver los índices originales y no se puede ordenar?"
     title: Dos punteros
     subtitle: Mueve dos índices hacia un objetivo en arreglos, cadenas o listas ordenadas
     intuition: 'Cuando una solución de fuerza bruta compara cada par con bucles anidados, conviene preguntarse
@@ -90,6 +92,8 @@ patterns:
         - Ordena primero y salta duplicados en cada nivel
         - El par interno usa el clásico patrón de dos punteros
   FAST_SLOW_POINTERS:
+    constraints: "La restricción que hay que decir en voz alta es memoria extra O(1)."
+    followUp: "¿Y si la lista se puede mutar, y si no?"
     title: Punteros rápido y lento
     subtitle: Detecta ciclos y encuentra puntos medios moviendo dos punteros a distinta velocidad
     intuition: 'Imagina a dos corredores en una pista: el rápido avanza dos pasos por cada paso del lento.
@@ -177,6 +181,8 @@ patterns:
         - Descarta los saltos que cambian de dirección
         - Marca los índices visitados para no repetir trabajo
   SLIDING_WINDOW:
+    constraints: "La ventana es contigua. Si la restricción no es monótona, el patrón no aplica."
+    followUp: "¿Qué cambia si hay negativos y encoger la ventana ya no arregla la suma?"
     title: Ventana deslizante
     subtitle: Mantén una ventana contigua que crece y se reduce para cumplir una restricción
     intuition: Cuando un problema pregunta por un subarreglo o subcadena contigua, la fuerza bruta recalcula
@@ -258,6 +264,8 @@ patterns:
         - En cada ventana válida compara la longitud con la mejor respuesta y quédate con la más corta.
         - 'Al encoger, decrementa have con cuidado: satisfied baja solo cuando un contador requerido cae por debajo de need.'
   INTERVALS:
+    constraints: "Ordena por inicio salvo que el problema sea de finales. Di cuál."
+    followUp: "¿Y si los intervalos son semiabiertos o un contacto de extremos no debe fusionarse?"
     title: Intervalos
     subtitle: Ordena por inicio y recorre una vez para fusionar, insertar o razonar sobre rangos
     intuition: Los problemas de intervalos se vuelven manejables en cuanto los ordenas por hora de inicio,
@@ -338,6 +346,8 @@ patterns:
         - Si no hay sala libre, asigna una (push end). El tamaño del heap es las salas necesarias.
         - 'Alternativa: ordena starts y ends por separado y barre — +1 en start, −1 en end.'
   IN_PLACE_LINKED_LIST:
+    constraints: "Dibuja el recableado de tres nodos antes del bucle."
+    followUp: "¿Y si k es mayor que la longitud o la lista está vacía?"
     title: Manipulación de lista enlazada en el lugar
     subtitle: Invierte, reordena y transforma listas con espacio extra O(1)
     intuition: 'Invertir o reordenar una lista enlazada sin espacio extra es, en esencia, llevar cuidadosamente
@@ -416,6 +426,8 @@ patterns:
         - Encuentra el medio con punteros rápido/lento
         - Invierte la segunda mitad y entrelaza los nodos
   TWO_HEAPS:
+    constraints: "Los dos heaps parten los datos para que la mediana esté siempre en la cima de uno."
+    followUp: "¿Y si además hay que borrar un valor arbitrario, no solo la mediana?"
     title: Dos heaps
     subtitle: Equilibra un max-heap y un min-heap para medianas y planificación voraz
     intuition: 'Todo lo que pida una mediana en curso, o equilibrar las mitades ''baja'' y ''alta'' de
@@ -497,6 +509,8 @@ patterns:
         - Push into max/min heaps and rebalance
         - Median is top or average of tops
   K_WAY_MERGE:
+    constraints: "El heap guarda un candidato de cada lista ordenada, no toda la entrada."
+    followUp: "¿Y si las listas son tan largas que conviene buscar un valor en binario en vez de fusionar?"
     title: Fusión de K vías
     subtitle: Fusiona múltiples entradas ordenadas con un min-heap de candidatos actuales
     intuition: 'Fusionar k listas ya ordenadas generaliza la fusión de dos listas de merge sort: en vez
@@ -575,6 +589,8 @@ patterns:
         - Use a dummy head
         - Always attach the smaller current node
   TOP_K_ELEMENTS:
+    constraints: "Un heap de tamaño k gana a un orden total cuando k es mucho menor que n."
+    followUp: "¿Y si el flujo no termina y aun así quieres el top k actual?"
     title: Los K elementos principales
     subtitle: Conserva solo K candidatos usando un heap de tamaño K
     intuition: 'Cuando solo necesitas los K elementos más grandes, más pequeños o más frecuentes de N,
@@ -656,6 +672,8 @@ patterns:
         - Si la frecuencia máxima supera (n+1)/2, es imposible
         - Toma siempre el carácter disponible más frecuente
   MODIFIED_BINARY_SEARCH:
+    constraints: "Di qué mitad descartas y por qué ahí no puede estar la respuesta."
+    followUp: "¿Y si los duplicados hacen que ambas mitades parezcan ordenadas?"
     title: Búsqueda binaria modificada
     subtitle: 'Búsqueda binaria más allá de la búsqueda simple: arreglos rotados, límites y espacios de
       respuesta'
@@ -741,6 +759,8 @@ patterns:
         - Si nums[lo]==nums[mid]==nums[hi], reduce ambos extremos
         - En los demás casos aplica la lógica habitual del arreglo rotado
   SUBSETS:
+    constraints: "Elegir, explorar, deshacer. El dibujo es el árbol incluir/excluir."
+    followUp: "¿Y si la entrada tiene duplicados y la salida debe ser única?"
     title: Subconjuntos
     subtitle: Genera sistemáticamente todos los subconjuntos, permutaciones y combinaciones
     intuition: Generar todos los subconjuntos, permutaciones o combinaciones consiste, en el fondo, en
@@ -837,6 +857,8 @@ patterns:
         - Choose or skip each number from start..n
         - Stop when path size is k
   GREEDY:
+    constraints: "Nombra la clave de orden y por qué la elección local no hay que deshacerla."
+    followUp: "Da un contraejemplo donde lo voraz pierde contra DP antes de comprometerte."
     title: Técnicas voraces (greedy)
     subtitle: Comprométete con la elección localmente óptima que preserva demostrablemente un invariante
       global
@@ -919,6 +941,8 @@ patterns:
         - Sort greed and cookie sizes
         - 'Two pointers: give cookie only when it fits'
   BACKTRACKING:
+    constraints: "Poda en cuanto la elección parcial es ilegal. No esperes a la hoja."
+    followUp: "¿Y si solo hace falta una solución, no todas?"
     title: Backtracking (vuelta atrás)
     subtitle: 'Elige, explora, deshaz: recorre el árbol de decisiones con poda'
     intuition: 'El backtracking explora un árbol de decisiones de soluciones parciales, comprometiéndose
@@ -1002,6 +1026,8 @@ patterns:
         - Digits stay fixed
         - Branch lower/upper for each letter
   DYNAMIC_PROGRAMMING:
+    constraints: "Define dp[i] en una frase antes de cualquier bucle. Con ese n la recursión ingenua no pasa."
+    followUp: "¿De qué celdas depende esta, y se puede dejar solo la fila anterior?"
     title: Programación dinámica
     subtitle: Subproblemas superpuestos y subestructura óptima, resueltos una vez y reutilizados
     intuition: La programación dinámica se aplica cuando un problema tiene subestructura óptima (la mejor
@@ -1072,7 +1098,7 @@ patterns:
       coin-change:
         title: Cambio de monedas
         summary: Cantidad mínima de monedas para formar el monto, o -1 si no es posible.
-        whenToUse: DP de mochila no acotada sobre el monto.
+        whenToUse: DP de mochila no acotada. Lo voraz falla con denominaciones no canónicas — monedas [1,3,4] y monto 6 son 3 monedas voraces y 2 con DP.
         hints:
         - dp[x] = mínimo sobre las monedas c de dp[x-c]+1
         - Inicializa dp[0]=0 y el resto en +infinito
@@ -1085,7 +1111,25 @@ patterns:
         - 'dp[i][j] es la distancia entre word1[:i] y word2[:j]; caracteres iguales toman la diagonal.'
         - 'Si no coinciden: 1 + min(insert=dp[i][j-1], delete=dp[i-1][j], replace=dp[i-1][j-1]).'
         - Conserva solo la fila anterior para respetar O(n) de espacio tras aclarar la recurrencia 2D.
+      longest-increasing-subsequence:
+        title: Subsecuencia creciente más larga
+        summary: Longitud de la subsecuencia estrictamente creciente más larga. No tiene que ser contigua.
+        whenToUse: dp[i] es la mejor longitud que termina en i. Primero la frase, luego el bucle. O(n log n) es el follow-up.
+        hints:
+        - ¿Qué significa una celda, antes de escribir el bucle?
+        - dp[i] = 1 + el mejor dp[j] entre valores anteriores más pequeños.
+        - La respuesta es el máximo de las celdas, no dp[n-1].
+      unique-paths:
+        title: Caminos únicos
+        summary: Cuenta caminos de la celda superior izquierda a la inferior derecha, solo a la derecha o abajo.
+        whenToUse: dp[r][c] = dp[r-1][c] + dp[r][c-1]. La primera fila y la primera columna valen 1.
+        hints:
+        - Di qué guarda una celda antes de rellenarla.
+        - A una celda se llega solo desde arriba o desde la izquierda.
+        - La primera fila y la primera columna tienen exactamente una forma de alcanzarse.
   CYCLIC_SORT:
+    constraints: "Los valores viven en 1..n o 0..n-1. Ese rango permite colocarlos en su sitio."
+    followUp: "¿Y si la promesa del rango es falsa y un valor cae fuera?"
     title: Ordenamiento cíclico
     subtitle: Coloca cada número del rango [1..n] en su índice de origen valor-1
     intuition: Cuando los valores de un arreglo están garantizados dentro de un rango pequeño conocido
@@ -1168,6 +1212,8 @@ patterns:
         - 'Mientras nums[i] esté en rango y no en casa, intercámbialo con el índice nums[i]-1 (evita self-swap infinito).'
         - 'Tras colocar, el primer i con nums[i] != i+1 da i+1; si todos encajan, la respuesta es n+1.'
   TOPOLOGICAL_SORT:
+    constraints: "Un ciclo significa que no hay orden. Diló antes de Kahn o DFS."
+    followUp: "¿Y si hay varios órdenes válidos y piden cualquiera?"
     title: Ordenamiento topológico
     subtitle: Ordena tareas con prerrequisitos usando BFS guiado por grado de entrada en un DAG
     intuition: 'Siempre que las tareas tengan prerrequisitos, esa relación de dependencia es un grafo
@@ -1250,6 +1296,8 @@ patterns:
         - Map each letter to its rank
         - Invalid if longer word is a prefix after a shorter equal prefix
   SORT_AND_SEARCH:
+    constraints: "Ordenar es legal solo si no hace falta el orden original."
+    followUp: "¿Cuánto cuesta el orden y lo evita un mapa hash?"
     title: Ordenar y buscar
     subtitle: Ordena por la clave correcta para habilitar comparaciones adyacentes o búsqueda binaria
     intuition: Muchos problemas que parecen complicados se simplifican en cuanto ordenas los datos por
@@ -1333,6 +1381,8 @@ patterns:
         - Put one array into a set
         - Filter unique hits from the other
   MATRICES:
+    constraints: "Marca la visita in situ si el problema lo permite. Si no, di por qué hace falta un conjunto."
+    followUp: "¿Y si no puedes mutar la rejilla de entrada?"
     title: Matrices
     subtitle: Recorre, transforma y busca en cuadrículas 2D de forma sistemática
     intuition: Los problemas de cuadrículas y matrices suelen tratarse de controlar exactamente cómo recorres
@@ -1427,6 +1477,8 @@ patterns:
         - Add mat[i][i] and mat[i][n-1-i]
         - Subtract center once if n is odd
   STACKS:
+    constraints: "La pila guarda índices o valores que todavía pueden ser la respuesta."
+    followUp: "¿Y si el arreglo es circular y el último mira al primero?"
     title: Pilas (stacks)
     subtitle: LIFO para pares coincidentes, el siguiente elemento mayor y estructuras monótonas
     intuition: Una pila encaja naturalmente cuando la respuesta a '¿qué resuelve este elemento?' depende
@@ -1512,6 +1564,8 @@ patterns:
         - Mantén el resultado acumulado y el signo actual
         - En '(' apila resultado/signo; en ')' desapílalos
   GRAPHS:
+    constraints: "Nombra el grafo: rejilla, lista de adyacencia o implícito. Luego BFS o DFS y por qué."
+    followUp: "¿Y si las aristas tienen peso? BFS sin pesos ya no es el camino más corto."
     title: Grafos
     subtitle: Recorrido BFS/DFS en grafos explícitos o implícitos
     intuition: Cualquier problema que involucre nodos conectados por relaciones -aristas explícitas o
@@ -1587,14 +1641,17 @@ patterns:
         hints:
         - Hay un puente cuando low[vecino] > disc[u]
         - Ignora la arista hacia el padre
-      find-center-star:
-        title: Centro de grafo estrella
-        summary: Find the center node of a star graph given edges.
-        whenToUse: Center appears in every edge — compare first two edges.
+      is-graph-bipartite:
+        title: ¿Es el grafo bipartito?
+        summary: Decide si un grafo no dirigido se puede partir en dos conjuntos sin aristas internas.
+        whenToUse: Colorea el grafo con BFS o DFS. Un ciclo impar significa que no.
         hints:
-        - Look at edges[0] and edges[1]
-        - The shared node is the center
+        - ¿Qué dice de un ciclo que falle una 2-coloración?
+        - Da al inicio el color 1. Un vecino con el mismo color es un conflicto.
+        - Puede haber varios componentes, así que empieza en cada nodo sin color.
   TREE_DFS:
+    constraints: "Di qué devuelve la llamada recursiva antes de combinar los hijos."
+    followUp: "¿Y si el árbol está degenerado y la pila de llamadas es la memoria?"
     title: DFS en árboles
     subtitle: Recorre recursivamente caminos raíz-hoja y propiedades de subárboles
     intuition: 'La mayoría de los problemas de árboles binarios son naturalmente recursivos: procesar
@@ -1682,6 +1739,8 @@ patterns:
         - 'Un camino por el nodo puede usar ambos hijos: candidate = node.val + left_gain + right_gain; actualiza el global.'
         - 'Devuelve al padre solo una rama: node.val + max(left_gain, right_gain), para que el camino sea simple.'
   TREE_BFS:
+    constraints: "El recorrido por niveles es una cola y una foto de su tamaño."
+    followUp: "¿Y si necesitas el número de nivel y no solo el orden de visita?"
     title: BFS en árboles
     subtitle: Recorrido por niveles con una cola, un nivel completo a la vez
     intuition: 'Cuando un problema de árboles habla de niveles, profundidad, o ''el X más cercano'', el
@@ -1764,6 +1823,8 @@ patterns:
         - Rastrea el índice de columna de cada nodo
         - Ordena cada columna primero por fila y luego por valor
   TRIE:
+    constraints: "Cada arista es un carácter. Luego los recorridos de insert y search."
+    followUp: "¿Y si el alfabeto es Unicode y no 26 letras?"
     title: Trie (árbol de prefijos)
     subtitle: Árbol de prefijos para diccionarios de palabras, autocompletado y búsqueda por prefijo compartido
     intuition: Un trie comparte prefijos comunes entre muchas palabras en una sola estructura de árbol,
@@ -1851,6 +1912,8 @@ patterns:
         - Compare characters column by column
         - Stop at first mismatch or end of a word
   HASH_MAPS:
+    constraints: "n suele llegar a 1e5, así que un doble bucle ya no es respuesta."
+    followUp: "¿Y si el arreglo es un flujo y no puedes guardar cada valor?"
     title: Mapas hash
     subtitle: Búsqueda promedio O(1) para complementos, frecuencias y sumas de prefijo
     intuition: Un mapa hash intercambia algo de memoria por búsqueda promedio O(1), permitiéndote recordar
@@ -1936,6 +1999,8 @@ patterns:
         - Construye un mapa suma→cantidad para los primeros dos arreglos
         - Para cada suma c+d, busca -(c+d) en el mapa
   KNOWING_WHAT_TO_TRACK:
+    constraints: "Nombra el número o la entrada del mapa que hace el resto del pase O(1)."
+    followUp: "¿Y si quitan la garantía: no hay mayoría, los valores no son solo 0 y 1?"
     title: Saber qué rastrear
     subtitle: Resuelve problemas de una pasada identificando los contadores en curso correctos
     intuition: 'Sorprendentemente, muchos problemas de entrevista no se tratan de un algoritmo elaborado
@@ -2008,14 +2073,9 @@ patterns:
         hints:
         - Puede haber como máximo dos respuestas
         - Verifica los conteos reales en una segunda pasada
-      max-points-on-line:
-        title: Máximo de puntos en una línea
-        summary: El número máximo de puntos que se encuentran sobre una misma línea recta.
-        whenToUse: Para cada punto de origen, rastrea las pendientes como fracciones reducidas.
-        hints:
-        - Normaliza la pendiente dividiendo por el MCD
-        - Maneja aparte las líneas verticales y los puntos duplicados
   UNION_FIND:
+    constraints: "Rango y compresión de camino son la razón de que esto sea casi O(1)."
+    followUp: "¿Y si hay que deshacer la última unión?"
     title: Union-Find (DSU)
     subtitle: Conectividad dinámica con uniones casi O(1) mediante compresión de caminos y rango
     intuition: 'Union-Find (conjuntos disjuntos) responde ''¿están conectadas estas dos cosas?'' y ''fusiona
@@ -2095,6 +2155,8 @@ patterns:
         - Union endpoints of each edge
         - find(source)==find(destination)
   CUSTOM_DATA_STRUCTURES:
+    constraints: "Nombra las dos estructuras y qué operación hace O(1) cada una."
+    followUp: "¿Y si la capacidad no tiene tope o cada operación debe ser segura entre hilos?"
     title: Estructuras de datos personalizadas
     subtitle: Combina bloques de construcción conocidos para cumplir restricciones de complejidad por
       operación
@@ -2183,6 +2245,8 @@ patterns:
         - Use an array of linked lists
         - Hash with key % bucketCount
   BITWISE:
+    constraints: "Di la propiedad: XOR cancela pares, una máscara aísla un bit."
+    followUp: "¿Y si los números pueden ser negativos y desplazas un int con signo?"
     title: Manipulación de bits
     subtitle: Usa XOR, desplazamientos y máscaras para conjuntos, paridad y trucos de espacio constante
     intuition: 'Los trucos de manipulación de bits provienen de un pequeño conjunto de identidades básicas:
@@ -2275,6 +2339,8 @@ patterns:
         - While left < right, right &= right-1 or shift both
         - Common prefix bits survive
   MATH_GEOMETRY:
+    constraints: "Reduce la fórmula antes de codear. El desbordamiento es parte de la respuesta."
+    followUp: "¿Y si las coordenadas son tan grandes que la pendiente debe ser una fracción reducida, no un double?"
     title: Matemáticas y geometría
     subtitle: Identidades de teoría de números y geometría de coordenadas para entrevistas
     intuition: Una parte significativa de los problemas de entrevista tratan en realidad de conocer una
@@ -2366,6 +2432,8 @@ patterns:
         - Normalize slope by GCD
         - Handle duplicates and vertical lines
   SPRING_BOOT_INTERVIEW:
+    constraints: "Di si el proceso está solo o es uno de muchos antes de elegir una estructura en memoria."
+    followUp: "¿Qué pasa al reiniciar, y qué pasa si una segunda instancia no ve esa memoria?"
     title: Laboratorio de entrevistas de Spring Boot
     subtitle: Temas de backend en Java que aparecen junto a algoritmos en las entrevistas
     intuition: 'Las entrevistas de backend en Java combinan cada vez más el DSA clásico con conocimientos
@@ -2417,6 +2485,7 @@ patterns:
       de anotaciones específicas del framework no'
     problems:
       rate-limiter:
+        failureNote: "Un cubo en memoria se reinicia en el despliegue e ignora las demás instancias. Di dónde vivirían los tokens si hubiera más de un proceso, y qué haces cuando ese almacén está caído."
         title: Limitador de tasa con token bucket
         summary: Permite como máximo N solicitudes por ventana de tiempo por clave usando semántica de
           token bucket.
@@ -2427,6 +2496,7 @@ patterns:
         - Rellena los tokens de forma perezosa según el tiempo transcurrido en vez de ejecutar un temporizador
           en segundo plano.
       idempotency-store:
+        failureNote: "Un TTL que expira a mitad del reintento vuelve a ejecutar el efecto. Una clave solo en memoria desaparece al reiniciar, y el siguiente reintento ya no es idempotente."
         title: Almacén de claves de idempotencia
         summary: Guarda resultados de solicitudes indexados por una clave de idempotencia con semántica
           TTL para reintentos seguros.
@@ -2438,6 +2508,7 @@ patterns:
         - Ante una clave repetida dentro de la ventana TTL, devuelve el resultado guardado en vez de reejecutar
           la operación.
       circuit-breaker:
+        failureNote: "Un breaker en un proceso no protege a la flota. Si todos los pods pasan a half-open a la vez, avalanchan la dependencia de la que acabas de apartarte."
         title: Circuit Breaker (interruptor de circuito)
         summary: Un interruptor de circuito simple con umbral de fallos y tiempo de espera en estado abierto.
         whenToUse: Protege a quienes llaman de fallos en cascada.
@@ -2445,6 +2516,7 @@ patterns:
         - Pasa a estado abierto tras N fallos
         - Tras el tiempo de espera, permite un intento en estado HALF_OPEN
       lru-http-cache:
+        failureNote: "Una caché de un proceso queda vieja en cuanto otra instancia escribe. Un GET que depende de quién llama, o un TTL olvidado, sirve el cuerpo equivocado."
         title: Caché de respuestas HTTP
         summary: Caché con TTL para respuestas GET idempotentes, con expulsión por capacidad.
         whenToUse: Patrón cache-aside para endpoints REST de lectura intensiva.
@@ -2452,6 +2524,7 @@ patterns:
         - Guarda la marca de tiempo de expiración
         - Elimina las entradas caducadas en el get; expulsa por LRU cuando esté llena
       config-store:
+        failureNote: "Un ConcurrentHashMap no es un servicio de configuración. Nadie más ve la escritura, y un reinicio la borra."
         title: Almacén de configuración en memoria
         summary: Thread-safe in-memory configuration key/value store.
         whenToUse: Simple Spring-style config bean for interviews.
@@ -2459,6 +2532,7 @@ patterns:
         - ConcurrentHashMap under the hood
         - getOrDefault for missing keys
       request-id-filter:
+        failureNote: "Un id nacido dentro de un servicio no correlaciona la llamada que entró por la pasarela. Fiarse de un id del cliente sin límites invita a trazas falsas."
         title: Filtro de Request Id
         summary: Genera o propaga un X-Request-Id por cada solicitud entrante y lo expone a las llamadas
           descendentes y a los logs.
@@ -2470,6 +2544,7 @@ patterns:
         - Guarda el id resuelto en un ámbito de la solicitud para que el código posterior pueda leerlo
           sin pasarlo como parámetro en cada llamada.
       transactional-outbox:
+        failureNote: "La fila del outbox y la escritura de negocio tienen que confirmarse juntas. Publicar antes del commit, o caer después del commit y antes de publicar, es el bug. Una cola en memoria no sobrevive al reinicio."
         title: Outbox transaccional
         summary: Cola outbox en memoria que encola eventos junto con una escritura en BD y publica solo
           los que ya están listos.
@@ -2482,6 +2557,7 @@ patterns:
         - publishDue busca eventos PENDING que ya sean elegibles, se los pasa al publicador, y luego
           los marca como PUBLISHED (o los deja PENDING para reintentar si el publicador lanza una excepción).
       optimistic-lock-service:
+        failureNote: "Una versión comprobada solo en esta JVM no coordina una segunda instancia. Dos pods pueden leer la versión 3 y escribir los dos."
         title: Servicio de bloqueo optimista
         summary: Actualización de un registro versionado que falla cuando la versión esperada por quien
           llama está desactualizada.
@@ -2493,6 +2569,7 @@ patterns:
         - Rechaza una actualización cuya versión esperada no coincida con la versión guardada, en vez
           de sobrescribir en silencio.
       concurrent-login-tracker:
+        failureNote: "Un conjunto de sesiones de este proceso está vacío en el siguiente pod. No puedes contar ni revocar un login que cayó en otro sitio."
         title: Rastreador de inicios de sesión concurrentes
         summary: Rastrea las sesiones activas por usuario y aplica un número máximo de inicios de sesión
           concurrentes.
@@ -2506,6 +2583,7 @@ patterns:
           más antigua según la política configurada; haz que el desalojo y la inserción sean atómicos
           bajo un bloqueo por usuario.
       sql-injection-safe-query:
+        failureNote: "Una lista blanca armada desde la petición no es una lista blanca. Ata los valores como parámetros. Los identificadores que no se pueden atar se quedan en una lista que escribiste tú."
         title: Constructor de consultas seguro frente a inyección SQL
         summary: Construye marcadores de posición parametrizados a partir de un mapa columna-valor,
           validando identificadores en vez de concatenar entrada sin procesar.

@@ -33,13 +33,16 @@ public class ProgressSyncController {
 
     @GetMapping("/{syncKey}")
     public Map<String, Object> pull(@PathVariable String syncKey) {
+        requireKey(syncKey);
         return store.get(syncKey).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unknown sync key"));
     }
 
     @PutMapping("/{syncKey}")
     public Map<String, Object> push(@PathVariable String syncKey, @Valid @RequestBody SyncPayload payload) {
-        if (!syncKey.matches("[a-f0-9]{32}")) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid sync key");
+        requireKey(syncKey);
+        int size = String.valueOf(payload.progress()).length() + String.valueOf(payload.meta()).length();
+        if (size > 262_144) {
+            throw new ResponseStatusException(HttpStatus.PAYLOAD_TOO_LARGE, "Sync payload exceeds 256KB");
         }
         Map<String, Object> body = Map.of(
                 "version", payload.version() == null ? 1 : payload.version(),
@@ -49,6 +52,12 @@ public class ProgressSyncController {
         );
         store.put(syncKey, body);
         return body;
+    }
+
+    private static void requireKey(String syncKey) {
+        if (syncKey == null || !syncKey.matches("[a-f0-9]{32}")) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid sync key");
+        }
     }
 
     public record SyncPayload(

@@ -1,0 +1,12 @@
+className: Solution
+method: isBipartite
+params: [int[][]]
+returns: boolean
+referenceClass: com.algoprep.patterns.graphs.IsGraphBipartite
+referenceMethod: isBipartite
+referenceStatic: true
+cases:
+  - name: even-cycle
+    args: [[[1, 3], [0, 2], [1, 3], [0, 2]]]
+  - name: odd-cycle
+    args: [[[1, 2, 3], [0, 2], [0, 1, 3], [0, 2]]]

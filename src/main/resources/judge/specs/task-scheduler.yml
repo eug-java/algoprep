@@ -1,0 +1,11 @@
+className: Solution
+method: leastInterval
+params: [char[], int]
+returns: int
+cases:
+  - name: cooldown
+    args: ["AAABBB", 2]
+    expected: 8
+  - name: no-gap
+    args: ["AAABBB", 0]
+    expected: 6

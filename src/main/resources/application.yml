@@ -4,6 +4,9 @@ spring:
 
 server:
   port: 18080
+  # Local process only. Docker Compose sets SERVER_ADDRESS=0.0.0.0 inside the
+  # container so the published port works; the host still reaches it via localhost.
+  address: ${SERVER_ADDRESS:127.0.0.1}
 
 management:
   endpoints:

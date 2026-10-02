@@ -96,6 +96,7 @@ challenges:
     including where null children belong.
   className: com.algoprep.patterns.challenge.SerializeBinaryTree
   hiddenPattern: TREE_DFS
+  alternatePatterns: [TREE_BFS]
   timeComplexity: O(n)
   spaceComplexity: O(n)
   hints:
@@ -165,6 +166,7 @@ challenges:
     how you will explore every valid cut without recomputing dead-end prefixes forever.
   className: com.algoprep.patterns.challenge.WordBreakII
   hiddenPattern: BACKTRACKING
+  alternatePatterns: [DYNAMIC_PROGRAMMING]
   timeComplexity: O(2^n * n) worst-case
   spaceComplexity: O(n)
   hints:
@@ -198,6 +200,7 @@ challenges:
     problem — t need not appear as a contiguous block inside the window.
   className: com.algoprep.patterns.challenge.MinimumWindowSubsequence
   hiddenPattern: TWO_POINTERS
+  alternatePatterns: [DYNAMIC_PROGRAMMING]
   timeComplexity: O(n^2)
   spaceComplexity: O(1)
   hints:

@@ -1,6 +1,7 @@
 questions:
   - id: q-rain-water
     correctPattern: TWO_POINTERS
+    alsoAccept: [DYNAMIC_PROGRAMMING, STACKS]
     options: [TWO_POINTERS, SLIDING_WINDOW, DYNAMIC_PROGRAMMING, STACKS]
   - id: q-min-window
     correctPattern: SLIDING_WINDOW
@@ -13,6 +14,7 @@ questions:
     options: [TOP_K_ELEMENTS, TWO_HEAPS, SORT_AND_SEARCH, DYNAMIC_PROGRAMMING]
   - id: q-islands
     correctPattern: GRAPHS
+    alsoAccept: [UNION_FIND, MATRICES]
     options: [MATRICES, GRAPHS, UNION_FIND, TREE_BFS]
   - id: q-lca
     correctPattern: TREE_DFS
@@ -22,6 +24,7 @@ questions:
     options: [TREE_DFS, TREE_BFS, GRAPHS, STACKS]
   - id: q-word-search-ii
     correctPattern: TRIE
+    alsoAccept: [BACKTRACKING]
     options: [BACKTRACKING, TRIE, HASH_MAPS, GRAPHS]
   - id: q-merge-intervals
     correctPattern: INTERVALS
@@ -46,12 +49,14 @@ questions:
     options: [STACKS, TWO_POINTERS, GREEDY, HASH_MAPS]
   - id: q-kth-largest
     correctPattern: TOP_K_ELEMENTS
+    alsoAccept: [TWO_HEAPS]
     options: [SORT_AND_SEARCH, TOP_K_ELEMENTS, TWO_HEAPS, MODIFIED_BINARY_SEARCH]
   - id: q-search-rotated
     correctPattern: MODIFIED_BINARY_SEARCH
     options: [SORT_AND_SEARCH, MODIFIED_BINARY_SEARCH, TWO_POINTERS, GREEDY]
   - id: q-permutations
     correctPattern: SUBSETS
+    alsoAccept: [BACKTRACKING]
     options: [BACKTRACKING, SUBSETS, DYNAMIC_PROGRAMMING, GREEDY]
   - id: q-gas-station
     correctPattern: GREEDY
@@ -73,6 +78,7 @@ questions:
     options: [BITWISE, MATH_GEOMETRY, DYNAMIC_PROGRAMMING, MODIFIED_BINARY_SEARCH]
   - id: q-merge-k-lists
     correctPattern: K_WAY_MERGE
+    alsoAccept: [TWO_HEAPS]
     options: [TWO_HEAPS, K_WAY_MERGE, SORT_AND_SEARCH, TOP_K_ELEMENTS]
   - id: q-spiral
     correctPattern: MATRICES
@@ -83,3 +89,16 @@ questions:
   - id: q-rate-limiter
     correctPattern: SPRING_BOOT_INTERVIEW
     options: [CUSTOM_DATA_STRUCTURES, SPRING_BOOT_INTERVIEW, HASH_MAPS, STACKS]
+  - id: q-group-anagrams
+    correctPattern: SORT_AND_SEARCH
+    alsoAccept: [HASH_MAPS]
+    options: [HASH_MAPS, SORT_AND_SEARCH, TRIE, SLIDING_WINDOW]
+  - id: q-coin-not-greedy
+    correctPattern: DYNAMIC_PROGRAMMING
+    options: [GREEDY, DYNAMIC_PROGRAMMING, TWO_POINTERS, MATH_GEOMETRY]
+  - id: q-longest-substring
+    correctPattern: SLIDING_WINDOW
+    options: [TWO_POINTERS, SLIDING_WINDOW, STACKS, GREEDY]
+  - id: q-bipartite
+    correctPattern: GRAPHS
+    options: [GRAPHS, UNION_FIND, TREE_BFS, DYNAMIC_PROGRAMMING]

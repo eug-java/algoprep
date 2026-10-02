@@ -31,6 +31,7 @@ public class JudgeService {
     private static final Duration DOCKER_TIMEOUT = Duration.ofSeconds(12);
     private static final List<String> FORBIDDEN = List.of(
             "Runtime.getRuntime", "ProcessBuilder", "FileWriter", "FileOutputStream",
+            "FileReader", "FileInputStream", "RandomAccessFile", "FileChannel", "java.io.",
             "java.nio.file", "java.net.", "Socket", "ServerSocket", "System.load", "System.exit",
             "Thread", "Process", "URLClassLoader", "javax.script", "ObjectInputStream",
             "Files.", "Paths.get", "Class.forName", "Method.invoke", "Compiler", "Unsafe");
@@ -198,20 +199,16 @@ public class JudgeService {
     }
 
     private String quoteArrayTokens(String content) {
-        // Quote bare array tokens without corrupting longer types (int[] vs int[][])
-        // or values that are already quoted in the YAML.
+        // Longer array types must be masked before shorter ones, or int[] rewrites int[][].
         List<String> types = List.of(
-                "char[][]", "int[][]", "ListNode[]", "Interval[]", "String[]", "double[]", "long[]", "int[]");
+                "char[][]", "int[][]", "ListNode[]", "Interval[]", "String[]", "double[]", "long[]", "int[]", "char[]");
         Map<String, String> placeholders = new java.util.LinkedHashMap<>();
         int index = 0;
         for (String type : types) {
-            String quoted = "\"" + type + "\"";
             String placeholder = "__JUDGE_TYPE_" + index++ + "__";
-            placeholders.put(placeholder, quoted);
-            content = content.replace(quoted, placeholder);
-        }
-        for (String type : types) {
-            content = content.replace(type, "\"" + type + "\"");
+            placeholders.put(placeholder, "\"" + type + "\"");
+            content = content.replace("\"" + type + "\"", placeholder);
+            content = content.replace(type, placeholder);
         }
         for (Map.Entry<String, String> entry : placeholders.entrySet()) {
             content = content.replace(entry.getKey(), entry.getValue());

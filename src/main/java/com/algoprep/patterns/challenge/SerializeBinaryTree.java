@@ -16,6 +16,11 @@ public final class SerializeBinaryTree {
     return encoded.toString();
   }
 
+  public static TreeNode roundTrip(TreeNode root) {
+    SerializeBinaryTree codec = new SerializeBinaryTree();
+    return codec.deserialize(codec.serialize(root));
+  }
+
   public TreeNode deserialize(String data) {
     if (data == null || data.isEmpty()) {
       return null;

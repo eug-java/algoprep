@@ -4,10 +4,10 @@ courseDescription: AlgoPrep is a self-contained Java interview training ground. 
   stress-test recognition in Blind Spot mode (no pattern labels). A bonus track covers Spring Boot topics
   for Java backend interviews.
 weeks:
-  1: Foundations — pointers, windows, heaps
-  2: Search, recursion & dynamic programming
-  3: Graphs, trees & matrices
-  4: Tracking, design, bits & Spring Boot lab
+  1: Hash maps, two pointers, windows, lists
+  2: Trees, graphs, and traversal
+  3: Search, recursion, and dynamic programming
+  4: Intervals, heaps, design, and Spring
 cheatsheet:
 - q: Contiguous subarray/substring with a sum or distinct-count constraint?
   a: Sliding Window
@@ -41,3 +41,19 @@ cheatsheet:
   a: Tree DFS
 - q: Fast complement/frequency check, or prefix-sum counting, in one pass?
   a: Hash Maps
+- q: Overlapping meetings, or a sweep of start and end times?
+  a: Intervals
+- q: Next greater element, daily temperatures, or a histogram rectangle?
+  a: Stacks
+- q: Prefix dictionary, autocomplete, or many words on a board?
+  a: Trie
+- q: Dynamic connectivity, or "are these two nodes in the same component?"
+  a: Union Find
+- q: Spiral order, rotate a matrix, or set a row and column to zero?
+  a: Matrices
+- q: Reverse a list, or reverse every k nodes, in place?
+  a: In-place Linked List
+- q: One number appears once, or you need to set and test bits?
+  a: Bitwise
+- q: A running balance of 0s and 1s, or a majority candidate you can track in one pass?
+  a: Knowing What to Track

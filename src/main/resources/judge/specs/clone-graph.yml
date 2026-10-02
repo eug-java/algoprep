@@ -1,0 +1,8 @@
+className: Solution
+method: cloneGraph
+params: [int[][]]
+returns: int[][]
+cases:
+  - name: square
+    args: [[[2, 4], [1, 3], [2, 4], [1, 3]]]
+    expected: [[2, 4], [1, 3], [2, 4], [1, 3]]

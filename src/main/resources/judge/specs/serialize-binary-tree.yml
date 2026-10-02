@@ -1,0 +1,12 @@
+className: Solution
+method: roundTrip
+params: [TreeNode]
+returns: TreeNode
+helpers: [TreeNode]
+cases:
+  - name: small
+    args: [[1, 2, 3]]
+    expected: [1, 2, 3]
+  - name: missing-child
+    args: [[1, null, 2]]
+    expected: [1, null, 2]

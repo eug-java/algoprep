@@ -45,7 +45,8 @@ public class PatternQuizLoader {
     public record QuizItem(
             String id,
             PatternId correctPattern,
-            List<PatternId> options
+            List<PatternId> options,
+            List<PatternId> alsoAccept
     ) {
     }
 }

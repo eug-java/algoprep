@@ -38,6 +38,31 @@ class CourseControllerTest {
     }
 
     @Test
+    void hashMapsOpenWeekOneAndExposeAnExample() throws Exception {
+        mockMvc.perform(get("/api/v1/course/patterns").param("lang", "en"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value("HASH_MAPS"))
+                .andExpect(jsonPath("$[0].week").value(1));
+        mockMvc.perform(get("/api/v1/course/patterns/HASH_MAPS").param("lang", "en"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.followUp").isNotEmpty())
+                .andExpect(jsonPath("$.constraints").isNotEmpty());
+        mockMvc.perform(get("/api/v1/course/patterns/HASH_MAPS/problems/two-sum").param("lang", "en"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.example").value(org.hamcrest.Matchers.containsString("[2, 7, 11, 15]")));
+    }
+
+    @Test
+    void quizAcceptsAnAlternatePattern() throws Exception {
+        mockMvc.perform(post("/api/v1/course/quiz/q-islands/check")
+                        .param("lang", "en")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"selectedPattern\":\"UNION_FIND\"}"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.correct").value(true));
+    }
+
+    @Test
     void russianLocaleTranslatesPatternTitles() throws Exception {
         mockMvc.perform(get("/api/v1/course/patterns/TWO_POINTERS").param("lang", "ru"))
                 .andExpect(status().isOk())

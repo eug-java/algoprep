@@ -1,0 +1,8 @@
+className: Solution
+method: palindromePairs
+params: [String[]]
+returns: List<List<Integer>>
+cases:
+  - name: reverses
+    args: [["bat", "tab", "cat"]]
+    expected: [[1, 0], [0, 1]]

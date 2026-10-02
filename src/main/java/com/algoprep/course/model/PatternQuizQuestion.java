@@ -7,6 +7,7 @@ public record PatternQuizQuestion(
         String prompt,
         List<PatternId> options,
         PatternId correctPattern,
+        List<PatternId> alsoAccept,
         String explanation
 ) {
 }

@@ -247,3 +247,85 @@
   right pass: ensure higher than right
     candies: [2,1,2]
   sum = 5
+
+"circular-array-loop": |
+  nums = [2, -1, 1, 2, 2]
+  slow and fast must stay in the same direction
+  index 0 -> 2 -> 3 -> 0 is a forward cycle
+  a sign change means this start is not a loop
+
+"maximize-capital": |
+  projects: capital [0,1,1] profits [1,2,3]  k=2  w=0
+  min-heap by capital, max-heap of affordable profits
+  w=0 can take profit 1 -> w=1
+  w=1 can take profit 3 -> w=4
+
+"sliding-window-median": |
+  nums = [1,3,-1,-3,5,3,6,7] k=3
+  two heaps keep the window ordered
+  window [1,3,-1] median 1
+  slide: drop 1, add -3 -> median -1
+  rebalance so the heaps differ by at most one
+
+"smallest-range": |
+  lists [4,10,15,24,26] [0,9,12,20] [5,18,22,30]
+  heap of current heads: 0,4,5  range 0..5
+  advance the list that owns the minimum
+  next heads 4,5,9  range 4..9 worse
+  best stays 0..5 until a tighter window appears (20..24)
+
+"reorganize-string": |
+  s = aab
+  max-heap by count: a2, b1
+  place a, then the next different letter b, then a
+  result aba
+  if the top letter is more than (n+1)/2, return empty
+
+"search-rotated-duplicates": |
+  nums = [2,5,6,0,0,1,2] target 0
+  both ends equal the mid, so you cannot tell which half is sorted
+  shrink both ends by one and search again
+  then a normal rotated-array discard works
+
+"unique-permutations": |
+  nums = [1,1,2]
+  sort first
+  choose 1, then skip the duplicate 1 at the same depth
+  branches: 1,1,2 and 1,2,1 and 2,1,1
+
+"four-sum-ii": |
+  A=B=C=D = [1,2] [-2,-1] [-1,2] [0,2]
+  map every A[i]+B[j] to a count
+  for each C[k]+D[l], add the count of the negation
+  answer 2
+
+"number-of-islands-ii": |
+  positions added one by one on a grid
+  each land cell is its own component
+  union with any already-land neighbor (4 directions)
+  the answer after each add is the component count
+
+"bitwise-and-range": |
+  left=5 (101) right=7 (111)
+  the range AND keeps only the common prefix
+  shift until left==right, then shift the prefix back
+  5&6&7 = 4
+
+"max-points-on-a-line": |
+  points (1,1) (2,2) (3,3)
+  from (1,1), slope to both others is 1/1
+  same reduced slope means the same line
+  vertical lines use a separate bucket, not a double
+
+"circuit-breaker": |
+  closed: failures 0
+  call fails, failures 1
+  threshold 2 -> open
+  while open, calls fail fast
+  after the timeout, one trial is half-open
+  success closes; another failure opens again
+
+"concurrent-login-tracker": |
+  login(user) records the session in this process
+  a second instance does not see that set
+  the in-memory count undercounts as soon as traffic is shared

@@ -10,6 +10,8 @@ Self-contained **Java 21** interview training: reusable problem patterns, runnab
 
 Open [http://localhost:18080](http://localhost:18080).
 
+The app binds to **127.0.0.1** unless `SERVER_ADDRESS` is set. That is deliberate: the judge compiles and runs submitted Java in this process unless `algoprep.judge.docker` is on. Do not publish port 18080 to a network you do not control. Docker Compose sets `SERVER_ADDRESS=0.0.0.0` only inside the container, so the published port is still the host's localhost mapping.
+
 Requirements: **JDK 21+**. `start.sh` auto-detects common OpenJDK 21 installs and sets `JAVA_HOME`.
 
 ```bash
@@ -49,9 +51,9 @@ ALGOPREP_E2E_NO_SERVER=1 npm test
 | Area | Content |
 |------|---------|
 | Patterns | **29** modules (classic DSA patterns + Spring Boot Interview Lab) |
-| Problems | **155** catalog + **15** Blind Spot drills (**170** total) |
-| By difficulty | Catalog **38** Easy · **82** Medium · **35** Hard (every pattern has all three); Blind Spot counts as Hard |
-| Judge | **156** runnable specs (incl. ops-mode for Trie/LRU/MinStack/…) + Monaco playground |
+| Problems | **156** catalog + **15** Blind Spot drills (**171** total) |
+| By difficulty | Catalog **37** Easy · **85** Medium · **34** Hard; Blind Spot counts as Hard |
+| Judge | Runnable YAML specs (including ops-mode for Trie/LRU/MinStack) + Monaco playground. Spring design drills without a hidden test are marked discussion-only. |
 | Blind Spot | **15** unlabeled hard drills (some with alternate valid patterns) |
 | Quiz | Guess-the-pattern recognition set |
 | Locales | EN · RU · ES |

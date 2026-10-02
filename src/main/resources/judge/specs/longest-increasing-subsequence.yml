@@ -1,0 +1,12 @@
+className: Solution
+method: lengthOfLIS
+params: [int[]]
+returns: int
+referenceClass: com.algoprep.patterns.dp.LongestIncreasingSubsequence
+referenceMethod: lengthOfLIS
+referenceStatic: true
+cases:
+  - name: classic
+    args: [[10, 9, 2, 5, 3, 7, 101, 18]]
+  - name: all-equal
+    args: [[7, 7, 7]]

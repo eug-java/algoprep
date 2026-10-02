@@ -4,10 +4,10 @@ courseDescription: AlgoPrep es un campo de entrenamiento autónomo para entrevis
   un patrón, pon a prueba el reconocimiento en modo Blind Spot (sin etiquetas de patrón). Una pista extra
   cubre temas de Spring Boot para roles backend en Java.
 weeks:
-  1: Fundamentos — punteros, ventanas, heaps
-  2: Búsqueda, recursión y programación dinámica
-  3: Grafos, árboles y matrices
-  4: Seguimiento de estado, diseño, bits y lab Spring Boot
+  1: Mapas hash, dos punteros, ventanas, listas
+  2: Árboles, grafos y recorridos
+  3: Búsqueda, recursión y programación dinámica
+  4: Intervalos, heaps, diseño y Spring
 cheatsheet:
 - q: ¿Subarreglo/subcadena contigua con restricción de suma o de distintos?
   a: Ventana deslizante
@@ -41,3 +41,19 @@ cheatsheet:
   a: DFS en árbol
 - q: ¿Complemento/frecuencia rápida, o conteo con prefijos, en una pasada?
   a: Mapas hash
+- q: ¿Reuniones que se solapan, o un barrido de inicios y finales?
+  a: Intervalos
+- q: ¿Siguiente mayor, temperaturas diarias, o un rectángulo en un histograma?
+  a: Pilas
+- q: ¿Diccionario de prefijos, autocompletar, o muchas palabras en un tablero?
+  a: Trie
+- q: ¿Conectividad dinámica, o «estos dos nodos están en el mismo componente»?
+  a: Union Find
+- q: ¿Orden en espiral, rotar una matriz, o poner a cero una fila y una columna?
+  a: Matrices
+- q: ¿Invertir una lista, o cada k nodos, en el lugar?
+  a: Lista enlazada in-place
+- q: ¿Un número aparece una vez, o hay que poner y probar bits?
+  a: Bits
+- q: ¿Un balance corrido de ceros y unos, o un candidato a mayoría?
+  a: Saber qué seguir

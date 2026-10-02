@@ -1047,8 +1047,7 @@ patterns:
         title: Coin Change
         summary: Return the fewest coins needed to make up amount using unlimited coins of the given
           denominations, or -1 if impossible.
-        whenToUse: Unbounded-knapsack DP over amounts — for each total, try every coin and keep the
-          minimum count.
+        whenToUse: Unbounded-knapsack DP over amounts. Greedy fails on non-canonical coins — [1,3,4] and amount 6 is 3 coins greedy, 2 coins DP.
         hints:
         - Let dp[x] be fewest coins for amount x; dp[x] = min(dp[x-c]+1) over coins c ≤ x.
         - Initialize dp[0]=0 and other entries to a sentinel larger than any valid answer (e.g.

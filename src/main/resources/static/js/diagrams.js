@@ -20,6 +20,14 @@ export function diagramFor(patternId) {
       return modifiedBinarySearch();
     case 'BACKTRACKING':
       return backtracking();
+    case 'GRAPHS':
+      return graphs();
+    case 'DYNAMIC_PROGRAMMING':
+      return dynamicProgramming();
+    case 'TWO_HEAPS':
+      return twoHeaps();
+    case 'TRIE':
+      return trie();
     default:
       return '';
   }
@@ -201,5 +209,70 @@ function backtracking() {
       <text x="220" y="170" text-anchor="middle" class="cell-t">prune</text>
     </svg>
     <p class="diagram-caption" data-diagram-caption="BACKTRACKING">Try a choice, recurse, then undo and try the next option.</p>`
+  );
+}
+
+function graphs() {
+  return shell(
+    'Graphs',
+    `<svg viewBox="0 0 520 150" class="diagram-svg">
+      <line x1="80" y1="80" x2="200" y2="40" class="edge"/>
+      <line x1="80" y1="80" x2="200" y2="120" class="edge"/>
+      <line x1="200" y1="40" x2="340" y2="80" class="edge"/>
+      <line x1="200" y1="120" x2="340" y2="80" class="edge"/>
+      <line x1="340" y1="80" x2="450" y2="80" class="edge"/>
+      <circle cx="80" cy="80" r="16" class="node active"/>
+      <circle cx="200" cy="40" r="16" class="node"/>
+      <circle cx="200" cy="120" r="16" class="node"/>
+      <circle cx="340" cy="80" r="16" class="node"/>
+      <circle cx="450" cy="80" r="16" class="node"/>
+    </svg>
+    <p class="diagram-caption" data-diagram-caption="GRAPHS">Visit each neighbor once. BFS uses a queue for the nearest unseen node.</p>`
+  );
+}
+
+function dynamicProgramming() {
+  return shell(
+    'Dynamic Programming',
+    `<svg viewBox="0 0 520 140" class="diagram-svg">
+      ${[40, 110, 180, 250, 320, 390].map((x, i) => `
+        <rect class="cell${i < 3 ? ' active' : ''}" x="${x}" y="48" width="52" height="36" rx="4"/>
+        <text x="${x + 26}" y="72" text-anchor="middle" class="cell-t">dp${i}</text>`).join('')}
+      <path d="M92 66 H110 M162 66 H180" class="edge" fill="none"/>
+    </svg>
+    <p class="diagram-caption" data-diagram-caption="DYNAMIC_PROGRAMMING">Name dp[i] first. Each cell is filled only from cells already known.</p>`
+  );
+}
+
+function twoHeaps() {
+  return shell(
+    'Two Heaps',
+    `<svg viewBox="0 0 520 150" class="diagram-svg">
+      <polygon points="120,110 70,40 170,40" class="cell"/>
+      <polygon points="400,110 350,40 450,40" class="cell"/>
+      <text x="120" y="80" text-anchor="middle" class="cell-t">max</text>
+      <text x="400" y="80" text-anchor="middle" class="cell-t">min</text>
+      <text x="260" y="78" text-anchor="middle" class="cell-t">median</text>
+    </svg>
+    <p class="diagram-caption" data-diagram-caption="TWO_HEAPS">The left heap holds the smaller half. The median sits on a root.</p>`
+  );
+}
+
+function trie() {
+  return shell(
+    'Trie',
+    `<svg viewBox="0 0 520 160" class="diagram-svg">
+      <circle cx="260" cy="28" r="12" class="node active"/>
+      <line x1="260" y1="40" x2="160" y2="80" class="edge"/>
+      <line x1="260" y1="40" x2="360" y2="80" class="edge"/>
+      <circle cx="160" cy="90" r="12" class="node"/>
+      <circle cx="360" cy="90" r="12" class="node"/>
+      <text x="140" y="94" text-anchor="end" class="cell-t">a</text>
+      <text x="380" y="94" class="cell-t">b</text>
+      <line x1="160" y1="102" x2="120" y2="136" class="edge"/>
+      <circle cx="120" cy="144" r="10" class="node"/>
+      <text x="100" y="148" text-anchor="end" class="cell-t">t</text>
+    </svg>
+    <p class="diagram-caption" data-diagram-caption="TRIE">Each edge is one character. A word ends only when the node is marked.</p>`
   );
 }

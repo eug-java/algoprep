@@ -65,6 +65,8 @@ public class CourseCatalogLoader {
             List<String> templateSteps,
             List<String> commonMistakes,
             List<String> whenNotToUse,
+            String constraints,
+            String followUp,
             List<ProblemDocument> problems
     ) {
         public PatternMeta toMeta() {
@@ -82,6 +84,8 @@ public class CourseCatalogLoader {
             List<String> templateSteps = this.templateSteps;
             List<String> commonMistakes = this.commonMistakes;
             List<String> whenNotToUse = this.whenNotToUse;
+            String constraints = this.constraints;
+            String followUp = this.followUp;
 
             Map<String, Object> problemOverlays = Map.of();
             if (overlay != null) {
@@ -94,6 +98,8 @@ public class CourseCatalogLoader {
                 templateSteps = list(overlay.get("templateSteps"), templateSteps);
                 commonMistakes = list(overlay.get("commonMistakes"), commonMistakes);
                 whenNotToUse = list(overlay.get("whenNotToUse"), whenNotToUse);
+                constraints = str(overlay.get("constraints"), constraints);
+                followUp = str(overlay.get("followUp"), followUp);
                 Object probs = overlay.get("problems");
                 if (probs instanceof Map<?, ?> m) {
                     problemOverlays = (Map<String, Object>) m;
@@ -122,6 +128,8 @@ public class CourseCatalogLoader {
                     templateSteps == null ? List.of() : templateSteps,
                     commonMistakes == null ? List.of() : commonMistakes,
                     whenNotToUse == null ? List.of() : whenNotToUse,
+                    constraints == null ? "" : constraints,
+                    followUp == null ? "" : followUp,
                     problemMetas
             );
         }
@@ -146,7 +154,12 @@ public class CourseCatalogLoader {
             List<String> hints,
             List<String> tags,
             List<String> companies,
-            Frequency frequency
+            Frequency frequency,
+            String example,
+            String constraints,
+            String followUp,
+            Boolean discussionOnly,
+            String failureNote
     ) {
         public ProblemMeta toMeta() {
             return toMeta(null);
@@ -157,11 +170,19 @@ public class CourseCatalogLoader {
             String summary = this.summary;
             String whenToUse = this.whenToUse;
             List<String> hints = this.hints;
+            String example = this.example;
+            String constraints = this.constraints;
+            String followUp = this.followUp;
+            String failureNote = this.failureNote;
             if (overlay != null) {
                 title = str(overlay.get("title"), title);
                 summary = str(overlay.get("summary"), summary);
                 whenToUse = str(overlay.get("whenToUse"), whenToUse);
                 hints = list(overlay.get("hints"), hints);
+                example = str(overlay.get("example"), example);
+                constraints = str(overlay.get("constraints"), constraints);
+                followUp = str(overlay.get("followUp"), followUp);
+                failureNote = str(overlay.get("failureNote"), failureNote);
             }
             return new ProblemMeta(
                     id,
@@ -176,6 +197,11 @@ public class CourseCatalogLoader {
                     tags == null ? List.of() : tags,
                     companies == null ? List.of() : companies,
                     frequency,
+                    example,
+                    constraints,
+                    followUp,
+                    discussionOnly,
+                    failureNote,
                     null
             );
         }

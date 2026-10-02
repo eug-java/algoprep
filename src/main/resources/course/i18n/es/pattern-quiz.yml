@@ -139,3 +139,23 @@ questions:
       Diseña un componente de API que permita como máximo N solicitudes por cliente en una ventana de tiempo.
     explanation: >
       Diseño de backend/sistema para servicios Spring — Spring Boot Interview Lab.
+  q-group-anagrams:
+    prompt: >
+      Agrupa palabras que son anagramas entre sí. El orden dentro del grupo no importa.
+    explanation: >
+      Ordena cada palabra y agrupa por esa clave — Sort and Search. Una firma de conteo de letras en un mapa hash es la misma idea y también cuenta.
+  q-coin-not-greedy:
+    prompt: >
+      Las monedas son [1,3,4] y el monto es 6. Devuelve el mínimo de monedas. Tomar siempre la mayor usa tres monedas.
+    explanation: >
+      La elección voraz es incorrecta aquí. dp[x] = mínimo sobre monedas de dp[x-moneda]+1 — programación dinámica.
+  q-longest-substring:
+    prompt: >
+      La subcadena más larga sin caracteres repetidos. El arreglo no está ordenado y hace falta un tramo contiguo.
+    explanation: >
+      Expande el borde derecho y encoge el izquierdo cuando un carácter se repite — ventana deslizante, no dos punteros desde los extremos.
+  q-bipartite:
+    prompt: >
+      Decide si los vértices de un grafo no dirigido se pueden partir en dos conjuntos de modo que cada arista cruce entre ellos.
+    explanation: >
+      Colorea con BFS. Un vecino que ya tiene tu color es un ciclo impar — Grafos.

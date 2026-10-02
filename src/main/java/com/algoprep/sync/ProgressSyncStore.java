@@ -24,18 +24,30 @@ public class ProgressSyncStore {
     }
 
     public void put(String key, Map<String, Object> payload) {
+        Path file = fileFor(key);
+        if (file == null) {
+            throw new IllegalArgumentException("Invalid sync key");
+        }
         memory.put(key, payload);
         try {
-            mapper.writerWithDefaultPrettyPrinter().writeValue(directory.resolve(key + ".json").toFile(), payload);
-        } catch (IOException ignored) {
-            // in-memory remains source of truth for this process
+            mapper.writerWithDefaultPrettyPrinter().writeValue(file.toFile(), payload);
+        } catch (IOException exception) {
+            throw new IllegalStateException("Unable to persist sync payload", exception);
         }
     }
 
+    private Path fileFor(String key) {
+        if (key == null || !key.matches("[a-f0-9]{32}")) return null;
+        Path file = directory.resolve(key + ".json").normalize();
+        if (!file.startsWith(directory)) return null;
+        return file;
+    }
+
     public Optional<Map<String, Object>> get(String key) {
+        Path file = fileFor(key);
+        if (file == null) return Optional.empty();
         Map<String, Object> cached = memory.get(key);
         if (cached != null) return Optional.of(cached);
-        Path file = directory.resolve(key + ".json");
         if (!Files.isRegularFile(file)) return Optional.empty();
         try {
             Map<String, Object> loaded = mapper.readValue(file.toFile(), new TypeReference<>() {});

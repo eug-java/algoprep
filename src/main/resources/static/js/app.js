@@ -654,6 +654,9 @@ async function renderProblem(patternId, problemId) {
   const hasJudge = Boolean(template);
   const ascii = problem.walkthroughAscii;
   const showAscii = (problem.difficulty || '').toUpperCase() === 'HARD' && ascii;
+  const constraints = problem.constraints || pattern.constraints || '';
+  const followUp = problem.followUp || pattern.followUp || '';
+  const discussion = Boolean(problem.discussionOnly);
 
   app.innerHTML = `
     <a class="back-link" href="#/patterns/${patternId}" data-link>← ${escapeHtml(pattern.title)}</a>
@@ -670,7 +673,11 @@ async function renderProblem(patternId, problemId) {
     <div class="panel">
       <h3>${escapeHtml(t('problem.when'))}</h3>
       <p>${escapeHtml(problem.whenToUse)}</p>
-      ${(problem.hints || []).length ? `<h3>${escapeHtml(t('problem.hints'))}</h3><ul class="bullet-list">${problem.hints.map((h) => `<li>${escapeHtml(h)}</li>`).join('')}</ul>` : ''}
+      ${problem.example ? `<h3>${escapeHtml(t('problem.example'))}</h3><pre class="ascii-walk">${escapeHtml(problem.example)}</pre>` : ''}
+      ${constraints ? `<h3>${escapeHtml(t('problem.constraints'))}</h3><p>${escapeHtml(constraints)}</p>` : ''}
+      <div id="hint-box"></div>
+      ${followUp ? `<h3>${escapeHtml(t('problem.followUp'))}</h3><p>${escapeHtml(followUp)}</p>` : ''}
+      ${problem.failureNote ? `<h3>${escapeHtml(t('problem.failure'))}</h3><p>${escapeHtml(problem.failureNote)}</p>` : ''}
       <p class="meta-mini">${escapeHtml((problem.companies || []).join(' · '))}</p>
       <p class="meta-mini">${escapeHtml(problem.className)}</p>
     </div>
@@ -680,7 +687,7 @@ async function renderProblem(patternId, problemId) {
       <p>${escapeHtml(tipFor(patternId, t))}</p>
     </div>
     <div class="panel checklist-panel" id="interview-checklist"></div>
-    ${hasJudge ? `
+    ${hasJudge && !discussion ? `
       <div class="panel playground">
         <div class="playground-head">
           <h2>${escapeHtml(t('playground.title'))}</h2>
@@ -694,7 +701,7 @@ async function renderProblem(patternId, problemId) {
         </div>
         <div id="judge-out"></div>
       </div>` : `
-      <div class="panel"><p>${escapeHtml(t('playground.unavailable'))}</p></div>`}
+      <div class="panel"><p>${escapeHtml(discussion ? t('playground.discussion') : t('playground.unavailable'))}</p></div>`}
     <div class="actions">
       <button class="btn btn-primary" id="btn-source" type="button">${escapeHtml(t('problem.reveal'))}</button>
       <button class="btn btn-ghost" id="btn-diff" type="button">${escapeHtml(t('problem.diff'))}</button>
@@ -706,8 +713,25 @@ async function renderProblem(patternId, problemId) {
 
   bindInterviewChecklist(key);
 
+  const hints = problem.hints || [];
+  let hintCount = hints.length ? 1 : 0;
+  const paintHints = () => {
+    const box = document.getElementById('hint-box');
+    if (!box || !hints.length) return;
+    const items = hints.slice(0, hintCount).map((h) => `<li>${escapeHtml(h)}</li>`).join('');
+    const more = hintCount < hints.length
+      ? `<button class="btn btn-ghost" id="btn-next-hint" type="button">${escapeHtml(t('problem.nextHint'))}</button>`
+      : '';
+    box.innerHTML = `<h3>${escapeHtml(t('problem.hints'))}</h3><ul class="bullet-list">${items}</ul>${more}`;
+    document.getElementById('btn-next-hint')?.addEventListener('click', () => {
+      hintCount += 1;
+      paintHints();
+    });
+  };
+  paintHints();
+
   const starter = template?.source || '';
-  if (hasJudge) mountPlaygroundEditor(starter);
+  if (hasJudge && !discussion) mountPlaygroundEditor(starter);
 
   document.getElementById('btn-reset-code')?.addEventListener('click', () => {
     setCodeValue(starter);
@@ -751,7 +775,9 @@ async function renderProblem(patternId, problemId) {
     panel.innerHTML = `<div class="loading">${escapeHtml(t('common.loading'))}</div>`;
     const src = await api.problemSource(patternId, problemId);
     officialSource = src.source;
-    panel.innerHTML = `<div class="panel"><h3>${escapeHtml(src.filePath)}</h3><pre class="code">${escapeHtml(src.source)}</pre></div>`;
+    const trap = (pattern.commonMistakes || [])[0] || '';
+    const why = [trap, followUp].filter(Boolean).map((line) => `<p>${escapeHtml(line)}</p>`).join('');
+    panel.innerHTML = `<div class="panel"><h3>${escapeHtml(src.filePath)}</h3><pre class="code">${escapeHtml(src.source)}</pre>${why ? `<h3>${escapeHtml(t('problem.why'))}</h3>${why}` : ''}</div>`;
   };
 
   document.getElementById('btn-diff').onclick = async () => {
@@ -813,8 +839,14 @@ async function renderChallenge(id) {
     </div>
     <div id="extra"></div>`;
   const extra = document.getElementById('extra');
+  const challengeHints = c.hints || [];
+  let challengeHintCount = 0;
   document.getElementById('btn-hints').onclick = () => {
-    extra.innerHTML = `<div class="panel"><h3>${escapeHtml(t('problem.hints'))}</h3><ul class="bullet-list">${(c.hints || []).map((h) => `<li>${escapeHtml(h)}</li>`).join('')}</ul></div>`;
+    if (!challengeHints.length) return;
+    challengeHintCount = Math.min(challengeHints.length, challengeHintCount + 1);
+    const items = challengeHints.slice(0, challengeHintCount).map((h) => `<li>${escapeHtml(h)}</li>`).join('');
+    const more = challengeHintCount < challengeHints.length ? `<p class="meta-mini">${escapeHtml(t('problem.nextHint'))}</p>` : '';
+    extra.innerHTML = `<div class="panel"><h3>${escapeHtml(t('problem.hints'))}</h3><ul class="bullet-list">${items}</ul>${more}</div>`;
   };
   document.getElementById('btn-reveal').onclick = async () => {
     const full = await api.revealChallenge(id);
@@ -892,8 +924,9 @@ async function renderQuiz() {
           <p><strong>${escapeHtml(result.correctPattern)}</strong></p>
           <p>${escapeHtml(result.explanation || '')}</p>
         </div>`;
+      const accepted = new Set([result.correctPattern, ...(result.alsoAccept || [])]);
       document.querySelectorAll('.quiz-option').forEach((b) => {
-        if (b.dataset.opt === result.correctPattern) b.classList.add('correct');
+        if (accepted.has(b.dataset.opt)) b.classList.add('correct');
         if (b.dataset.opt === selected && !result.correct) b.classList.add('wrong');
       });
       document.getElementById('quiz-submit').classList.add('hidden');

@@ -1,0 +1,8 @@
+className: Solution
+method: countSmaller
+params: [int[]]
+returns: List<Integer>
+cases:
+  - name: example
+    args: [[5, 2, 6, 1]]
+    expected: [2, 1, 1, 0]

@@ -1,0 +1,12 @@
+className: Solution
+method: uniquePaths
+params: [int, int]
+returns: int
+referenceClass: com.algoprep.patterns.dp.UniquePaths
+referenceMethod: uniquePaths
+referenceStatic: true
+cases:
+  - name: three-by-seven
+    args: [3, 7]
+  - name: single-cell
+    args: [1, 1]

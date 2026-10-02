@@ -1,0 +1,12 @@
+className: Solution
+method: lowestCommonAncestor
+params: [TreeNode, int, int]
+returns: int
+helpers: [TreeNode]
+cases:
+  - name: descendant
+    args: [[3, 5, 1, 6, 2, 0, 8, null, null, 7, 4], 5, 4]
+    expected: 5
+  - name: split-at-root
+    args: [[3, 5, 1, 6, 2, 0, 8, null, null, 7, 4], 5, 1]
+    expected: 3

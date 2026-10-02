@@ -43,12 +43,14 @@ public class PatternQuizService {
                 .filter(q -> q.id().equals(id))
                 .findFirst()
                 .map(q -> {
-                    boolean correct = q.correctPattern() == selected;
+                    boolean correct = q.correctPattern() == selected
+                            || (q.alsoAccept() != null && q.alsoAccept().contains(selected));
                     Map<String, Object> result = new LinkedHashMap<>();
                     result.put("id", q.id());
                     result.put("correct", correct);
                     result.put("selected", selected);
                     result.put("correctPattern", q.correctPattern());
+                    result.put("alsoAccept", q.alsoAccept() == null ? List.of() : q.alsoAccept());
                     result.put("explanation", q.explanation());
                     return result;
                 });
@@ -78,6 +80,7 @@ public class PatternQuizService {
                     prompt,
                     item.options() == null ? List.of() : item.options(),
                     item.correctPattern(),
+                    item.alsoAccept() == null ? List.of() : item.alsoAccept(),
                     explanation
             ));
         }

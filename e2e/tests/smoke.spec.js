@@ -67,8 +67,14 @@ test.describe('AlgoPrep smoke', () => {
   test('problem page stages hints and shows an example', async ({ page }) => {
     await openApp(page, '/#/patterns/HASH_MAPS/problems/two-sum');
     await expect(page.locator('#hint-box li')).toHaveCount(1, { timeout: 15_000 });
+    await expect(page.locator('#hint-box .hint-stage').first()).toHaveText('Question');
     await page.locator('#btn-next-hint').click();
     await expect(page.locator('#hint-box li')).toHaveCount(2);
+    await expect(page.locator('#hint-box .hint-stage').nth(1)).toHaveText('Invariant');
+    await page.locator('#btn-next-hint').click();
+    await expect(page.locator('#hint-box li')).toHaveCount(3);
+    await expect(page.locator('#hint-box .hint-stage').nth(2)).toHaveText('Move');
+    await expect(page.locator('#btn-next-hint')).toHaveCount(0);
     await expect(page.locator('pre.ascii-walk').first()).toContainText('[2, 7, 11, 15]');
   });
 

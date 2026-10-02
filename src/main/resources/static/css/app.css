@@ -578,6 +578,14 @@ html[data-theme="light"] .theme-switch button[aria-pressed="true"] {
 }
 
 .bullet-list li { margin: 0.25rem 0; }
+.hint-stage {
+  display: inline-block;
+  margin-right: 0.45rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0.72;
+}
 
 .problem-list {
   display: grid;

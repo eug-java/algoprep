@@ -46,46 +46,50 @@ patterns:
         whenToUse: Sorted array plus pair-sum question is the textbook signal for opposite-direction two
           pointers.
         hints:
-        - Start left at index 0 and right at index n-1.
-        - If the sum is too small move left forward; if too large move right backward.
+        - "Which pointer can you move without losing the rest of the answer?"
+        - "Each step discards only the side that can no longer hold the answer."
+        - "Start left at index 0 and right at index n-1. If the sum is too small move left forward; if too large move right backward."
       remove-duplicates:
         title: Remove Duplicates from Sorted Array
         summary: Compact a sorted array in-place so each element appears once, returning the new length.
         whenToUse: In-place compaction with a slow write pointer and a fast scan pointer over sorted data.
         hints:
-        - Keep a write index that only advances when a new unique value is found.
-        - The fast pointer scans every element; the slow pointer marks the next free slot.
+        - "Which pointer can you move without losing the rest of the answer?"
+        - "Each step discards only the side that can no longer hold the answer."
+        - "Keep a write index that only advances when a new unique value is found. The fast pointer scans every element; the slow pointer marks the next free slot."
       triplet-sum-zero:
         title: Triplet Sum to Zero
         summary: Find all unique triplets in an array that sum to zero.
         whenToUse: Sort, fix one index as an anchor, then run two pointers over the remaining range for
           its complement pair.
         hints:
-        - Sort first so two pointers and duplicate-skipping both become possible.
-        - After fixing nums[i], search for a pair summing to -nums[i] in the rest of the array.
-        - Skip over repeated values for i, left, and right to avoid duplicate triplets.
+        - "Which pointer can you move without losing the rest of the answer?"
+        - "Each step discards only the side that can no longer hold the answer."
+        - "Sort first so two pointers and duplicate-skipping both become possible. After fixing nums[i], search for a pair summing to -nums[i] in the rest of the array. Skip over repeated values for i, left, and right to avoid duplicate triplets."
       container-with-most-water:
         title: Container With Most Water
         summary: Find two lines that form a container with the max water area.
         whenToUse: Two ends of a height line; area is min(height)*width, so move the shorter pointer inward.
         hints:
-        - Start left=0 and right=n-1; the widest container is the first candidate.
-        - Area = min(h[left], h[right]) * (right-left). Track the maximum.
-        - Only advancing the shorter side can improve the min height; advancing the taller side never helps.
+        - "Which pointer can you move without losing the rest of the answer?"
+        - "Each step discards only the side that can no longer hold the answer."
+        - "Start left=0 and right=n-1; the widest container is the first candidate. Area = min(h[left], h[right]) * (right-left). Track the maximum. Only advancing the shorter side can improve the min height; advancing the taller side never helps."
       dutch-national-flag:
         title: Dutch National Flag / Sort Colors
         summary: Sort an array of 0/1/2 in-place with one pass.
         whenToUse: Three-way partition with low/mid/high pointers.
         hints:
-        - Maintain [0..low) as 0s and (high..n] as 2s
-        - Swap mid with low/high based on value
+        - "Which pointer can you move without losing the rest of the answer?"
+        - "Each step discards only the side that can no longer hold the answer."
+        - "Maintain [0..low) as 0s and (high..n] as 2s Swap mid with low/high based on value"
       quadruple-sum:
         title: Quadruple Sum to Target
         summary: Find all unique quadruplets that sum to target.
         whenToUse: Sort + fix two indices + two pointers for the pair.
         hints:
-        - Sort first and skip duplicates at every level
-        - Inner pair uses classic two pointers
+        - "Which pointer can you move without losing the rest of the answer?"
+        - "Each step discards only the side that can no longer hold the answer."
+        - "Sort first and skip duplicates at every level Inner pair uses classic two pointers"
   FAST_SLOW_POINTERS:
     title: Fast & Slow Pointers
     subtitle: Detect cycles and find midpoints by moving two pointers at different speeds
@@ -138,43 +142,49 @@ patterns:
         summary: Detect whether a linked list contains a cycle.
         whenToUse: Floyd's cycle detection gives O(1) space where a hash set would cost O(n).
         hints:
-        - If fast ever meets slow, a cycle exists.
-        - If fast reaches null, the list is acyclic.
+        - "What does the gap between a one-step walker and a two-step walker tell you?"
+        - "The fast walker gains one step each move, so the gap finds the middle or the loop."
+        - "If fast ever meets slow, a cycle exists. If fast reaches null, the list is acyclic."
       middle-of-linked-list:
         title: Middle of the Linked List
         summary: Return the middle node (the second middle for even length).
         whenToUse: Fast reaches the end exactly when slow is at the middle - no length count needed.
         hints:
-        - Advance fast by two and slow by one in the same loop.
-        - When fast is null or fast.next is null, slow is the answer.
+        - "What does the gap between a one-step walker and a two-step walker tell you?"
+        - "The fast walker gains one step each move, so the gap finds the middle or the loop."
+        - "Advance fast by two and slow by one in the same loop. When fast is null or fast.next is null, slow is the answer."
       happy-number:
         title: Happy Number
         summary: Determine if repeatedly summing squared digits eventually reaches 1.
         whenToUse: The digit-square transform forms a functional graph; a cycle that isn't 1 means unhappy.
         hints:
-        - Treat 'next value' as one step of a linked structure.
-        - Run fast/slow on that implicit sequence to detect a non-1 cycle.
+        - "What does the gap between a one-step walker and a two-step walker tell you?"
+        - "The fast walker gains one step each move, so the gap finds the middle or the loop."
+        - "Treat 'next value' as one step of a linked structure. Run fast/slow on that implicit sequence to detect a non-1 cycle."
       cycle-start:
         title: Start of Linked List Cycle
         summary: Return the node where the cycle begins, or null.
         whenToUse: Floyd meet + reset one pointer to head.
         hints:
-        - After meeting, move one pointer to head
-        - Advance both one step until they meet again
+        - "What does the gap between a one-step walker and a two-step walker tell you?"
+        - "The fast walker gains one step each move, so the gap finds the middle or the loop."
+        - "After meeting, move one pointer to head Advance both one step until they meet again"
       palindrome-linked-list:
         title: Palindrome Linked List
         summary: Check if a linked list reads the same forward and backward.
         whenToUse: Find middle, reverse second half, compare.
         hints:
-        - Fast/slow to middle
-        - Reverse second half then compare
+        - "What does the gap between a one-step walker and a two-step walker tell you?"
+        - "The fast walker gains one step each move, so the gap finds the middle or the loop."
+        - "Fast/slow to middle Reverse second half then compare"
       circular-array-loop:
         title: Circular Array Loop
         summary: Detect a cycle in a circular jump array of length > 1 in one direction.
         whenToUse: Treat indices as a functional graph; fast/slow per start.
         hints:
-        - Reject opposite-direction jumps
-        - Mark visited indices to avoid rework
+        - "What does the gap between a one-step walker and a two-step walker tell you?"
+        - "The fast walker gains one step each move, so the gap finds the middle or the loop."
+        - "Reject opposite-direction jumps Mark visited indices to avoid rework"
   SLIDING_WINDOW:
     title: Sliding Window
     subtitle: Maintain a contiguous window that grows and shrinks to satisfy a constraint
@@ -230,40 +240,42 @@ patterns:
         whenToUse: 'Fixed window size K: add the entering element on the right, remove the leaving one
           on the left.'
         hints:
-        - Compute the first window's sum directly, then slide by one.
-        - Each slide only needs one addition and one subtraction, not a full re-sum.
+        - "Which part of the range can you drop and never check again?"
+        - "The window stays feasible; you shrink it from the left only when the condition breaks."
+        - "Compute the first window's sum directly, then slide by one. Each slide only needs one addition and one subtraction, not a full re-sum."
       longest-substring-k-distinct:
         title: Longest Substring with K Distinct Characters
         summary: Find the length of the longest substring containing at most K distinct characters.
         whenToUse: Variable-size window plus a frequency map of distinct keys, shrinking whenever distinct
           count exceeds K.
         hints:
-        - Grow the window and add each new character to a frequency map.
-        - While the map has more than K keys, shrink from the left and decrement/remove counts.
+        - "Which part of the range can you drop and never check again?"
+        - "The window stays feasible; you shrink it from the left only when the condition breaks."
+        - "Grow the window and add each new character to a frequency map. While the map has more than K keys, shrink from the left and decrement/remove counts."
       find-all-anagrams:
         title: Find All Anagrams in a String
         summary: Return the start indices of all of p's anagrams found within s.
         whenToUse: Fixed window equal to p's length, comparing running character counts against p's counts.
         hints:
-        - Build a target frequency map for p once, up front.
-        - Slide a window of len(p) over s, comparing counts; matching counts means an anagram starts there.
+        - "Which part of the range can you drop and never check again?"
+        - "The window stays feasible; you shrink it from the left only when the condition breaks."
+        - "Build a target frequency map for p once, up front. Slide a window of len(p) over s, comparing counts; matching counts means an anagram starts there."
       longest-no-repeat:
         title: Longest Substring Without Repeating Characters
         summary: Longest substring with all unique characters.
         whenToUse: Variable window with a last-seen index map so you can jump left past duplicates in O(1).
         hints:
-        - Keep a map from character → last index seen inside (or just before) the current window.
-        - When s[right] was seen at index j ≥ left, set left = j+1 so the window stays duplicate-free.
-        - Update best = max(best, right-left+1) after each expansion.
+        - "Which part of the range can you drop and never check again?"
+        - "The window stays feasible; you shrink it from the left only when the condition breaks."
+        - "Keep a map from character → last index seen inside (or just before) the current window. When s[right] was seen at index j ≥ left, set left = j+1 so the window stays duplicate-free. Update best = max(best, right-left+1) after each expansion."
       min-window-substring:
         title: Minimum Window Substring
         summary: Smallest substring of s covering all characters of t.
         whenToUse: Shrinkable window with need/have frequency maps until every required character is satisfied.
         hints:
-        - Build a need map for t and track how many distinct required characters are currently satisfied.
-        - Expand right until the window is valid (satisfied == need.size), then shrink left while it stays valid.
-        - Whenever the window is valid, compare its length to the best answer and keep the shortest (leftmost on ties if required).
-        - Decrement have counts carefully when shrinking so satisfied drops only when a required count falls below need.
+        - "Which part of the range can you drop and never check again?"
+        - "The window stays feasible; you shrink it from the left only when the condition breaks."
+        - "Build a need map for t and track how many distinct required characters are currently satisfied. Expand right until the window is valid (satisfied == need.size), then shrink left while it stays valid. Whenever the window is valid, compare its length to the best answer and keep the shortest (leftmost on ties if required). Decrement have counts carefully when shrinking so satisfied drops only when a required count falls below need."
   INTERVALS:
     title: Intervals
     subtitle: Sort by start time and sweep once to merge, insert, or reason about ranges
@@ -308,39 +320,42 @@ patterns:
         summary: Merge all overlapping intervals into a minimal set of non-overlapping ranges.
         whenToUse: Classic sort-by-start plus a single linear merge sweep.
         hints:
-        - Sort by start time before anything else.
-        - Compare each interval's start against the last merged interval's end.
+        - "What becomes obvious once the intervals are sorted by start?"
+        - "You only compare the current interval with the one you have not closed yet."
+        - "Sort by start time before anything else. Compare each interval's start against the last merged interval's end."
       insert-interval:
         title: Insert Interval
         summary: Insert a new interval into a sorted, non-overlapping list and merge where needed.
         whenToUse: 'Three phases: copy intervals strictly before, merge all overlapping ones, copy the
           rest.'
         hints:
-        - No sorting needed - the input list is already sorted.
-        - Keep expanding the new interval's bounds while it overlaps the current one.
+        - "What becomes obvious once the intervals are sorted by start?"
+        - "You only compare the current interval with the one you have not closed yet."
+        - "No sorting needed - the input list is already sorted. Keep expanding the new interval's bounds while it overlaps the current one."
       conflicting-appointments:
         title: Conflicting Appointments
         summary: Check whether any two appointments in a list overlap.
         whenToUse: Sort by start, then check each adjacent pair — after sorting, only neighbors can overlap.
         hints:
-        - After sorting by start, only adjacent pairs can possibly overlap.
-        - 'An overlap exists as soon as one appointment''s start is before the previous one''s end.'
+        - "What becomes obvious once the intervals are sorted by start?"
+        - "You only compare the current interval with the one you have not closed yet."
+        - "After sorting by start, only adjacent pairs can possibly overlap. An overlap exists as soon as one appointment's start is before the previous one's end."
       interval-intersection:
         title: Interval List Intersections
         summary: Return intersections of two sorted interval lists.
         whenToUse: Two-pointer sweep over two already-sorted interval lists; emit overlap then advance the one that ends first.
         hints:
-        - Intersection start is max(starts); intersection end is min(ends). Emit only when start < end (or ≤ if inclusive).
-        - Advance the pointer of the interval that ends first — it cannot intersect any later intervals from the other list.
+        - "What becomes obvious once the intervals are sorted by start?"
+        - "You only compare the current interval with the one you have not closed yet."
+        - "Intersection start is max(starts); intersection end is min(ends). Emit only when start < end (or ≤ if inclusive). Advance the pointer of the interval that ends first — it cannot intersect any later intervals from the other list."
       minimum-meeting-rooms:
         title: Minimum Meeting Rooms
         summary: Find the minimum number of meeting rooms required.
         whenToUse: 'Track concurrent meetings: sort by start and keep a min-heap of ongoing end times (or sweep starts/ends).'
         hints:
-        - Sort meetings by start time so you always schedule the next earliest meeting.
-        - Keep a min-heap of end times for rooms currently in use; free a room when heap.min ≤ next.start.
-        - If no room is free, allocate one (push the new end). The heap size is the rooms needed so far.
-        - 'Alternatively: sort starts and ends separately and sweep — increment on a start, decrement on an end.'
+        - "What becomes obvious once the intervals are sorted by start?"
+        - "You only compare the current interval with the one you have not closed yet."
+        - "Sort meetings by start time so you always schedule the next earliest meeting. Keep a min-heap of end times for rooms currently in use; free a room when heap.min ≤ next.start. If no room is free, allocate one (push the new end). The heap size is the rooms needed so far. Alternatively: sort starts and ends separately and sweep — increment on a start, decrement on an end."
   IN_PLACE_LINKED_LIST:
     title: In-place Linked List Manipulation
     subtitle: Reverse, reorder, and transform lists with O(1) extra space
@@ -384,37 +399,41 @@ patterns:
         summary: Reverse a singly linked list iteratively and return the new head.
         whenToUse: The foundational three-pointer reversal template for every variant in this pattern.
         hints:
-        - Save curr.next before overwriting it.
-        - The last non-null curr becomes the new head once the loop ends.
+        - "Which links can you rewrite while holding only a few node references?"
+        - "The prefix you already walked is rewired; the rest of the list is still untouched."
+        - "Save curr.next before overwriting it. The last non-null curr becomes the new head once the loop ends."
       reverse-sublist:
         title: Reverse Sub List
         summary: Reverse the nodes from position left to right (1-indexed) in a linked list.
         whenToUse: Walk to the node just before 'left', reverse the segment, then reconnect both boundaries.
         hints:
-        - Use a dummy head so left=1 doesn't need special-casing.
-        - The original 'left' node becomes the tail of the reversed segment - reconnect it to what follows
-          'right'.
+        - "Which links can you rewrite while holding only a few node references?"
+        - "The prefix you already walked is rewired; the rest of the list is still untouched."
+        - "Use a dummy head so left=1 doesn't need special-casing. The original 'left' node becomes the tail of the reversed segment - reconnect it to what follows 'right'."
       reverse-every-k:
         title: Reverse Every K-Element Sublist
         summary: Reverse the nodes of a linked list in groups of k; any leftover group stays as-is.
         whenToUse: Count k nodes ahead to confirm a full group exists, reverse it, then chain groups together.
         hints:
-        - Before reversing a group, check that k nodes actually remain.
-        - Connect the previous group's tail to the current group's new head after each reversal.
+        - "Which links can you rewrite while holding only a few node references?"
+        - "The prefix you already walked is rewired; the rest of the list is still untouched."
+        - "Before reversing a group, check that k nodes actually remain. Connect the previous group's tail to the current group's new head after each reversal."
       rotate-list:
         title: Rotate List
         summary: Rotate the list to the right by k places.
         whenToUse: Find length, connect cycle, break at new head.
         hints:
-        - k %= n
-        - New tail is at n - k - 1 from head after cycle
+        - "Which links can you rewrite while holding only a few node references?"
+        - "The prefix you already walked is rewired; the rest of the list is still untouched."
+        - "k %= n New tail is at n - k - 1 from head after cycle"
       reorder-list:
         title: Reorder List
         summary: Reorder L0→Ln→L1→Ln-1→… in-place.
         whenToUse: Middle + reverse second half + merge.
         hints:
-        - Find mid with fast/slow
-        - Reverse second half then weave
+        - "Which links can you rewrite while holding only a few node references?"
+        - "The prefix you already walked is rewired; the rest of the list is still untouched."
+        - "Find mid with fast/slow Reverse second half then weave"
   TWO_HEAPS:
     title: Two Heaps
     subtitle: Balance a max-heap and a min-heap for medians and greedy scheduling
@@ -468,37 +487,42 @@ patterns:
         summary: Support inserting numbers one at a time and returning the running median.
         whenToUse: 'The textbook two-heaps problem: balance a max-heap and min-heap as numbers arrive.'
         hints:
-        - Insert into the max-heap first, then move its top to the min-heap to keep order.
-        - Rebalance sizes after every insert so they differ by at most one.
+        - "Which half of the values must stay ordered, and which half can stay loose?"
+        - "One heap keeps the half you have set aside, and the other keeps the choice you can take next."
+        - "Insert into the max-heap first, then move its top to the min-heap to keep order. Rebalance sizes after every insert so they differ by at most one."
       maximize-capital:
         title: Maximize Capital
         summary: Pick at most k projects to maximize final capital (the IPO problem).
         whenToUse: A min-heap by required capital to find affordable projects, paired with a max-heap
           by profit to pick the best one.
         hints:
-        - Push all projects affordable with current capital into a max-heap by profit.
-        - Always take the top of the profit max-heap, then unlock newly affordable projects.
+        - "Which half of the values must stay ordered, and which half can stay loose?"
+        - "One heap keeps the half you have set aside, and the other keeps the choice you can take next."
+        - "Push all projects affordable with current capital into a max-heap by profit. Always take the top of the profit max-heap, then unlock newly affordable projects."
       sliding-window-median:
         title: Sliding Window Median
         summary: Medians of every contiguous window of size k.
         whenToUse: Two heaps plus delayed lazy deletion.
         hints:
-        - Balance max/min heaps for the window
-        - Lazy-delete outgoing elements
+        - "Which half of the values must stay ordered, and which half can stay loose?"
+        - "One heap keeps the half you have set aside, and the other keeps the choice you can take next."
+        - "Balance max/min heaps for the window Lazy-delete outgoing elements"
       next-interval:
         title: Next Interval
         summary: For each interval, find the next interval with start >= end, else -1.
         whenToUse: Max-heap on start / end to match greedily.
         hints:
-        - Heap intervals by start descending
-        - Match against ends descending
+        - "Which half of the values must stay ordered, and which half can stay loose?"
+        - "One heap keeps the half you have set aside, and the other keeps the choice you can take next."
+        - "Heap intervals by start descending Match against ends descending"
       static-median:
         title: Median of an Unsorted Array
         summary: Find the median of an unsorted array using two heaps.
         whenToUse: Same two-heap balance idea as the stream median, but for a fixed array.
         hints:
-        - Push into max/min heaps and rebalance
-        - Median is top or average of tops
+        - "Which half of the values must stay ordered, and which half can stay loose?"
+        - "One heap keeps the half you have set aside, and the other keeps the choice you can take next."
+        - "Push into max/min heaps and rebalance Median is top or average of tops"
   K_WAY_MERGE:
     title: K-way Merge
     subtitle: Merge multiple sorted inputs using a min-heap of current candidates
@@ -550,37 +574,42 @@ patterns:
         summary: Merge k sorted linked lists into a single sorted linked list.
         whenToUse: Min-heap of the k current list heads, always popping the smallest.
         hints:
-        - Push each list's head node (not just its value) so you can advance it later.
-        - After popping a node, push its .next into the heap if it exists.
+        - "Of the K sorted fronts, which element is safe to take next?"
+        - "A min-heap of the current heads always yields the next value in global order."
+        - "Push each list's head node (not just its value) so you can advance it later. After popping a node, push its .next into the heap if it exists."
       kth-smallest-sorted-matrix:
         title: Kth Smallest in Sorted Matrix
         summary: Find the k-th smallest element in a matrix sorted by row and column.
         whenToUse: Treat rows as sorted lists and heap-merge them, or binary search directly on the value
           range.
         hints:
-        - Seed the heap with the first element of each row (up to k rows).
-        - Pop k times; the k-th pop is the answer.
+        - "Of the K sorted fronts, which element is safe to take next?"
+        - "A min-heap of the current heads always yields the next value in global order."
+        - "Seed the heap with the first element of each row (up to k rows). Pop k times; the k-th pop is the answer."
       k-smallest-pairs:
         title: K Smallest Pairs
         summary: K pairs (u,v) with smallest sums from two sorted arrays.
         whenToUse: Min-heap of candidate pairs expanding indices.
         hints:
-        - Seed heap with (i,0) for first k of nums1
-        - Push (i,j+1) when popping
+        - "Of the K sorted fronts, which element is safe to take next?"
+        - "A min-heap of the current heads always yields the next value in global order."
+        - "Seed heap with (i,0) for first k of nums1 Push (i,j+1) when popping"
       smallest-range:
         title: Smallest Range Covering Elements from K Lists
         summary: Smallest range that includes at least one number from each list.
         whenToUse: Min-heap across list heads tracking current max.
         hints:
-        - Track global max among heap tops
-        - Advance the list of the min
+        - "Of the K sorted fronts, which element is safe to take next?"
+        - "A min-heap of the current heads always yields the next value in global order."
+        - "Track global max among heap tops Advance the list of the min"
       merge-two-sorted-lists:
         title: Merge Two Sorted Lists
         summary: Merge two sorted linked lists into one sorted list.
         whenToUse: K-way merge with k=2 — compare heads and advance.
         hints:
-        - Use a dummy head
-        - Always attach the smaller current node
+        - "Of the K sorted fronts, which element is safe to take next?"
+        - "A min-heap of the current heads always yields the next value in global order."
+        - "Use a dummy head Always attach the smaller current node"
   TOP_K_ELEMENTS:
     title: Top K Elements
     subtitle: Keep only K candidates alive using a heap of size K
@@ -623,37 +652,41 @@ patterns:
         summary: Return the K largest numbers from an unsorted array.
         whenToUse: A min-heap of size K is the direct application of the pattern.
         hints:
-        - Push the first K numbers, then compare every later number to the heap's top.
-        - Replace the top only if the new number is larger.
+        - "Do you need the whole order, or only the K values that beat the rest?"
+        - "A heap of size K forgets anything that can no longer enter the answer."
+        - "Push the first K numbers, then compare every later number to the heap's top. Replace the top only if the new number is larger."
       k-closest-points:
         title: K Closest Points to Origin
         summary: Return the K points with the smallest Euclidean distance to the origin.
         whenToUse: A max-heap of size K by distance keeps the farthest of the kept points ready to evict.
         hints:
-        - Compare squared distances to avoid unnecessary sqrt calls.
-        - Evict the max-heap's top whenever the heap grows past K.
+        - "Do you need the whole order, or only the K values that beat the rest?"
+        - "A heap of size K forgets anything that can no longer enter the answer."
+        - "Compare squared distances to avoid unnecessary sqrt calls. Evict the max-heap's top whenever the heap grows past K."
       top-k-frequent:
         title: Top K Frequent Numbers
         summary: Return the K most frequent elements in an array.
         whenToUse: Build a frequency map first, then run a size-K heap keyed by frequency.
         hints:
-        - Count frequencies with a hash map in one pass.
-        - Push (value, frequency) pairs into a min-heap ordered by frequency, capped at size K.
+        - "Do you need the whole order, or only the K values that beat the rest?"
+        - "A heap of size K forgets anything that can no longer enter the answer."
+        - "Count frequencies with a hash map in one pass. Push (value, frequency) pairs into a min-heap ordered by frequency, capped at size K."
       kth-largest:
         title: Kth Largest Element
         summary: Return the k-th largest element in an unsorted array.
         whenToUse: Min-heap of size k (interview-safe) or quickselect for average O(n); state the tradeoff out loud.
         hints:
-        - Maintain a min-heap of the k largest values seen so far; the heap top is the current k-th largest.
-        - Push each number; if size exceeds k, poll the smallest — that value can never be the answer.
-        - Quickselect is an average O(n) follow-up; mention worst-case O(n²) unless you add median-of-medians.
+        - "Do you need the whole order, or only the K values that beat the rest?"
+        - "A heap of size K forgets anything that can no longer enter the answer."
+        - "Maintain a min-heap of the k largest values seen so far; the heap top is the current k-th largest. Push each number; if size exceeds k, poll the smallest — that value can never be the answer. Quickselect is an average O(n) follow-up; mention worst-case O(n²) unless you add median-of-medians."
       reorganize-string:
         title: Reorganize String
         summary: Rearrange so no two adjacent chars are equal; empty if impossible.
         whenToUse: Max-heap by frequency; greedily place next.
         hints:
-        - If max freq > (n+1)/2 impossible
-        - Always take the current most frequent available
+        - "Do you need the whole order, or only the K values that beat the rest?"
+        - "A heap of size K forgets anything that can no longer enter the answer."
+        - "If max freq > (n+1)/2 impossible Always take the current most frequent available"
   MODIFIED_BINARY_SEARCH:
     title: Modified Binary Search
     subtitle: 'Binary search beyond simple target lookup: rotated arrays, boundaries, and answer spaces'
@@ -701,24 +734,27 @@ patterns:
         whenToUse: Detect the order from the two end elements once, then run standard binary search adapted
           to that order.
         hints:
-        - Compare the first and last elements to decide ascending vs descending.
-        - Flip the comparison direction based on which order was detected.
+        - "After you look at the middle, which half is guaranteed not to hold the answer?"
+        - "Each step keeps the answer, if it exists, inside the range you have not discarded."
+        - "Compare the first and last elements to decide ascending vs descending. Flip the comparison direction based on which order was detected."
       search-rotated-array:
         title: Search in Rotated Sorted Array
         summary: Find a target's index in a rotated sorted array with unique elements.
         whenToUse: At mid, one side is always sorted - search there if the target falls in its range,
           otherwise search the other side.
         hints:
-        - Compare nums[low] to nums[mid] to find which half is sorted.
-        - Check if target lies within the sorted half's value range before recursing into it.
+        - "After you look at the middle, which half is guaranteed not to hold the answer?"
+        - "Each step keeps the answer, if it exists, inside the range you have not discarded."
+        - "Compare nums[low] to nums[mid] to find which half is sorted. Check if target lies within the sorted half's value range before recursing into it."
       find-range:
         title: Find First and Last Position
         summary: Find the first and last index of a target value in a sorted array.
         whenToUse: 'Run two binary searches: one biased to find the lower bound, one biased to find the
           upper bound.'
         hints:
-        - On finding a match while searching for the first position, keep narrowing left instead of stopping.
-        - Do the same but narrow right for the last position search.
+        - "After you look at the middle, which half is guaranteed not to hold the answer?"
+        - "Each step keeps the answer, if it exists, inside the range you have not discarded."
+        - "On finding a match while searching for the first position, keep narrowing left instead of stopping. Do the same but narrow right for the last position search."
       find-peak-element:
         title: Find Peak Element
         summary: Return the index of any peak — an element strictly greater than its neighbors (ends
@@ -726,16 +762,17 @@ patterns:
         whenToUse: Binary search on the slope — move toward the greater neighbor, which must contain
           a peak.
         hints:
-        - If nums[mid] < nums[mid+1], a peak exists on the right (search mid+1..hi).
-        - Otherwise a peak exists on the left including mid (search lo..mid).
-        - Any valid peak index is accepted; you do not need the global maximum.
+        - "After you look at the middle, which half is guaranteed not to hold the answer?"
+        - "Each step keeps the answer, if it exists, inside the range you have not discarded."
+        - "If nums[mid] < nums[mid+1], a peak exists on the right (search mid+1..hi). Otherwise a peak exists on the left including mid (search lo..mid). Any valid peak index is accepted; you do not need the global maximum."
       search-rotated-duplicates:
         title: Search Rotated Array II
         summary: Search target in rotated sorted array that may contain duplicates.
         whenToUse: Binary search with duplicate shrinkage at ends.
         hints:
-        - When nums[lo]==nums[mid]==nums[hi] shrink both ends
-        - Otherwise same rotated half logic
+        - "After you look at the middle, which half is guaranteed not to hold the answer?"
+        - "Each step keeps the answer, if it exists, inside the range you have not discarded."
+        - "When nums[lo]==nums[mid]==nums[hi] shrink both ends Otherwise same rotated half logic"
   SUBSETS:
     title: Subsets
     subtitle: Systematically generate all subsets, permutations, and combinations
@@ -781,46 +818,50 @@ patterns:
         summary: Return all subsets (the power set) of an array of distinct integers.
         whenToUse: 'Textbook cascading BFS: double the subset list for every new element.'
         hints:
-        - Start the result list with just the empty subset.
-        - For each number, append it to a copy of every subset already in the result.
+        - "What choice are you adding to the current path, and what do you undo when it fails?"
+        - "The current path is one partial answer; you record it before the next choice and undo on the way back."
+        - "Start the result list with just the empty subset. For each number, append it to a copy of every subset already in the result."
       subsets-with-duplicates:
         title: Subsets With Duplicates
         summary: Return all unique subsets when the input array may contain duplicate values.
         whenToUse: Sort first, then only extend subsets created in the previous round when handling a
           repeated value.
         hints:
-        - Sort the array so duplicate values become adjacent.
-        - When nums[i] equals nums[i-1], only append it to subsets added during the previous number's
-          round.
+        - "What choice are you adding to the current path, and what do you undo when it fails?"
+        - "The current path is one partial answer; you record it before the next choice and undo on the way back."
+        - "Sort the array so duplicate values become adjacent. When nums[i] equals nums[i-1], only append it to subsets added during the previous number's round."
       permutations:
         title: Permutations
         summary: Return all permutations of an array of distinct numbers.
         whenToUse: Backtracking swap-and-undo, or BFS by inserting the next number at every position.
         hints:
-        - Swap the current index with each later index, recurse, then swap back.
-        - 'Base case: when the current index reaches the array''s end, record a full permutation.'
+        - "What choice are you adding to the current path, and what do you undo when it fails?"
+        - "The current path is one partial answer; you record it before the next choice and undo on the way back."
+        - "Swap the current index with each later index, recurse, then swap back. Base case: when the current index reaches the array's end, record a full permutation."
       generate-parentheses:
         title: Generate Parentheses
         summary: All combinations of n pairs of well-formed parentheses.
         whenToUse: Backtracking with open/close counts — prune any prefix that could never become valid.
         hints:
-        - 'Add ''('' only while open_used < n; you never need more opens than n.'
-        - 'Add '')'' only while close_used < open_used; this keeps every prefix balanced.'
-        - Record a string only when open_used == close_used == n. Raw subset generation without these guards explodes and produces invalid strings.
+        - "What choice are you adding to the current path, and what do you undo when it fails?"
+        - "The current path is one partial answer; you record it before the next choice and undo on the way back."
+        - "Add '(' only while open_used < n; you never need more opens than n. Add ')' only while close_used < open_used; this keeps every prefix balanced. Record a string only when open_used == close_used == n. Raw subset generation without these guards explodes and produces invalid strings."
       unique-permutations:
         title: Permutations II
         summary: All unique permutations of an array that may contain duplicates.
         whenToUse: Backtracking with sorted skip of identical siblings.
         hints:
-        - Sort first
-        - Skip a duplicate if previous identical not used
+        - "What choice are you adding to the current path, and what do you undo when it fails?"
+        - "The current path is one partial answer; you record it before the next choice and undo on the way back."
+        - "Sort first Skip a duplicate if previous identical not used"
       subsets-size-k:
         title: Combinations of Size K
         summary: Return all combinations of k numbers chosen from 1..n.
         whenToUse: Subset/backtracking generation with a fixed size limit.
         hints:
-        - Choose or skip each number from start..n
-        - Stop when path size is k
+        - "What choice are you adding to the current path, and what do you undo when it fails?"
+        - "The current path is one partial answer; you record it before the next choice and undo on the way back."
+        - "Choose or skip each number from start..n Stop when path size is k"
   GREEDY:
     title: Greedy Techniques
     subtitle: Commit to the locally optimal choice that provably preserves a global invariant
@@ -868,38 +909,42 @@ patterns:
         whenToUse: Track the farthest reachable index while scanning; if the current index ever exceeds
           it, you're stuck.
         hints:
-        - Update farthest = max(farthest, i + nums[i]) at each index.
-        - If i ever exceeds farthest, the last index is unreachable.
+        - "Which local choice, once you sort by the right key, never has to be undone?"
+        - "The sort key makes the next pick safe for every later step."
+        - "Update farthest = max(farthest, i + nums[i]) at each index. If i ever exceeds farthest, the last index is unreachable."
       jump-game-ii:
         title: Jump Game II
         summary: Find the minimum number of jumps required to reach the last index.
         whenToUse: 'BFS-like level expansion: track the current jump''s farthest end and the overall farthest
           reach.'
         hints:
-        - When i reaches the current jump's end, increment jumps and set the end to the farthest seen
-          so far.
-        - This greedily expands one 'level' at a time, similar to BFS on an implicit graph.
+        - "Which local choice, once you sort by the right key, never has to be undone?"
+        - "The sort key makes the next pick safe for every later step."
+        - "When i reaches the current jump's end, increment jumps and set the end to the farthest seen so far. This greedily expands one 'level' at a time, similar to BFS on an implicit graph."
       gas-station:
         title: Gas Station
         summary: Starting station index to complete the circuit, or -1.
         whenToUse: Greedy reset of start when tank goes negative.
         hints:
-        - If total gas < total cost impossible
-        - When tank < 0, start = i+1 and reset tank
+        - "Which local choice, once you sort by the right key, never has to be undone?"
+        - "The sort key makes the next pick safe for every later step."
+        - "If total gas < total cost impossible When tank < 0, start = i+1 and reset tank"
       candy:
         title: Candy
         summary: Minimum candies so higher-rated neighbors get more.
         whenToUse: Two-pass greedy left-to-right and right-to-left.
         hints:
-        - Ensure rising slopes left→right
-        - Then enforce rising slopes right→left with max
+        - "Which local choice, once you sort by the right key, never has to be undone?"
+        - "The sort key makes the next pick safe for every later step."
+        - "Ensure rising slopes left→right Then enforce rising slopes right→left with max"
       assign-cookies:
         title: Assign Cookies
         summary: Maximize content children by assigning cookies greedily.
         whenToUse: Sort both arrays and assign the smallest sufficient cookie.
         hints:
-        - Sort greed and cookie sizes
-        - 'Two pointers: give cookie only when it fits'
+        - "Which local choice, once you sort by the right key, never has to be undone?"
+        - "The sort key makes the next pick safe for every later step."
+        - "Sort greed and cookie sizes Two pointers: give cookie only when it fits"
   BACKTRACKING:
     title: Backtracking
     subtitle: Choose, explore, undo - search the decision tree with pruning
@@ -947,22 +992,25 @@ patterns:
         whenToUse: Classic backtracking with a start index that prevents generating permutations of the
           same combination.
         hints:
-        - Pass the same start index (not start+1) when reusing a number.
-        - Prune the branch as soon as the running sum exceeds the target.
+        - "Where do you commit to a choice, and where must you undo it?"
+        - "The board is valid for the choices made so far; a dead end restores the previous board."
+        - "Pass the same start index (not start+1) when reusing a number. Prune the branch as soon as the running sum exceeds the target."
       word-search:
         title: Word Search
         summary: Determine whether a word exists in a grid via adjacent cells, each used at most once.
         whenToUse: DFS/backtracking from each cell, marking visited cells and unmarking them on backtrack.
         hints:
-        - Mark a cell visited before recursing into its neighbors, and unmark it right after.
-        - Prune immediately if the current cell's letter doesn't match the needed character.
+        - "Where do you commit to a choice, and where must you undo it?"
+        - "The board is valid for the choices made so far; a dead end restores the previous board."
+        - "Mark a cell visited before recursing into its neighbors, and unmark it right after. Prune immediately if the current cell's letter doesn't match the needed character."
       n-queens:
         title: N-Queens
         summary: All distinct solutions to the n-queens puzzle.
         whenToUse: Place row by row; prune columns/diagonals.
         hints:
-        - Track cols and both diagonals
-        - Build board strings at leaves
+        - "Where do you commit to a choice, and where must you undo it?"
+        - "The board is valid for the choices made so far; a dead end restores the previous board."
+        - "Track cols and both diagonals Build board strings at leaves"
       sudoku-solver:
         title: Sudoku Solver
         summary: Fill every empty cell of a 9×9 Sudoku board in-place so each row, column, and 3×3
@@ -970,16 +1018,17 @@ patterns:
         whenToUse: Backtracking — try digits 1–9 in the next empty cell, pruning with row/col/box
           occupancy.
         hints:
-        - 'Scan for the next ''.'' cell; if none remain, the board is solved.'
-        - Before placing digit d, confirm it is unused in that row, column, and 3×3 box.
-        - 'Place, recurse, then restore ''.'' on failure so sibling branches stay clean.'
+        - "Where do you commit to a choice, and where must you undo it?"
+        - "The board is valid for the choices made so far; a dead end restores the previous board."
+        - "Scan for the next '.' cell; if none remain, the board is solved. Before placing digit d, confirm it is unused in that row, column, and 3×3 box. Place, recurse, then restore '.' on failure so sibling branches stay clean."
       letter-case-permutation:
         title: Letter Case Permutation
         summary: Return all strings formed by toggling letter case.
         whenToUse: Simple backtracking / branching on letters only.
         hints:
-        - Digits stay fixed
-        - Branch lower/upper for each letter
+        - "Where do you commit to a choice, and where must you undo it?"
+        - "The board is valid for the choices made so far; a dead end restores the previous board."
+        - "Digits stay fixed Branch lower/upper for each letter"
   DYNAMIC_PROGRAMMING:
     title: Dynamic Programming
     subtitle: Overlapping subproblems and optimal substructure, solved once and reused
@@ -1027,41 +1076,43 @@ patterns:
         summary: Count the distinct ways to climb n steps, taking 1 or 2 steps at a time.
         whenToUse: 'A Fibonacci-shaped DP intro: dp[i] = dp[i-1] + dp[i-2].'
         hints:
-        - The base cases are dp[1]=1 and dp[2]=2.
-        - Only the last two values are ever needed, so O(1) space works.
+        - "Which smaller question has the same shape, and what would you recompute if you solved it from scratch?"
+        - "The cell for this prefix is built only from cells you have already finished."
+        - "The base cases are dp[1]=1 and dp[2]=2. Only the last two values are ever needed, so O(1) space works."
       house-robber:
         title: House Robber
         summary: Find the maximum money you can rob without robbing two adjacent houses.
         whenToUse: dp[i] = max(dp[i-1], dp[i-2] + nums[i]) - decide to skip or take each house.
         hints:
-        - At each house, either skip it (keep dp[i-1]) or rob it (dp[i-2] + nums[i]).
-        - Only the previous two dp values need to be kept.
+        - "Which smaller question has the same shape, and what would you recompute if you solved it from scratch?"
+        - "The cell for this prefix is built only from cells you have already finished."
+        - "At each house, either skip it (keep dp[i-1]) or rob it (dp[i-2] + nums[i]). Only the previous two dp values need to be kept."
       0-1-knapsack:
         title: 0/1 Knapsack
         summary: Maximize value packed into a weight capacity when each item can be used at most once.
         whenToUse: Classic 2D (or 1D reverse-iteration) knapsack DP over item index and remaining capacity.
         hints:
-        - dp[c] represents the best value achievable with capacity c.
-        - Iterate capacity from high to low in the 1D version so each item is only used once.
+        - "Which smaller question has the same shape, and what would you recompute if you solved it from scratch?"
+        - "The cell for this prefix is built only from cells you have already finished."
+        - "dp[c] represents the best value achievable with capacity c. Iterate capacity from high to low in the 1D version so each item is only used once."
       coin-change:
         title: Coin Change
         summary: Return the fewest coins needed to make up amount using unlimited coins of the given
           denominations, or -1 if impossible.
         whenToUse: Unbounded-knapsack DP over amounts. Greedy fails on non-canonical coins — [1,3,4] and amount 6 is 3 coins greedy, 2 coins DP.
         hints:
-        - Let dp[x] be fewest coins for amount x; dp[x] = min(dp[x-c]+1) over coins c ≤ x.
-        - Initialize dp[0]=0 and other entries to a sentinel larger than any valid answer (e.g.
-          amount+1).
-        - After filling, if dp[amount] is still the sentinel, return -1.
+        - "Which smaller question has the same shape, and what would you recompute if you solved it from scratch?"
+        - "The cell for this prefix is built only from cells you have already finished."
+        - "Let dp[x] be fewest coins for amount x; dp[x] = min(dp[x-c]+1) over coins c ≤ x. Initialize dp[0]=0 and other entries to a sentinel larger than any valid answer (e.g. amount+1). After filling, if dp[amount] is still the sentinel, return -1."
       edit-distance:
         title: Edit Distance
         summary: Minimum number of insert, delete, and replace operations to transform word1 into
           word2.
         whenToUse: 2D DP on prefixes of both strings (Levenshtein); each cell is insert / delete / replace from neighbors.
         hints:
-        - 'dp[i][j] is the distance between word1[:i] and word2[:j]; matching chars take the diagonal.'
-        - On mismatch, take 1 + min(insert=dp[i][j-1], delete=dp[i-1][j], replace=dp[i-1][j-1]).
-        - Keep only the previous row to match the O(n) space bound after the 2D recurrence is clear.
+        - "Which smaller question has the same shape, and what would you recompute if you solved it from scratch?"
+        - "The cell for this prefix is built only from cells you have already finished."
+        - "dp[i][j] is the distance between word1[:i] and word2[:j]; matching chars take the diagonal. On mismatch, take 1 + min(insert=dp[i][j-1], delete=dp[i-1][j], replace=dp[i-1][j-1]). Keep only the previous row to match the O(n) space bound after the 2D recurrence is clear."
   CYCLIC_SORT:
     title: Cyclic Sort
     subtitle: Place each number in range [1..n] at its home index value-1
@@ -1107,40 +1158,43 @@ patterns:
         summary: Sort an array containing numbers from 1 to n in-place.
         whenToUse: The direct, textbook application of the pattern.
         hints:
-        - While nums[i] isn't at index nums[i]-1, swap it there.
-        - Each element is swapped at most once into its final place, keeping it O(n).
+        - "If every value belongs in one index, which value is sitting in the wrong place?"
+        - "Index i should hold i or i + 1; one swap puts a value home without extra memory."
+        - "While nums[i] isn't at index nums[i]-1, swap it there. Each element is swapped at most once into its final place, keeping it O(n)."
       find-missing-number:
         title: Find the Missing Number
         summary: Given n distinct numbers taken from 0..n, find the one number missing from the array.
         whenToUse: Cyclic-place the numbers (or use sum/XOR math); here, cyclic sort then scan for the
           mismatch.
         hints:
-        - Place each value v at index v when v < n.
-        - After placing, the first index i where nums[i] != i is the missing number.
+        - "If every value belongs in one index, which value is sitting in the wrong place?"
+        - "Index i should hold i or i + 1; one swap puts a value home without extra memory."
+        - "Place each value v at index v when v < n. After placing, the first index i where nums[i] != i is the missing number."
       find-all-duplicates:
         title: Find All Duplicate Numbers
         summary: Given numbers from 1..n where some appear twice, return all the duplicates.
         whenToUse: Place each value by index; whatever can't be placed because its slot is taken is a
           duplicate.
         hints:
-        - Run cyclic sort placement as usual.
-        - After placement, any index i where nums[i] != i + 1 holds a duplicate value.
+        - "If every value belongs in one index, which value is sitting in the wrong place?"
+        - "Index i should hold i or i + 1; one swap puts a value home without extra memory."
+        - "Run cyclic sort placement as usual. After placement, any index i where nums[i] != i + 1 holds a duplicate value."
       find-duplicate-number:
         title: Find the Duplicate Number
         summary: Array of n+1 ints in 1..n with one duplicate; find it without modifying.
         whenToUse: Treat indices→values as a functional graph and find the cycle entrance (Floyd), without modifying the array.
         hints:
-        - Each index i points to nums[i]; because one value is duplicated, the graph has exactly one cycle.
-        - 'Run Floyd: slow = nums[slow], fast = nums[nums[fast]] until they meet.'
-        - Reset one pointer to the start and advance both one step at a time; the meeting point is the duplicate.
+        - "If every value belongs in one index, which value is sitting in the wrong place?"
+        - "Index i should hold i or i + 1; one swap puts a value home without extra memory."
+        - "Each index i points to nums[i]; because one value is duplicated, the graph has exactly one cycle. Run Floyd: slow = nums[slow], fast = nums[nums[fast]] until they meet. Reset one pointer to the start and advance both one step at a time; the meeting point is the duplicate."
       first-missing-positive:
         title: First Missing Positive
         summary: Smallest missing positive integer in unsorted array.
         whenToUse: 'In-place placement: put each value v in [1..n] at index v-1, then scan for the first mismatch.'
         hints:
-        - Ignore non-positive values and values > n — they cannot be the first missing positive within 1..n+1.
-        - While nums[i] is in range and not already at home, swap it into index nums[i]-1 (guard against infinite self-swaps).
-        - After placement, the first index i with nums[i] != i+1 means the answer is i+1; if all match, answer is n+1.
+        - "If every value belongs in one index, which value is sitting in the wrong place?"
+        - "Index i should hold i or i + 1; one swap puts a value home without extra memory."
+        - "Ignore non-positive values and values > n — they cannot be the first missing positive within 1..n+1. While nums[i] is in range and not already at home, swap it into index nums[i]-1 (guard against infinite self-swaps). After placement, the first index i with nums[i] != i+1 means the answer is i+1; if all match, answer is n+1."
   TOPOLOGICAL_SORT:
     title: Topological Sort
     subtitle: Order tasks with prerequisites using indegree-driven BFS on a DAG
@@ -1188,36 +1242,41 @@ patterns:
         whenToUse: Cycle detection via topological sort - if not all nodes get processed, a cycle blocks
           completion.
         hints:
-        - Build the graph as prerequisite -> course.
-        - If the processed-node count ends up less than the total course count, a cycle exists.
+        - "Which node has no remaining prerequisites, and what becomes free when you finish it?"
+        - "A node enters the order only when its indegree hits zero."
+        - "Build the graph as prerequisite -> course. If the processed-node count ends up less than the total course count, a cycle exists."
       course-schedule-order:
         title: Course Schedule Order
         summary: Return one valid course order, or an empty array if no valid order exists.
         whenToUse: Kahn's algorithm, collecting the popped nodes directly into the output order.
         hints:
-        - Seed the queue with all zero-indegree courses.
-        - If the final order's length is less than the course count, return an empty array.
+        - "Which node has no remaining prerequisites, and what becomes free when you finish it?"
+        - "A node enters the order only when its indegree hits zero."
+        - "Seed the queue with all zero-indegree courses. If the final order's length is less than the course count, return an empty array."
       tasks-scheduling:
         title: Tasks Scheduling
         summary: Can all tasks finish given prerequisites?
         whenToUse: Same as course schedule — cycle detection via topo.
         hints:
-        - Build indegree graph
-        - BFS Kahn; fail if processed < tasks
+        - "Which node has no remaining prerequisites, and what becomes free when you finish it?"
+        - "A node enters the order only when its indegree hits zero."
+        - "Build indegree graph BFS Kahn; fail if processed < tasks"
       alien-dictionary-order:
         title: Alien Dictionary
         summary: Derive alien letter order from sorted dictionary words.
         whenToUse: Extract edges from adjacent words; topo sort.
         hints:
-        - Compare adjacent pairs for first difference
-        - Invalid if longer word is prefix after shorter
+        - "Which node has no remaining prerequisites, and what becomes free when you finish it?"
+        - "A node enters the order only when its indegree hits zero."
+        - "Compare adjacent pairs for first difference Invalid if longer word is prefix after shorter"
       verify-alien-dictionary:
         title: Verifying an Alien Dictionary
         summary: Check whether words are sorted by a given alien alphabet order.
         whenToUse: Compare adjacent words using a custom alphabet ranking.
         hints:
-        - Map each letter to its rank
-        - Invalid if longer word is a prefix after a shorter equal prefix
+        - "Which node has no remaining prerequisites, and what becomes free when you finish it?"
+        - "A node enters the order only when its indegree hits zero."
+        - "Map each letter to its rank Invalid if longer word is a prefix after a shorter equal prefix"
   SORT_AND_SEARCH:
     title: Sort and Search
     subtitle: Sort by the right key to unlock adjacent comparisons or binary search
@@ -1265,8 +1324,9 @@ patterns:
         whenToUse: Sort each word's characters to build a canonical key, then group by that key in a hash
           map.
         hints:
-        - Two strings are anagrams exactly when their sorted character sequences are equal.
-        - Use the sorted string (or a character-count signature) as the hash map key.
+        - "What becomes cheap to find once equal items sit together?"
+        - "Sorting groups the values that a later scan or binary search will treat as one run."
+        - "Two strings are anagrams exactly when their sorted character sequences are equal. Use the sorted string (or a character-count signature) as the hash map key."
       search-suggestions:
         title: Search Suggestions (sorted prefix)
         summary: For each prefix of a search word, return up to 3 lexicographically smallest matching
@@ -1274,29 +1334,33 @@ patterns:
         whenToUse: Sort products once, then binary search each growing prefix's lower bound instead of
           rescanning.
         hints:
-        - Sort the product list lexicographically up front.
-        - For each prefix, binary search for its lower bound and take up to 3 matches from there.
+        - "What becomes cheap to find once equal items sit together?"
+        - "Sorting groups the values that a later scan or binary search will treat as one run."
+        - "Sort the product list lexicographically up front. For each prefix, binary search for its lower bound and take up to 3 matches from there."
       wiggle-sort:
         title: Wiggle Sort
         summary: Reorder so nums[0] <= nums[1] >= nums[2] <= nums[3] ….
         whenToUse: One-pass swap based on even/odd positions.
         hints:
-        - For even i ensure nums[i] <= nums[i+1]
-        - For odd i ensure nums[i] >= nums[i+1]
+        - "What becomes cheap to find once equal items sit together?"
+        - "Sorting groups the values that a later scan or binary search will treat as one run."
+        - "For even i ensure nums[i] <= nums[i+1] For odd i ensure nums[i] >= nums[i+1]"
       count-smaller-after-self:
         title: Count of Smaller Numbers After Self
         summary: For each element, count smaller elements to its right.
         whenToUse: Merge sort tree counting inversions while merging.
         hints:
-        - Merge sort indices
-        - When taking from right half, add mid-i+1 to left counts
+        - "What becomes cheap to find once equal items sit together?"
+        - "Sorting groups the values that a later scan or binary search will treat as one run."
+        - "Merge sort indices When taking from right half, add mid-i+1 to left counts"
       intersection-two-arrays:
         title: Intersection of Two Arrays
         summary: Return unique intersection of two arrays.
         whenToUse: Sort + two pointers, or hash set membership.
         hints:
-        - Put one array into a set
-        - Filter unique hits from the other
+        - "What becomes cheap to find once equal items sit together?"
+        - "Sorting groups the values that a later scan or binary search will treat as one run."
+        - "Put one array into a set Filter unique hits from the other"
   MATRICES:
     title: Matrices
     subtitle: Traverse, transform, and search 2D grids systematically
@@ -1344,31 +1408,35 @@ patterns:
         whenToUse: Shrink top/bottom/left/right boundaries after fully consuming each edge of the current
           layer.
         hints:
-        - Traverse top row, right column, bottom row, left column, in that cyclic order.
-        - After each edge, move the corresponding boundary inward by one.
+        - "Does this cell depend on a neighbor, a border, or a mark you can write in place?"
+        - "Each cell is handled from its neighbors or its border, and a mark stops you from processing it twice."
+        - "Traverse top row, right column, bottom row, left column, in that cyclic order. After each edge, move the corresponding boundary inward by one."
       rotate-image:
         title: Rotate Image
         summary: Rotate an n x n matrix 90 degrees clockwise, in-place.
         whenToUse: Transpose the matrix first, then reverse each row - two simple O(n^2) passes instead
           of tricky index math.
         hints:
-        - Transpose swaps matrix[i][j] with matrix[j][i] for i < j.
-        - Reversing each row after transposing produces the clockwise rotation.
+        - "Does this cell depend on a neighbor, a border, or a mark you can write in place?"
+        - "Each cell is handled from its neighbors or its border, and a mark stops you from processing it twice."
+        - "Transpose swaps matrix[i][j] with matrix[j][i] for i < j. Reversing each row after transposing produces the clockwise rotation."
       set-matrix-zeroes:
         title: Set Matrix Zeroes
         summary: If a cell is 0, set its entire row and column to 0, in-place.
         whenToUse: Use the first row and first column themselves as markers instead of allocating extra
           arrays.
         hints:
-        - Use two boolean flags to remember whether the first row/column originally had a zero.
-        - Mark row i and column j via matrix[i][0] and matrix[0][j] as you scan the rest of the grid.
+        - "Does this cell depend on a neighbor, a border, or a mark you can write in place?"
+        - "Each cell is handled from its neighbors or its border, and a mark stops you from processing it twice."
+        - "Use two boolean flags to remember whether the first row/column originally had a zero. Mark row i and column j via matrix[i][0] and matrix[0][j] as you scan the rest of the grid."
       search-2d-matrix:
         title: Search a 2D Matrix II
         summary: Search in a matrix sorted per row and column.
         whenToUse: Start top-right; move left/down by comparison.
         hints:
-        - From top-right corner
-        - Too big → left; too small → down
+        - "Does this cell depend on a neighbor, a border, or a mark you can write in place?"
+        - "Each cell is handled from its neighbors or its border, and a mark stops you from processing it twice."
+        - "From top-right corner Too big → left; too small → down"
       shortest-path-binary-matrix:
         title: Shortest Path in Binary Matrix
         summary: Length of the shortest clear path from (0,0) to (n-1,n-1) on a binary grid, moving
@@ -1376,17 +1444,17 @@ patterns:
         whenToUse: BFS from the top-left on the grid graph — unweighted shortest path needs
           level-order distance.
         hints:
-        - If grid[0][0] or the destination is blocked (1), return -1 immediately.
-        - Enqueue all 8 neighbors of each 0-cell; mark visited when enqueueing to avoid duplicate
-          work.
-        - Distance counts cells on the path (start is 1), not the number of edges.
+        - "Does this cell depend on a neighbor, a border, or a mark you can write in place?"
+        - "Each cell is handled from its neighbors or its border, and a mark stops you from processing it twice."
+        - "If grid[0][0] or the destination is blocked (1), return -1 immediately. Enqueue all 8 neighbors of each 0-cell; mark visited when enqueueing to avoid duplicate work. Distance counts cells on the path (start is 1), not the number of edges."
       matrix-diagonal-sum:
         title: Matrix Diagonal Sum
         summary: Sum primary and secondary diagonals without double-counting the center.
         whenToUse: Direct index walk on a square matrix.
         hints:
-        - Add mat[i][i] and mat[i][n-1-i]
-        - Subtract center once if n is odd
+        - "Does this cell depend on a neighbor, a border, or a mark you can write in place?"
+        - "Each cell is handled from its neighbors or its border, and a mark stops you from processing it twice."
+        - "Add mat[i][i] and mat[i][n-1-i] Subtract center once if n is odd"
   STACKS:
     title: Stacks
     subtitle: LIFO for matching pairs, next-greater elements, and monotonic structures
@@ -1437,15 +1505,17 @@ patterns:
         summary: Check whether a string of brackets is properly matched and nested.
         whenToUse: The classic stack matching template for any bracket-validity question.
         hints:
-        - Push opening brackets; on a closing bracket, pop and check it matches.
-        - The string is valid only if the stack is empty at the very end.
+        - "What has to be resolved before you can accept the current value?"
+        - "The stack holds unresolved items in the order they still need to be closed."
+        - "Push opening brackets; on a closing bracket, pop and check it matches. The string is valid only if the stack is empty at the very end."
       daily-temperatures:
         title: Daily Temperatures
         summary: For each day, find how many days until a warmer temperature occurs.
         whenToUse: A monotonic decreasing stack of indices resolves each day the moment a warmer one appears.
         hints:
-        - Keep indices on the stack, not temperatures, so you can compute day differences.
-        - Pop and resolve every stacked index whose temperature is less than the current day's.
+        - "What has to be resolved before you can accept the current value?"
+        - "The stack holds unresolved items in the order they still need to be closed."
+        - "Keep indices on the stack, not temperatures, so you can compute day differences. Pop and resolve every stacked index whose temperature is less than the current day's."
       next-greater-element:
         title: Next Greater Element
         summary: For each element of nums1, find its next greater element in nums2 (nums1 is a subset
@@ -1453,8 +1523,9 @@ patterns:
         whenToUse: Precompute next-greater for every value in nums2 with a monotonic stack, then map nums1's
           answers via a hash map.
         hints:
-        - Build the full next-greater mapping for nums2 in one monotonic-stack pass.
-        - Look up each nums1 value in that mapping instead of rescanning nums2 per query.
+        - "What has to be resolved before you can accept the current value?"
+        - "The stack holds unresolved items in the order they still need to be closed."
+        - "Build the full next-greater mapping for nums2 in one monotonic-stack pass. Look up each nums1 value in that mapping instead of rescanning nums2 per query."
       decode-string:
         title: Decode String
         summary: Decode a nested encoding like "3[a2[c]]" into "accaccacc", where k[encoded] means
@@ -1462,18 +1533,17 @@ patterns:
         whenToUse: 'Two stacks (or one stack of pairs) — push the current count and buffer on ''['',
           pop and repeat on '']''.'
         hints:
-        - 'Accumulate multi-digit counts before each ''[''; do not treat each digit as its own
-          factor.'
-        - 'On '']'', pop the previous string and count, then append current.repeat(count) onto the
-          previous string.'
-        - Letters append to the current buffer; digits never belong in the decoded output.
+        - "What has to be resolved before you can accept the current value?"
+        - "The stack holds unresolved items in the order they still need to be closed."
+        - "Accumulate multi-digit counts before each '['; do not treat each digit as its own factor. On ']', pop the previous string and count, then append current.repeat(count) onto the previous string. Letters append to the current buffer; digits never belong in the decoded output."
       basic-calculator:
         title: Basic Calculator
         summary: Evaluate expression with +, -, parentheses, and spaces.
         whenToUse: Sign stack for nested parentheses.
         hints:
-        - Keep running result and sign
-        - On '(' push result/sign; on ')' pop
+        - "What has to be resolved before you can accept the current value?"
+        - "The stack holds unresolved items in the order they still need to be closed."
+        - "Keep running result and sign On '(' push result/sign; on ')' pop"
   GRAPHS:
     title: Graphs
     subtitle: BFS/DFS traversal on explicit or implicit graphs
@@ -1522,23 +1592,25 @@ patterns:
         summary: Count the number of land components ('1's) in a 2D grid of water and land.
         whenToUse: DFS or BFS flood fill from each unvisited land cell, counting how many fills are needed.
         hints:
-        - Mark a land cell visited (or sink it to '0') as soon as you enqueue/visit it.
-        - Each flood fill from a fresh unvisited land cell represents exactly one island.
+        - "Which nodes are one edge away, and which have you already entered?"
+        - "A visited set plus a queue or a stack expands each node once."
+        - "Mark a land cell visited (or sink it to '0') as soon as you enqueue/visit it. Each flood fill from a fresh unvisited land cell represents exactly one island."
       clone-graph:
         title: Clone Graph
         summary: Create a deep copy of an undirected, connected graph given a reference node.
         whenToUse: A hash map from original node to its clone, filled while doing BFS or DFS.
         hints:
-        - Create a node's clone the first time you see it and store it in the map immediately.
-        - When wiring neighbors, look up (or create) their clones through the same map to avoid infinite
-          recursion.
+        - "Which nodes are one edge away, and which have you already entered?"
+        - "A visited set plus a queue or a stack expands each node once."
+        - "Create a node's clone the first time you see it and store it in the map immediately. When wiring neighbors, look up (or create) their clones through the same map to avoid infinite recursion."
       pacific-atlantic:
         title: Pacific Atlantic Water Flow
         summary: Cells from which water can flow to both oceans.
         whenToUse: Multi-source DFS/BFS inland from ocean borders.
         hints:
-        - Flow only to >= height neighbors
-        - Intersect reachable sets
+        - "Which nodes are one edge away, and which have you already entered?"
+        - "A visited set plus a queue or a stack expands each node once."
+        - "Flow only to >= height neighbors Intersect reachable sets"
       critical-connections:
         title: Critical Connections in a Network
         summary: Find every bridge in an undirected network — edges whose removal increases the
@@ -1546,11 +1618,9 @@ patterns:
         whenToUse: Tarjan-style DFS with discovery and low-link times; edge u–v is a bridge when
           low[v] > disc[u].
         hints:
-        - Track disc[u] (first visit time) and low[u] (earliest reachable discovery via tree/back
-          edges).
-        - After exploring child v, if low[v] > disc[u], the edge (u,v) is a bridge.
-        - Ignore the parent edge when updating low from neighbors so you do not falsely cancel a
-          bridge.
+        - "Which nodes are one edge away, and which have you already entered?"
+        - "A visited set plus a queue or a stack expands each node once."
+        - "Track disc[u] (first visit time) and low[u] (earliest reachable discovery via tree/back edges). After exploring child v, if low[v] > disc[u], the edge (u,v) is a bridge. Ignore the parent edge when updating low from neighbors so you do not falsely cancel a bridge."
       find-center-star:
         title: Find Center of Star Graph
         summary: Find the center node of a star graph given edges.
@@ -1606,39 +1676,43 @@ patterns:
         summary: Determine whether a root-to-leaf path exists whose values sum to a given target.
         whenToUse: DFS subtracting the current node's value from the remaining target as you descend.
         hints:
-        - At a leaf, check whether the remaining target equals the leaf's value.
-        - Recurse into children with target minus the current node's value.
+        - "What does this node's answer become once both children have answered?"
+        - "The result of a node is built only from its subtrees."
+        - "At a leaf, check whether the remaining target equals the leaf's value. Recurse into children with target minus the current node's value."
       all-path-sum:
         title: All Paths for a Sum
         summary: Return every root-to-leaf path whose values sum to a given target.
         whenToUse: DFS while building a running path list, backtracking (removing the last element) after
           each recursive call.
         hints:
-        - Add the current node to a shared path list before recursing, remove it after.
-        - Only copy the path into the result list when a leaf matches the remaining target exactly.
+        - "What does this node's answer become once both children have answered?"
+        - "The result of a node is built only from its subtrees."
+        - "Add the current node to a shared path list before recursing, remove it after. Only copy the path into the result list when a leaf matches the remaining target exactly."
       tree-diameter:
         title: Binary Tree Diameter
         summary: Find the length (in edges) of the longest path between any two nodes.
         whenToUse: DFS computing subtree height while updating a separate 'best diameter' variable from
           left+right heights.
         hints:
-        - The function should return height, but update a side variable with left_height + right_height.
-        - The diameter at a node may not pass through the root, so track the max across every node.
+        - "What does this node's answer become once both children have answered?"
+        - "The result of a node is built only from its subtrees."
+        - "The function should return height, but update a side variable with left_height + right_height. The diameter at a node may not pass through the root, so track the max across every node."
       lowest-common-ancestor:
         title: Lowest Common Ancestor
         summary: LCA of two nodes in a binary tree.
         whenToUse: 'Post-order: if both sides nonempty, root is LCA.'
         hints:
-        - Return non-null from subtree containing p/q
-        - If both left and right non-null, root is answer
+        - "What does this node's answer become once both children have answered?"
+        - "The result of a node is built only from its subtrees."
+        - "Return non-null from subtree containing p/q If both left and right non-null, root is answer"
       max-path-sum:
         title: Binary Tree Maximum Path Sum
         summary: Maximum path sum between any two nodes (path may not pass root).
         whenToUse: DFS returns the best downward gain through the node; a global tracks the best path that may bend through it.
         hints:
-        - For each child, take max(0, child_gain) — a negative child can never improve a path.
-        - 'A path through the node may use both children: candidate = node.val + left_gain + right_gain; update a global max.'
-        - 'Return to the parent only a single-branch gain: node.val + max(left_gain, right_gain), so paths stay simple.'
+        - "What does this node's answer become once both children have answered?"
+        - "The result of a node is built only from its subtrees."
+        - "For each child, take max(0, child_gain) — a negative child can never improve a path. A path through the node may use both children: candidate = node.val + left_gain + right_gain; update a global max. Return to the parent only a single-branch gain: node.val + max(left_gain, right_gain), so paths stay simple."
   TREE_BFS:
     title: Tree Breadth-First Search
     subtitle: Level-order traversal with a queue, one full level at a time
@@ -1694,36 +1768,41 @@ patterns:
         summary: Return node values grouped level by level, top to bottom.
         whenToUse: 'The classic tree BFS template: capture queue size per level.'
         hints:
-        - Capture queue.size() before the inner loop to know the current level's width.
-        - Build one list per level and append it to the outer result list.
+        - "Which nodes share a distance from the root, and when does that distance increase?"
+        - "The queue holds one level; its size at the start of the loop is that whole level."
+        - "Capture queue.size() before the inner loop to know the current level's width. Build one list per level and append it to the outer result list."
       zigzag-level-order:
         title: Zigzag Level Order
         summary: Traverse level by level, alternating left-to-right and right-to-left.
         whenToUse: Standard level-order BFS, plus a direction flag that reverses every other level's list.
         hints:
-        - Build each level's list normally, then reverse it when the direction flag says right-to-left.
-        - Flip the direction flag after finishing each level.
+        - "Which nodes share a distance from the root, and when does that distance increase?"
+        - "The queue holds one level; its size at the start of the loop is that whole level."
+        - "Build each level's list normally, then reverse it when the direction flag says right-to-left. Flip the direction flag after finishing each level."
       right-side-view:
         title: Binary Tree Right Side View
         summary: Return the values of the nodes visible from the right side of the tree.
         whenToUse: Standard level-order BFS, keeping only the last node processed at each level.
         hints:
-        - Within each level's inner loop, overwrite a 'lastInLevel' variable on every poll.
-        - After finishing a level's inner loop, append 'lastInLevel' to the result.
+        - "Which nodes share a distance from the root, and when does that distance increase?"
+        - "The queue holds one level; its size at the start of the loop is that whole level."
+        - "Within each level's inner loop, overwrite a 'lastInLevel' variable on every poll. After finishing a level's inner loop, append 'lastInLevel' to the result."
       min-depth:
         title: Minimum Depth of Binary Tree
         summary: Number of nodes along shortest root-to-leaf path.
         whenToUse: BFS; first leaf found is minimum depth.
         hints:
-        - Level-order until a leaf
-        - Depth increments per level
+        - "Which nodes share a distance from the root, and when does that distance increase?"
+        - "The queue holds one level; its size at the start of the loop is that whole level."
+        - "Level-order until a leaf Depth increments per level"
       vertical-order:
         title: Vertical Order Traversal
         summary: Column-wise values top-to-bottom, sorted within cell.
         whenToUse: BFS with (row,col) keys into TreeMap.
         hints:
-        - Track column index
-        - Sort each column by row then value
+        - "Which nodes share a distance from the root, and when does that distance increase?"
+        - "The queue holds one level; its size at the start of the loop is that whole level."
+        - "Track column index Sort each column by row then value"
   TRIE:
     title: Trie
     subtitle: Prefix tree for word dictionaries, autocomplete, and shared-prefix search
@@ -1781,8 +1860,9 @@ patterns:
         summary: Implement insert, search, and startsWith operations for a trie.
         whenToUse: The core Trie ADT that every other trie problem builds on.
         hints:
-        - Each node needs a children map and a boolean end-of-word flag.
-        - search() requires the end flag to be true; startsWith() does not.
+        - "Which prefix is shared, and where does this word branch off?"
+        - "Each edge is one character; a word ends only at a node marked as terminal."
+        - "Each node needs a children map and a boolean end-of-word flag. search() requires the end flag to be true; startsWith() does not."
       word-break-dict:
         title: Extra Characters in a String (Trie dict)
         summary: Find the minimum number of extra characters left over after breaking a string using dictionary
@@ -1790,30 +1870,33 @@ patterns:
         whenToUse: DP over string positions, using a trie to quickly check which dictionary words start
           at each position.
         hints:
-        - dp[i] = minimum extra characters for the substring starting at i.
-        - At each position, try every dictionary word that matches as a prefix via the trie, then recurse
-          past it.
+        - "Which prefix is shared, and where does this word branch off?"
+        - "Each edge is one character; a word ends only at a node marked as terminal."
+        - "dp[i] = minimum extra characters for the substring starting at i. At each position, try every dictionary word that matches as a prefix via the trie, then recurse past it."
       replace-words:
         title: Replace Words
         summary: Replace words with their shortest dictionary root prefix.
         whenToUse: Trie of roots; walk each word until end mark.
         hints:
-        - Insert all roots
-        - Stop at first isEnd along the word
+        - "Which prefix is shared, and where does this word branch off?"
+        - "Each edge is one character; a word ends only at a node marked as terminal."
+        - "Insert all roots Stop at first isEnd along the word"
       word-search-ii:
         title: Word Search II
         summary: Find all dictionary words on the board via adjacent cells.
         whenToUse: Trie of words + DFS pruning on board.
         hints:
-        - Build trie of words
-        - Remove word from trie when found to dedupe
+        - "Which prefix is shared, and where does this word branch off?"
+        - "Each edge is one character; a word ends only at a node marked as terminal."
+        - "Build trie of words Remove word from trie when found to dedupe"
       longest-common-prefix:
         title: Longest Common Prefix
         summary: Find the longest common prefix among strings.
         whenToUse: Trie of words or vertical scan until mismatch.
         hints:
-        - Compare characters column by column
-        - Stop at first mismatch or end of a word
+        - "Which prefix is shared, and where does this word branch off?"
+        - "Each edge is one character; a word ends only at a node marked as terminal."
+        - "Compare characters column by column Stop at first mismatch or end of a word"
   HASH_MAPS:
     title: Hash Maps
     subtitle: O(1) average lookup for complements, frequencies, and prefix counts
@@ -1862,36 +1945,41 @@ patterns:
         whenToUse: Value-to-index map while scanning; check the complement before inserting the current
           value.
         hints:
-        - For each number, check if target - number is already in the map.
-        - Insert the current number's index only after checking, to avoid matching an element with itself.
+        - "What have you already seen that would answer the current element in constant time?"
+        - "The map stores the complement or the count of everything before the current index."
+        - "For each number, check if target - number is already in the map. Insert the current number's index only after checking, to avoid matching an element with itself."
       subarray-sum-equals-k:
         title: Subarray Sum Equals K
         summary: Count the number of contiguous subarrays whose elements sum to K.
         whenToUse: Running prefix sum plus a map of how many times each prefix sum value has occurred.
         hints:
-        - Initialize the map with prefix sum 0 occurring once, to handle subarrays starting at index 0.
-        - At each step, add map.get(currentSum - K) to the answer before updating the map with currentSum.
+        - "What have you already seen that would answer the current element in constant time?"
+        - "The map stores the complement or the count of everything before the current index."
+        - "Initialize the map with prefix sum 0 occurring once, to handle subarrays starting at index 0. At each step, add map.get(currentSum - K) to the answer before updating the map with currentSum."
       isomorphic-strings:
         title: Isomorphic Strings
         summary: Check if s and t are isomorphic via bijection of chars.
         whenToUse: Two maps (or map+set) for forward/backward mapping.
         hints:
-        - Map s→t and ensure consistency
-        - Also ensure two s chars don't map to same t
+        - "What have you already seen that would answer the current element in constant time?"
+        - "The map stores the complement or the count of everything before the current index."
+        - "Map s→t and ensure consistency Also ensure two s chars don't map to same t"
       longest-consecutive-already:
         title: Contiguous Array
         summary: Max length of contiguous subarray with equal 0s and 1s.
         whenToUse: Prefix balance + first-seen index map.
         hints:
-        - Treat 0 as -1
-        - If balance seen before, update max length
+        - "What have you already seen that would answer the current element in constant time?"
+        - "The map stores the complement or the count of everything before the current index."
+        - "Treat 0 as -1 If balance seen before, update max length"
       four-sum-ii:
         title: 4Sum II
         summary: Count tuples (i,j,k,l) with sum zero across four arrays.
         whenToUse: Hash all sums of A+B; probe -(C+D).
         hints:
-        - Map sum→count for first two arrays
-        - For each c+d look up -(c+d)
+        - "What have you already seen that would answer the current element in constant time?"
+        - "The map stores the complement or the count of everything before the current index."
+        - "Map sum→count for first two arrays For each c+d look up -(c+d)"
   KNOWING_WHAT_TO_TRACK:
     title: Knowing What to Track
     subtitle: Solve one-pass problems by identifying the right running counters
@@ -1943,27 +2031,27 @@ patterns:
         whenToUse: 'Boyer-Moore voting: track a single candidate and a count instead of a full frequency
           map.'
         hints:
-        - Increment the count when the current number matches the candidate, decrement otherwise.
-        - When the count hits zero, switch the candidate to the current number.
+        - "Which single number, updated on every step, makes the rest of the history unnecessary?"
+        - "The tracked value is enough to recover the answer; you do not store the whole pass."
+        - "Increment the count when the current number matches the candidate, decrement otherwise. When the count hits zero, switch the candidate to the current number."
       longest-consecutive:
         title: Longest Consecutive Sequence
         summary: Find the length of the longest run of consecutive integers in an unsorted array.
         whenToUse: Put everything in a hash set, then only start counting a run from numbers with no predecessor
           present.
         hints:
-        - Only begin extending a sequence from a number x where x-1 is not in the set.
-        - From each valid start, keep checking x+1, x+2, ... to measure the run's length.
+        - "Which single number, updated on every step, makes the rest of the history unnecessary?"
+        - "The tracked value is enough to recover the answer; you do not store the whole pass."
+        - "Only begin extending a sequence from a number x where x-1 is not in the set. From each valid start, keep checking x+1, x+2, ... to measure the run's length."
       majority-element-ii:
         title: Majority Element II
         summary: Find every element that appears more than ⌊n/3⌋ times (at most two such elements).
         whenToUse: Boyer-Moore voting with two candidate slots, then a second counting pass to
           verify.
         hints:
-        - At most two answers — three values each > n/3 would exceed the array length.
-        - Maintain two candidates and counts; a third distinct value decrements both (pairwise
-          cancel).
-        - Always verify final candidates with an exact frequency pass; voting alone can leave
-          false survivors.
+        - "Which single number, updated on every step, makes the rest of the history unnecessary?"
+        - "The tracked value is enough to recover the answer; you do not store the whole pass."
+        - "At most two answers — three values each > n/3 would exceed the array length. Maintain two candidates and counts; a third distinct value decrements both (pairwise cancel). Always verify final candidates with an exact frequency pass; voting alone can leave false survivors."
       max-points-on-line:
         title: Max Points on a Line
         summary: Maximum number of points that lie on the same straight line.
@@ -2018,8 +2106,9 @@ patterns:
         summary: Count connected components in an undirected graph given as an adjacency matrix.
         whenToUse: Union every direct connection in the matrix, then count how many distinct roots remain.
         hints:
-        - Only need to scan the upper (or lower) triangle of the symmetric matrix.
-        - The final answer is the number of elements that are their own root.
+        - "Are these two items already in the same component, or should this edge join them?"
+        - "Each item points at a parent; the root is the component, and a union links two roots."
+        - "Only need to scan the upper (or lower) triangle of the symmetric matrix. The final answer is the number of elements that are their own root."
       redundant-connection:
         title: Redundant Connection
         summary: Find the edge that can be removed so the graph becomes a tree again (a tree plus one
@@ -2027,8 +2116,9 @@ patterns:
         whenToUse: Process edges in order; the first edge whose endpoints already share a root is the
           redundant one.
         hints:
-        - Union endpoints one edge at a time, in the given input order.
-        - As soon as find(u) == find(v) before unioning, that edge is the answer.
+        - "Are these two items already in the same component, or should this edge join them?"
+        - "Each item points at a parent; the root is the component, and a union links two roots."
+        - "Union endpoints one edge at a time, in the given input order. As soon as find(u) == find(v) before unioning, that edge is the answer."
       accounts-merge:
         title: Accounts Merge
         summary: 'Given accounts as [name, email…], merge any accounts that share at least one email
@@ -2036,25 +2126,25 @@ patterns:
         whenToUse: Union-Find (or DFS on an email graph) — emails that co-occur are connected, then
           group by root.
         hints:
-        - Map each email to its account name once, and union consecutive emails within the same
-          account.
-        - After all unions, collect emails by find(root), sort each group, and prepend the name.
-        - Same display name with no shared email stays separate — connectivity is by email, not by
-          name.
+        - "Are these two items already in the same component, or should this edge join them?"
+        - "Each item points at a parent; the root is the component, and a union links two roots."
+        - "Map each email to its account name once, and union consecutive emails within the same account. After all unions, collect emails by find(root), sort each group, and prepend the name. Same display name with no shared email stays separate — connectivity is by email, not by name."
       number-of-islands-ii:
         title: Number of Islands II
         summary: After each land add, return current island count.
         whenToUse: Online Union-Find as cells become land.
         hints:
-        - Add land then union 4-neighbors
-        - Increment count on add; decrement on each successful union
+        - "Are these two items already in the same component, or should this edge join them?"
+        - "Each item points at a parent; the root is the component, and a union links two roots."
+        - "Add land then union 4-neighbors Increment count on add; decrement on each successful union"
       path-exists:
         title: Find if Path Exists in Graph
         summary: Return whether a path exists between source and destination.
         whenToUse: Union all edges, then check same component.
         hints:
-        - Union endpoints of each edge
-        - find(source)==find(destination)
+        - "Are these two items already in the same component, or should this edge join them?"
+        - "Each item points at a parent; the root is the component, and a union links two roots."
+        - "Union endpoints of each edge find(source)==find(destination)"
   CUSTOM_DATA_STRUCTURES:
     title: Custom Data Structures
     subtitle: Compose well-known building blocks to meet per-operation complexity constraints
@@ -2103,40 +2193,41 @@ patterns:
         whenToUse: An auxiliary stack (or encoded value pairs) tracks the running minimum alongside the
           main stack.
         hints:
-        - Push the new minimum onto an auxiliary stack every time it changes (or on every push, tracking
-          duplicates).
-        - Pop from both stacks together to keep them in sync.
+        - "Which operation must stay fast, and what extra link buys that speed?"
+        - "The structure keeps both the order you need and a direct handle to the node you will update."
+        - "Push the new minimum onto an auxiliary stack every time it changes (or on every push, tracking duplicates). Pop from both stacks together to keep them in sync."
       lru-cache:
         title: LRU Cache
         summary: Design a cache with O(1) get and put that evicts the least-recently-used entry when full.
         whenToUse: Bounded cache with O(1) get/put — LinkedHashMap in access-order (or HashMap + doubly linked list).
         hints:
-        - Use LinkedHashMap in access-order mode (or an equivalent ordered map).
-        - On get/put, refresh the key so it becomes most recently used.
-        - When size exceeds capacity, remove the eldest (least recently used) entry.
-        - 'Interview alternate: HashMap<node> + doubly linked list for explicit O(1) splice-to-front / evict-tail.'
+        - "Which operation must stay fast, and what extra link buys that speed?"
+        - "The structure keeps both the order you need and a direct handle to the node you will update."
+        - "Use LinkedHashMap in access-order mode (or an equivalent ordered map). On get/put, refresh the key so it becomes most recently used. When size exceeds capacity, remove the eldest (least recently used) entry. Interview alternate: HashMap<node> + doubly linked list for explicit O(1) splice-to-front / evict-tail."
       time-map:
         title: Time Based Key-Value Store
         summary: Store values by timestamp; get latest at or before timestamp.
         whenToUse: Map each key to an append-only list of (timestamp, value) pairs; binary-search the latest stamp ≤ query.
         hints:
-        - Timestamps for a key are inserted in non-decreasing order, so each list stays sorted for binary search.
-        - get should return the rightmost value with timestamp ≤ query (upper_bound - 1), or empty if none.
-        - Store pairs or parallel arrays; avoid resorting on every get.
+        - "Which operation must stay fast, and what extra link buys that speed?"
+        - "The structure keeps both the order you need and a direct handle to the node you will update."
+        - "Timestamps for a key are inserted in non-decreasing order, so each list stays sorted for binary search. get should return the rightmost value with timestamp ≤ query (upper_bound - 1), or empty if none. Store pairs or parallel arrays; avoid resorting on every get."
       lfu-cache:
         title: LFU Cache
         summary: O(1) get/put with least-frequently-used eviction (tie → LRU).
         whenToUse: Maps + freq buckets of doubly linked lists.
         hints:
-        - Track min frequency
-        - On get bump frequency bucket
+        - "Which operation must stay fast, and what extra link buys that speed?"
+        - "The structure keeps both the order you need and a direct handle to the node you will update."
+        - "Track min frequency On get bump frequency bucket"
       design-hashmap:
         title: Design HashMap
         summary: Implement a simple HashMap without built-in map libraries.
         whenToUse: Array of buckets + chaining for interview design warmup.
         hints:
-        - Use an array of linked lists
-        - Hash with key % bucketCount
+        - "Which operation must stay fast, and what extra link buys that speed?"
+        - "The structure keeps both the order you need and a direct handle to the node you will update."
+        - "Use an array of linked lists Hash with key % bucketCount"
   BITWISE:
     title: Bitwise Manipulation
     subtitle: Use XOR, shifts, and masks for sets, parity, and constant-space tricks
@@ -2185,50 +2276,51 @@ patterns:
         whenToUse: XOR every element together; paired values cancel to zero, leaving only the unpaired
           one.
         hints:
-        - a XOR a = 0 and a XOR 0 = a, so pairs vanish regardless of order.
-        - No extra space or sorting is needed - a single pass of XOR suffices.
+        - "Which bit can you decide without looking at the others?"
+        - "A mask or a shift isolates one bit; the rest of the integer stays unchanged."
+        - "a XOR a = 0 and a XOR 0 = a, so pairs vanish regardless of order. No extra space or sorting is needed - a single pass of XOR suffices."
       number-of-1-bits:
         title: Number of 1 Bits
         summary: Count the number of set bits (Hamming weight) in an integer.
         whenToUse: n &= n-1 clears the lowest set bit each time, so looping until n is zero counts the
           bits directly.
         hints:
-        - Each iteration of n &= (n - 1) removes exactly one set bit.
-        - The loop runs exactly popcount(n) times, which is already efficient without checking every bit
-          position.
+        - "Which bit can you decide without looking at the others?"
+        - "A mask or a shift isolates one bit; the rest of the integer stays unchanged."
+        - "Each iteration of n &= (n - 1) removes exactly one set bit. The loop runs exactly popcount(n) times, which is already efficient without checking every bit position."
       single-number-ii:
         title: Single Number II
         summary: Every element appears thrice except one — find it.
         whenToUse: Bit counts mod 3, or ones/twos state machine.
         hints:
-        - Count each bit mod 3
-        - Or maintain ones/twos masks
+        - "Which bit can you decide without looking at the others?"
+        - "A mask or a shift isolates one bit; the rest of the integer stays unchanged."
+        - "Count each bit mod 3 Or maintain ones/twos masks"
       sum-of-two-integers:
         title: Sum of Two Integers
         summary: Return the sum of two integers without using the + or - operators.
         whenToUse: Bitwise half-adder loop — XOR builds sum bits, AND<<1 builds carry, repeat until
           carry is 0.
         hints:
-        - a ^ b is the sum ignoring carry; (a & b) << 1 is the carry to add next.
-        - Loop setting a = sumWithoutCarry and b = carry until b becomes 0.
-        - 'Negatives work the same in two''s complement under the language''s fixed-width int
-          semantics.'
+        - "Which bit can you decide without looking at the others?"
+        - "A mask or a shift isolates one bit; the rest of the integer stays unchanged."
+        - "a ^ b is the sum ignoring carry; (a & b) << 1 is the carry to add next. Loop setting a = sumWithoutCarry and b = carry until b becomes 0. Negatives work the same in two's complement under the language's fixed-width int semantics."
       reverse-bits:
         title: Reverse Bits
         summary: Reverse the 32 bits of an unsigned integer (bit 0 becomes bit 31, and so on).
         whenToUse: 'Fixed-width bit walk — build the result by shifting in n''s low bit 32 times.'
         hints:
-        - 'Loop exactly 32 times: result = (result << 1) | (n & 1), then unsigned-shift n right by
-          1.'
-        - Leading zeros still matter — process all 32 positions; do not stop early.
-        - Prefer >>> (unsigned shift) so the high bit of n does not sign-extend incorrectly.
+        - "Which bit can you decide without looking at the others?"
+        - "A mask or a shift isolates one bit; the rest of the integer stays unchanged."
+        - "Loop exactly 32 times: result = (result << 1) | (n & 1), then unsigned-shift n right by 1. Leading zeros still matter — process all 32 positions; do not stop early. Prefer >>> (unsigned shift) so the high bit of n does not sign-extend incorrectly."
       bitwise-and-range:
         title: Bitwise AND of Numbers Range
         summary: Bitwise AND of all numbers in [left, right].
         whenToUse: Shift until left==right to clear differing low bits.
         hints:
-        - While left < right, right &= right-1 or shift both
-        - Common prefix bits survive
+        - "Which bit can you decide without looking at the others?"
+        - "A mask or a shift isolates one bit; the rest of the integer stays unchanged."
+        - "While left < right, right &= right-1 or shift both Common prefix bits survive"
   MATH_GEOMETRY:
     title: Math & Geometry
     subtitle: Number theory and coordinate geometry identities for interviews
@@ -2280,16 +2372,17 @@ patterns:
         whenToUse: Fast power via repeated squaring; halve the exponent each step instead of multiplying
           n times.
         hints:
-        - If n is even, x^n = (x*x)^(n/2); if odd, peel off one factor of x first.
-        - Handle negative n by computing 1 / x^(-n), and watch for Integer.MIN_VALUE overflow when negating.
+        - "Which quantity stays fixed, so you can compute it instead of simulating every step?"
+        - "A closed form, a gcd, or a slope replaces the loop."
+        - "If n is even, x^n = (x*x)^(n/2); if odd, peel off one factor of x first. Handle negative n by computing 1 / x^(-n), and watch for Integer.MIN_VALUE overflow when negating."
       gcd-of-strings:
         title: Greatest Common Divisor of Strings
         summary: Find the largest string that divides both of two given strings.
         whenToUse: Check str1+str2 == str2+str1 first, then take the substring of length gcd(len1, len2).
         hints:
-        - Two strings share a divisor string only if concatenating them in either order gives the same
-          result.
-        - If that check passes, the answer is the prefix of length gcd(str1.length(), str2.length()).
+        - "Which quantity stays fixed, so you can compute it instead of simulating every step?"
+        - "A closed form, a gcd, or a slope replaces the loop."
+        - "Two strings share a divisor string only if concatenating them in either order gives the same result. If that check passes, the answer is the prefix of length gcd(str1.length(), str2.length())."
       sqrt:
         title: Sqrt(x)
         summary: Return the floor of the square root of a non-negative integer x (largest integer
@@ -2297,30 +2390,33 @@ patterns:
         whenToUse: Binary search over the answer range [0..x] rather than testing every candidate
           linearly.
         hints:
-        - Search for the largest mid where mid*mid ≤ x; if mid*mid > x, search the left half.
-        - Cast mid*mid to long (or use division) to avoid 32-bit overflow when mid is large.
-        - For x < 2 the answer is x itself — handle that before the search loop.
+        - "Which quantity stays fixed, so you can compute it instead of simulating every step?"
+        - "A closed form, a gcd, or a slope replaces the loop."
+        - "Search for the largest mid where mid*mid ≤ x; if mid*mid > x, search the left half. Cast mid*mid to long (or use division) to avoid 32-bit overflow when mid is large. For x < 2 the answer is x itself — handle that before the search loop."
       integer-to-roman:
         title: Integer to Roman
         summary: Convert integer to Roman numeral.
         whenToUse: Greedy subtract largest Roman values including subtractives.
         hints:
-        - Table 1000,900,500,400,...
-        - Append while num >= value
+        - "Which quantity stays fixed, so you can compute it instead of simulating every step?"
+        - "A closed form, a gcd, or a slope replaces the loop."
+        - "Table 1000,900,500,400,... Append while num >= value"
       max-points-line-math:
         title: Valid Square
         summary: Check whether four points form a square.
         whenToUse: 'Distances: 2 diagonals equal, 4 sides equal, no zero.'
         hints:
-        - Compute 6 pairwise squared distances
-        - Need 4 equal sides + 2 equal diagonals
+        - "Which quantity stays fixed, so you can compute it instead of simulating every step?"
+        - "A closed form, a gcd, or a slope replaces the loop."
+        - "Compute 6 pairwise squared distances Need 4 equal sides + 2 equal diagonals"
       max-points-on-a-line:
         title: Max Points on a Line
         summary: Maximum number of points that lie on the same line.
         whenToUse: For each origin count slopes with reduced fractions.
         hints:
-        - Normalize slope by GCD
-        - Handle duplicates and vertical lines
+        - "Which quantity stays fixed, so you can compute it instead of simulating every step?"
+        - "A closed form, a gcd, or a slope replaces the loop."
+        - "Normalize slope by GCD Handle duplicates and vertical lines"
   SPRING_BOOT_INTERVIEW:
     title: Spring Boot Interview Lab
     subtitle: Backend Java topics that appear alongside algorithms in interview loops
@@ -2372,38 +2468,42 @@ patterns:
         whenToUse: A classic API gateway / interview concurrency design question about controlling request
           rate per client.
         hints:
-        - Track available tokens and a last-refill timestamp per key.
-        - Refill tokens lazily based on elapsed time instead of running a background timer.
+        - "What fails first when a second instance, a retry, or a restart shows up?"
+        - "Name the shared state and the lock, transaction, or key that keeps one side effect from running twice."
+        - "Track available tokens and a last-refill timestamp per key. Refill tokens lazily based on elapsed time instead of running a background timer."
       idempotency-store:
         title: Idempotency Key Store
         summary: Store request results keyed by an idempotency key with TTL semantics so retries are safe.
         whenToUse: Safe POST retries in payment-like APIs, where re-sending a request must not duplicate
           a side effect.
         hints:
-        - Store (result, expiryTimestamp) pairs keyed by the client-supplied idempotency key.
-        - On a repeated key within the TTL window, return the stored result instead of re-executing the
-          operation.
+        - "What fails first when a second instance, a retry, or a restart shows up?"
+        - "Name the shared state and the lock, transaction, or key that keeps one side effect from running twice."
+        - "Store (result, expiryTimestamp) pairs keyed by the client-supplied idempotency key. On a repeated key within the TTL window, return the stored result instead of re-executing the operation."
       circuit-breaker:
         title: Circuit Breaker
         summary: Simple circuit breaker with failure threshold and open-state timeout.
         whenToUse: Protect callers from cascading failures.
         hints:
-        - Trip open after N failures
-        - After timeout allow trial in HALF_OPEN
+        - "What fails first when a second instance, a retry, or a restart shows up?"
+        - "Name the shared state and the lock, transaction, or key that keeps one side effect from running twice."
+        - "Trip open after N failures After timeout allow trial in HALF_OPEN"
       lru-http-cache:
         title: HTTP Response Cache
         summary: TTL cache for idempotent GET responses with capacity eviction.
         whenToUse: Cache-aside for read-heavy REST endpoints.
         hints:
-        - Store expiry timestamp
-        - Evict expired on get; LRU when full
+        - "What fails first when a second instance, a retry, or a restart shows up?"
+        - "Name the shared state and the lock, transaction, or key that keeps one side effect from running twice."
+        - "Store expiry timestamp Evict expired on get; LRU when full"
       config-store:
         title: In-Memory Config Store
         summary: Thread-safe in-memory configuration key/value store.
         whenToUse: Simple Spring-style config bean for interviews.
         hints:
-        - ConcurrentHashMap under the hood
-        - getOrDefault for missing keys
+        - "What fails first when a second instance, a retry, or a restart shows up?"
+        - "Name the shared state and the lock, transaction, or key that keeps one side effect from running twice."
+        - "ConcurrentHashMap under the hood getOrDefault for missing keys"
       request-id-filter:
         title: Request Id Filter
         summary: Generate or propagate an X-Request-Id per inbound request and expose it to downstream
@@ -2411,9 +2511,9 @@ patterns:
         whenToUse: Every request needs a stable correlation id for tracing across services, whether
           or not the caller already supplied one.
         hints:
-        - If the incoming header is present and non-blank, reuse it; otherwise generate a new id.
-        - Store the resolved id somewhere request-scoped so later code can read it without re-threading
-          a parameter.
+        - "What fails first when a second instance, a retry, or a restart shows up?"
+        - "Name the shared state and the lock, transaction, or key that keeps one side effect from running twice."
+        - "If the incoming header is present and non-blank, reuse it; otherwise generate a new id. Store the resolved id somewhere request-scoped so later code can read it without re-threading a parameter."
       transactional-outbox:
         title: Transactional Outbox
         summary: In-memory outbox queue that enqueues events with a DB write and publishes only the
@@ -2421,30 +2521,27 @@ patterns:
         whenToUse: Reliably publish an event after a transactional write without a distributed transaction,
           by writing the event to an outbox table/queue in the same transaction and publishing it separately.
         hints:
-        - Enqueue stores the event with a status and an eligible-at timestamp instead of publishing
-          immediately.
-        - publishDue scans for PENDING events that are eligible now, hands each to the publisher, then
-          marks it PUBLISHED (or leaves it PENDING to retry if the publisher throws).
+        - "What fails first when a second instance, a retry, or a restart shows up?"
+        - "Name the shared state and the lock, transaction, or key that keeps one side effect from running twice."
+        - "Enqueue stores the event with a status and an eligible-at timestamp instead of publishing immediately. publishDue scans for PENDING events that are eligible now, hands each to the publisher, then marks it PUBLISHED (or leaves it PENDING to retry if the publisher throws)."
       optimistic-lock-service:
         title: Optimistic Lock Service
         summary: Versioned record update that fails when the caller's expected version is stale.
         whenToUse: Concurrent updates to the same row without taking a database lock, analogous to a
           JPA @Version column and OptimisticLockException.
         hints:
-        - Store a version number alongside each record's value; every successful update increments
-          it.
-        - Reject an update whose expected version does not match the stored version instead of overwriting
-          silently.
+        - "What fails first when a second instance, a retry, or a restart shows up?"
+        - "Name the shared state and the lock, transaction, or key that keeps one side effect from running twice."
+        - "Store a version number alongside each record's value; every successful update increments it. Reject an update whose expected version does not match the stored version instead of overwriting silently."
       concurrent-login-tracker:
         title: Concurrent Login Tracker
         summary: Track active sessions per user and enforce a maximum number of concurrent logins.
         whenToUse: 'Enforce a "max N devices logged in" policy: a new login should either be rejected
           or evict the oldest session, depending on policy, once the per-user limit is reached.'
         hints:
-        - Keep an ordered per-user collection of active session ids so the oldest session is easy to
-          find.
-        - On a new login past the limit, either reject it or evict-and-replace the oldest session depending
-          on the configured policy; make eviction and insertion atomic under one lock per user.
+        - "What fails first when a second instance, a retry, or a restart shows up?"
+        - "Name the shared state and the lock, transaction, or key that keeps one side effect from running twice."
+        - "Keep an ordered per-user collection of active session ids so the oldest session is easy to find. On a new login past the limit, either reject it or evict-and-replace the oldest session depending on the configured policy; make eviction and insertion atomic under one lock per user."
       sql-injection-safe-query:
         title: SQL Injection Safe Query Builder
         summary: Build parameterized query placeholders from a column-to-value map, validating identifiers
@@ -2453,7 +2550,6 @@ patterns:
           column names against an allow-list and always bind values as parameters, never string-concatenate
           them into SQL.
         hints:
-        - Validate every identifier (column name) against an allow-list pattern before using it in the
-          generated SQL text.
-        - Never inline the value itself - always emit a `?` placeholder and return the value list separately
-          for a PreparedStatement to bind.
+        - "What fails first when a second instance, a retry, or a restart shows up?"
+        - "Name the shared state and the lock, transaction, or key that keeps one side effect from running twice."
+        - "Validate every identifier (column name) against an allow-list pattern before using it in the generated SQL text. Never inline the value itself - always emit a `?` placeholder and return the value list separately for a PreparedStatement to bind."

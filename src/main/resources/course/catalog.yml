@@ -58,8 +58,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - Start left at index 0 and right at index n-1.
-    - If the sum is too small move left forward; if too large move right backward.
+    - "Which pointer can you move without losing the rest of the answer?"
+    - "Each step discards only the side that can no longer hold the answer."
+    - "Start left at index 0 and right at index n-1. If the sum is too small move left forward; if too large move right backward."
     tags:
     - array
     - two-pointers
@@ -76,8 +77,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - Keep a write index that only advances when a new unique value is found.
-    - The fast pointer scans every element; the slow pointer marks the next free slot.
+    - "Which pointer can you move without losing the rest of the answer?"
+    - "Each step discards only the side that can no longer hold the answer."
+    - "Keep a write index that only advances when a new unique value is found. The fast pointer scans every element; the slow pointer marks the next free slot."
     tags:
     - array
     - two-pointers
@@ -97,9 +99,9 @@ patterns:
     timeComplexity: O(n^2)
     spaceComplexity: O(1) excluding output
     hints:
-    - Sort first so two pointers and duplicate-skipping both become possible.
-    - After fixing nums[i], search for a pair summing to -nums[i] in the rest of the array.
-    - Skip over repeated values for i, left, and right to avoid duplicate triplets.
+    - "Which pointer can you move without losing the rest of the answer?"
+    - "Each step discards only the side that can no longer hold the answer."
+    - "Sort first so two pointers and duplicate-skipping both become possible. After fixing nums[i], search for a pair summing to -nums[i] in the rest of the array. Skip over repeated values for i, left, and right to avoid duplicate triplets."
     tags:
     - array
     - two-pointers
@@ -116,9 +118,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - Start left=0 and right=n-1; the widest container is the first candidate.
-    - Area = min(h[left], h[right]) * (right-left). Track the maximum.
-    - Only advancing the shorter side can improve the min height; advancing the taller side never helps.
+    - "Which pointer can you move without losing the rest of the answer?"
+    - "Each step discards only the side that can no longer hold the answer."
+    - "Start left=0 and right=n-1; the widest container is the first candidate. Area = min(h[left], h[right]) * (right-left). Track the maximum. Only advancing the shorter side can improve the min height; advancing the taller side never helps."
     tags:
     - array
     - two-pointers
@@ -136,8 +138,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - Maintain [0..low) as 0s and (high..n] as 2s
-    - Swap mid with low/high based on value
+    - "Which pointer can you move without losing the rest of the answer?"
+    - "Each step discards only the side that can no longer hold the answer."
+    - "Maintain [0..low) as 0s and (high..n] as 2s Swap mid with low/high based on value"
     tags:
     - array
     - two-pointers
@@ -155,8 +158,9 @@ patterns:
     timeComplexity: O(n³)
     spaceComplexity: O(n)
     hints:
-    - Sort first and skip duplicates at every level
-    - Inner pair uses classic two pointers
+    - "Which pointer can you move without losing the rest of the answer?"
+    - "Each step discards only the side that can no longer hold the answer."
+    - "Sort first and skip duplicates at every level Inner pair uses classic two pointers"
     tags:
     - array
     - two-pointers
@@ -223,8 +227,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - If fast ever meets slow, a cycle exists.
-    - If fast reaches null, the list is acyclic.
+    - "What does the gap between a one-step walker and a two-step walker tell you?"
+    - "The fast walker gains one step each move, so the gap finds the middle or the loop."
+    - "If fast ever meets slow, a cycle exists. If fast reaches null, the list is acyclic."
     tags:
     - linked-list
     - cycle
@@ -242,8 +247,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - Advance fast by two and slow by one in the same loop.
-    - When fast is null or fast.next is null, slow is the answer.
+    - "What does the gap between a one-step walker and a two-step walker tell you?"
+    - "The fast walker gains one step each move, so the gap finds the middle or the loop."
+    - "Advance fast by two and slow by one in the same loop. When fast is null or fast.next is null, slow is the answer."
     tags:
     - linked-list
     companies:
@@ -260,8 +266,9 @@ patterns:
     timeComplexity: O(log n)
     spaceComplexity: O(1)
     hints:
-    - Treat 'next value' as one step of a linked structure.
-    - Run fast/slow on that implicit sequence to detect a non-1 cycle.
+    - "What does the gap between a one-step walker and a two-step walker tell you?"
+    - "The fast walker gains one step each move, so the gap finds the middle or the loop."
+    - "Treat 'next value' as one step of a linked structure. Run fast/slow on that implicit sequence to detect a non-1 cycle."
     tags:
     - math
     - cycle
@@ -279,8 +286,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - After meeting, move one pointer to head
-    - Advance both one step until they meet again
+    - "What does the gap between a one-step walker and a two-step walker tell you?"
+    - "The fast walker gains one step each move, so the gap finds the middle or the loop."
+    - "After meeting, move one pointer to head Advance both one step until they meet again"
     tags:
     - linked-list
     - cycle
@@ -297,8 +305,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - Fast/slow to middle
-    - Reverse second half then compare
+    - "What does the gap between a one-step walker and a two-step walker tell you?"
+    - "The fast walker gains one step each move, so the gap finds the middle or the loop."
+    - "Fast/slow to middle Reverse second half then compare"
     tags:
     - linked-list
     companies:
@@ -316,8 +325,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - Reject opposite-direction jumps
-    - Mark visited indices to avoid rework
+    - "What does the gap between a one-step walker and a two-step walker tell you?"
+    - "The fast walker gains one step each move, so the gap finds the middle or the loop."
+    - "Reject opposite-direction jumps Mark visited indices to avoid rework"
     tags:
     - array
     - cycle
@@ -384,8 +394,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - Compute the first window's sum directly, then slide by one.
-    - Each slide only needs one addition and one subtraction, not a full re-sum.
+    - "Which part of the range can you drop and never check again?"
+    - "The window stays feasible; you shrink it from the left only when the condition breaks."
+    - "Compute the first window's sum directly, then slide by one. Each slide only needs one addition and one subtraction, not a full re-sum."
     tags:
     - array
     - sliding-window
@@ -404,8 +415,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(k)
     hints:
-    - Grow the window and add each new character to a frequency map.
-    - While the map has more than K keys, shrink from the left and decrement/remove counts.
+    - "Which part of the range can you drop and never check again?"
+    - "The window stays feasible; you shrink it from the left only when the condition breaks."
+    - "Grow the window and add each new character to a frequency map. While the map has more than K keys, shrink from the left and decrement/remove counts."
     tags:
     - string
     - sliding-window
@@ -424,8 +436,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - Build a target frequency map for p once, up front.
-    - Slide a window of len(p) over s, comparing counts; matching counts means an anagram starts there.
+    - "Which part of the range can you drop and never check again?"
+    - "The window stays feasible; you shrink it from the left only when the condition breaks."
+    - "Build a target frequency map for p once, up front. Slide a window of len(p) over s, comparing counts; matching counts means an anagram starts there."
     tags:
     - string
     - sliding-window
@@ -444,9 +457,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(min(n,alphabet))
     hints:
-    - Keep a map from character → last index seen inside (or just before) the current window.
-    - When s[right] was seen at index j ≥ left, set left = j+1 so the window stays duplicate-free.
-    - Update best = max(best, right-left+1) after each expansion.
+    - "Which part of the range can you drop and never check again?"
+    - "The window stays feasible; you shrink it from the left only when the condition breaks."
+    - "Keep a map from character → last index seen inside (or just before) the current window. When s[right] was seen at index j ≥ left, set left = j+1 so the window stays duplicate-free. Update best = max(best, right-left+1) after each expansion."
     tags:
     - string
     - sliding-window
@@ -465,10 +478,9 @@ patterns:
     timeComplexity: O(|s|+|t|)
     spaceComplexity: O(alphabet)
     hints:
-    - Build a need map for t and track how many distinct required characters are currently satisfied.
-    - Expand right until the window is valid (satisfied == need.size), then shrink left while it stays valid.
-    - Whenever the window is valid, compare its length to the best answer and keep the shortest (leftmost on ties if required).
-    - Decrement have counts carefully when shrinking so satisfied drops only when a required count falls below need.
+    - "Which part of the range can you drop and never check again?"
+    - "The window stays feasible; you shrink it from the left only when the condition breaks."
+    - "Build a need map for t and track how many distinct required characters are currently satisfied. Expand right until the window is valid (satisfied == need.size), then shrink left while it stays valid. Whenever the window is valid, compare its length to the best answer and keep the shortest (leftmost on ties if required). Decrement have counts carefully when shrinking so satisfied drops only when a required count falls below need."
     tags:
     - string
     - sliding-window
@@ -529,8 +541,9 @@ patterns:
     timeComplexity: O(n log n)
     spaceComplexity: O(n)
     hints:
-    - Sort by start time before anything else.
-    - Compare each interval's start against the last merged interval's end.
+    - "What becomes obvious once the intervals are sorted by start?"
+    - "You only compare the current interval with the one you have not closed yet."
+    - "Sort by start time before anything else. Compare each interval's start against the last merged interval's end."
     tags:
     - intervals
     companies:
@@ -547,8 +560,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(n)
     hints:
-    - No sorting needed - the input list is already sorted.
-    - Keep expanding the new interval's bounds while it overlaps the current one.
+    - "What becomes obvious once the intervals are sorted by start?"
+    - "You only compare the current interval with the one you have not closed yet."
+    - "No sorting needed - the input list is already sorted. Keep expanding the new interval's bounds while it overlaps the current one."
     tags:
     - intervals
     companies:
@@ -565,8 +579,9 @@ patterns:
     timeComplexity: O(n log n)
     spaceComplexity: O(n)
     hints:
-    - After sorting by start, only adjacent pairs can possibly overlap.
-    - An overlap exists as soon as one appointment's start is before the previous one's end.
+    - "What becomes obvious once the intervals are sorted by start?"
+    - "You only compare the current interval with the one you have not closed yet."
+    - "After sorting by start, only adjacent pairs can possibly overlap. An overlap exists as soon as one appointment's start is before the previous one's end."
     tags:
     - intervals
     companies:
@@ -583,8 +598,9 @@ patterns:
     timeComplexity: O(m+n)
     spaceComplexity: O(1) excluding output
     hints:
-    - Intersection start is max(starts); intersection end is min(ends). Emit only when start < end (or ≤ if inclusive).
-    - Advance the pointer of the interval that ends first — it cannot intersect any later intervals from the other list.
+    - "What becomes obvious once the intervals are sorted by start?"
+    - "You only compare the current interval with the one you have not closed yet."
+    - "Intersection start is max(starts); intersection end is min(ends). Emit only when start < end (or ≤ if inclusive). Advance the pointer of the interval that ends first — it cannot intersect any later intervals from the other list."
     tags:
     - intervals
     companies:
@@ -601,10 +617,9 @@ patterns:
     timeComplexity: O(n log n)
     spaceComplexity: O(n)
     hints:
-    - Sort meetings by start time so you always schedule the next earliest meeting.
-    - Keep a min-heap of end times for rooms currently in use; free a room when heap.min ≤ next.start.
-    - If no room is free, allocate one (push the new end). The heap size is the rooms needed so far.
-    - 'Alternatively: sort starts and ends separately and sweep — increment on a start, decrement on an end.'
+    - "What becomes obvious once the intervals are sorted by start?"
+    - "You only compare the current interval with the one you have not closed yet."
+    - "Sort meetings by start time so you always schedule the next earliest meeting. Keep a min-heap of end times for rooms currently in use; free a room when heap.min ≤ next.start. If no room is free, allocate one (push the new end). The heap size is the rooms needed so far. Alternatively: sort starts and ends separately and sweep — increment on a start, decrement on an end."
     tags:
     - intervals
     - heap
@@ -665,8 +680,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - Save curr.next before overwriting it.
-    - The last non-null curr becomes the new head once the loop ends.
+    - "Which links can you rewrite while holding only a few node references?"
+    - "The prefix you already walked is rewired; the rest of the list is still untouched."
+    - "Save curr.next before overwriting it. The last non-null curr becomes the new head once the loop ends."
     tags:
     - linked-list
     companies:
@@ -683,9 +699,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - Use a dummy head so left=1 doesn't need special-casing.
-    - The original 'left' node becomes the tail of the reversed segment - reconnect it to what follows
-      'right'.
+    - "Which links can you rewrite while holding only a few node references?"
+    - "The prefix you already walked is rewired; the rest of the list is still untouched."
+    - "Use a dummy head so left=1 doesn't need special-casing. The original 'left' node becomes the tail of the reversed segment - reconnect it to what follows 'right'."
     tags:
     - linked-list
     companies:
@@ -703,8 +719,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - Before reversing a group, check that k nodes actually remain.
-    - Connect the previous group's tail to the current group's new head after each reversal.
+    - "Which links can you rewrite while holding only a few node references?"
+    - "The prefix you already walked is rewired; the rest of the list is still untouched."
+    - "Before reversing a group, check that k nodes actually remain. Connect the previous group's tail to the current group's new head after each reversal."
     tags:
     - linked-list
     companies:
@@ -721,8 +738,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - k %= n
-    - New tail is at n - k - 1 from head after cycle
+    - "Which links can you rewrite while holding only a few node references?"
+    - "The prefix you already walked is rewired; the rest of the list is still untouched."
+    - "k %= n New tail is at n - k - 1 from head after cycle"
     tags:
     - linked-list
     companies:
@@ -740,9 +758,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - Find the middle with fast/slow pointers (slow ends on the last node of the first half for odd lengths).
-    - Reverse only the second half (nodes after mid), then weave first-half and reversed-second nodes.
-    - Be careful not to create a cycle when cutting the list at mid.
+    - "Which links can you rewrite while holding only a few node references?"
+    - "The prefix you already walked is rewired; the rest of the list is still untouched."
+    - "Find the middle with fast/slow pointers (slow ends on the last node of the first half for odd lengths). Reverse only the second half (nodes after mid), then weave first-half and reversed-second nodes. Be careful not to create a cycle when cutting the list at mid."
     tags:
     - linked-list
     companies:
@@ -809,8 +827,9 @@ patterns:
     timeComplexity: O(log n) insert, O(1) median
     spaceComplexity: O(n)
     hints:
-    - Insert into the max-heap first, then move its top to the min-heap to keep order.
-    - Rebalance sizes after every insert so they differ by at most one.
+    - "Which half of the values must stay ordered, and which half can stay loose?"
+    - "One heap keeps the half you have set aside, and the other keeps the choice you can take next."
+    - "Insert into the max-heap first, then move its top to the min-heap to keep order. Rebalance sizes after every insert so they differ by at most one."
     tags:
     - heap
     companies:
@@ -829,8 +848,9 @@ patterns:
     timeComplexity: O(n log n)
     spaceComplexity: O(n)
     hints:
-    - Push all projects affordable with current capital into a max-heap by profit.
-    - Always take the top of the profit max-heap, then unlock newly affordable projects.
+    - "Which half of the values must stay ordered, and which half can stay loose?"
+    - "One heap keeps the half you have set aside, and the other keeps the choice you can take next."
+    - "Push all projects affordable with current capital into a max-heap by profit. Always take the top of the profit max-heap, then unlock newly affordable projects."
     tags:
     - heap
     - greedy
@@ -848,8 +868,9 @@ patterns:
     timeComplexity: O(n log n)
     spaceComplexity: O(n)
     hints:
-    - Balance max/min heaps for the window
-    - Lazy-delete outgoing elements
+    - "Which half of the values must stay ordered, and which half can stay loose?"
+    - "One heap keeps the half you have set aside, and the other keeps the choice you can take next."
+    - "Balance max/min heaps for the window Lazy-delete outgoing elements"
     tags:
     - heap
     companies:
@@ -867,8 +888,9 @@ patterns:
     timeComplexity: O(n log n)
     spaceComplexity: O(n)
     hints:
-    - Heap intervals by start descending
-    - Match against ends descending
+    - "Which half of the values must stay ordered, and which half can stay loose?"
+    - "One heap keeps the half you have set aside, and the other keeps the choice you can take next."
+    - "Heap intervals by start descending Match against ends descending"
     tags:
     - heap
     - intervals
@@ -886,8 +908,9 @@ patterns:
     timeComplexity: O(n log n)
     spaceComplexity: O(n)
     hints:
-    - Push into max/min heaps and rebalance
-    - Median is top or average of tops
+    - "Which half of the values must stay ordered, and which half can stay loose?"
+    - "One heap keeps the half you have set aside, and the other keeps the choice you can take next."
+    - "Push into max/min heaps and rebalance Median is top or average of tops"
     tags:
     - heap
     companies:
@@ -951,8 +974,9 @@ patterns:
     timeComplexity: O(N log k)
     spaceComplexity: O(k)
     hints:
-    - Push each list's head node (not just its value) so you can advance it later.
-    - After popping a node, push its .next into the heap if it exists.
+    - "Of the K sorted fronts, which element is safe to take next?"
+    - "A min-heap of the current heads always yields the next value in global order."
+    - "Push each list's head node (not just its value) so you can advance it later. After popping a node, push its .next into the heap if it exists."
     tags:
     - heap
     - linked-list
@@ -972,8 +996,9 @@ patterns:
     timeComplexity: O(k log n)
     spaceComplexity: O(n)
     hints:
-    - Seed the heap with the first element of each row (up to k rows).
-    - Pop k times; the k-th pop is the answer.
+    - "Of the K sorted fronts, which element is safe to take next?"
+    - "A min-heap of the current heads always yields the next value in global order."
+    - "Seed the heap with the first element of each row (up to k rows). Pop k times; the k-th pop is the answer."
     tags:
     - heap
     - matrix
@@ -991,8 +1016,9 @@ patterns:
     timeComplexity: O(k log k)
     spaceComplexity: O(k)
     hints:
-    - Seed heap with (i,0) for first k of nums1
-    - Push (i,j+1) when popping
+    - "Of the K sorted fronts, which element is safe to take next?"
+    - "A min-heap of the current heads always yields the next value in global order."
+    - "Seed heap with (i,0) for first k of nums1 Push (i,j+1) when popping"
     tags:
     - heap
     companies:
@@ -1009,8 +1035,9 @@ patterns:
     timeComplexity: O(n log k)
     spaceComplexity: O(k)
     hints:
-    - Track global max among heap tops
-    - Advance the list of the min
+    - "Of the K sorted fronts, which element is safe to take next?"
+    - "A min-heap of the current heads always yields the next value in global order."
+    - "Track global max among heap tops Advance the list of the min"
     tags:
     - heap
     companies:
@@ -1028,8 +1055,9 @@ patterns:
     timeComplexity: O(m+n)
     spaceComplexity: O(1)
     hints:
-    - Use a dummy head
-    - Always attach the smaller current node
+    - "Of the K sorted fronts, which element is safe to take next?"
+    - "A min-heap of the current heads always yields the next value in global order."
+    - "Use a dummy head Always attach the smaller current node"
     tags:
     - linked-list
     - merge
@@ -1088,8 +1116,9 @@ patterns:
     timeComplexity: O(n log k)
     spaceComplexity: O(k)
     hints:
-    - Push the first K numbers, then compare every later number to the heap's top.
-    - Replace the top only if the new number is larger.
+    - "Do you need the whole order, or only the K values that beat the rest?"
+    - "A heap of size K forgets anything that can no longer enter the answer."
+    - "Push the first K numbers, then compare every later number to the heap's top. Replace the top only if the new number is larger."
     tags:
     - heap
     companies:
@@ -1106,8 +1135,9 @@ patterns:
     timeComplexity: O(n log k)
     spaceComplexity: O(k)
     hints:
-    - Compare squared distances to avoid unnecessary sqrt calls.
-    - Evict the max-heap's top whenever the heap grows past K.
+    - "Do you need the whole order, or only the K values that beat the rest?"
+    - "A heap of size K forgets anything that can no longer enter the answer."
+    - "Compare squared distances to avoid unnecessary sqrt calls. Evict the max-heap's top whenever the heap grows past K."
     tags:
     - heap
     - geometry
@@ -1126,8 +1156,9 @@ patterns:
     timeComplexity: O(n log k)
     spaceComplexity: O(n)
     hints:
-    - Count frequencies with a hash map in one pass.
-    - Push (value, frequency) pairs into a min-heap ordered by frequency, capped at size K.
+    - "Do you need the whole order, or only the K values that beat the rest?"
+    - "A heap of size K forgets anything that can no longer enter the answer."
+    - "Count frequencies with a hash map in one pass. Push (value, frequency) pairs into a min-heap ordered by frequency, capped at size K."
     tags:
     - heap
     - hash-map
@@ -1146,9 +1177,9 @@ patterns:
     timeComplexity: O(n log k)
     spaceComplexity: O(k)
     hints:
-    - Maintain a min-heap of the k largest values seen so far; the heap top is the current k-th largest.
-    - Push each number; if size exceeds k, poll the smallest — that value can never be the answer.
-    - Quickselect is an average O(n) follow-up; mention worst-case O(n²) unless you add median-of-medians.
+    - "Do you need the whole order, or only the K values that beat the rest?"
+    - "A heap of size K forgets anything that can no longer enter the answer."
+    - "Maintain a min-heap of the k largest values seen so far; the heap top is the current k-th largest. Push each number; if size exceeds k, poll the smallest — that value can never be the answer. Quickselect is an average O(n) follow-up; mention worst-case O(n²) unless you add median-of-medians."
     tags:
     - heap
     companies:
@@ -1166,8 +1197,9 @@ patterns:
     timeComplexity: O(n log a)
     spaceComplexity: O(a)
     hints:
-    - If max freq > (n+1)/2 impossible
-    - Always take the current most frequent available
+    - "Do you need the whole order, or only the K values that beat the rest?"
+    - "A heap of size K forgets anything that can no longer enter the answer."
+    - "If max freq > (n+1)/2 impossible Always take the current most frequent available"
     tags:
     - heap
     - greedy
@@ -1231,8 +1263,9 @@ patterns:
     timeComplexity: O(log n)
     spaceComplexity: O(1)
     hints:
-    - Compare the first and last elements to decide ascending vs descending.
-    - Flip the comparison direction based on which order was detected.
+    - "After you look at the middle, which half is guaranteed not to hold the answer?"
+    - "Each step keeps the answer, if it exists, inside the range you have not discarded."
+    - "Compare the first and last elements to decide ascending vs descending. Flip the comparison direction based on which order was detected."
     tags:
     - binary-search
     companies:
@@ -1250,8 +1283,9 @@ patterns:
     timeComplexity: O(log n)
     spaceComplexity: O(1)
     hints:
-    - Compare nums[low] to nums[mid] to find which half is sorted.
-    - Check if target lies within the sorted half's value range before recursing into it.
+    - "After you look at the middle, which half is guaranteed not to hold the answer?"
+    - "Each step keeps the answer, if it exists, inside the range you have not discarded."
+    - "Compare nums[low] to nums[mid] to find which half is sorted. Check if target lies within the sorted half's value range before recursing into it."
     tags:
     - binary-search
     companies:
@@ -1269,8 +1303,9 @@ patterns:
     timeComplexity: O(log n)
     spaceComplexity: O(1)
     hints:
-    - On finding a match while searching for the first position, keep narrowing left instead of stopping.
-    - Do the same but narrow right for the last position search.
+    - "After you look at the middle, which half is guaranteed not to hold the answer?"
+    - "Each step keeps the answer, if it exists, inside the range you have not discarded."
+    - "On finding a match while searching for the first position, keep narrowing left instead of stopping. Do the same but narrow right for the last position search."
     tags:
     - binary-search
     companies:
@@ -1289,9 +1324,9 @@ patterns:
     timeComplexity: O(log n)
     spaceComplexity: O(1)
     hints:
-    - If nums[mid] < nums[mid+1], a peak exists on the right (search mid+1..hi).
-    - Otherwise a peak exists on the left including mid (search lo..mid).
-    - Any valid peak index is accepted; you do not need the global maximum.
+    - "After you look at the middle, which half is guaranteed not to hold the answer?"
+    - "Each step keeps the answer, if it exists, inside the range you have not discarded."
+    - "If nums[mid] < nums[mid+1], a peak exists on the right (search mid+1..hi). Otherwise a peak exists on the left including mid (search lo..mid). Any valid peak index is accepted; you do not need the global maximum."
     tags:
     - binary-search
     companies:
@@ -1308,8 +1343,9 @@ patterns:
     timeComplexity: O(n) worst, O(log n) average
     spaceComplexity: O(1)
     hints:
-    - When nums[lo]==nums[mid]==nums[hi] shrink both ends
-    - Otherwise same rotated half logic
+    - "After you look at the middle, which half is guaranteed not to hold the answer?"
+    - "Each step keeps the answer, if it exists, inside the range you have not discarded."
+    - "When nums[lo]==nums[mid]==nums[hi] shrink both ends Otherwise same rotated half logic"
     tags:
     - binary-search
     companies:
@@ -1371,8 +1407,9 @@ patterns:
     timeComplexity: O(n * 2^n)
     spaceComplexity: O(n * 2^n)
     hints:
-    - Start the result list with just the empty subset.
-    - For each number, append it to a copy of every subset already in the result.
+    - "What choice are you adding to the current path, and what do you undo when it fails?"
+    - "The current path is one partial answer; you record it before the next choice and undo on the way back."
+    - "Start the result list with just the empty subset. For each number, append it to a copy of every subset already in the result."
     tags:
     - subsets
     companies:
@@ -1391,8 +1428,9 @@ patterns:
     timeComplexity: O(n * 2^n)
     spaceComplexity: O(n * 2^n)
     hints:
-    - Sort the array so duplicate values become adjacent.
-    - When nums[i] equals nums[i-1], only append it to subsets added during the previous number's round.
+    - "What choice are you adding to the current path, and what do you undo when it fails?"
+    - "The current path is one partial answer; you record it before the next choice and undo on the way back."
+    - "Sort the array so duplicate values become adjacent. When nums[i] equals nums[i-1], only append it to subsets added during the previous number's round."
     tags:
     - subsets
     companies:
@@ -1409,8 +1447,9 @@ patterns:
     timeComplexity: O(n * n!)
     spaceComplexity: O(n * n!)
     hints:
-    - Swap the current index with each later index, recurse, then swap back.
-    - 'Base case: when the current index reaches the array''s end, record a full permutation.'
+    - "What choice are you adding to the current path, and what do you undo when it fails?"
+    - "The current path is one partial answer; you record it before the next choice and undo on the way back."
+    - "Swap the current index with each later index, recurse, then swap back. Base case: when the current index reaches the array's end, record a full permutation."
     tags:
     - permutations
     companies:
@@ -1428,9 +1467,9 @@ patterns:
     timeComplexity: O(4ⁿ/√n)
     spaceComplexity: O(n)
     hints:
-    - Add '(' only while open_used < n; you never need more opens than n.
-    - Add ')' only while close_used < open_used; this keeps every prefix balanced.
-    - Record a string only when open_used == close_used == n. Raw subset generation without these guards explodes and produces invalid strings.
+    - "What choice are you adding to the current path, and what do you undo when it fails?"
+    - "The current path is one partial answer; you record it before the next choice and undo on the way back."
+    - "Add '(' only while open_used < n; you never need more opens than n. Add ')' only while close_used < open_used; this keeps every prefix balanced. Record a string only when open_used == close_used == n. Raw subset generation without these guards explodes and produces invalid strings."
     tags:
     - backtracking
     - subsets
@@ -1448,8 +1487,9 @@ patterns:
     timeComplexity: O(n·n!)
     spaceComplexity: O(n)
     hints:
-    - Sort first
-    - Skip a duplicate if previous identical not used
+    - "What choice are you adding to the current path, and what do you undo when it fails?"
+    - "The current path is one partial answer; you record it before the next choice and undo on the way back."
+    - "Sort first Skip a duplicate if previous identical not used"
     tags:
     - permutations
     companies:
@@ -1467,8 +1507,9 @@ patterns:
     timeComplexity: O(C(n,k)·k)
     spaceComplexity: O(k)
     hints:
-    - Choose or skip each number from start..n
-    - Stop when path size is k
+    - "What choice are you adding to the current path, and what do you undo when it fails?"
+    - "The current path is one partial answer; you record it before the next choice and undo on the way back."
+    - "Choose or skip each number from start..n Stop when path size is k"
     tags:
     - subsets
     - backtracking
@@ -1532,8 +1573,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - Update farthest = max(farthest, i + nums[i]) at each index.
-    - If i ever exceeds farthest, the last index is unreachable.
+    - "Which local choice, once you sort by the right key, never has to be undone?"
+    - "The sort key makes the next pick safe for every later step."
+    - "Update farthest = max(farthest, i + nums[i]) at each index. If i ever exceeds farthest, the last index is unreachable."
     tags:
     - greedy
     companies:
@@ -1552,8 +1594,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - When i reaches the current jump's end, increment jumps and set the end to the farthest seen so far.
-    - This greedily expands one 'level' at a time, similar to BFS on an implicit graph.
+    - "Which local choice, once you sort by the right key, never has to be undone?"
+    - "The sort key makes the next pick safe for every later step."
+    - "When i reaches the current jump's end, increment jumps and set the end to the farthest seen so far. This greedily expands one 'level' at a time, similar to BFS on an implicit graph."
     tags:
     - greedy
     companies:
@@ -1570,8 +1613,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - If total gas < total cost impossible
-    - When tank < 0, start = i+1 and reset tank
+    - "Which local choice, once you sort by the right key, never has to be undone?"
+    - "The sort key makes the next pick safe for every later step."
+    - "If total gas < total cost impossible When tank < 0, start = i+1 and reset tank"
     tags:
     - greedy
     companies:
@@ -1588,8 +1632,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(n)
     hints:
-    - Ensure rising slopes left→right
-    - Then enforce rising slopes right→left with max
+    - "Which local choice, once you sort by the right key, never has to be undone?"
+    - "The sort key makes the next pick safe for every later step."
+    - "Ensure rising slopes left→right Then enforce rising slopes right→left with max"
     tags:
     - greedy
     companies:
@@ -1607,8 +1652,9 @@ patterns:
     timeComplexity: O(n log n)
     spaceComplexity: O(1)
     hints:
-    - Sort greed and cookie sizes
-    - 'Two pointers: give cookie only when it fits'
+    - "Which local choice, once you sort by the right key, never has to be undone?"
+    - "The sort key makes the next pick safe for every later step."
+    - "Sort greed and cookie sizes Two pointers: give cookie only when it fits"
     tags:
     - greedy
     companies:
@@ -1670,8 +1716,9 @@ patterns:
     timeComplexity: O(2^n) worst-case
     spaceComplexity: O(target)
     hints:
-    - Pass the same start index (not start+1) when reusing a number.
-    - Prune the branch as soon as the running sum exceeds the target.
+    - "Where do you commit to a choice, and where must you undo it?"
+    - "The board is valid for the choices made so far; a dead end restores the previous board."
+    - "Pass the same start index (not start+1) when reusing a number. Prune the branch as soon as the running sum exceeds the target."
     tags:
     - backtracking
     companies:
@@ -1688,8 +1735,9 @@ patterns:
     timeComplexity: O(m*n*4^L)
     spaceComplexity: O(L)
     hints:
-    - Mark a cell visited before recursing into its neighbors, and unmark it right after.
-    - Prune immediately if the current cell's letter doesn't match the needed character.
+    - "Where do you commit to a choice, and where must you undo it?"
+    - "The board is valid for the choices made so far; a dead end restores the previous board."
+    - "Mark a cell visited before recursing into its neighbors, and unmark it right after. Prune immediately if the current cell's letter doesn't match the needed character."
     tags:
     - backtracking
     - matrix
@@ -1708,8 +1756,9 @@ patterns:
     timeComplexity: O(n!)
     spaceComplexity: O(n)
     hints:
-    - Track cols and both diagonals
-    - Build board strings at leaves
+    - "Where do you commit to a choice, and where must you undo it?"
+    - "The board is valid for the choices made so far; a dead end restores the previous board."
+    - "Track cols and both diagonals Build board strings at leaves"
     tags:
     - backtracking
     companies:
@@ -1727,9 +1776,9 @@ patterns:
     timeComplexity: O(9^m)
     spaceComplexity: O(1)
     hints:
-    - Scan for the next '.' cell; if none remain, the board is solved.
-    - Before placing digit d, confirm it is unused in that row, column, and 3×3 box.
-    - Place, recurse, then restore '.' on failure so sibling branches stay clean.
+    - "Where do you commit to a choice, and where must you undo it?"
+    - "The board is valid for the choices made so far; a dead end restores the previous board."
+    - "Scan for the next '.' cell; if none remain, the board is solved. Before placing digit d, confirm it is unused in that row, column, and 3×3 box. Place, recurse, then restore '.' on failure so sibling branches stay clean."
     tags:
     - backtracking
     companies:
@@ -1746,8 +1795,9 @@ patterns:
     timeComplexity: O(2^L · n)
     spaceComplexity: O(2^L · n)
     hints:
-    - Digits stay fixed
-    - Branch lower/upper for each letter
+    - "Where do you commit to a choice, and where must you undo it?"
+    - "The board is valid for the choices made so far; a dead end restores the previous board."
+    - "Digits stay fixed Branch lower/upper for each letter"
     tags:
     - backtracking
     companies:
@@ -1809,8 +1859,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - The base cases are dp[1]=1 and dp[2]=2.
-    - Only the last two values are ever needed, so O(1) space works.
+    - "Which smaller question has the same shape, and what would you recompute if you solved it from scratch?"
+    - "The cell for this prefix is built only from cells you have already finished."
+    - "The base cases are dp[1]=1 and dp[2]=2. Only the last two values are ever needed, so O(1) space works."
     tags:
     - dp
     companies:
@@ -1827,8 +1878,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - At each house, either skip it (keep dp[i-1]) or rob it (dp[i-2] + nums[i]).
-    - Only the previous two dp values need to be kept.
+    - "Which smaller question has the same shape, and what would you recompute if you solved it from scratch?"
+    - "The cell for this prefix is built only from cells you have already finished."
+    - "At each house, either skip it (keep dp[i-1]) or rob it (dp[i-2] + nums[i]). Only the previous two dp values need to be kept."
     tags:
     - dp
     companies:
@@ -1846,8 +1898,9 @@ patterns:
     timeComplexity: O(n*W)
     spaceComplexity: O(W)
     hints:
-    - dp[c] represents the best value achievable with capacity c.
-    - Iterate capacity from high to low in the 1D version so each item is only used once.
+    - "Which smaller question has the same shape, and what would you recompute if you solved it from scratch?"
+    - "The cell for this prefix is built only from cells you have already finished."
+    - "dp[c] represents the best value achievable with capacity c. Iterate capacity from high to low in the 1D version so each item is only used once."
     tags:
     - dp
     - knapsack
@@ -1867,9 +1920,9 @@ patterns:
     timeComplexity: O(amount·coins)
     spaceComplexity: O(amount)
     hints:
-    - Let dp[x] be fewest coins for amount x; dp[x] = min(dp[x-c]+1) over coins c ≤ x.
-    - Initialize dp[0]=0 and other entries to a sentinel larger than any valid answer (e.g. amount+1).
-    - After filling, if dp[amount] is still the sentinel, return -1.
+    - "Which smaller question has the same shape, and what would you recompute if you solved it from scratch?"
+    - "The cell for this prefix is built only from cells you have already finished."
+    - "Let dp[x] be fewest coins for amount x; dp[x] = min(dp[x-c]+1) over coins c ≤ x. Initialize dp[0]=0 and other entries to a sentinel larger than any valid answer (e.g. amount+1). After filling, if dp[amount] is still the sentinel, return -1."
     tags:
     - dp
     companies:
@@ -1886,9 +1939,9 @@ patterns:
     timeComplexity: O(mn)
     spaceComplexity: O(n)
     hints:
-    - 'dp[i][j] is the distance between word1[:i] and word2[:j]; matching chars take the diagonal.'
-    - On mismatch, take 1 + min(insert=dp[i][j-1], delete=dp[i-1][j], replace=dp[i-1][j-1]).
-    - Keep only the previous row to match the O(n) space bound after the 2D recurrence is clear.
+    - "Which smaller question has the same shape, and what would you recompute if you solved it from scratch?"
+    - "The cell for this prefix is built only from cells you have already finished."
+    - "dp[i][j] is the distance between word1[:i] and word2[:j]; matching chars take the diagonal. On mismatch, take 1 + min(insert=dp[i][j-1], delete=dp[i-1][j], replace=dp[i-1][j-1]). Keep only the previous row to match the O(n) space bound after the 2D recurrence is clear."
     tags:
     - dp
     companies:
@@ -1906,9 +1959,9 @@ patterns:
     timeComplexity: O(n^2)
     spaceComplexity: O(n)
     hints:
-    - What does one cell mean, before you write a loop?
-    - dp[i] = 1 + the best dp[j] among earlier smaller values.
-    - The answer is the maximum cell, not dp[n-1].
+    - "Which smaller question has the same shape, and what would you recompute if you solved it from scratch?"
+    - "The cell for this prefix is built only from cells you have already finished."
+    - "What does one cell mean, before you write a loop? dp[i] = 1 + the best dp[j] among earlier smaller values. The answer is the maximum cell, not dp[n-1]."
     tags:
     - dp
     companies:
@@ -1925,9 +1978,9 @@ patterns:
     timeComplexity: O(mn)
     spaceComplexity: O(n)
     hints:
-    - Say what a cell stores before filling it.
-    - A cell is reached only from above or from the left.
-    - The first row and the first column have exactly one way to be reached.
+    - "Which smaller question has the same shape, and what would you recompute if you solved it from scratch?"
+    - "The cell for this prefix is built only from cells you have already finished."
+    - "Say what a cell stores before filling it. A cell is reached only from above or from the left. The first row and the first column have exactly one way to be reached."
     tags:
     - dp
     companies:
@@ -1988,8 +2041,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - While nums[i] isn't at index nums[i]-1, swap it there.
-    - Each element is swapped at most once into its final place, keeping it O(n).
+    - "If every value belongs in one index, which value is sitting in the wrong place?"
+    - "Index i should hold i or i + 1; one swap puts a value home without extra memory."
+    - "While nums[i] isn't at index nums[i]-1, swap it there. Each element is swapped at most once into its final place, keeping it O(n)."
     tags:
     - cyclic-sort
     companies:
@@ -2006,8 +2060,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - Place each value v at index v when v < n.
-    - After placing, the first index i where nums[i] != i is the missing number.
+    - "If every value belongs in one index, which value is sitting in the wrong place?"
+    - "Index i should hold i or i + 1; one swap puts a value home without extra memory."
+    - "Place each value v at index v when v < n. After placing, the first index i where nums[i] != i is the missing number."
     tags:
     - cyclic-sort
     companies:
@@ -2024,8 +2079,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1) excluding output
     hints:
-    - Run cyclic sort placement as usual.
-    - After placement, any index i where nums[i] != i + 1 holds a duplicate value.
+    - "If every value belongs in one index, which value is sitting in the wrong place?"
+    - "Index i should hold i or i + 1; one swap puts a value home without extra memory."
+    - "Run cyclic sort placement as usual. After placement, any index i where nums[i] != i + 1 holds a duplicate value."
     tags:
     - cyclic-sort
     companies:
@@ -2043,9 +2099,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - Each index i points to nums[i]; because one value is duplicated, the graph has exactly one cycle.
-    - 'Run Floyd: slow = nums[slow], fast = nums[nums[fast]] until they meet.'
-    - Reset one pointer to the start and advance both one step at a time; the meeting point is the duplicate.
+    - "If every value belongs in one index, which value is sitting in the wrong place?"
+    - "Index i should hold i or i + 1; one swap puts a value home without extra memory."
+    - "Each index i points to nums[i]; because one value is duplicated, the graph has exactly one cycle. Run Floyd: slow = nums[slow], fast = nums[nums[fast]] until they meet. Reset one pointer to the start and advance both one step at a time; the meeting point is the duplicate."
     tags:
     - cyclic-sort
     - cycle
@@ -2063,9 +2119,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - Ignore non-positive values and values > n — they cannot be the first missing positive within 1..n+1.
-    - While nums[i] is in range and not already at home, swap it into index nums[i]-1 (guard against infinite self-swaps).
-    - After placement, the first index i with nums[i] != i+1 means the answer is i+1; if all match, answer is n+1.
+    - "If every value belongs in one index, which value is sitting in the wrong place?"
+    - "Index i should hold i or i + 1; one swap puts a value home without extra memory."
+    - "Ignore non-positive values and values > n — they cannot be the first missing positive within 1..n+1. While nums[i] is in range and not already at home, swap it into index nums[i]-1 (guard against infinite self-swaps). After placement, the first index i with nums[i] != i+1 means the answer is i+1; if all match, answer is n+1."
     tags:
     - cyclic-sort
     companies:
@@ -2128,8 +2184,9 @@ patterns:
     timeComplexity: O(V+E)
     spaceComplexity: O(V+E)
     hints:
-    - Build the graph as prerequisite -> course.
-    - If the processed-node count ends up less than the total course count, a cycle exists.
+    - "Which node has no remaining prerequisites, and what becomes free when you finish it?"
+    - "A node enters the order only when its indegree hits zero."
+    - "Build the graph as prerequisite -> course. If the processed-node count ends up less than the total course count, a cycle exists."
     tags:
     - graph
     - topo
@@ -2148,8 +2205,9 @@ patterns:
     timeComplexity: O(V+E)
     spaceComplexity: O(V+E)
     hints:
-    - Seed the queue with all zero-indegree courses.
-    - If the final order's length is less than the course count, return an empty array.
+    - "Which node has no remaining prerequisites, and what becomes free when you finish it?"
+    - "A node enters the order only when its indegree hits zero."
+    - "Seed the queue with all zero-indegree courses. If the final order's length is less than the course count, return an empty array."
     tags:
     - graph
     - topo
@@ -2167,8 +2225,9 @@ patterns:
     timeComplexity: O(V+E)
     spaceComplexity: O(V+E)
     hints:
-    - Build indegree graph
-    - BFS Kahn; fail if processed < tasks
+    - "Which node has no remaining prerequisites, and what becomes free when you finish it?"
+    - "A node enters the order only when its indegree hits zero."
+    - "Build indegree graph BFS Kahn; fail if processed < tasks"
     tags:
     - graph
     - topo
@@ -2186,8 +2245,9 @@ patterns:
     timeComplexity: O(C)
     spaceComplexity: O(1) alphabet
     hints:
-    - Compare adjacent pairs for first difference
-    - Invalid if longer word is prefix after shorter
+    - "Which node has no remaining prerequisites, and what becomes free when you finish it?"
+    - "A node enters the order only when its indegree hits zero."
+    - "Compare adjacent pairs for first difference Invalid if longer word is prefix after shorter"
     tags:
     - graph
     - topo
@@ -2205,8 +2265,9 @@ patterns:
     timeComplexity: O(total chars)
     spaceComplexity: O(1)
     hints:
-    - Map each letter to its rank
-    - Invalid if longer word is a prefix after a shorter equal prefix
+    - "Which node has no remaining prerequisites, and what becomes free when you finish it?"
+    - "A node enters the order only when its indegree hits zero."
+    - "Map each letter to its rank Invalid if longer word is a prefix after a shorter equal prefix"
     tags:
     - sort
     - topo
@@ -2270,8 +2331,9 @@ patterns:
     timeComplexity: O(n * k log k)
     spaceComplexity: O(n * k)
     hints:
-    - Two strings are anagrams exactly when their sorted character sequences are equal.
-    - Use the sorted string (or a character-count signature) as the hash map key.
+    - "What becomes cheap to find once equal items sit together?"
+    - "Sorting groups the values that a later scan or binary search will treat as one run."
+    - "Two strings are anagrams exactly when their sorted character sequences are equal. Use the sorted string (or a character-count signature) as the hash map key."
     tags:
     - hash-map
     - sort
@@ -2290,8 +2352,9 @@ patterns:
     timeComplexity: O(n log n + m * log n)
     spaceComplexity: O(n)
     hints:
-    - Sort the product list lexicographically up front.
-    - For each prefix, binary search for its lower bound and take up to 3 matches from there.
+    - "What becomes cheap to find once equal items sit together?"
+    - "Sorting groups the values that a later scan or binary search will treat as one run."
+    - "Sort the product list lexicographically up front. For each prefix, binary search for its lower bound and take up to 3 matches from there."
     tags:
     - binary-search
     - sort
@@ -2310,8 +2373,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - For even i ensure nums[i] <= nums[i+1]
-    - For odd i ensure nums[i] >= nums[i+1]
+    - "What becomes cheap to find once equal items sit together?"
+    - "Sorting groups the values that a later scan or binary search will treat as one run."
+    - "For even i ensure nums[i] <= nums[i+1] For odd i ensure nums[i] >= nums[i+1]"
     tags:
     - sort
     companies:
@@ -2329,8 +2393,9 @@ patterns:
     timeComplexity: O(n log n)
     spaceComplexity: O(n)
     hints:
-    - Merge sort indices
-    - When taking from right half, add mid-i+1 to left counts
+    - "What becomes cheap to find once equal items sit together?"
+    - "Sorting groups the values that a later scan or binary search will treat as one run."
+    - "Merge sort indices When taking from right half, add mid-i+1 to left counts"
     tags:
     - sort
     - divide-conquer
@@ -2349,8 +2414,9 @@ patterns:
     timeComplexity: O(n log n)
     spaceComplexity: O(n)
     hints:
-    - Put one array into a set
-    - Filter unique hits from the other
+    - "What becomes cheap to find once equal items sit together?"
+    - "Sorting groups the values that a later scan or binary search will treat as one run."
+    - "Put one array into a set Filter unique hits from the other"
     tags:
     - hash-set
     - sort
@@ -2414,8 +2480,9 @@ patterns:
     timeComplexity: O(m*n)
     spaceComplexity: O(1) excluding output
     hints:
-    - Traverse top row, right column, bottom row, left column, in that cyclic order.
-    - After each edge, move the corresponding boundary inward by one.
+    - "Does this cell depend on a neighbor, a border, or a mark you can write in place?"
+    - "Each cell is handled from its neighbors or its border, and a mark stops you from processing it twice."
+    - "Traverse top row, right column, bottom row, left column, in that cyclic order. After each edge, move the corresponding boundary inward by one."
     tags:
     - matrix
     companies:
@@ -2433,8 +2500,9 @@ patterns:
     timeComplexity: O(n^2)
     spaceComplexity: O(1)
     hints:
-    - Transpose swaps matrix[i][j] with matrix[j][i] for i < j.
-    - Reversing each row after transposing produces the clockwise rotation.
+    - "Does this cell depend on a neighbor, a border, or a mark you can write in place?"
+    - "Each cell is handled from its neighbors or its border, and a mark stops you from processing it twice."
+    - "Transpose swaps matrix[i][j] with matrix[j][i] for i < j. Reversing each row after transposing produces the clockwise rotation."
     tags:
     - matrix
     companies:
@@ -2452,8 +2520,9 @@ patterns:
     timeComplexity: O(m*n)
     spaceComplexity: O(1)
     hints:
-    - Use two boolean flags to remember whether the first row/column originally had a zero.
-    - Mark row i and column j via matrix[i][0] and matrix[0][j] as you scan the rest of the grid.
+    - "Does this cell depend on a neighbor, a border, or a mark you can write in place?"
+    - "Each cell is handled from its neighbors or its border, and a mark stops you from processing it twice."
+    - "Use two boolean flags to remember whether the first row/column originally had a zero. Mark row i and column j via matrix[i][0] and matrix[0][j] as you scan the rest of the grid."
     tags:
     - matrix
     companies:
@@ -2471,8 +2540,9 @@ patterns:
     timeComplexity: O(m+n)
     spaceComplexity: O(1)
     hints:
-    - From top-right corner
-    - Too big → left; too small → down
+    - "Does this cell depend on a neighbor, a border, or a mark you can write in place?"
+    - "Each cell is handled from its neighbors or its border, and a mark stops you from processing it twice."
+    - "From top-right corner Too big → left; too small → down"
     tags:
     - matrix
     - binary-search
@@ -2492,9 +2562,9 @@ patterns:
     timeComplexity: O(n²)
     spaceComplexity: O(n²)
     hints:
-    - If grid[0][0] or the destination is blocked (1), return -1 immediately.
-    - Enqueue all 8 neighbors of each 0-cell; mark visited when enqueueing to avoid duplicate work.
-    - Distance counts cells on the path (start is 1), not the number of edges.
+    - "Does this cell depend on a neighbor, a border, or a mark you can write in place?"
+    - "Each cell is handled from its neighbors or its border, and a mark stops you from processing it twice."
+    - "If grid[0][0] or the destination is blocked (1), return -1 immediately. Enqueue all 8 neighbors of each 0-cell; mark visited when enqueueing to avoid duplicate work. Distance counts cells on the path (start is 1), not the number of edges."
     tags:
     - matrix
     - bfs
@@ -2512,8 +2582,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - Add mat[i][i] and mat[i][n-1-i]
-    - Subtract center once if n is odd
+    - "Does this cell depend on a neighbor, a border, or a mark you can write in place?"
+    - "Each cell is handled from its neighbors or its border, and a mark stops you from processing it twice."
+    - "Add mat[i][i] and mat[i][n-1-i] Subtract center once if n is odd"
     tags:
     - matrix
     companies:
@@ -2579,8 +2650,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(n)
     hints:
-    - Push opening brackets; on a closing bracket, pop and check it matches.
-    - The string is valid only if the stack is empty at the very end.
+    - "What has to be resolved before you can accept the current value?"
+    - "The stack holds unresolved items in the order they still need to be closed."
+    - "Push opening brackets; on a closing bracket, pop and check it matches. The string is valid only if the stack is empty at the very end."
     tags:
     - stack
     companies:
@@ -2597,8 +2669,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(n)
     hints:
-    - Keep indices on the stack, not temperatures, so you can compute day differences.
-    - Pop and resolve every stacked index whose temperature is less than the current day's.
+    - "What has to be resolved before you can accept the current value?"
+    - "The stack holds unresolved items in the order they still need to be closed."
+    - "Keep indices on the stack, not temperatures, so you can compute day differences. Pop and resolve every stacked index whose temperature is less than the current day's."
     tags:
     - stack
     - monotonic
@@ -2618,8 +2691,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(n)
     hints:
-    - Build the full next-greater mapping for nums2 in one monotonic-stack pass.
-    - Look up each nums1 value in that mapping instead of rescanning nums2 per query.
+    - "What has to be resolved before you can accept the current value?"
+    - "The stack holds unresolved items in the order they still need to be closed."
+    - "Build the full next-greater mapping for nums2 in one monotonic-stack pass. Look up each nums1 value in that mapping instead of rescanning nums2 per query."
     tags:
     - stack
     companies:
@@ -2639,9 +2713,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(n)
     hints:
-    - Accumulate multi-digit counts before each '['; do not treat each digit as its own factor.
-    - On ']', pop the previous string and count, then append current.repeat(count) onto the previous string.
-    - Letters append to the current buffer; digits never belong in the decoded output.
+    - "What has to be resolved before you can accept the current value?"
+    - "The stack holds unresolved items in the order they still need to be closed."
+    - "Accumulate multi-digit counts before each '['; do not treat each digit as its own factor. On ']', pop the previous string and count, then append current.repeat(count) onto the previous string. Letters append to the current buffer; digits never belong in the decoded output."
     tags:
     - stack
     companies:
@@ -2659,8 +2733,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(n)
     hints:
-    - Keep running result and sign
-    - On '(' push result/sign; on ')' pop
+    - "What has to be resolved before you can accept the current value?"
+    - "The stack holds unresolved items in the order they still need to be closed."
+    - "Keep running result and sign On '(' push result/sign; on ')' pop"
     tags:
     - stack
     companies:
@@ -2723,8 +2798,9 @@ patterns:
     timeComplexity: O(m*n)
     spaceComplexity: O(m*n)
     hints:
-    - Mark a land cell visited (or sink it to '0') as soon as you enqueue/visit it.
-    - Each flood fill from a fresh unvisited land cell represents exactly one island.
+    - "Which nodes are one edge away, and which have you already entered?"
+    - "A visited set plus a queue or a stack expands each node once."
+    - "Mark a land cell visited (or sink it to '0') as soon as you enqueue/visit it. Each flood fill from a fresh unvisited land cell represents exactly one island."
     tags:
     - graph
     - bfs
@@ -2745,8 +2821,9 @@ patterns:
     timeComplexity: O(V+E)
     spaceComplexity: O(V)
     hints:
-    - Create a node's clone the first time you see it and store it in the map immediately.
-    - When wiring neighbors, look up (or create) their clones through the same map to avoid infinite recursion.
+    - "Which nodes are one edge away, and which have you already entered?"
+    - "A visited set plus a queue or a stack expands each node once."
+    - "Create a node's clone the first time you see it and store it in the map immediately. When wiring neighbors, look up (or create) their clones through the same map to avoid infinite recursion."
     tags:
     - graph
     companies:
@@ -2763,8 +2840,9 @@ patterns:
     timeComplexity: O(mn)
     spaceComplexity: O(mn)
     hints:
-    - Flow only to >= height neighbors
-    - Intersect reachable sets
+    - "Which nodes are one edge away, and which have you already entered?"
+    - "A visited set plus a queue or a stack expands each node once."
+    - "Flow only to >= height neighbors Intersect reachable sets"
     tags:
     - graph
     - dfs
@@ -2783,9 +2861,9 @@ patterns:
     timeComplexity: O(V+E)
     spaceComplexity: O(V+E)
     hints:
-    - Track disc[u] (first visit time) and low[u] (earliest reachable discovery via tree/back edges).
-    - After exploring child v, if low[v] > disc[u], the edge (u,v) is a bridge.
-    - Ignore the parent edge when updating low from neighbors so you do not falsely cancel a bridge.
+    - "Which nodes are one edge away, and which have you already entered?"
+    - "A visited set plus a queue or a stack expands each node once."
+    - "Track disc[u] (first visit time) and low[u] (earliest reachable discovery via tree/back edges). After exploring child v, if low[v] > disc[u], the edge (u,v) is a bridge. Ignore the parent edge when updating low from neighbors so you do not falsely cancel a bridge."
     tags:
     - graph
     companies:
@@ -2803,9 +2881,9 @@ patterns:
     timeComplexity: O(V+E)
     spaceComplexity: O(V)
     hints:
-    - What would a two-coloring failing tell you about a cycle?
-    - Give the start node color 1 and push it. A neighbor already wearing the same color is a conflict.
-    - A graph can have several components, so start a new search from every uncolored node.
+    - "Which nodes are one edge away, and which have you already entered?"
+    - "A visited set plus a queue or a stack expands each node once."
+    - "What would a two-coloring failing tell you about a cycle? Give the start node color 1 and push it. A neighbor already wearing the same color is a conflict. A graph can have several components, so start a new search from every uncolored node."
     tags:
     - graph
     companies:
@@ -2868,8 +2946,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(h)
     hints:
-    - At a leaf, check whether the remaining target equals the leaf's value.
-    - Recurse into children with target minus the current node's value.
+    - "What does this node's answer become once both children have answered?"
+    - "The result of a node is built only from its subtrees."
+    - "At a leaf, check whether the remaining target equals the leaf's value. Recurse into children with target minus the current node's value."
     tags:
     - tree
     - dfs
@@ -2888,8 +2967,9 @@ patterns:
     timeComplexity: O(n^2) worst-case copy
     spaceComplexity: O(n)
     hints:
-    - Add the current node to a shared path list before recursing, remove it after.
-    - Only copy the path into the result list when a leaf matches the remaining target exactly.
+    - "What does this node's answer become once both children have answered?"
+    - "The result of a node is built only from its subtrees."
+    - "Add the current node to a shared path list before recursing, remove it after. Only copy the path into the result list when a leaf matches the remaining target exactly."
     tags:
     - tree
     - dfs
@@ -2909,8 +2989,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(h)
     hints:
-    - The function should return height, but update a side variable with left_height + right_height.
-    - The diameter at a node may not pass through the root, so track the max across every node.
+    - "What does this node's answer become once both children have answered?"
+    - "The result of a node is built only from its subtrees."
+    - "The function should return height, but update a side variable with left_height + right_height. The diameter at a node may not pass through the root, so track the max across every node."
     tags:
     - tree
     - dfs
@@ -2928,8 +3009,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(h)
     hints:
-    - Return non-null from subtree containing p/q
-    - If both left and right non-null, root is answer
+    - "What does this node's answer become once both children have answered?"
+    - "The result of a node is built only from its subtrees."
+    - "Return non-null from subtree containing p/q If both left and right non-null, root is answer"
     tags:
     - tree
     - dfs
@@ -2947,9 +3029,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(h)
     hints:
-    - For each child, take max(0, child_gain) — a negative child can never improve a path.
-    - 'A path through the node may use both children: candidate = node.val + left_gain + right_gain; update a global max.'
-    - 'Return to the parent only a single-branch gain: node.val + max(left_gain, right_gain), so paths stay simple.'
+    - "What does this node's answer become once both children have answered?"
+    - "The result of a node is built only from its subtrees."
+    - "For each child, take max(0, child_gain) — a negative child can never improve a path. A path through the node may use both children: candidate = node.val + left_gain + right_gain; update a global max. Return to the parent only a single-branch gain: node.val + max(left_gain, right_gain), so paths stay simple."
     tags:
     - tree
     - dfs
@@ -3017,8 +3099,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(n)
     hints:
-    - Capture queue.size() before the inner loop to know the current level's width.
-    - Build one list per level and append it to the outer result list.
+    - "Which nodes share a distance from the root, and when does that distance increase?"
+    - "The queue holds one level; its size at the start of the loop is that whole level."
+    - "Capture queue.size() before the inner loop to know the current level's width. Build one list per level and append it to the outer result list."
     tags:
     - tree
     - bfs
@@ -3037,8 +3120,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(n)
     hints:
-    - Build each level's list normally, then reverse it when the direction flag says right-to-left.
-    - Flip the direction flag after finishing each level.
+    - "Which nodes share a distance from the root, and when does that distance increase?"
+    - "The queue holds one level; its size at the start of the loop is that whole level."
+    - "Build each level's list normally, then reverse it when the direction flag says right-to-left. Flip the direction flag after finishing each level."
     tags:
     - tree
     - bfs
@@ -3056,8 +3140,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(n)
     hints:
-    - Within each level's inner loop, overwrite a 'lastInLevel' variable on every poll.
-    - After finishing a level's inner loop, append 'lastInLevel' to the result.
+    - "Which nodes share a distance from the root, and when does that distance increase?"
+    - "The queue holds one level; its size at the start of the loop is that whole level."
+    - "Within each level's inner loop, overwrite a 'lastInLevel' variable on every poll. After finishing a level's inner loop, append 'lastInLevel' to the result."
     tags:
     - tree
     - bfs
@@ -3076,8 +3161,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(n)
     hints:
-    - Level-order until a leaf
-    - Depth increments per level
+    - "Which nodes share a distance from the root, and when does that distance increase?"
+    - "The queue holds one level; its size at the start of the loop is that whole level."
+    - "Level-order until a leaf Depth increments per level"
     tags:
     - tree
     - bfs
@@ -3095,8 +3181,9 @@ patterns:
     timeComplexity: O(n log n)
     spaceComplexity: O(n)
     hints:
-    - Track column index
-    - Sort each column by row then value
+    - "Which nodes share a distance from the root, and when does that distance increase?"
+    - "The queue holds one level; its size at the start of the loop is that whole level."
+    - "Track column index Sort each column by row then value"
     tags:
     - tree
     - bfs
@@ -3165,8 +3252,9 @@ patterns:
     timeComplexity: O(L) per op
     spaceComplexity: O(ALPHABET * total chars)
     hints:
-    - Each node needs a children map and a boolean end-of-word flag.
-    - search() requires the end flag to be true; startsWith() does not.
+    - "Which prefix is shared, and where does this word branch off?"
+    - "Each edge is one character; a word ends only at a node marked as terminal."
+    - "Each node needs a children map and a boolean end-of-word flag. search() requires the end flag to be true; startsWith() does not."
     tags:
     - trie
     companies:
@@ -3185,9 +3273,9 @@ patterns:
     timeComplexity: O(n^2)
     spaceComplexity: O(dictionary)
     hints:
-    - dp[i] = minimum extra characters for the substring starting at i.
-    - At each position, try every dictionary word that matches as a prefix via the trie, then recurse
-      past it.
+    - "Which prefix is shared, and where does this word branch off?"
+    - "Each edge is one character; a word ends only at a node marked as terminal."
+    - "dp[i] = minimum extra characters for the substring starting at i. At each position, try every dictionary word that matches as a prefix via the trie, then recurse past it."
     tags:
     - trie
     - dp
@@ -3206,8 +3294,9 @@ patterns:
     timeComplexity: O(total chars)
     spaceComplexity: O(dictionary)
     hints:
-    - Insert all roots
-    - Stop at first isEnd along the word
+    - "Which prefix is shared, and where does this word branch off?"
+    - "Each edge is one character; a word ends only at a node marked as terminal."
+    - "Insert all roots Stop at first isEnd along the word"
     tags:
     - trie
     companies:
@@ -3225,8 +3314,9 @@ patterns:
     timeComplexity: O(m·n·4·L)
     spaceComplexity: O(dictionary)
     hints:
-    - Build trie of words
-    - Remove word from trie when found to dedupe
+    - "Which prefix is shared, and where does this word branch off?"
+    - "Each edge is one character; a word ends only at a node marked as terminal."
+    - "Build trie of words Remove word from trie when found to dedupe"
     tags:
     - trie
     - backtracking
@@ -3245,8 +3335,9 @@ patterns:
     timeComplexity: O(total chars)
     spaceComplexity: O(1)
     hints:
-    - Compare characters column by column
-    - Stop at first mismatch or end of a word
+    - "Which prefix is shared, and where does this word branch off?"
+    - "Each edge is one character; a word ends only at a node marked as terminal."
+    - "Compare characters column by column Stop at first mismatch or end of a word"
     tags:
     - trie
     - string
@@ -3310,8 +3401,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(n)
     hints:
-    - For each number, check if target - number is already in the map.
-    - Insert the current number's index only after checking, to avoid matching an element with itself.
+    - "What have you already seen that would answer the current element in constant time?"
+    - "The map stores the complement or the count of everything before the current index."
+    - "For each number, check if target - number is already in the map. Insert the current number's index only after checking, to avoid matching an element with itself."
     tags:
     - hash-map
     companies:
@@ -3328,8 +3420,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(n)
     hints:
-    - Initialize the map with prefix sum 0 occurring once, to handle subarrays starting at index 0.
-    - At each step, add map.get(currentSum - K) to the answer before updating the map with currentSum.
+    - "What have you already seen that would answer the current element in constant time?"
+    - "The map stores the complement or the count of everything before the current index."
+    - "Initialize the map with prefix sum 0 occurring once, to handle subarrays starting at index 0. At each step, add map.get(currentSum - K) to the answer before updating the map with currentSum."
     tags:
     - hash-map
     - prefix-sum
@@ -3347,8 +3440,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1) alphabet
     hints:
-    - Map s→t and ensure consistency
-    - Also ensure two s chars don't map to same t
+    - "What have you already seen that would answer the current element in constant time?"
+    - "The map stores the complement or the count of everything before the current index."
+    - "Map s→t and ensure consistency Also ensure two s chars don't map to same t"
     tags:
     - hash-map
     companies:
@@ -3365,8 +3459,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(n)
     hints:
-    - Treat 0 as -1
-    - If balance seen before, update max length
+    - "What have you already seen that would answer the current element in constant time?"
+    - "The map stores the complement or the count of everything before the current index."
+    - "Treat 0 as -1 If balance seen before, update max length"
     tags:
     - hash-map
     - prefix-sum
@@ -3385,8 +3480,9 @@ patterns:
     timeComplexity: O(n²)
     spaceComplexity: O(n²)
     hints:
-    - Map sum→count for first two arrays
-    - For each c+d look up -(c+d)
+    - "What have you already seen that would answer the current element in constant time?"
+    - "The map stores the complement or the count of everything before the current index."
+    - "Map sum→count for first two arrays For each c+d look up -(c+d)"
     tags:
     - hash-map
     companies:
@@ -3452,8 +3548,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - Increment the count when the current number matches the candidate, decrement otherwise.
-    - When the count hits zero, switch the candidate to the current number.
+    - "Which single number, updated on every step, makes the rest of the history unnecessary?"
+    - "The tracked value is enough to recover the answer; you do not store the whole pass."
+    - "Increment the count when the current number matches the candidate, decrement otherwise. When the count hits zero, switch the candidate to the current number."
     tags:
     - tracking
     companies:
@@ -3471,8 +3568,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(n)
     hints:
-    - Only begin extending a sequence from a number x where x-1 is not in the set.
-    - From each valid start, keep checking x+1, x+2, ... to measure the run's length.
+    - "Which single number, updated on every step, makes the rest of the history unnecessary?"
+    - "The tracked value is enough to recover the answer; you do not store the whole pass."
+    - "Only begin extending a sequence from a number x where x-1 is not in the set. From each valid start, keep checking x+1, x+2, ... to measure the run's length."
     tags:
     - hash-set
     companies:
@@ -3490,9 +3588,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - At most two answers — three values each > n/3 would exceed the array length.
-    - Maintain two candidates and counts; a third distinct value decrements both (pairwise cancel).
-    - Always verify final candidates with an exact frequency pass; voting alone can leave false survivors.
+    - "Which single number, updated on every step, makes the rest of the history unnecessary?"
+    - "The tracked value is enough to recover the answer; you do not store the whole pass."
+    - "At most two answers — three values each > n/3 would exceed the array length. Maintain two candidates and counts; a third distinct value decrements both (pairwise cancel). Always verify final candidates with an exact frequency pass; voting alone can leave false survivors."
     tags:
     - tracking
     companies:
@@ -3555,8 +3653,9 @@ patterns:
     timeComplexity: O(n^2 * alpha(n))
     spaceComplexity: O(n)
     hints:
-    - Only need to scan the upper (or lower) triangle of the symmetric matrix.
-    - The final answer is the number of elements that are their own root.
+    - "Are these two items already in the same component, or should this edge join them?"
+    - "Each item points at a parent; the root is the component, and a union links two roots."
+    - "Only need to scan the upper (or lower) triangle of the symmetric matrix. The final answer is the number of elements that are their own root."
     tags:
     - union-find
     companies:
@@ -3576,8 +3675,9 @@ patterns:
     timeComplexity: O(n * alpha(n))
     spaceComplexity: O(n)
     hints:
-    - Union endpoints one edge at a time, in the given input order.
-    - As soon as find(u) == find(v) before unioning, that edge is the answer.
+    - "Are these two items already in the same component, or should this edge join them?"
+    - "Each item points at a parent; the root is the component, and a union links two roots."
+    - "Union endpoints one edge at a time, in the given input order. As soon as find(u) == find(v) before unioning, that edge is the answer."
     tags:
     - union-find
     companies:
@@ -3597,9 +3697,9 @@ patterns:
     timeComplexity: O(emails · α)
     spaceComplexity: O(emails)
     hints:
-    - Map each email to its account name once, and union consecutive emails within the same account.
-    - After all unions, collect emails by find(root), sort each group, and prepend the name.
-    - Same display name with no shared email stays separate — connectivity is by email, not by name.
+    - "Are these two items already in the same component, or should this edge join them?"
+    - "Each item points at a parent; the root is the component, and a union links two roots."
+    - "Map each email to its account name once, and union consecutive emails within the same account. After all unions, collect emails by find(root), sort each group, and prepend the name. Same display name with no shared email stays separate — connectivity is by email, not by name."
     tags:
     - union-find
     companies:
@@ -3617,8 +3717,9 @@ patterns:
     timeComplexity: O(k α(mn))
     spaceComplexity: O(mn)
     hints:
-    - Add land then union 4-neighbors
-    - Increment count on add; decrement on each successful union
+    - "Are these two items already in the same component, or should this edge join them?"
+    - "Each item points at a parent; the root is the component, and a union links two roots."
+    - "Add land then union 4-neighbors Increment count on add; decrement on each successful union"
     tags:
     - union-find
     companies:
@@ -3635,8 +3736,9 @@ patterns:
     timeComplexity: O(n + e·α(n))
     spaceComplexity: O(n)
     hints:
-    - Union endpoints of each edge
-    - find(source)==find(destination)
+    - "Are these two items already in the same component, or should this edge join them?"
+    - "Each item points at a parent; the root is the component, and a union links two roots."
+    - "Union endpoints of each edge find(source)==find(destination)"
     tags:
     - union-find
     companies:
@@ -3700,8 +3802,9 @@ patterns:
     timeComplexity: O(1) all ops
     spaceComplexity: O(n)
     hints:
-    - Push the new minimum onto an auxiliary stack every time it changes (or on every push, tracking duplicates).
-    - Pop from both stacks together to keep them in sync.
+    - "Which operation must stay fast, and what extra link buys that speed?"
+    - "The structure keeps both the order you need and a direct handle to the node you will update."
+    - "Push the new minimum onto an auxiliary stack every time it changes (or on every push, tracking duplicates). Pop from both stacks together to keep them in sync."
     tags:
     - design
     - stack
@@ -3719,10 +3822,9 @@ patterns:
     timeComplexity: O(1)
     spaceComplexity: O(capacity)
     hints:
-    - Use LinkedHashMap in access-order mode (or an equivalent ordered map).
-    - On get/put, refresh the key so it becomes most recently used.
-    - When size exceeds capacity, remove the eldest (least recently used) entry.
-    - 'Interview alternate: HashMap<node> + doubly linked list for explicit O(1) splice-to-front / evict-tail.'
+    - "Which operation must stay fast, and what extra link buys that speed?"
+    - "The structure keeps both the order you need and a direct handle to the node you will update."
+    - "Use LinkedHashMap in access-order mode (or an equivalent ordered map). On get/put, refresh the key so it becomes most recently used. When size exceeds capacity, remove the eldest (least recently used) entry. Interview alternate: HashMap<node> + doubly linked list for explicit O(1) splice-to-front / evict-tail."
     tags:
     - design
     - hash-map
@@ -3741,9 +3843,9 @@ patterns:
     timeComplexity: O(log n) get
     spaceComplexity: O(n)
     hints:
-    - Timestamps for a key are inserted in non-decreasing order, so each list stays sorted for binary search.
-    - get should return the rightmost value with timestamp ≤ query (upper_bound - 1), or empty if none.
-    - Store pairs or parallel arrays; avoid resorting on every get.
+    - "Which operation must stay fast, and what extra link buys that speed?"
+    - "The structure keeps both the order you need and a direct handle to the node you will update."
+    - "Timestamps for a key are inserted in non-decreasing order, so each list stays sorted for binary search. get should return the rightmost value with timestamp ≤ query (upper_bound - 1), or empty if none. Store pairs or parallel arrays; avoid resorting on every get."
     tags:
     - design
     - binary-search
@@ -3761,8 +3863,9 @@ patterns:
     timeComplexity: O(1)
     spaceComplexity: O(capacity)
     hints:
-    - Track min frequency
-    - On get bump frequency bucket
+    - "Which operation must stay fast, and what extra link buys that speed?"
+    - "The structure keeps both the order you need and a direct handle to the node you will update."
+    - "Track min frequency On get bump frequency bucket"
     tags:
     - design
     companies:
@@ -3779,8 +3882,9 @@ patterns:
     timeComplexity: O(1) average
     spaceComplexity: O(n)
     hints:
-    - Use an array of linked lists
-    - Hash with key % bucketCount
+    - "Which operation must stay fast, and what extra link buys that speed?"
+    - "The structure keeps both the order you need and a direct handle to the node you will update."
+    - "Use an array of linked lists Hash with key % bucketCount"
     tags:
     - design
     companies:
@@ -3842,8 +3946,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - a XOR a = 0 and a XOR 0 = a, so pairs vanish regardless of order.
-    - No extra space or sorting is needed - a single pass of XOR suffices.
+    - "Which bit can you decide without looking at the others?"
+    - "A mask or a shift isolates one bit; the rest of the integer stays unchanged."
+    - "a XOR a = 0 and a XOR 0 = a, so pairs vanish regardless of order. No extra space or sorting is needed - a single pass of XOR suffices."
     tags:
     - bit
     companies:
@@ -3861,8 +3966,9 @@ patterns:
     timeComplexity: O(1)
     spaceComplexity: O(1)
     hints:
-    - Each iteration of n &= (n - 1) removes exactly one set bit.
-    - The loop runs exactly popcount(n) times, which is already efficient without checking every bit position.
+    - "Which bit can you decide without looking at the others?"
+    - "A mask or a shift isolates one bit; the rest of the integer stays unchanged."
+    - "Each iteration of n &= (n - 1) removes exactly one set bit. The loop runs exactly popcount(n) times, which is already efficient without checking every bit position."
     tags:
     - bit
     companies:
@@ -3879,8 +3985,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - Count each bit mod 3
-    - Or maintain ones/twos masks
+    - "Which bit can you decide without looking at the others?"
+    - "A mask or a shift isolates one bit; the rest of the integer stays unchanged."
+    - "Count each bit mod 3 Or maintain ones/twos masks"
     tags:
     - bit
     companies:
@@ -3899,9 +4006,9 @@ patterns:
     timeComplexity: O(1)
     spaceComplexity: O(1)
     hints:
-    - a ^ b is the sum ignoring carry; (a & b) << 1 is the carry to add next.
-    - Loop setting a = sumWithoutCarry and b = carry until b becomes 0.
-    - Negatives work the same in two's complement under the language's fixed-width int semantics.
+    - "Which bit can you decide without looking at the others?"
+    - "A mask or a shift isolates one bit; the rest of the integer stays unchanged."
+    - "a ^ b is the sum ignoring carry; (a & b) << 1 is the carry to add next. Loop setting a = sumWithoutCarry and b = carry until b becomes 0. Negatives work the same in two's complement under the language's fixed-width int semantics."
     tags:
     - bit
     companies:
@@ -3918,9 +4025,9 @@ patterns:
     timeComplexity: O(1)
     spaceComplexity: O(1)
     hints:
-    - 'Loop exactly 32 times: result = (result << 1) | (n & 1), then unsigned-shift n right by 1.'
-    - Leading zeros still matter — process all 32 positions; do not stop early.
-    - Prefer >>> (unsigned shift) so the high bit of n does not sign-extend incorrectly.
+    - "Which bit can you decide without looking at the others?"
+    - "A mask or a shift isolates one bit; the rest of the integer stays unchanged."
+    - "Loop exactly 32 times: result = (result << 1) | (n & 1), then unsigned-shift n right by 1. Leading zeros still matter — process all 32 positions; do not stop early. Prefer >>> (unsigned shift) so the high bit of n does not sign-extend incorrectly."
     tags:
     - bit
     companies:
@@ -3937,8 +4044,9 @@ patterns:
     timeComplexity: O(1)
     spaceComplexity: O(1)
     hints:
-    - While left < right, right &= right-1 or shift both
-    - Common prefix bits survive
+    - "Which bit can you decide without looking at the others?"
+    - "A mask or a shift isolates one bit; the rest of the integer stays unchanged."
+    - "While left < right, right &= right-1 or shift both Common prefix bits survive"
     tags:
     - bit
     companies:
@@ -4004,8 +4112,9 @@ patterns:
     timeComplexity: O(log n)
     spaceComplexity: O(1)
     hints:
-    - If n is even, x^n = (x*x)^(n/2); if odd, peel off one factor of x first.
-    - Handle negative n by computing 1 / x^(-n), and watch for Integer.MIN_VALUE overflow when negating.
+    - "Which quantity stays fixed, so you can compute it instead of simulating every step?"
+    - "A closed form, a gcd, or a slope replaces the loop."
+    - "If n is even, x^n = (x*x)^(n/2); if odd, peel off one factor of x first. Handle negative n by computing 1 / x^(-n), and watch for Integer.MIN_VALUE overflow when negating."
     tags:
     - math
     companies:
@@ -4022,8 +4131,9 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(n)
     hints:
-    - Two strings share a divisor string only if concatenating them in either order gives the same result.
-    - If that check passes, the answer is the prefix of length gcd(str1.length(), str2.length()).
+    - "Which quantity stays fixed, so you can compute it instead of simulating every step?"
+    - "A closed form, a gcd, or a slope replaces the loop."
+    - "Two strings share a divisor string only if concatenating them in either order gives the same result. If that check passes, the answer is the prefix of length gcd(str1.length(), str2.length())."
     tags:
     - math
     - string
@@ -4042,9 +4152,9 @@ patterns:
     timeComplexity: O(log x)
     spaceComplexity: O(1)
     hints:
-    - Search for the largest mid where mid*mid ≤ x; if mid*mid > x, search the left half.
-    - Cast mid*mid to long (or use division) to avoid 32-bit overflow when mid is large.
-    - For x < 2 the answer is x itself — handle that before the search loop.
+    - "Which quantity stays fixed, so you can compute it instead of simulating every step?"
+    - "A closed form, a gcd, or a slope replaces the loop."
+    - "Search for the largest mid where mid*mid ≤ x; if mid*mid > x, search the left half. Cast mid*mid to long (or use division) to avoid 32-bit overflow when mid is large. For x < 2 the answer is x itself — handle that before the search loop."
     tags:
     - math
     - binary-search
@@ -4062,8 +4172,9 @@ patterns:
     timeComplexity: O(1)
     spaceComplexity: O(1)
     hints:
-    - Table 1000,900,500,400,...
-    - Append while num >= value
+    - "Which quantity stays fixed, so you can compute it instead of simulating every step?"
+    - "A closed form, a gcd, or a slope replaces the loop."
+    - "Table 1000,900,500,400,... Append while num >= value"
     tags:
     - math
     companies:
@@ -4081,8 +4192,9 @@ patterns:
     timeComplexity: O(1)
     spaceComplexity: O(1)
     hints:
-    - Compute 6 pairwise squared distances
-    - Need 4 equal sides + 2 equal diagonals
+    - "Which quantity stays fixed, so you can compute it instead of simulating every step?"
+    - "A closed form, a gcd, or a slope replaces the loop."
+    - "Compute 6 pairwise squared distances Need 4 equal sides + 2 equal diagonals"
     tags:
     - math
     - geometry
@@ -4101,8 +4213,9 @@ patterns:
     timeComplexity: O(n²)
     spaceComplexity: O(n)
     hints:
-    - Normalize slope by GCD
-    - Handle duplicates and vertical lines
+    - "Which quantity stays fixed, so you can compute it instead of simulating every step?"
+    - "A closed form, a gcd, or a slope replaces the loop."
+    - "Normalize slope by GCD Handle duplicates and vertical lines"
     tags:
     - math
     - geometry
@@ -4172,8 +4285,9 @@ patterns:
     timeComplexity: O(1)
     spaceComplexity: O(1) per key
     hints:
-    - Track available tokens and a last-refill timestamp per key.
-    - Refill tokens lazily based on elapsed time instead of running a background timer.
+    - "What fails first when a second instance, a retry, or a restart shows up?"
+    - "Name the shared state and the lock, transaction, or key that keeps one side effect from running twice."
+    - "Track available tokens and a last-refill timestamp per key. Refill tokens lazily based on elapsed time instead of running a background timer."
     tags:
     - spring
     - concurrency
@@ -4192,8 +4306,9 @@ patterns:
     timeComplexity: O(1)
     spaceComplexity: O(n)
     hints:
-    - Store (result, expiryTimestamp) pairs keyed by the client-supplied idempotency key.
-    - On a repeated key within the TTL window, return the stored result instead of re-executing the operation.
+    - "What fails first when a second instance, a retry, or a restart shows up?"
+    - "Name the shared state and the lock, transaction, or key that keeps one side effect from running twice."
+    - "Store (result, expiryTimestamp) pairs keyed by the client-supplied idempotency key. On a repeated key within the TTL window, return the stored result instead of re-executing the operation."
     tags:
     - spring
     - design
@@ -4211,8 +4326,9 @@ patterns:
     timeComplexity: O(1)
     spaceComplexity: O(1)
     hints:
-    - Trip open after N failures
-    - After timeout allow trial in HALF_OPEN
+    - "What fails first when a second instance, a retry, or a restart shows up?"
+    - "Name the shared state and the lock, transaction, or key that keeps one side effect from running twice."
+    - "Trip open after N failures After timeout allow trial in HALF_OPEN"
     tags:
     - spring
     - resilience
@@ -4230,8 +4346,9 @@ patterns:
     timeComplexity: O(1)
     spaceComplexity: O(capacity)
     hints:
-    - Store expiry timestamp
-    - Evict expired on get; LRU when full
+    - "What fails first when a second instance, a retry, or a restart shows up?"
+    - "Name the shared state and the lock, transaction, or key that keeps one side effect from running twice."
+    - "Store expiry timestamp Evict expired on get; LRU when full"
     tags:
     - spring
     - cache
@@ -4250,8 +4367,9 @@ patterns:
     timeComplexity: O(1)
     spaceComplexity: O(n)
     hints:
-    - ConcurrentHashMap under the hood
-    - getOrDefault for missing keys
+    - "What fails first when a second instance, a retry, or a restart shows up?"
+    - "Name the shared state and the lock, transaction, or key that keeps one side effect from running twice."
+    - "ConcurrentHashMap under the hood getOrDefault for missing keys"
     tags:
     - spring
     companies:
@@ -4270,9 +4388,9 @@ patterns:
     timeComplexity: O(1)
     spaceComplexity: O(1)
     hints:
-    - If the incoming header is present and non-blank, reuse it; otherwise generate a new id.
-    - Store the resolved id somewhere request-scoped (here, a simple holder) so later code can read it
-      without re-threading a parameter.
+    - "What fails first when a second instance, a retry, or a restart shows up?"
+    - "Name the shared state and the lock, transaction, or key that keeps one side effect from running twice."
+    - "If the incoming header is present and non-blank, reuse it; otherwise generate a new id. Store the resolved id somewhere request-scoped (here, a simple holder) so later code can read it without re-threading a parameter."
     tags:
     - spring
     - web
@@ -4292,9 +4410,9 @@ patterns:
     timeComplexity: O(n) per publishDue call
     spaceComplexity: O(n)
     hints:
-    - Enqueue stores the event with a status and an eligible-at timestamp instead of publishing immediately.
-    - publishDue scans for PENDING events that are eligible now, hands each to the publisher, then marks
-      it PUBLISHED (or leaves it PENDING to retry if the publisher throws).
+    - "What fails first when a second instance, a retry, or a restart shows up?"
+    - "Name the shared state and the lock, transaction, or key that keeps one side effect from running twice."
+    - "Enqueue stores the event with a status and an eligible-at timestamp instead of publishing immediately. publishDue scans for PENDING events that are eligible now, hands each to the publisher, then marks it PUBLISHED (or leaves it PENDING to retry if the publisher throws)."
     tags:
     - spring
     - reliability
@@ -4314,9 +4432,9 @@ patterns:
     timeComplexity: O(1)
     spaceComplexity: O(n)
     hints:
-    - Store a version number alongside each record's value; every successful update increments it.
-    - Reject an update whose expected version does not match the stored version instead of overwriting
-      silently.
+    - "What fails first when a second instance, a retry, or a restart shows up?"
+    - "Name the shared state and the lock, transaction, or key that keeps one side effect from running twice."
+    - "Store a version number alongside each record's value; every successful update increments it. Reject an update whose expected version does not match the stored version instead of overwriting silently."
     tags:
     - spring
     - concurrency
@@ -4336,9 +4454,9 @@ patterns:
     timeComplexity: O(1) amortized per login/logout
     spaceComplexity: O(active sessions)
     hints:
-    - Keep an ordered per-user collection of active session ids so the oldest session is easy to find.
-    - On a new login past the limit, either reject it or evict-and-replace the oldest session depending
-      on the configured policy; make eviction and insertion atomic under one lock per user.
+    - "What fails first when a second instance, a retry, or a restart shows up?"
+    - "Name the shared state and the lock, transaction, or key that keeps one side effect from running twice."
+    - "Keep an ordered per-user collection of active session ids so the oldest session is easy to find. On a new login past the limit, either reject it or evict-and-replace the oldest session depending on the configured policy; make eviction and insertion atomic under one lock per user."
     tags:
     - spring
     - concurrency
@@ -4359,10 +4477,9 @@ patterns:
     timeComplexity: O(n) in the number of columns
     spaceComplexity: O(n)
     hints:
-    - Validate every identifier (column name) against an allow-list pattern before using it in the generated
-      SQL text.
-    - Never inline the value itself - always emit a `?` placeholder and return the value list separately
-      for a PreparedStatement to bind.
+    - "What fails first when a second instance, a retry, or a restart shows up?"
+    - "Name the shared state and the lock, transaction, or key that keeps one side effect from running twice."
+    - "Validate every identifier (column name) against an allow-list pattern before using it in the generated SQL text. Never inline the value itself - always emit a `?` placeholder and return the value list separately for a PreparedStatement to bind."
     tags:
     - spring
     - security

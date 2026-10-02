@@ -1,4 +1,4 @@
-const CACHE = 'algoprep-v1';
+const CACHE = 'algoprep-v2';
 const ASSETS = [
   '/',
   '/index.html',

@@ -51,8 +51,8 @@ ALGOPREP_E2E_NO_SERVER=1 npm test
 | Area | Content |
 |------|---------|
 | Patterns | **29** modules (classic DSA patterns + Spring Boot Interview Lab) |
-| Problems | **156** catalog + **15** Blind Spot drills (**171** total) |
-| By difficulty | Catalog **37** Easy · **85** Medium · **34** Hard; Blind Spot counts as Hard |
+| Problems | **157** catalog + **15** Blind Spot drills (**172** total) |
+| By difficulty | Catalog **37** Easy · **85** Medium · **35** Hard; Blind Spot counts as Hard |
 | Judge | Runnable YAML specs (including ops-mode for Trie/LRU/MinStack) + Monaco playground. Spring design drills without a hidden test are marked discussion-only. |
 | Blind Spot | **15** unlabeled hard drills (some with alternate valid patterns) |
 | Quiz | Guess-the-pattern recognition set |

@@ -12,10 +12,9 @@ challenges:
   timeComplexity: O(n)
   spaceComplexity: O(1)
   hints:
-  - Water at index i is limited by the shorter of max-left and max-right.
-  - Two pointers from both ends can track running maxima without precomputing two full arrays.
-  - Move the pointer on the side with the smaller running maximum, since that side's water level is already
-    determined.
+  - "What, on each side of a bar, caps the water?"
+  - "Water at a bar cannot rise above the shorter of the tallest bars already seen on each side."
+  - "Advance the side whose running maximum is smaller, because that side's water level is already decided."
 - id: longest-repeating-replacement
   title: Longest Repeating Character Replacement
   difficulty: HARD
@@ -29,10 +28,9 @@ challenges:
   timeComplexity: O(n)
   spaceComplexity: O(1)
   hints:
-  - A window is valid while windowLength - maxFrequencyInWindow <= k.
-  - Track a running character frequency count as the window's right edge expands.
-  - The window never needs to shrink below its historical maximum size, so you can slide rather than fully
-    recompute the left edge.
+  - "When is a stretch still achievable with only k replacements?"
+  - "A stretch is valid while its length minus its most frequent character is at most k."
+  - "Grow the right edge, and do not pull the left edge back below the longest valid length already seen."
 - id: employee-free-time
   title: Employee Free Time
   difficulty: HARD
@@ -46,10 +44,9 @@ challenges:
   timeComplexity: O(n log n)
   spaceComplexity: O(n)
   hints:
-  - Flatten every employee's intervals into one big list, then sort by start time.
-  - Merge overlapping intervals across the flattened list the same way you would for a single schedule.
-  - Any gap between the end of one merged interval and the start of the next merged interval is common
-    free time.
+  - "Where is a gap that every employee shares?"
+  - "Once every busy interval sits on one timeline, a gap between two merged busy blocks is free for everyone."
+  - "Order by start, merge overlaps, and emit each positive gap between a merged end and the next start."
 - id: median-of-two-sorted
   title: Median of Two Sorted Arrays
   difficulty: HARD
@@ -62,12 +59,9 @@ challenges:
   timeComplexity: O(log(min(m,n)))
   spaceComplexity: O(1)
   hints:
-  - Binary search the partition point on the shorter array, not the longer one, to keep the search space
-    small.
-  - A correct partition has every element on the left side <= every element on the right side, across
-    both arrays combined.
-  - Once the partition is correct, the median comes directly from the four boundary elements around the
-    partition.
+  - "What would a cut through both arrays have to satisfy to sit on the median?"
+  - "Every value on the left of the cut is at most every value on the right."
+  - "Search the cut on the shorter array until the four boundary values are in order; the median is among those boundaries."
 - id: word-ladder
   title: Word Ladder
   difficulty: HARD
@@ -82,10 +76,9 @@ challenges:
   timeComplexity: O(N * L^2)
   spaceComplexity: O(N * L)
   hints:
-  - Model each word as a node and connect two words with an edge if they differ by exactly one letter.
-  - The shortest transformation sequence in an unweighted graph is found with BFS, not DFS.
-  - Generating all single-letter variations of the current word (rather than comparing against every dictionary
-    word) keeps each step efficient.
+  - "What counts as one step away from the current word?"
+  - "Two words are one step apart when they differ by exactly one letter, and the answer is the fewest such steps."
+  - "From the current word, try each one-letter change that is still unused in the dictionary, and do not revisit a word."
 - id: serialize-binary-tree
   title: Serialize and Deserialize Binary Tree
   difficulty: HARD
@@ -100,10 +93,9 @@ challenges:
   timeComplexity: O(n)
   spaceComplexity: O(n)
   hints:
-  - Explicit null markers in the serialized output let deserialization know exactly where each subtree ends.
-  - Prefer a preorder DFS that writes node values and null markers — it rebuilds unambiguously from a token stream.
-  - Level-order with null markers is a valid alternate; whichever you choose, deserialize in the same order you wrote.
-  - During deserialization, consume tokens left-to-right, recursively (or with a queue) rebuilding parent-child links as markers appear.
+  - "What has to be written so a missing child is not confused with the end of the tree?"
+  - "A null marker occupies every missing child, so the token stream has a slot for every branch."
+  - "Write values and null markers in one fixed order, then rebuild by consuming that same order."
 - id: largest-rectangle-histogram
   title: Largest Rectangle in Histogram
   difficulty: HARD
@@ -116,12 +108,9 @@ challenges:
   timeComplexity: O(n)
   spaceComplexity: O(n)
   hints:
-  - For each bar, the largest rectangle using it as the shortest bar extends until the first shorter bar
-    on each side.
-  - A monotonic increasing stack of indices lets you find, for the bar being popped, exactly where those
-    boundaries are.
-  - When you pop a bar because a shorter one appears, the width spans from the new stack top (exclusive)
-    to the current index (exclusive).
+  - "For this bar, how far can it extend while it stays the shortest?"
+  - "The rectangle that uses this bar as its shortest side stops at the first strictly shorter bar on each side."
+  - "When a shorter bar arrives, the bar you set aside has its right edge at the new index and its left edge just after the previous unresolved index."
 - id: alien-dictionary
   title: Alien Dictionary
   difficulty: HARD
@@ -136,10 +125,9 @@ challenges:
   timeComplexity: O(C)
   spaceComplexity: O(1) alphabet-bounded
   hints:
-  - Compare each pair of adjacent words character by character to find the first position where they differ.
-  - That first differing character pair gives you a 'comes before' edge between two letters.
-  - Once all edges are collected, a topological sort over the 26 letters (only those actually present)
-    gives a valid order.
+  - "What does the first position where two neighboring words differ tell you?"
+  - "That pair of letters is a precedence: the letter in the earlier word comes first."
+  - "Collect those precedences, then repeatedly take a letter that no remaining rule still places after another."
 - id: sliding-window-maximum
   title: Sliding Window Maximum
   difficulty: HARD
@@ -154,9 +142,9 @@ challenges:
   timeComplexity: O(n)
   spaceComplexity: O(k)
   hints:
-  - A monotonic decreasing deque of indices keeps candidates for the window maximum.
-  - Drop indices that fall out of the window from the front; drop smaller values from the back before inserting.
-  - The front of the deque is always the index of the current window's maximum.
+  - "Which earlier index can never be the maximum of any later window?"
+  - "Candidates stay in decreasing value order, and the front candidate is still inside the window."
+  - "Drop indexes that have fallen out of the window, and drop smaller values before accepting the new index."
 - id: word-break-ii
   title: Word Break II
   difficulty: HARD
@@ -170,10 +158,9 @@ challenges:
   timeComplexity: O(2^n * n) worst-case
   spaceComplexity: O(n)
   hints:
-  - Backtrack over cut positions; only recurse when the current prefix is in the dictionary.
-  - The reference solution is plain DFS — for large inputs, memoizing failed start indices (or caching
-    sentence lists per index) is a useful follow-up optimization to discuss.
-  - Join the chosen words with spaces only when you reach the end of s.
+  - "Which cut is worth continuing, and which prefix is a dead end?"
+  - "A cut is legal only when the piece just taken is in the dictionary."
+  - "When the end of the string is reached, join the chosen pieces with spaces."
 - id: russian-doll-envelopes
   title: Russian Doll Envelopes
   difficulty: HARD
@@ -188,9 +175,9 @@ challenges:
   timeComplexity: O(n log n)
   spaceComplexity: O(n)
   hints:
-  - Sort by width ascending and height descending so equal widths cannot nest.
-  - The answer is the LIS length on the height sequence after that sort.
-  - Patience-sorting / binary-search tails keeps LIS in O(n log n).
+  - "After you fix an order of the envelopes, what is left to maximize?"
+  - "Equal widths cannot nest, so among equal widths the heights must be taken so the remaining heights can still increase."
+  - "The longest chain is the longest strictly increasing run of those heights."
 - id: minimum-window-subsequence
   title: Minimum Window Subsequence
   difficulty: HARD
@@ -204,10 +191,9 @@ challenges:
   timeComplexity: O(n^2)
   spaceComplexity: O(1)
   hints:
-  - Scan forward to find a window that covers t as a subsequence, then shrink from the right by walking
-    backward to the earliest start that still covers t.
-  - Track the best (shortest, then leftmost) window across all such candidates.
-  - Two pointers / two-pass scanning avoids a full DP table when m is small.
+  - "Once the pattern has been covered in order, how far back can this window start?"
+  - "The best window is the shortest, and among ties the leftmost, and it ends on a match of the pattern's last character."
+  - "Expand until the pattern is covered in order, then walk back to the earliest start that still covers it."
 
 - id: count-of-smaller
   title: Count of Smaller Numbers After Self
@@ -221,9 +207,9 @@ challenges:
   timeComplexity: O(n log n)
   spaceComplexity: O(n)
   hints:
-  - Merge sort can count inversions while sorting index arrays.
-  - A Fenwick / segment tree over ranked values also works.
-  - Either approach is interview-valid; state the trade-offs.
+  - "When this value moves past others, which of those others are smaller and still to its right?"
+  - "Each value's count is the number of smaller values that pass it while ordered halves are combined."
+  - "As the halves are combined, add the number of already-taken smaller values to the larger value they pass."
 - id: palindrome-pairs
   title: Palindrome Pairs
   difficulty: HARD
@@ -236,9 +222,9 @@ challenges:
   timeComplexity: O(n * k^2)
   spaceComplexity: O(n * k)
   hints:
-  - Index every word in a hash map and look up reverse complements of prefixes/suffixes.
-  - A trie of reversed words is an equally valid recognition path.
-  - Deduplicate pairs — the same (i, j) can be discovered via multiple cut positions.
+  - "Which other word would finish a palindrome on this word's unmatched side?"
+  - "A pair works when the unmatched side is itself a palindrome and the other side is the reverse of a word you stored."
+  - "For each cut of a word, look up the reverse of one side among the words already indexed."
 - id: task-scheduler
   title: Task Scheduler
   difficulty: HARD
@@ -252,6 +238,6 @@ challenges:
   timeComplexity: O(n)
   spaceComplexity: O(1)
   hints:
-  - Frequency of the most common task dominates the schedule length.
-  - idleSlots = (maxFreq - 1) * n, then fill with other tasks.
-  - A max-heap simulation of cooldown is also a valid interview answer.
+  - "What forces idle time: the number of tasks, or the one that repeats most?"
+  - "The busiest task leaves a gap of n after each copy except the last, and other tasks can fill those gaps."
+  - "The time taken is the larger of the task count and the length forced by the busiest task's gaps."

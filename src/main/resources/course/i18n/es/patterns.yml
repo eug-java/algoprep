@@ -44,56 +44,62 @@ patterns:
       búsqueda de forma confiable
     problems:
       pair-with-target-sum:
+        example: "Entrada: [1, 2, 3, 4], 6 → [1, 3]"
         title: Par con suma objetivo
         summary: Encuentra los índices de dos números en un arreglo ordenado que sumen un valor objetivo.
         whenToUse: Arreglo ordenado más búsqueda de par con suma es la señal clásica de dos punteros en
           direcciones opuestas.
         hints:
-        - "¿Qué puntero puedes mover sin perder el resto de la respuesta?"
-        - "Cada paso descarta solo el lado que ya no puede contener la respuesta."
+        - "¿Qué extremo puedes soltar si este par no da en el objetivo?"
+        - "El par, si existe, sigue estrictamente entre los dos índices."
         - "Coloca left en el índice 0 y right en n-1. Si la suma es menor que el objetivo avanza left; si es mayor retrocede right."
       remove-duplicates:
+        example: "Entrada: [2, 3, 3, 6, 9, 9] → 4"
         title: Eliminar duplicados de un arreglo ordenado
         summary: Compacta un arreglo ordenado en el lugar para que cada elemento aparezca una vez y devuelve
           la nueva longitud.
         whenToUse: Compactación en el lugar con un puntero de escritura lento y uno de lectura rápido
           sobre datos ordenados.
         hints:
-        - "¿Qué puntero puedes mover sin perder el resto de la respuesta?"
-        - "Cada paso descarta solo el lado que ya no puede contener la respuesta."
+        - "¿Dónde está el siguiente hueco libre para un valor que aún no escribiste?"
+        - "El índice de escritura queda justo después del último valor único guardado."
         - "Mantén un índice de escritura que avance solo al encontrar un valor único nuevo. El puntero rápido recorre todos los elementos; el lento marca el siguiente espacio libre."
       triplet-sum-zero:
+        example: "Entrada: [-3, 0, 1, 2, -1, 1, -2] → [[-3, 1, 2], [-2, 0, 2], [-2, 1, 1], [-1, 0, 1]]"
         title: Trío que suma cero
         summary: Encuentra todos los tríos únicos en un arreglo cuya suma sea cero.
         whenToUse: Ordena, fija un índice como ancla y luego usa dos punteros en el resto para hallar
           su pareja complementaria.
         hints:
-        - "¿Qué puntero puedes mover sin perder el resto de la respuesta?"
-        - "Cada paso descarta solo el lado que ya no puede contener la respuesta."
+        - "Cuando un número queda fijo, ¿qué objetivo deben sumar los otros dos?"
+        - "Para un ancla fija, el par válido sigue a su derecha."
         - "Ordena primero: así son posibles tanto los dos punteros como saltar duplicados. Con nums[i] fijo, busca un par que sume -nums[i] en el resto del arreglo. Salta valores repetidos en i, left y right para evitar tríos duplicados."
       container-with-most-water:
+        example: "Entrada: [1, 8, 6, 2, 5, 4, 8, 3, 7] → 49"
         title: Contenedor con más agua
         summary: Encuentra dos líneas que formen un contenedor con el área de agua máxima.
         whenToUse: 'Dos extremos de una línea de alturas; el área es min(altura)*ancho, así que mueve el puntero más corto hacia dentro.'
         hints:
-        - "¿Qué puntero puedes mover sin perder el resto de la respuesta?"
-        - "Cada paso descarta solo el lado que ya no puede contener la respuesta."
+        - "¿Qué lado ya no puede agrandar el área?"
+        - "La mejor área es al menos tan grande como cualquier recipiente que aún use el lado corto que vas a abandonar."
         - "Empieza con left=0 y right=n-1; el contenedor más ancho es el primer candidato. Área = min(h[left], h[right]) * (right-left). Guarda el máximo. Solo avanzar el lado más corto puede mejorar la altura mínima; avanzar el alto no ayuda."
       dutch-national-flag:
+        example: "Entrada: [1, 0, 2, 1, 0] → [0, 0, 1, 1, 2]"
         title: Bandera holandesa / Ordenar colores
         summary: Ordena un arreglo de 0/1/2 en el lugar con una sola pasada.
         whenToUse: Partición en tres vías con punteros low/mid/high.
         hints:
-        - "¿Qué puntero puedes mover sin perder el resto de la respuesta?"
-        - "Cada paso descarta solo el lado que ya no puede contener la respuesta."
+        - "¿Qué región ya está lista y qué índice sigue sin clasificar?"
+        - "Todo antes de low es 0, todo después de high es 2, y mid es el primer índice sin clasificar."
         - "Mantén [0..low) como ceros y (high..n] como doses Intercambia mid con low o high según el valor"
       quadruple-sum:
+        example: "Entrada: [4, 1, 2, -1, 1, -3], 1 → [[-3, -1, 1, 4], [-3, 1, 1, 2]]"
         title: Suma de cuatro números objetivo
         summary: Encuentra todas las cuádruplas únicas cuya suma sea el valor objetivo.
         whenToUse: Ordena, fija dos índices y usa dos punteros para el par restante.
         hints:
-        - "¿Qué puntero puedes mover sin perder el resto de la respuesta?"
-        - "Cada paso descarta solo el lado que ya no puede contener la respuesta."
+        - "Con dos números fijos, ¿qué suma de par queda por hallar?"
+        - "El par restante, si existe, está entre los índices internos, y los duplicados de cada nivel se saltan."
         - "Ordena primero y salta duplicados en cada nivel El par interno usa el clásico patrón de dos punteros"
   FAST_SLOW_POINTERS:
     constraints: "La restricción que hay que decir en voz alta es memoria extra O(1)."
@@ -139,56 +145,62 @@ patterns:
       diverjan
     problems:
       linked-list-cycle:
+        example: "Entrada: [1, 2, 3, 4] → false"
         title: Ciclo en lista enlazada
         summary: Detecta si una lista enlazada contiene un ciclo.
         whenToUse: La detección de Floyd da espacio O(1) donde un set hash costaría O(n).
         hints:
-        - "¿Qué revela la distancia entre un puntero de un paso y otro de dos pasos?"
-        - "El rápido gana un paso en cada movimiento, y esa brecha halla el medio o el ciclo."
+        - "¿Qué demostraría un encuentro de los dos recorridos y qué demostraría un null?"
+        - "Si el rápido llega a null no hay ciclo; un encuentro significa que los enlaces se cierran."
         - "Si fast se encuentra con slow, hay un ciclo. Si fast llega a null, la lista no tiene ciclo."
       middle-of-linked-list:
+        example: "Entrada: [1, 2, 3, 4, 5] → [3, 4, 5]"
         title: Nodo medio de la lista enlazada
         summary: Devuelve el nodo medio (el segundo medio si la longitud es par).
         whenToUse: fast llega al final justo cuando slow está en el medio, sin necesidad de contar la
           longitud.
         hints:
-        - "¿Qué revela la distancia entre un puntero de un paso y otro de dos pasos?"
-        - "El rápido gana un paso en cada movimiento, y esa brecha halla el medio o el ciclo."
+        - "Cuando el recorrido rápido se queda sin nodos, ¿dónde está el lento?"
+        - "El lento dio la mitad de pasos y está en el medio."
         - "Avanza fast de a dos y slow de a uno en el mismo bucle. Cuando fast es null o fast.next es null, slow es la respuesta."
       happy-number:
+        example: "Entrada: 23 → true"
         title: Número feliz
         summary: Determina si sumar repetidamente los cuadrados de los dígitos llega a 1.
         whenToUse: La transformación por cuadrados de dígitos forma un grafo funcional; un ciclo sin el
           1 significa que no es feliz.
         hints:
-        - "¿Qué revela la distancia entre un puntero de un paso y otro de dos pasos?"
-        - "El rápido gana un paso en cada movimiento, y esa brecha halla el medio o el ciclo."
+        - "¿Qué se repite si la cadena de cuadrados de dígitos nunca llega a 1?"
+        - "La secuencia de sumas de cuadrados o llega a 1 o entra en un bucle."
         - "Trata el 'siguiente valor' como un paso de una estructura enlazada implícita. Aplica fast/slow sobre esa secuencia para detectar un ciclo distinto de 1."
       cycle-start:
+        example: "Entrada: 1 → 2 → (vuelve a 2) → 2"
         title: Inicio del ciclo en una lista enlazada
         summary: Devuelve el nodo donde comienza el ciclo, o null si no existe.
         whenToUse: Encuentro de punteros con el algoritmo de Floyd, luego reinicia un puntero al head.
         hints:
-        - "¿Qué revela la distancia entre un puntero de un paso y otro de dos pasos?"
-        - "El rápido gana un paso en cada movimiento, y esa brecha halla el medio o el ciclo."
+        - "Tras el encuentro, ¿qué nodo está a la misma distancia de la cabeza y del punto de encuentro?"
+        - "Al devolver uno a la cabeza y avanzar ambos de uno en uno, se encuentran en la entrada del ciclo."
         - "Tras el encuentro, mueve un puntero de vuelta al head Avanza ambos un paso a la vez hasta que se encuentren de nuevo"
       palindrome-linked-list:
+        example: "Entrada: 1 → 2 → 2 → 1 → true"
         title: Lista enlazada palíndroma
         summary: Comprueba si una lista enlazada se lee igual hacia adelante y hacia atrás.
         whenToUse: Encuentra el punto medio, invierte la segunda mitad y compara.
         hints:
-        - "¿Qué revela la distancia entre un puntero de un paso y otro de dos pasos?"
-        - "El rápido gana un paso en cada movimiento, y esa brecha halla el medio o el ciclo."
+        - "¿Qué mitad puedes invertir para comparar las dos en un solo paso?"
+        - "La primera mitad se queda; la segunda invertida se alinea con ella de fuera hacia dentro."
         - "Punteros rápido/lento para hallar el medio Invierte la segunda mitad y luego compárala"
       circular-array-loop:
+        example: "Entrada: [1, 2, -1, 2, 2] → true"
         title: Bucle en arreglo circular
         summary: Detecta un ciclo de longitud mayor que 1 en un arreglo circular de saltos, en una sola
           dirección.
         whenToUse: Trata los índices como un grafo funcional; aplica punteros rápido/lento desde cada
           inicio.
         hints:
-        - "¿Qué revela la distancia entre un puntero de un paso y otro de dos pasos?"
-        - "El rápido gana un paso en cada movimiento, y esa brecha halla el medio o el ciclo."
+        - "¿Qué hace ilegal un salto aunque el índice vuelva?"
+        - "Un ciclo cuenta solo si todos los saltos tienen el mismo signo y la longitud es mayor que uno."
         - "Descarta los saltos que cambian de dirección Marca los índices visitados para no repetir trabajo"
   SLIDING_WINDOW:
     constraints: "La ventana es contigua. Si la restricción no es monótona, el patrón no aplica."
@@ -233,47 +245,52 @@ patterns:
     - La validez de la ventana no puede verificarse o actualizarse en O(1) al entrar y salir elementos
     problems:
       max-sum-subarray-k:
+        example: "Entrada: [2, 1, 5, 1, 3, 2], k = 3 → 9"
         title: Suma máxima de subarreglo de tamaño K
         summary: Encuentra la suma máxima de cualquier subarreglo contiguo de tamaño fijo K.
         whenToUse: 'Tamaño de ventana fijo K: suma el elemento que entra por la derecha y resta el que
           sale por la izquierda.'
         hints:
-        - "¿Qué parte del rango puedes soltar y no volver a mirar?"
-        - "La ventana sigue siendo válida y se encoge por la izquierda solo cuando la condición se rompe."
+        - "¿Qué cambia cuando la ventana avanza un paso y qué se mantiene?"
+        - "La suma pierde el valor que sale y gana el que entra; la respuesta es la mejor suma vista."
         - "Calcula la suma de la primera ventana directamente y luego desliza de a uno. Cada deslizamiento solo necesita una suma y una resta, no recalcular todo."
       longest-substring-k-distinct:
+        example: "Entrada: \\\"araaci\\\", 2 → 4"
         title: Subcadena más larga con K caracteres distintos
         summary: Encuentra la longitud de la subcadena más larga con a lo sumo K caracteres distintos.
         whenToUse: Ventana de tamaño variable más un mapa de frecuencias de claves distintas, contrayendo
           cuando se supera K.
         hints:
-        - "¿Qué parte del rango puedes soltar y no volver a mirar?"
-        - "La ventana sigue siendo válida y se encoge por la izquierda solo cuando la condición se rompe."
+        - "Cuando la ventana tiene un carácter distinto de más, ¿qué lado debe ceder algo?"
+        - "La ventana es válida exactamente mientras su mapa tiene como máximo K claves."
         - "Expande la ventana agregando cada nuevo carácter a un mapa de frecuencias. Mientras el mapa tenga más de K claves, contrae desde la izquierda y reduce/elimina conteos."
       find-all-anagrams:
+        example: "Entrada: \\\"cbaebabacd\\\", \\\"abc\\\" → [0, 6]"
         title: Encontrar todos los anagramas en una cadena
         summary: Devuelve los índices de inicio de todos los anagramas de p dentro de s.
         whenToUse: Ventana fija igual a la longitud de p, comparando conteos de caracteres en curso contra
           los de p.
         hints:
-        - "¿Qué parte del rango puedes soltar y no volver a mirar?"
-        - "La ventana sigue siendo válida y se encoge por la izquierda solo cuando la condición se rompe."
+        - "¿Qué es igual en toda ventana que es un anagrama del patrón?"
+        - "Una ventana de la longitud del patrón coincide cuando sus conteos igualan los del patrón."
         - "Construye una vez el mapa de frecuencias objetivo para p. Desliza una ventana de longitud p sobre s comparando conteos; si coinciden, ahí empieza un anagrama."
       longest-no-repeat:
+        example: "Entrada: \"aabccbb\" → 3"
         title: Subcadena más larga sin caracteres repetidos
         summary: Encuentra la subcadena más larga con todos los caracteres únicos.
         whenToUse: Ventana variable con mapa de último índice para saltar left pasado un duplicado en O(1).
         hints:
-        - "¿Qué parte del rango puedes soltar y no volver a mirar?"
-        - "La ventana sigue siendo válida y se encoge por la izquierda solo cuando la condición se rompe."
+        - "¿Adónde debe saltar el borde izquierdo si el carácter nuevo ya está dentro de la ventana?"
+        - "Left queda justo después de la copia anterior del carácter de la derecha; la respuesta es la brecha más ancha."
         - "Mantén un mapa carácter → último índice dentro (o justo antes) de la ventana actual. Si s[right] se vio en j ≥ left, pon left = j+1 para que la ventana quede sin repetidos. Tras cada expansión, actualiza best = max(best, right-left+1)."
       min-window-substring:
+        example: "Entrada: \\\"ADOBECODEBANC\\\", \\\"ABC\\\" → BANC"
         title: Subcadena de ventana mínima
         summary: La subcadena más pequeña de s que cubre todos los caracteres de t.
         whenToUse: Ventana encogible con mapas need/have hasta satisfacer todos los caracteres requeridos.
         hints:
-        - "¿Qué parte del rango puedes soltar y no volver a mirar?"
-        - "La ventana sigue siendo válida y se encoge por la izquierda solo cuando la condición se rompe."
+        - "¿Qué tiene que volverse cierto antes de poder encoger?"
+        - "La ventana es válida solo mientras el conteo de cada carácter requerido está cubierto."
         - "Construye need para t y cuenta cuántos caracteres distintos requeridos ya están satisfechos. Expande right hasta que la ventana sea válida (satisfied == need.size), luego encoge left mientras siga válida. En cada ventana válida compara la longitud con la mejor respuesta y quédate con la más corta. Al encoger, decrementa have con cuidado: satisfied baja solo cuando un contador requerido cae por debajo de need."
   INTERVALS:
     constraints: "Ordena por inicio salvo que el problema sea de finales. Di cuál."
@@ -319,46 +336,51 @@ patterns:
       o mapa ordenado encaja mejor)
     problems:
       merge-intervals:
+        example: "Entrada: [[2, 5], [1, 3], [7, 9]] → [[1, 5], [7, 9]]"
         title: Fusionar intervalos
         summary: Fusiona todos los intervalos solapados en un conjunto mínimo de rangos sin solapamiento.
         whenToUse: 'El clásico: ordenar por inicio más un único recorrido lineal de fusión.'
         hints:
-        - "¿Qué se vuelve obvio al ordenar los intervalos por el inicio?"
-        - "Solo comparas el intervalo actual con el que todavía no has cerrado."
+        - "Tras ordenar, ¿qué intervalo previo puede tocar todavía el actual?"
+        - "Solo el último intervalo fusionado puede solaparse con el que miras."
         - "Ordena por inicio antes que nada. Compara el inicio de cada intervalo con el fin del último intervalo fusionado."
       insert-interval:
+        example: "Entrada: [[1, 3], [6, 9]], [2, 5] → [[1, 5], [6, 9]]"
         title: Insertar intervalo
         summary: Inserta un nuevo intervalo en una lista ordenada sin solapamientos y fusiona donde haga
           falta.
         whenToUse: 'Tres fases: copiar los intervalos estrictamente anteriores, fusionar los que se solapan,
           copiar el resto.'
         hints:
-        - "¿Qué se vuelve obvio al ordenar los intervalos por el inicio?"
-        - "Solo comparas el intervalo actual con el que todavía no has cerrado."
+        - "¿Dónde empieza el intervalo nuevo a tragarse a sus vecinos?"
+        - "Antes del solape la lista se copia tal cual; durante el solape los límites nuevos solo crecen."
         - "No hace falta ordenar: la lista de entrada ya está ordenada. Sigue expandiendo los límites del nuevo intervalo mientras se solape con el actual."
       conflicting-appointments:
+        example: "Entrada: [1,4], [2,5], [7,9] → false"
         title: Citas en conflicto
         summary: Verifica si dos citas cualesquiera en una lista se solapan.
         whenToUse: 'Ordena por inicio y comprueba cada par adyacente — tras ordenar solo los vecinos pueden solaparse.'
         hints:
-        - "¿Qué se vuelve obvio al ordenar los intervalos por el inicio?"
-        - "Solo comparas el intervalo actual con el que todavía no has cerrado."
+        - "Tras ordenar por inicio, ¿qué par es el único que puede chocar?"
+        - "Hay choque exactamente cuando una cita empieza antes de que termine la anterior."
         - "Tras ordenar por start, solo los pares adyacentes pueden solaparse. Hay solape en cuanto el start de uno es anterior al end del anterior."
       interval-intersection:
+        example: "Entrada: [[0, 2], [5, 10]], [[1, 5], [8, 12]] → [[1, 2], [5, 5], [8, 10]]"
         title: Intersecciones de listas de intervalos
         summary: Devuelve las intersecciones de dos listas de intervalos ordenadas.
         whenToUse: Dos punteros sobre dos listas de intervalos ya ordenadas; emite el solape y avanza la que termina antes.
         hints:
-        - "¿Qué se vuelve obvio al ordenar los intervalos por el inicio?"
-        - "Solo comparas el intervalo actual con el que todavía no has cerrado."
+        - "¿Qué inicio y qué fin definen el solape de los dos intervalos actuales?"
+        - "El solape va del inicio más tardío al fin más temprano, y está vacío si ese tramo va al revés."
         - "Inicio del solape = max(starts); fin = min(ends). Emite solo si start < end (o ≤ si es inclusivo). Avanza el puntero del intervalo que termina primero — no puede solapar intervalos posteriores de la otra lista."
       minimum-meeting-rooms:
+        example: "Entrada: [0,30], [5,10], [15,20] → 2"
         title: Mínimo de salas de reunión
         summary: Encuentra el número mínimo de salas de reunión necesarias.
         whenToUse: 'Cuenta reuniones concurrentes: ordena por start y un min-heap de ends en curso (o barrido starts/ends).'
         hints:
-        - "¿Qué se vuelve obvio al ordenar los intervalos por el inicio?"
-        - "Solo comparas el intervalo actual con el que todavía no has cerrado."
+        - "Cuando empieza una reunión, ¿cuál anterior ya pudo liberar una sala?"
+        - "El número de salas es cuántas reuniones están abiertas a la vez, según fines que aún están en el futuro."
         - "Ordena las reuniones por start para siempre tomar la siguiente más temprana. Mantén un min-heap de ends de salas ocupadas; libera cuando heap.min ≤ next.start. Si no hay sala libre, asigna una (push end). El tamaño del heap es las salas necesarias. Alternativa: ordena starts y ends por separado y barre — +1 en start, −1 en end."
   IN_PLACE_LINKED_LIST:
     constraints: "Dibuja el recableado de tres nodos antes del bucle."
@@ -402,47 +424,52 @@ patterns:
       recursión puede ser más clara
     problems:
       reverse-linked-list:
+        example: "Entrada: [1, 2, 3, 4] → [4, 3, 2, 1]"
         title: Invertir lista enlazada
         summary: Invierte una lista simplemente enlazada de forma iterativa y devuelve la nueva cabeza.
         whenToUse: La plantilla fundamental de inversión con tres punteros para toda variante de este
           patrón.
         hints:
-        - "¿Qué enlaces puedes reescribir sujetando solo unos pocos nodos?"
-        - "El prefijo ya recorrido está reenganchado; el resto de la lista sigue intacto."
+        - "¿Qué tienes que recordar antes de sobrescribir un puntero next?"
+        - "El prefijo invertido termina en el nodo que acabas de reenganchar, y el resto sigue siendo la cadena vieja."
         - "Guarda curr.next antes de sobrescribirlo. El último curr no nulo se convierte en la nueva cabeza al terminar el bucle."
       reverse-sublist:
+        example: "Entrada: [1, 2, 3, 4, 5], 2, 4 → [1, 4, 3, 2, 5]"
         title: Invertir sublista
         summary: Invierte los nodos desde la posición left hasta right (indexado desde 1) en una lista
           enlazada.
         whenToUse: Llega al nodo justo antes de 'left', invierte el segmento y luego reconecta ambos límites.
         hints:
-        - "¿Qué enlaces puedes reescribir sujetando solo unos pocos nodos?"
-        - "El prefijo ya recorrido está reenganchado; el resto de la lista sigue intacto."
+        - "¿Qué nodo se vuelve la cola del tramo invertido?"
+        - "El nodo que estaba en el límite izquierdo cierra el tramo invertido y debe unirse a lo que seguía al límite derecho."
         - "Usa una cabeza ficticia para que left=1 no requiera un caso especial. El nodo original 'left' se vuelve la cola del segmento invertido: reconéctalo con lo que sigue a 'right'."
       reverse-every-k:
+        example: "Entrada: [1, 2, 3, 4, 5], 2 → [2, 1, 4, 3, 5]"
         title: Invertir cada sublista de K elementos
         summary: Invierte los nodos de una lista enlazada en grupos de k; el grupo sobrante queda igual.
         whenToUse: Cuenta k nodos por adelantado para confirmar que existe un grupo completo, inviértelo
           y luego encadena los grupos.
         hints:
-        - "¿Qué enlaces puedes reescribir sujetando solo unos pocos nodos?"
-        - "El prefijo ya recorrido está reenganchado; el resto de la lista sigue intacto."
+        - "¿Qué debe ser cierto antes de invertir el siguiente grupo de k?"
+        - "Un grupo se invierte solo si quedan k nodos; su nueva cabeza se ata a la cola del grupo anterior."
         - "Antes de invertir un grupo, verifica que realmente quedan k nodos. Conecta la cola del grupo anterior con la nueva cabeza del grupo actual tras cada inversión."
       rotate-list:
+        example: "Entrada: [1, 2, 3, 4, 5], 2 → [4, 5, 1, 2, 3]"
         title: Rotar lista
         summary: Rota la lista enlazada k posiciones hacia la derecha.
         whenToUse: Halla la longitud, conecta la lista en círculo y rómpela en el nuevo punto.
         hints:
-        - "¿Qué enlaces puedes reescribir sujetando solo unos pocos nodos?"
-        - "El prefijo ya recorrido está reenganchado; el resto de la lista sigue intacto."
+        - "Tras k pasos, ¿qué nodo es la nueva cola?"
+        - "La lista es un círculo por un empalme: la nueva cola está a n - (k mod n) pasos de la vieja cabeza."
         - "Toma k módulo n La nueva cola queda en la posición n - k - 1 desde el head tras cerrar el círculo"
       reorder-list:
+        example: "Entrada: [1, 2, 3, 4] → [1, 4, 2, 3]"
         title: Reordenar lista
         summary: Reordena la lista en el lugar como L0→Ln→L1→Ln-1→…
         whenToUse: Encuentra el medio, invierte la segunda mitad y entrelaza ambas.
         hints:
-        - "¿Qué enlaces puedes reescribir sujetando solo unos pocos nodos?"
-        - "El prefijo ya recorrido está reenganchado; el resto de la lista sigue intacto."
+        - "¿Qué mitad hay que invertir antes de entrelazar las dos?"
+        - "La primera mitad conserva el orden; la segunda invertida se entrelaza nodo por medio."
         - "Encuentra el medio con punteros rápido/lento Invierte la segunda mitad y entrelaza los nodos"
   TWO_HEAPS:
     constraints: "Los dos heaps parten los datos para que la mediana esté siempre en la cima de uno."
@@ -490,48 +517,53 @@ patterns:
       dos heaps'
     problems:
       find-median-stream:
+        example: "Operaciones: addNum(3), findMedian(), addNum(1), findMedian(), addNum(5), findMedian() → [null, 3.0, null, 2.0, null, 3.0]"
         title: Mediana de un flujo de números
         summary: Permite insertar números de a uno y devolver la mediana en curso.
         whenToUse: 'El problema clásico de dos heaps: equilibra un max-heap y un min-heap a medida que
           llegan números.'
         hints:
-        - "¿Qué mitad debe quedar ordenada y cuál puede seguir suelta?"
-        - "Un heap guarda la mitad apartada y el otro la elección que puedes tomar ahora."
+        - "Tras cada inserción, ¿qué heap puede ser más grande?"
+        - "El max-heap guarda la mitad baja, el min-heap la alta, y sus tamaños difieren como máximo en uno."
         - "Inserta primero en el max-heap y luego mueve su cima al min-heap para mantener el orden. Reequilibra los tamaños tras cada inserción para que difieran en a lo sumo uno."
       maximize-capital:
+        example: "Entrada: [0, 1, 2], [1, 2, 3], 3, 0 → 6"
         title: Maximizar capital
         summary: Elige a lo sumo k proyectos para maximizar el capital final (el problema del IPO).
         whenToUse: Un min-heap por capital requerido para hallar proyectos accesibles, junto a un max-heap
           por ganancia para elegir el mejor.
         hints:
-        - "¿Qué mitad debe quedar ordenada y cuál puede seguir suelta?"
-        - "Un heap guarda la mitad apartada y el otro la elección que puedes tomar ahora."
+        - "¿Qué proyectos puedes considerar con el capital que tienes ahora?"
+        - "Los proyectos asequibles están en un heap de beneficio; tomar el mejor solo sube el capital."
         - "Coloca en un max-heap por ganancia todos los proyectos accesibles con el capital actual. Toma siempre la cima del max-heap de ganancia y luego desbloquea los proyectos recién accesibles."
       sliding-window-median:
+        example: "Entrada: [1, 3, -1, -3, 5, 3, 6, 7], 3 → [1.0, -1.0, -1.0, 3.0, 5.0, 6.0]"
         title: Mediana de ventana deslizante
         summary: Calcula la mediana de cada ventana contigua de tamaño k.
         whenToUse: Dos montículos junto con borrado perezoso (lazy deletion).
         hints:
-        - "¿Qué mitad debe quedar ordenada y cuál puede seguir suelta?"
-        - "Un heap guarda la mitad apartada y el otro la elección que puedes tomar ahora."
+        - "Cuando la ventana se desliza, ¿qué valor debe salir de los heaps y cuál llega?"
+        - "Los dos heaps siguen partiendo la ventana actual en mitad baja y alta, aunque una salida se borre de forma perezosa."
         - "Equilibra los montículos máximo y mínimo para la ventana Elimina de forma perezosa los elementos que salen de la ventana"
       next-interval:
+        example: "Entrada: [[2, 3], [3, 4], [5, 6]] → [1, 2, -1]"
         title: Siguiente intervalo
         summary: Para cada intervalo, encuentra el siguiente intervalo cuyo inicio >= su fin, o -1 si
           no existe.
         whenToUse: Montículo máximo por inicio/fin para emparejar de forma voraz.
         hints:
-        - "¿Qué mitad debe quedar ordenada y cuál puede seguir suelta?"
-        - "Un heap guarda la mitad apartada y el otro la elección que puedes tomar ahora."
+        - "Para un intervalo que acaba de terminar, ¿qué inicio posterior es el primero que puede seguirlo?"
+        - "Emparejas el fin pendiente más temprano con el inicio más temprano que aún no es anterior a ese fin."
         - "Construye un montículo de intervalos ordenado por inicio descendente Empareja contra los finales en orden descendente"
       static-median:
+        example: "Entrada: [3, 1, 2] → 2.0"
         title: Mediana de un arreglo desordenado
-        summary: Find the median of an unsorted array using two heaps.
-        whenToUse: Same two-heap balance idea as the stream median, but for a fixed array.
+        summary: "Mediana de un arreglo desordenado usando dos montículos."
+        whenToUse: "La misma idea de equilibrar dos montículos que en la mediana de un flujo, pero para un arreglo fijo."
         hints:
-        - "¿Qué mitad debe quedar ordenada y cuál puede seguir suelta?"
-        - "Un heap guarda la mitad apartada y el otro la elección que puedes tomar ahora."
-        - "Push into max/min heaps and rebalance Median is top or average of tops"
+        - "¿Qué mitad de los valores necesitas en la cima para leer la mediana?"
+        - "Tras reequilibrar, la mediana es la cima del heap mayor, o el promedio de las dos cimas."
+        - "Inserta en los montículos max/min y reequilibra. La mediana es la cima o el promedio de las dos cimas."
   K_WAY_MERGE:
     constraints: "El heap guarda un candidato de cada lista ordenada, no toda la entrada."
     followUp: "¿Y si las listas son tan largas que conviene buscar un valor en binario en vez de fusionar?"
@@ -577,46 +609,51 @@ patterns:
       del orden local)
     problems:
       merge-k-sorted-lists:
+        example: "Entrada: [[1, 4, 5], [1, 3, 4], [2, 6]] → [1, 1, 2, 3, 4, 4, 5, 6]"
         title: Fusionar K listas ordenadas
         summary: Fusiona k listas enlazadas ordenadas en una sola lista ordenada.
         whenToUse: Min-heap con las k cabezas actuales de las listas, extrayendo siempre la menor.
         hints:
-        - "De los K frentes ordenados, ¿qué elemento es seguro tomar ahora?"
-        - "Un min-heap de las cabezas actuales entrega el siguiente valor en el orden global."
+        - "¿Cuál de las K cabezas es seguro tomar ahora?"
+        - "Un heap de las cabezas actuales entrega el siguiente nodo en orden global, y su sucesor lo reemplaza."
         - "Inserta el nodo cabeza de cada lista (no solo su valor) para poder avanzarlo después. Tras extraer un nodo, inserta su .next en el heap si existe."
       kth-smallest-sorted-matrix:
+        example: "Entrada: [[1, 3, 4], [2, 6, 8], [3, 6, 7]], 5 → 4"
         title: K-ésimo menor en matriz ordenada
         summary: Encuentra el k-ésimo elemento más pequeño en una matriz ordenada por filas y columnas.
         whenToUse: Trata las filas como listas ordenadas y fusiónalas con un heap, o aplica búsqueda binaria
           directamente sobre el rango de valores.
         hints:
-        - "De los K frentes ordenados, ¿qué elemento es seguro tomar ahora?"
-        - "Un min-heap de las cabezas actuales entrega el siguiente valor en el orden global."
+        - "Después de sacar una celda, ¿qué celda nueva pasa a ser candidata?"
+        - "El heap guarda la menor celda aún no tomada de las filas abiertas, y la extracción k es la respuesta."
         - "Inicializa el heap con el primer elemento de cada fila (hasta k filas). Extrae k veces; la k-ésima extracción es la respuesta."
       k-smallest-pairs:
+        example: "Entrada: [1, 7, 11], [2, 4, 6], 3 → [[1, 2], [1, 4], [1, 6]]"
         title: K pares con menor suma
         summary: Encuentra k pares (u,v) con las sumas más pequeñas a partir de dos arreglos ordenados.
         whenToUse: Montículo mínimo de pares candidatos que expande índices progresivamente.
         hints:
-        - "De los K frentes ordenados, ¿qué elemento es seguro tomar ahora?"
-        - "Un min-heap de las cabezas actuales entrega el siguiente valor en el orden global."
+        - "Cuando tomas el par (i, j), ¿qué par siguiente del mismo i vale la pena mirar?"
+        - "El heap guarda el mejor par aún no tomado por cada índice inicial, así que la siguiente extracción es la siguiente suma menor."
         - "Inicializa el montículo con (i,0) para los primeros k de nums1 Al extraer un par, inserta (i, j+1)"
       smallest-range:
+        example: "Entrada: [[4, 10, 15, 24, 26], [0, 9, 12, 20], [5, 18, 22, 30]] → [20, 24]"
         title: Rango mínimo que cubre elementos de K listas
         summary: Encuentra el rango más pequeño que incluya al menos un número de cada lista.
         whenToUse: Montículo mínimo sobre las cabezas de las listas, rastreando el máximo actual.
         hints:
-        - "De los K frentes ordenados, ¿qué elemento es seguro tomar ahora?"
-        - "Un min-heap de las cabezas actuales entrega el siguiente valor en el orden global."
+        - "¿Qué lista posee ahora el mínimo y cuál es el máximo entre los K frentes?"
+        - "El rango que cubre un elemento de cada lista va del mínimo del heap al mejor máximo de esos frentes."
         - "Rastrea el máximo global entre las cimas del montículo Avanza la lista de la que salió el mínimo"
       merge-two-sorted-lists:
+        example: "Entrada: [1, 2, 4], [1, 3, 4] → [1, 1, 2, 3, 4, 4]"
         title: Fusionar dos listas ordenadas
-        summary: Merge two sorted linked lists into one sorted list.
-        whenToUse: K-way merge with k=2 — compare heads and advance.
+        summary: "Fusiona dos listas enlazadas ordenadas en una sola lista ordenada."
+        whenToUse: "Fusión de k vías con k=2: compara las cabezas y avanza la menor."
         hints:
-        - "De los K frentes ordenados, ¿qué elemento es seguro tomar ahora?"
-        - "Un min-heap de las cabezas actuales entrega el siguiente valor en el orden global."
-        - "Use a dummy head Always attach the smaller current node"
+        - "¿Cuál de los dos nodos actuales es el siguiente a enganchar?"
+        - "La lista fusionada es la cabeza menor y luego la fusión de lo que queda."
+        - "Usa una cabeza ficticia. Engancha siempre el nodo actual más pequeño."
   TOP_K_ELEMENTS:
     constraints: "Un heap de tamaño k gana a un orden total cuando k es mucho menor que n."
     followUp: "¿Y si el flujo no termina y aun así quieres el top k actual?"
@@ -662,47 +699,52 @@ patterns:
     - Necesitas el orden exacto de todos los elementos, no solo los K principales
     problems:
       top-k-numbers:
+        example: "Entrada: [3, 1, 5, 12, 2, 11], 3 → [12, 11, 5]"
         title: Los K números principales
         summary: Devuelve los K números más grandes de un arreglo no ordenado.
         whenToUse: Un min-heap de tamaño K es la aplicación directa del patrón.
         hints:
-        - "¿Necesitas el orden completo o solo los K valores que vencen al resto?"
-        - "Un heap de tamaño K olvida lo que ya no puede entrar en la respuesta."
+        - "¿Qué valor de un heap de tamaño K estás dispuesto a tirar?"
+        - "El heap guarda los K mayores hasta ahora, y su cima es el menor de esos K."
         - "Inserta los primeros K números, luego compara cada número posterior con la cima del heap. Reemplaza la cima solo si el número nuevo es mayor."
       k-closest-points:
+        example: "Entrada: [[1, 3], [-2, 2], [0, 1]], 2 → [[0, 1], [-2, 2]]"
         title: K puntos más cercanos al origen
         summary: Devuelve los K puntos con menor distancia euclidiana al origen.
         whenToUse: Un max-heap de tamaño K por distancia mantiene listo para descartar al punto más lejano
           conservado.
         hints:
-        - "¿Necesitas el orden completo o solo los K valores que vencen al resto?"
-        - "Un heap de tamaño K olvida lo que ya no puede entrar en la respuesta."
+        - "¿Qué punto del heap es el más lejano y por eso se desaloja?"
+        - "Un heap de tamaño K ordenado por distancia guarda los puntos más cercanos; su cima es el más lejano de ellos."
         - "Compara distancias al cuadrado para evitar llamadas innecesarias a sqrt. Descarta la cima del max-heap cada vez que el heap supere el tamaño K."
       top-k-frequent:
+        example: "Entrada: [1, 3, 5, 12, 11, 12, 11], 2 → [12, 11]"
         title: Los K números más frecuentes
         summary: Devuelve los K elementos más frecuentes de un arreglo.
         whenToUse: Construye primero un mapa de frecuencias y luego aplica un heap de tamaño K según la
           frecuencia.
         hints:
-        - "¿Necesitas el orden completo o solo los K valores que vencen al resto?"
-        - "Un heap de tamaño K olvida lo que ya no puede entrar en la respuesta."
+        - "Cuando ya conoces cada frecuencia, ¿qué frecuencia debe soltar un heap de tamaño K?"
+        - "El heap guarda K pares por frecuencia, y su cima es la menos frecuente de esas K."
         - "Cuenta las frecuencias con un mapa hash en una pasada. Inserta pares (valor, frecuencia) en un min-heap ordenado por frecuencia, acotado a tamaño K."
       kth-largest:
+        example: "Entrada: [3, 2, 1, 5, 6, 4], 2 → 5"
         title: K-ésimo elemento más grande
         summary: Devuelve el k-ésimo elemento más grande de un arreglo desordenado.
         whenToUse: Min-heap de tamaño k (seguro en entrevista) o quickselect con O(n) medio; di el tradeoff en voz alta.
         hints:
-        - "¿Necesitas el orden completo o solo los K valores que vencen al resto?"
-        - "Un heap de tamaño K olvida lo que ya no puede entrar en la respuesta."
+        - "¿Qué significa la cima de un min-heap de tamaño K?"
+        - "El heap son los K valores mayores vistos, así que su cima es el k-ésimo mayor actual."
         - "Mantén un min-heap de los k mayores vistos; la cima es el k-ésimo mayor actual. Inserta cada número; si el tamaño supera k, saca el menor — ya no puede ser la respuesta. Quickselect es un follow-up O(n) medio; menciona O(n²) en el peor caso sin median-of-medians."
       reorganize-string:
+        example: "Entrada: \\\"aab\\\" → aba"
         title: Reorganizar cadena
         summary: Reordena la cadena para que no haya dos caracteres adyacentes iguales; devuelve vacío
           si es imposible.
         whenToUse: Montículo máximo por frecuencia; coloca el siguiente carácter de forma voraz.
         hints:
-        - "¿Necesitas el orden completo o solo los K valores que vencen al resto?"
-        - "Un heap de tamaño K olvida lo que ya no puede entrar en la respuesta."
+        - "¿Qué carácter no puedes colocar a continuación?"
+        - "El siguiente es el más frecuente de los que quedan, salvo el recién usado; es imposible si un carácter tiene que repetirse demasiado pronto."
         - "Si la frecuencia máxima supera (n+1)/2, es imposible Toma siempre el carácter disponible más frecuente"
   MODIFIED_BINARY_SEARCH:
     constraints: "Di qué mitad descartas y por qué ahí no puede estar la respuesta."
@@ -752,47 +794,52 @@ patterns:
       e igual de rápido en la práctica
     problems:
       order-agnostic-binary-search:
+        example: "Entrada: [4, 6, 10], 10 → 2"
         title: Búsqueda binaria agnóstica al orden
         summary: Busca un objetivo en un arreglo ordenado ascendente o descendentemente.
         whenToUse: Detecta el orden a partir de los elementos extremos una vez, y luego aplica la búsqueda
           binaria estándar adaptada.
         hints:
-        - "Tras mirar el medio, ¿qué mitad seguro que no contiene la respuesta?"
-        - "Cada paso deja la respuesta, si existe, dentro del tramo que aún no descartaste."
+        - "¿Cómo sabes si el medio es demasiado pequeño o demasiado grande?"
+        - "El primero y el último fijan la dirección del orden, y esa dirección decide qué mitad conservar."
         - "Compara el primer y último elemento para decidir si es ascendente o descendente. Invierte la dirección de comparación según el orden detectado."
       search-rotated-array:
+        example: "Entrada: [10, 15, 1, 3, 8], 1 → 2"
         title: Buscar en arreglo ordenado rotado
         summary: Encuentra el índice de un objetivo en un arreglo ordenado rotado con elementos únicos.
         whenToUse: 'En mid, un lado siempre está ordenado: busca ahí si el objetivo cae en su rango, si
           no, busca en el otro lado.'
         hints:
-        - "Tras mirar el medio, ¿qué mitad seguro que no contiene la respuesta?"
-        - "Cada paso deja la respuesta, si existe, dentro del tramo que aún no descartaste."
+        - "¿Qué mitad sigue ordenada y podría vivir ahí el objetivo?"
+        - "Un lado del medio es un rango ordenado normal; el objetivo se conserva solo si cae dentro de ese rango."
         - "Compara nums[low] con nums[mid] para saber qué mitad está ordenada. Verifica si el objetivo está en el rango de valores de la mitad ordenada antes de entrar en ella."
       find-range:
+        example: "Entrada: [4, 6, 6, 6, 9], 6 → [1, 3]"
         title: Primera y última posición
         summary: Encuentra el primer y último índice de un valor objetivo en un arreglo ordenado.
         whenToUse: 'Ejecuta dos búsquedas binarias: una sesgada para hallar el límite inferior, otra para
           el límite superior.'
         hints:
-        - "Tras mirar el medio, ¿qué mitad seguro que no contiene la respuesta?"
-        - "Cada paso deja la respuesta, si existe, dentro del tramo que aún no descartaste."
+        - "Cuando encuentras el objetivo, ¿terminaste o aún necesitas un lado?"
+        - "La búsqueda izquierda guarda la coincidencia más a la izquierda y la derecha la más a la derecha, ambas en el mismo arreglo ordenado."
         - "Al encontrar una coincidencia buscando la primera posición, sigue acotando a la izquierda en vez de detenerte. Haz lo mismo pero acotando a la derecha para la última posición."
       find-peak-element:
+        example: "Entrada: [1, 2, 3, 1] → 2"
         title: Encontrar elemento pico
         summary: Devuelve el índice de cualquier elemento pico del arreglo.
         whenToUse: Búsqueda binaria hacia el vecino mayor.
         hints:
-        - "Tras mirar el medio, ¿qué mitad seguro que no contiene la respuesta?"
-        - "Cada paso deja la respuesta, si existe, dentro del tramo que aún no descartaste."
+        - "Si el medio es menor que su vecino derecho, ¿qué lado aún esconde un pico?"
+        - "Una subida a la derecha significa que hay un pico a la derecha; si no, hay uno a la izquierda, incluido el medio."
         - "Si mid es menor que mid+1, avanza a la derecha En caso contrario, avanza a la izquierda incluyendo mid"
       search-rotated-duplicates:
+        example: "Entrada: [2, 5, 6, 0, 0, 1, 2], 0 → true"
         title: Buscar en arreglo rotado II
         summary: Busca un valor objetivo en un arreglo ordenado y rotado que puede contener duplicados.
         whenToUse: Búsqueda binaria con reducción de extremos ante duplicados.
         hints:
-        - "Tras mirar el medio, ¿qué mitad seguro que no contiene la respuesta?"
-        - "Cada paso deja la respuesta, si existe, dentro del tramo que aún no descartaste."
+        - "¿Qué puedes concluir cuando los extremos y el medio son iguales?"
+        - "Si los tres valores coinciden, ninguna mitad está demostrada como ordenada, así que ambos extremos se encogen en uno; si no, vale la mitad rotada de siempre."
         - "Si nums[lo]==nums[mid]==nums[hi], reduce ambos extremos En los demás casos aplica la lógica habitual del arreglo rotado"
   SUBSETS:
     constraints: "Elegir, explorar, deshacer. El dibujo es el árbol incluir/excluir."
@@ -846,56 +893,62 @@ patterns:
     - El problema necesita una respuesta válida bajo restricciones, no todos los arreglos posibles
     problems:
       subsets:
+        example: "Entrada: [1, 2] → [[], [1], [2], [1, 2]]"
         title: Subconjuntos
         summary: Devuelve todos los subconjuntos (conjunto potencia) de un arreglo de enteros distintos.
         whenToUse: 'El clásico BFS en cascada: duplica la lista de subconjuntos por cada nuevo elemento.'
         hints:
-        - "¿Qué elección añades al camino actual y qué deshaces si no sirve?"
-        - "El camino actual es una respuesta parcial; la anotas antes de la siguiente elección y la deshaces al volver."
+        - "Para el número que miras, ¿cuáles son los dos futuros de cada subconjunto construido?"
+        - "El resultado es todo subconjunto del prefijo, y el número nuevo se añade a cada uno o no."
         - "Empieza la lista de resultados solo con el subconjunto vacío. Por cada número, agrégalo a una copia de cada subconjunto ya presente en el resultado."
       subsets-with-duplicates:
+        example: "Entrada: [1, 2, 2] → [[], [1], [2], [1, 2], [2, 2], [1, 2, 2]]"
         title: Subconjuntos con duplicados
         summary: Devuelve todos los subconjuntos únicos cuando el arreglo de entrada puede tener valores
           duplicados.
         whenToUse: Ordena primero y luego, ante un valor repetido, extiende solo los subconjuntos creados
           en la ronda anterior.
         hints:
-        - "¿Qué elección añades al camino actual y qué deshaces si no sirve?"
-        - "El camino actual es una respuesta parcial; la anotas antes de la siguiente elección y la deshaces al volver."
+        - "Cuando este valor es igual al anterior, ¿qué subconjuntos tienes prohibido extender?"
+        - "Un duplicado solo extiende los subconjuntos creados por la copia anterior, así que el mismo subconjunto no se construye dos veces."
         - "Ordena el arreglo para que los valores duplicados queden adyacentes. Si nums[i] es igual a nums[i-1], agrégalo solo a los subconjuntos añadidos en la ronda del número anterior."
       permutations:
+        example: "Entrada: [1, 2, 3] → [[3, 2, 1], [2, 3, 1], [2, 1, 3], [3, 1, 2], [1, 3, 2], [1, 2, 3]]"
         title: Permutaciones
         summary: Devuelve todas las permutaciones de un arreglo de números distintos.
         whenToUse: Backtracking de intercambio y deshacer, o BFS insertando el siguiente número en cada
           posición.
         hints:
-        - "¿Qué elección añades al camino actual y qué deshaces si no sirve?"
-        - "El camino actual es una respuesta parcial; la anotas antes de la siguiente elección y la deshaces al volver."
+        - "¿Qué hay que restaurar después de probar el valor en esta posición?"
+        - "El prefijo hasta el índice actual es una permutación parcial, y el intercambio se deshace antes de la siguiente elección."
         - "Intercambia el índice actual con cada índice posterior, recurre y luego deshaz el intercambio. Caso base: cuando el índice actual llega al final del arreglo, registra una permutación completa."
       generate-parentheses:
+        example: "Entrada: 3 → ((())), (()()), (())(), ()(()), ()()()"
         title: Generar paréntesis
         summary: Todas las combinaciones válidas de n pares de paréntesis bien formados.
         whenToUse: 'Backtracking con contadores open/close — poda cualquier prefijo que ya no pueda ser válido.'
         hints:
-        - "¿Qué elección añades al camino actual y qué deshaces si no sirve?"
-        - "El camino actual es una respuesta parcial; la anotas antes de la siguiente elección y la deshaces al volver."
+        - "¿Cuándo puedes poner un cierre y cuándo una apertura?"
+        - "Un prefijo es válido mientras los cierres no superan a las aperturas, y las aperturas no superan n."
         - "Añade '(' solo mientras open_used < n. Añade ')' solo mientras close_used < open_used; así cada prefijo queda balanceado. Registra la cadena solo cuando open_used == close_used == n. Generar subconjuntos sin estas reglas explota y produce inválidas."
       unique-permutations:
+        example: "Entrada: [1, 1, 2] → [[1, 1, 2], [1, 2, 1], [2, 1, 1]]"
         title: Permutaciones II
         summary: Todas las permutaciones únicas de un arreglo que puede contener duplicados.
         whenToUse: Backtracking con salto de valores idénticos consecutivos tras ordenar.
         hints:
-        - "¿Qué elección añades al camino actual y qué deshaces si no sirve?"
-        - "El camino actual es una respuesta parcial; la anotas antes de la siguiente elección y la deshaces al volver."
+        - "Cuando dos valores idénticos son vecinos, ¿cuál puedes usar a continuación?"
+        - "Un duplicado se usa en esta profundidad solo si el valor idéntico anterior ya se usó, así que las permutaciones iguales no se repiten."
         - "Ordena el arreglo primero Salta un duplicado si el idéntico anterior aún no se ha usado"
       subsets-size-k:
+        example: "Entrada: 4, 2 → [[1, 2], [1, 3], [1, 4], [2, 3], [2, 4], [3, 4]]"
         title: Combinaciones de tamaño K
-        summary: Return all combinations of k numbers chosen from 1..n.
-        whenToUse: Subset/backtracking generation with a fixed size limit.
+        summary: "Todas las combinaciones de k números elegidos de 1..n."
+        whenToUse: "Generación de subconjuntos con un límite fijo de tamaño."
         hints:
-        - "¿Qué elección añades al camino actual y qué deshaces si no sirve?"
-        - "El camino actual es una respuesta parcial; la anotas antes de la siguiente elección y la deshaces al volver."
-        - "Choose or skip each number from start..n Stop when path size is k"
+        - "Cuando el camino ya tiene K números, ¿qué queda por hacer?"
+        - "El camino es una combinación desde un índice inicial creciente, así que los números no se reutilizan ni se reordenan."
+        - "Elige o descarta cada número desde start hasta n. Para cuando el camino ya tiene k números."
   GREEDY:
     constraints: "Nombra la clave de orden y por qué la elección local no hay que deshacerla."
     followUp: "Da un contraejemplo donde lo voraz pierde contra DP antes de comprometerte."
@@ -943,47 +996,52 @@ patterns:
       a la vez
     problems:
       jump-game:
+        example: "Entrada: [2, 3, 1, 1, 4] → true"
         title: Juego de saltos
         summary: Determina si puedes llegar al último índice dado el salto máximo en cada posición.
         whenToUse: Rastrea el índice más lejano alcanzable mientras recorres; si el índice actual lo supera,
           estás atascado.
         hints:
-        - "¿Qué elección local, tras ordenar por la clave correcta, ya no hay que deshacer?"
-        - "La clave de orden hace que la siguiente elección sea segura para todos los pasos posteriores."
+        - "¿Qué índice más lejano puedes prometer estando en i?"
+        - "Si i queda alguna vez más allá del alcance, el final es inalcanzable; si no, el alcance solo crece."
         - "Actualiza farthest = max(farthest, i + nums[i]) en cada índice. Si i llega a superar farthest, el último índice es inalcanzable."
       jump-game-ii:
+        example: "Entrada: [2, 3, 1, 1, 4] → 2"
         title: Juego de saltos II
         summary: Encuentra el número mínimo de saltos necesarios para llegar al último índice.
         whenToUse: 'Expansión por niveles similar a BFS: rastrea el fin del salto actual y el alcance
           máximo general.'
         hints:
-        - "¿Qué elección local, tras ordenar por la clave correcta, ya no hay que deshacer?"
-        - "La clave de orden hace que la siguiente elección sea segura para todos los pasos posteriores."
+        - "¿Cuándo tienes que gastar un salto?"
+        - "El salto actual cubre hasta un fin registrado, y un salto nuevo se gasta solo cuando i llega a ese fin."
         - "Cuando i llega al fin del salto actual, incrementa los saltos y fija el fin al mayor alcance visto. Esto expande vorazmente un 'nivel' a la vez, similar a BFS sobre un grafo implícito."
       gas-station:
+        example: "Entrada: [1, 2, 3, 4, 5], [3, 4, 5, 1, 2] → 3"
         title: Estación de gasolina
         summary: Índice de la estación de partida que permite completar el circuito, o -1.
         whenToUse: Reinicio voraz del punto de partida cuando el tanque se vuelve negativo.
         hints:
-        - "¿Qué elección local, tras ordenar por la clave correcta, ya no hay que deshacer?"
-        - "La clave de orden hace que la siguiente elección sea segura para todos los pasos posteriores."
+        - "Si el tanque se vuelve negativo en i, ¿desde dónde el viaje ya no pudo empezar?"
+        - "Un inicio es posible solo en una estación posterior al fallo, y solo si el gas total cubre el costo total."
         - "Si el gas total es menor que el costo total, es imposible Cuando el tanque baja de 0, toma start = i+1 y reinicia el tanque"
       candy:
+        example: "Entrada: [1, 0, 2] → 5"
         title: Caramelos
         summary: Cantidad mínima de caramelos para que el vecino con mejor calificación reciba más.
         whenToUse: Dos pasadas voraces, de izquierda a derecha y de derecha a izquierda.
         hints:
-        - "¿Qué elección local, tras ordenar por la clave correcta, ya no hay que deshacer?"
-        - "La clave de orden hace que la siguiente elección sea segura para todos los pasos posteriores."
+        - "¿Qué te obliga a recordar una subida hacia la derecha para el camino de vuelta?"
+        - "Cada niño tiene al menos un caramelo, y uno más que un vecino más bajo a cualquier lado."
         - "Asegura las pendientes ascendentes de izquierda a derecha Luego aplica las ascendentes de derecha a izquierda tomando el máximo"
       assign-cookies:
+        example: "Entrada: [1, 2, 3], [1, 1] → 1"
         title: Asignar galletas
-        summary: Maximize content children by assigning cookies greedily.
-        whenToUse: Sort both arrays and assign the smallest sufficient cookie.
+        summary: "Maximiza los niños contentos asignando galletas de forma voraz."
+        whenToUse: "Ordena ambos arreglos y asigna la galleta suficiente más pequeña."
         hints:
-        - "¿Qué elección local, tras ordenar por la clave correcta, ya no hay que deshacer?"
-        - "La clave de orden hace que la siguiente elección sea segura para todos los pasos posteriores."
-        - "Sort greed and cookie sizes Two pointers: give cookie only when it fits"
+        - "¿Qué galleta es la más pequeña que aún puede satisfacer a este niño?"
+        - "Ambos arreglos están ordenados, así que una galleta demasiado pequeña es inútil también para todo niño posterior."
+        - "Ordena el apetito y los tamaños. Dos punteros: da la galleta solo cuando alcanza."
   BACKTRACKING:
     constraints: "Poda en cuanto la elección parcial es ilegal. No esperes a la hoja."
     followUp: "¿Y si solo hace falta una solución, no todas?"
@@ -1032,48 +1090,53 @@ patterns:
       rápida que el backtracking exhaustivo'
     problems:
       combination-sum:
+        example: "Entrada: [2, 3, 6, 7], 7 → [[2, 2, 3], [7]]"
         title: Suma de combinaciones
         summary: Encuentra todas las combinaciones únicas de candidatos que sumen un objetivo; los números
           pueden reutilizarse.
         whenToUse: Backtracking clásico con un índice de inicio que evita generar permutaciones de la
           misma combinación.
         hints:
-        - "¿Dónde fijas una elección y dónde tienes que deshacerla?"
-        - "El tablero es válido para lo ya elegido; un callejón sin salida restaura el tablero anterior."
+        - "Cuando reutilizas un número, ¿desde qué índice puedes volver a empezar?"
+        - "La suma del camino es el total del multiconjunto elegido, y una rama muere en cuanto la suma pasa el objetivo."
         - "Pasa el mismo índice de inicio (no start+1) al reutilizar un número. Poda la rama en cuanto la suma acumulada supere el objetivo."
       word-search:
+        example: "Entrada: [\\\"ABCE\\\", \\\"SFCS\\\", \\\"ADEE\\\"], \\\"ABCCED\\\" → true"
         title: Búsqueda de palabra
         summary: Determina si una palabra existe en una cuadrícula mediante celdas adyacentes, cada una
           usada como máximo una vez.
         whenToUse: DFS/backtracking desde cada celda, marcando celdas visitadas y desmarcándolas al retroceder.
         hints:
-        - "¿Dónde fijas una elección y dónde tienes que deshacerla?"
-        - "El tablero es válido para lo ya elegido; un callejón sin salida restaura el tablero anterior."
+        - "¿Cómo debe verse el tablero otra vez cuando un vecino falla?"
+        - "La celda actual queda marcada como usada para este camino y se desmarca en cuanto el camino vuelve."
         - "Marca una celda visitada antes de recurrir a sus vecinas y desmárcala justo después. Poda de inmediato si la letra de la celda actual no coincide con el carácter necesario."
       n-queens:
+        example: "Entrada: 4 → 2 tableros"
         title: N reinas
         summary: Todas las soluciones distintas del rompecabezas de las n reinas.
         whenToUse: Coloca reinas fila por fila, podando columnas y diagonales ocupadas.
         hints:
-        - "¿Dónde fijas una elección y dónde tienes que deshacerla?"
-        - "El tablero es válido para lo ya elegido; un callejón sin salida restaura el tablero anterior."
+        - "¿Qué columnas y diagonales ya ocupan las reinas que pusiste?"
+        - "Una fila es segura cuando su columna y ambas diagonales están libres; el tablero se anota solo cuando cada fila tiene una reina."
         - "Rastrea las columnas y ambas diagonales ocupadas Construye las cadenas del tablero en las hojas de la recursión"
       sudoku-solver:
+        example: "Entrada:\n53..7....\n6..195...\n.98....6.\n8...6...3\n4..8.3..1\n7...2...6\n.6....28.\n...419..5\n....8..79\n→\n534678912\n672195348\n198342567\n859761423\n426853791\n713924856\n961537284\n287419635\n345286179"
         title: Resolver Sudoku
         summary: Completa un tablero de sudoku 9×9 en el lugar.
         whenToUse: Prueba los dígitos del 1 al 9 respetando las restricciones de fila, columna y caja.
         hints:
-        - "¿Dónde fijas una elección y dónde tienes que deshacerla?"
-        - "El tablero es válido para lo ya elegido; un callejón sin salida restaura el tablero anterior."
+        - "¿Qué celda vacía estás llenando y qué dígitos siguen siendo legales ahí?"
+        - "Una colocación es legal solo si ese dígito no está en la fila, la columna y la caja, y se quita si el resto del tablero falla."
         - "Encuentra la siguiente celda vacía Verifica la fila, la columna y la caja 3x3 antes de colocar el dígito"
       letter-case-permutation:
+        example: "Entrada: \\\"a1b2\\\" → a1b2, a1B2, A1b2, A1B2"
         title: Permutaciones de mayúsculas/minúsculas
-        summary: Return all strings formed by toggling letter case.
-        whenToUse: Simple backtracking / branching on letters only.
+        summary: "Todas las cadenas que se obtienen cambiando el caso de las letras."
+        whenToUse: "Backtracking simple: ramifica solo en las letras."
         hints:
-        - "¿Dónde fijas una elección y dónde tienes que deshacerla?"
-        - "El tablero es válido para lo ya elegido; un callejón sin salida restaura el tablero anterior."
-        - "Digits stay fixed Branch lower/upper for each letter"
+        - "Para una letra, ¿cuáles son las dos ramas y qué pasa con un dígito?"
+        - "Los dígitos se copian una vez; cada letra se bifurca en minúscula y mayúscula, y el camino es una cadena parcial."
+        - "Los dígitos se quedan fijos. Cada letra se ramifica en minúscula y mayúscula."
   DYNAMIC_PROGRAMMING:
     constraints: "Define dp[i] en una frase antes de cualquier bucle. Con ese n la recursión ingenua no pasa."
     followUp: "¿De qué celdas depende esta, y se puede dejar solo la fila anterior?"
@@ -1122,63 +1185,70 @@ patterns:
       directo
     problems:
       climbing-stairs:
+        example: "Entrada: 5 → 8"
         title: Subir escaleras
         summary: Cuenta las formas distintas de subir n escalones, avanzando 1 o 2 escalones a la vez.
         whenToUse: 'Una introducción a DP con forma de Fibonacci: dp[i] = dp[i-1] + dp[i-2].'
         hints:
-        - "¿Qué pregunta más pequeña tiene la misma forma, y qué recalcularías si la resolvieras desde cero?"
-        - "La celda de este prefijo se arma solo con celdas que ya terminaste."
+        - "¿Cuántas formas terminan en un solo paso y cuántas en uno doble?"
+        - "Las formas de llegar a n son las de llegar a n-1 más las de llegar a n-2."
         - "Los casos base son dp[1]=1 y dp[2]=2. Solo se necesitan los últimos dos valores, así que basta espacio O(1)."
       house-robber:
+        example: "Entrada: [2, 7, 9, 3, 1] → 12"
         title: El ladrón de casas
         summary: Encuentra el máximo dinero que puedes robar sin robar dos casas adyacentes.
         whenToUse: 'dp[i] = max(dp[i-1], dp[i-2] + nums[i]): decide omitir o robar cada casa.'
         hints:
-        - "¿Qué pregunta más pequeña tiene la misma forma, y qué recalcularías si la resolvieras desde cero?"
-        - "La celda de este prefijo se arma solo con celdas que ya terminaste."
+        - "Si robas esta casa, ¿qué vecino queda prohibido?"
+        - "El mejor botín hasta la casa i es el mejor entre saltarla o tomarla más el mejor hasta i-2."
         - "En cada casa, omítela (dp[i-1]) o róbala (dp[i-2] + nums[i]). Solo hace falta guardar los dos valores anteriores de dp."
       0-1-knapsack:
+        example: "Entrada: [1, 6, 10, 16], [1, 2, 3, 5], 7 → 22"
         title: Mochila 0/1
         summary: Maximiza el valor empacado en una capacidad de peso cuando cada ítem se puede usar como
           máximo una vez.
         whenToUse: El clásico DP de mochila en 2D (o 1D con iteración inversa) sobre el índice del ítem
           y la capacidad restante.
         hints:
-        - "¿Qué pregunta más pequeña tiene la misma forma, y qué recalcularías si la resolvieras desde cero?"
-        - "La celda de este prefijo se arma solo con celdas que ya terminaste."
+        - "Si este objeto no cabe, ¿qué elección queda?"
+        - "El mejor valor de los primeros i objetos con capacidad c es el mejor entre saltarlo o tomarlo si cabe."
         - "dp[c] representa el mejor valor alcanzable con capacidad c. Itera la capacidad de mayor a menor en la versión 1D para que cada ítem se use solo una vez."
       coin-change:
+        example: "Entrada: [1, 2, 5], 11 → 3"
         title: Cambio de monedas
         summary: Cantidad mínima de monedas para formar el monto, o -1 si no es posible.
         whenToUse: DP de mochila no acotada. Lo voraz falla con denominaciones no canónicas — monedas [1,3,4] y monto 6 son 3 monedas voraces y 2 con DP.
         hints:
-        - "¿Qué pregunta más pequeña tiene la misma forma, y qué recalcularías si la resolvieras desde cero?"
-        - "La celda de este prefijo se arma solo con celdas que ya terminaste."
+        - "¿Qué moneda, usada una vez, deja una cantidad menor que ya conoces?"
+        - "El mínimo de monedas para la cantidad a es uno más el mínimo para a menos una moneda, o imposible si ninguna moneda llega."
         - "dp[x] = mínimo sobre las monedas c de dp[x-c]+1 Inicializa dp[0]=0 y el resto en +infinito"
       edit-distance:
+        example: "Entrada: \\\"horse\\\", \\\"ros\\\" → 3"
         title: Distancia de edición
         summary: Número mínimo de operaciones de inserción, eliminación y reemplazo para transformar word1
           en word2.
         whenToUse: DP 2D sobre prefijos de ambas cadenas; cada celda es insert / delete / replace desde vecinos.
         hints:
-        - "¿Qué pregunta más pequeña tiene la misma forma, y qué recalcularías si la resolvieras desde cero?"
-        - "La celda de este prefijo se arma solo con celdas que ya terminaste."
+        - "¿Cuál de las tres ediciones encoge el problema que queda?"
+        - "La distancia entre los prefijos es la más barata entre sustituir, borrar o insertar los últimos caracteres."
         - "dp[i][j] es la distancia entre word1[:i] y word2[:j]; caracteres iguales toman la diagonal. Si no coinciden: 1 + min(insert=dp[i][j-1], delete=dp[i-1][j], replace=dp[i-1][j-1]). Conserva solo la fila anterior para respetar O(n) de espacio tras aclarar la recurrencia 2D."
       longest-increasing-subsequence:
+        example: "Entrada: [10, 9, 2, 5, 3, 7, 101, 18] → 4"
         title: Subsecuencia creciente más larga
         summary: Longitud de la subsecuencia estrictamente creciente más larga. No tiene que ser contigua.
         whenToUse: dp[i] es la mejor longitud que termina en i. Primero la frase, luego el bucle. O(n log n) es el follow-up.
         hints:
-        - "¿Qué pregunta más pequeña tiene la misma forma, y qué recalcularías si la resolvieras desde cero?"
-        - "La celda de este prefijo se arma solo con celdas que ya terminaste."
+        - "Si este valor extiende una subsecuencia anterior, ¿qué longitud supera?"
+        - "La mejor longitud que termina en i es uno más que la mejor longitud que termina en un valor anterior menor."
         - "¿Qué significa una celda, antes de escribir el bucle? dp[i] = 1 + el mejor dp[j] entre valores anteriores más pequeños. La respuesta es el máximo de las celdas, no dp[n-1]."
       unique-paths:
+        example: "Entrada: 3, 7 → 28"
         title: Caminos únicos
         summary: Cuenta caminos de la celda superior izquierda a la inferior derecha, solo a la derecha o abajo.
         whenToUse: dp[r][c] = dp[r-1][c] + dp[r][c-1]. La primera fila y la primera columna valen 1.
         hints:
-        - "¿Qué pregunta más pequeña tiene la misma forma, y qué recalcularías si la resolvieras desde cero?"
-        - "La celda de este prefijo se arma solo con celdas que ya terminaste."
+        - "¿Cuántos caminos llegan desde la celda de arriba y cuántos desde la izquierda?"
+        - "Los caminos a una celda son los de la celda de arriba más los de la celda de la izquierda, con la primera fila y columna en 1."
         - "Di qué guarda una celda antes de rellenarla. A una celda se llega solo desde arriba o desde la izquierda. La primera fila y la primera columna tienen exactamente una forma de alcanzarse."
   CYCLIC_SORT:
     constraints: "Los valores viven en 1..n o 0..n-1. Ese rango permite colocarlos en su sitio."
@@ -1225,47 +1295,52 @@ patterns:
     - El arreglo no debe mutarse, y no se permite espacio extra O(n) para una copia de solo lectura
     problems:
       cyclic-sort:
+        example: "Entrada: [3, 1, 5, 4, 2] → [1, 2, 3, 4, 5]"
         title: Ordenamiento cíclico
         summary: Ordena en el lugar un arreglo que contiene números del 1 al n.
         whenToUse: La aplicación directa y clásica del patrón.
         hints:
-        - "Si cada valor pertenece a un índice, ¿cuál está ahora en el lugar equivocado?"
-        - "El índice i debe guardar i o i + 1; un intercambio coloca un valor sin memoria extra."
+        - "¿Qué valor está en este índice y qué índice es su casa?"
+        - "El índice i está listo cuando guarda el valor que le pertenece; un intercambio manda un valor a casa."
         - "Mientras nums[i] no esté en el índice nums[i]-1, intercámbialo allí. Cada elemento se intercambia como máximo una vez a su lugar final, manteniendo O(n)."
       find-missing-number:
+        example: "Entrada: [4, 0, 3, 1] → 2"
         title: Encontrar el número faltante
         summary: Dados n números distintos tomados de 0..n, encuentra el número que falta en el arreglo.
         whenToUse: Coloca los números cíclicamente (o usa suma/XOR); aquí, ordenamiento cíclico y luego
           busca la discrepancia.
         hints:
-        - "Si cada valor pertenece a un índice, ¿cuál está ahora en el lugar equivocado?"
-        - "El índice i debe guardar i o i + 1; un intercambio coloca un valor sin memoria extra."
+        - "Si el valor en i no es i, ¿adónde pertenece ese valor?"
+        - "Cuando cada valor del rango se sienta en su índice, el índice que aún tiene un valor ajeno es el número que falta."
         - "Coloca cada valor v en el índice v cuando v < n. Tras colocar, el primer índice i donde nums[i] != i es el número faltante."
       find-all-duplicates:
+        example: "Entrada: [4, 3, 2, 7, 8, 2, 3, 1] → [3, 2]"
         title: Encontrar todos los duplicados
         summary: Dados números de 1..n donde algunos aparecen dos veces, devuelve todos los duplicados.
         whenToUse: Coloca cada valor por índice; lo que no se puede colocar porque su casilla está ocupada
           es un duplicado.
         hints:
-        - "Si cada valor pertenece a un índice, ¿cuál está ahora en el lugar equivocado?"
-        - "El índice i debe guardar i o i + 1; un intercambio coloca un valor sin memoria extra."
+        - "¿Qué significa que el hueco de este valor ya esté marcado?"
+        - "Cada valor reclama el hueco value-1; un segundo reclamo significa que ese valor apareció dos veces."
         - "Ejecuta la colocación de ordenamiento cíclico como de costumbre. Tras colocar, cualquier índice i donde nums[i] != i + 1 contiene un valor duplicado."
       find-duplicate-number:
+        example: "Entrada: [1, 3, 4, 2, 2] → 2"
         title: Encontrar el número duplicado
         summary: Un arreglo de n+1 enteros entre 1 y n tiene un duplicado; encuéntralo sin modificar el
           arreglo.
         whenToUse: Trata índices→valores como grafo funcional y halla la entrada del ciclo (Floyd), sin modificar el array.
         hints:
-        - "Si cada valor pertenece a un índice, ¿cuál está ahora en el lugar equivocado?"
-        - "El índice i debe guardar i o i + 1; un intercambio coloca un valor sin memoria extra."
+        - "Si tratas cada valor como el índice siguiente, ¿qué le hace un valor repetido al camino?"
+        - "El duplicado es la entrada del ciclo en la cadena de índices."
         - "Cada índice i apunta a nums[i]; por un duplicado hay exactamente un ciclo. Floyd: slow = nums[slow], fast = nums[nums[fast]] hasta que se encuentren. Reinicia un puntero al inicio y avanza ambos de uno en uno; el encuentro es el duplicado."
       first-missing-positive:
+        example: "Entrada: [3, 4, -1, 1] → 2"
         title: Primer entero positivo faltante
         summary: El menor entero positivo faltante en un arreglo desordenado.
         whenToUse: 'Colocación in-place: pon cada v en [1..n] en el índice v-1, luego escanea el primer desajuste.'
         hints:
-        - "Si cada valor pertenece a un índice, ¿cuál está ahora en el lugar equivocado?"
-        - "El índice i debe guardar i o i + 1; un intercambio coloca un valor sin memoria extra."
+        - "¿Qué entero positivo debería vivir en este índice?"
+        - "El índice i debe guardar i+1; lo que está fuera de 1..n se ignora, y el primer índice que no guarda su valor es la respuesta."
         - "Ignora no positivos y > n — no pueden ser el primer positivo faltante en 1..n+1. Mientras nums[i] esté en rango y no en casa, intercámbialo con el índice nums[i]-1 (evita self-swap infinito). Tras colocar, el primer i con nums[i] != i+1 da i+1; si todos encajan, la respuesta es n+1."
   TOPOLOGICAL_SORT:
     constraints: "Un ciclo significa que no hay orden. Diló antes de Kahn o DFS."
@@ -1314,48 +1389,53 @@ patterns:
       simple o union-find encajan mejor)
     problems:
       course-schedule:
+        example: "Entrada: 2, [[1, 0]] → true"
         title: Horario de cursos
         summary: Determina si puedes terminar todos los cursos dada una lista de pares de prerrequisitos.
         whenToUse: 'Detección de ciclos mediante ordenamiento topológico: si no se procesan todos los
           nodos, un ciclo bloquea la finalización.'
         hints:
-        - "¿Qué nodo ya no tiene prerrequisitos, y qué queda libre al terminarlo?"
-        - "Un nodo entra en el orden solo cuando su grado de entrada llega a cero."
+        - "¿Qué curso ya no tiene prerrequisito?"
+        - "Un curso queda libre cuando su grado de entrada llega a cero; queda un ciclo si algún curso nunca se libera."
         - "Construye el grafo como prerrequisito -> curso. Si el conteo de nodos procesados es menor que el total de cursos, existe un ciclo."
       course-schedule-order:
+        example: "Entrada: 4, [[1, 0], [2, 0], [3, 1], [3, 2]] → [0, 1, 2, 3]"
         title: Orden del horario de cursos
         summary: Devuelve un orden de cursos válido, o un arreglo vacío si no existe ninguno.
         whenToUse: El algoritmo de Kahn, recolectando los nodos extraídos directamente en el orden de
           salida.
         hints:
-        - "¿Qué nodo ya no tiene prerrequisitos, y qué queda libre al terminarlo?"
-        - "Un nodo entra en el orden solo cuando su grado de entrada llega a cero."
+        - "¿En qué orden quedan libres los cursos?"
+        - "El orden es la secuencia en que los grados de entrada llegan a cero; si es corta, el grafo tenía un ciclo."
         - "Inicializa la cola con todos los cursos de grado de entrada cero. Si la longitud del orden final es menor que el conteo de cursos, devuelve un arreglo vacío."
       tasks-scheduling:
+        example: "Entrada: 3, [[0, 1], [1, 2]] → true"
         title: Planificación de tareas
         summary: ¿Se pueden completar todas las tareas dados sus requisitos previos?
         whenToUse: Igual que la programación de cursos — detección de ciclos mediante orden topológico.
         hints:
-        - "¿Qué nodo ya no tiene prerrequisitos, y qué queda libre al terminarlo?"
-        - "Un nodo entra en el orden solo cuando su grado de entrada llega a cero."
+        - "¿Qué tarea puede empezar porque nada de lo que necesita sigue pendiente?"
+        - "Hay un horario exactamente cuando toda tarea acaba con grado de entrada cero."
         - "Construye el grafo con el grado de entrada de cada nodo BFS de Kahn; falla si el número procesado es menor que el total de tareas"
       alien-dictionary-order:
+        example: "Entrada: [\\\"wrt\\\", \\\"wrf\\\", \\\"er\\\", \\\"ett\\\", \\\"rftt\\\"] → wertf"
         title: Diccionario alienígena
         summary: Deriva el orden de las letras de un alfabeto alienígena a partir de palabras ordenadas
           del diccionario.
         whenToUse: Extrae las aristas comparando palabras adyacentes y aplica orden topológico.
         hints:
-        - "¿Qué nodo ya no tiene prerrequisitos, y qué queda libre al terminarlo?"
-        - "Un nodo entra en el orden solo cuando su grado de entrada llega a cero."
+        - "¿Dónde discrepan primero dos palabras vecinas y qué arista da eso?"
+        - "Las primeras letras distintas son una arista de precedencia, y un alfabeto válido es un orden del que se pelan grados de entrada cero."
         - "Compara pares adyacentes buscando la primera diferencia Es inválido si la palabra más larga aparece antes que su propio prefijo"
       verify-alien-dictionary:
+        example: "Entrada: [\\\"hello\\\", \\\"leetcode\\\"], \\\"hlabcdefgijkmnopqrstuvwxyz\\\" → true"
         title: Verificar diccionario alienígena
-        summary: Check whether words are sorted by a given alien alphabet order.
-        whenToUse: Compare adjacent words using a custom alphabet ranking.
+        summary: "Comprueba si las palabras están ordenadas según un alfabeto alienígena."
+        whenToUse: "Compara palabras vecinas con el rango de ese alfabeto."
         hints:
-        - "¿Qué nodo ya no tiene prerrequisitos, y qué queda libre al terminarlo?"
-        - "Un nodo entra en el orden solo cuando su grado de entrada llega a cero."
-        - "Map each letter to its rank Invalid if longer word is a prefix after a shorter equal prefix"
+        - "Para dos palabras vecinas, ¿qué carácter es el primero que puede decidir el orden?"
+        - "En el orden alienígena las palabras están ordenadas exactamente cuando cada par vecino no decrece en la primera posición en que difieren."
+        - "Asigna un rango a cada letra. Es inválido si la palabra más larga coincide con la más corta como prefijo y va antes."
   SORT_AND_SEARCH:
     constraints: "Ordenar es legal solo si no hace falta el orden original."
     followUp: "¿Cuánto cuesta el orden y lo evita un mapa hash?"
@@ -1404,48 +1484,53 @@ patterns:
       O(n) sin forma de evitar ordenar todo)
     problems:
       group-anagrams:
+        example: "Entrada: [\\\"eat\\\", \\\"tea\\\", \\\"tan\\\", \\\"ate\\\", \\\"nat\\\", \\\"bat\\\"] → [[eat, tea, ate], [tan, nat], [bat]]"
         title: Agrupar anagramas
         summary: Agrupa un arreglo de cadenas de modo que todos los anagramas entre sí queden juntos.
         whenToUse: Ordena los caracteres de cada palabra para formar una clave canónica y agrupa por esa
           clave en un mapa hash.
         hints:
-        - "¿Qué se vuelve barato de hallar cuando los iguales quedan juntos?"
-        - "Ordenar agrupa los valores que el siguiente barrido o la búsqueda binaria leerá como un tramo."
+        - "¿Qué es igual en cada palabra que debe ir en un mismo grupo?"
+        - "Las palabras que comparten una firma ordenada, o los mismos conteos de caracteres, son un grupo."
         - "Dos cadenas son anagramas exactamente cuando sus secuencias de caracteres ordenadas son iguales. Usa la cadena ordenada (o una firma de conteo de caracteres) como clave del mapa hash."
       search-suggestions:
+        example: "Entrada: [\\\"mobile\\\", \\\"mouse\\\", \\\"moneypot\\\", \\\"monitor\\\", \\\"mousepad\\\"], \\\"mouse\\\" → [[mobile, moneypot, monitor], [mobile, moneypot, monitor], [mouse, mousepad], [mouse, mousepad], [mouse, mousepad]]"
         title: Sugerencias de búsqueda (prefijo ordenado)
         summary: Para cada prefijo de una palabra de búsqueda, devuelve hasta 3 productos coincidentes
           lexicográficamente menores.
         whenToUse: Ordena los productos una vez y luego aplica búsqueda binaria del límite inferior de
           cada prefijo creciente en vez de recorrer todo de nuevo.
         hints:
-        - "¿Qué se vuelve barato de hallar cuando los iguales quedan juntos?"
-        - "Ordenar agrupa los valores que el siguiente barrido o la búsqueda binaria leerá como un tramo."
+        - "Cuando el prefijo crece una letra, ¿qué productos puedes descartar?"
+        - "Los productos están ordenados, así que las coincidencias de un prefijo son un tramo contiguo, y un prefijo más largo solo lo estrecha."
         - "Ordena la lista de productos lexicográficamente de antemano. Para cada prefijo, busca con binaria el límite inferior y toma hasta 3 coincidencias desde ahí."
       wiggle-sort:
+        example: "Entrada: [3, 5, 2, 1, 6, 4] → [3, 5, 1, 6, 2, 4]"
         title: Ordenamiento en zigzag (Wiggle Sort)
         summary: Reordena el arreglo para que nums[0] <= nums[1] >= nums[2] <= nums[3] …
         whenToUse: Intercambios en una sola pasada según la paridad de la posición.
         hints:
-        - "¿Qué se vuelve barato de hallar cuando los iguales quedan juntos?"
-        - "Ordenar agrupa los valores que el siguiente barrido o la búsqueda binaria leerá como un tramo."
+        - "En un índice par, ¿qué vecino puede ser menor?"
+        - "Los índices pares guardan valores no mayores que sus vecinos, así que un paso de intercambios arregla cada par adyacente."
         - "Para i par, asegura que nums[i] <= nums[i+1] Para i impar, asegura que nums[i] >= nums[i+1]"
       count-smaller-after-self:
+        example: "Entrada: [5, 2, 6, 1] → [2, 1, 1, 0]"
         title: Contar números menores a la derecha
         summary: Para cada elemento, cuenta cuántos elementos menores hay a su derecha.
         whenToUse: Merge sort de índices contando inversiones durante la fusión.
         hints:
-        - "¿Qué se vuelve barato de hallar cuando los iguales quedan juntos?"
-        - "Ordenar agrupa los valores que el siguiente barrido o la búsqueda binaria leerá como un tramo."
+        - "Cuando este valor se fusiona desde la mitad derecha, ¿cuántos valores de esa mitad ya se saben menores?"
+        - "El conteo de cada valor es cuántos menores lo pasan mientras se fusionan las mitades."
         - "Aplica merge sort sobre los índices del arreglo Al tomar un elemento de la mitad derecha, suma mid-i+1 a los conteos de la izquierda"
       intersection-two-arrays:
+        example: "Entrada: [4, 9, 5, 9], [9, 4, 9, 8, 4] → [4, 9]"
         title: Intersección de dos arreglos
-        summary: Return unique intersection of two arrays.
-        whenToUse: Sort + two pointers, or hash set membership.
+        summary: "Intersección única de dos arreglos."
+        whenToUse: "Ordenar y dos punteros, o pertenencia con un conjunto."
         hints:
-        - "¿Qué se vuelve barato de hallar cuando los iguales quedan juntos?"
-        - "Ordenar agrupa los valores que el siguiente barrido o la búsqueda binaria leerá como un tramo."
-        - "Put one array into a set Filter unique hits from the other"
+        - "¿Qué valores del primer arreglo aún puedes reportar?"
+        - "Un valor entra en la respuesta una vez si aparece en ambos arreglos, sin importar las copias de más."
+        - "Mete un arreglo en un conjunto. Filtra del otro los aciertos únicos."
   MATRICES:
     constraints: "Marca la visita in situ si el problema lo permite. Si no, di por qué hace falta un conjunto."
     followUp: "¿Y si no puedes mutar la rejilla de entrada?"
@@ -1495,57 +1580,63 @@ patterns:
       vez de un recorrido completo
     problems:
       spiral-order:
+        example: "Entrada: [[1, 2, 3], [4, 5, 6], [7, 8, 9]] → [1, 2, 3, 6, 9, 8, 7, 4, 5]"
         title: Matriz espiral
         summary: Devuelve todos los elementos de una matriz en orden espiral en sentido horario.
         whenToUse: Reduce los límites superior/inferior/izquierdo/derecho tras consumir completamente
           cada borde de la capa actual.
         hints:
-        - "¿Esta celda depende de una vecina, del borde o de una marca que puedes escribir en el sitio?"
-        - "Cada celda se resuelve desde sus vecinas o desde el borde, y una marca evita tratarla dos veces."
+        - "¿Qué borde ya vaciaste y qué dirección sigue?"
+        - "Las celdas no leídas forman un rectángulo; cada pasada consume un lado y encoge ese límite."
         - "Recorre la fila superior, la columna derecha, la fila inferior y la columna izquierda, en ese orden cíclico. Tras cada borde, mueve el límite correspondiente hacia adentro en uno."
       rotate-image:
+        example: "Entrada: [[1, 2, 3], [4, 5, 6], [7, 8, 9]] → [[7, 4, 1], [8, 5, 2], [9, 6, 3]]"
         title: Rotar imagen
         summary: Rota una matriz n x n 90 grados en sentido horario, en el lugar.
         whenToUse: 'Transpón la matriz primero y luego invierte cada fila: dos pasadas simples O(n^2)
           en vez de aritmética de índices complicada.'
         hints:
-        - "¿Esta celda depende de una vecina, del borde o de una marca que puedes escribir en el sitio?"
-        - "Cada celda se resuelve desde sus vecinas o desde el borde, y una marca evita tratarla dos veces."
+        - "¿Qué celda recibe el valor que estaba en la fila de arriba?"
+        - "Una rotación mueve cuatro celdas en un ciclo, y los límites de la capa se encogen hacia el centro."
         - "Transponer intercambia matrix[i][j] con matrix[j][i] para i < j. Invertir cada fila tras transponer produce la rotación en sentido horario."
       set-matrix-zeroes:
+        example: "Entrada: [[1, 1, 1], [1, 0, 1], [1, 1, 1]] → [[1, 0, 1], [0, 0, 0], [1, 0, 1]]"
         title: Poner ceros en la matriz
         summary: Si una celda es 0, pon toda su fila y columna en 0, en el lugar.
         whenToUse: Usa la primera fila y la primera columna como marcadores en vez de reservar arreglos
           extra.
         hints:
-        - "¿Esta celda depende de una vecina, del borde o de una marca que puedes escribir en el sitio?"
-        - "Cada celda se resuelve desde sus vecinas o desde el borde, y una marca evita tratarla dos veces."
+        - "Si un cero está en la primera fila o columna, ¿qué tienes que recordar aparte?"
+        - "Una celda se vuelve cero cuando su fila o columna fue marcada, y las marcas viven en la primera fila y columna."
         - "Usa dos banderas booleanas para recordar si la primera fila/columna tenía originalmente un cero. Marca la fila i y la columna j mediante matrix[i][0] y matrix[0][j] mientras recorres el resto de la cuadrícula."
       search-2d-matrix:
+        example: "Entrada: [[1, 4, 7, 11], [2, 5, 8, 12], [3, 6, 9, 16]], 8 → true"
         title: Buscar en una matriz 2D II
         summary: Busca un valor en una matriz ordenada por filas y columnas.
         whenToUse: Empieza en la esquina superior derecha y muévete a la izquierda o hacia abajo según
           la comparación.
         hints:
-        - "¿Esta celda depende de una vecina, del borde o de una marca que puedes escribir en el sitio?"
-        - "Cada celda se resuelve desde sus vecinas o desde el borde, y una marca evita tratarla dos veces."
+        - "Desde la esquina en la que estás, ¿qué dirección es sin duda demasiado grande y cuál demasiado pequeña?"
+        - "Cada comparación descarta una fila o una columna, y el objetivo sigue en el rectángulo que no descartaste."
         - "Comienza en la esquina superior derecha Si es muy grande, ve a la izquierda; si es muy pequeño, baja"
       shortest-path-binary-matrix:
+        example: "Entrada: [[0, 1], [1, 0]] → 2"
         title: Camino más corto en matriz binaria
         summary: Encuentra el camino libre más corto de (0,0) a (n-1,n-1) con movimientos en 8 direcciones.
         whenToUse: BFS sobre el grafo de la cuadrícula.
         hints:
-        - "¿Esta celda depende de una vecina, del borde o de una marca que puedes escribir en el sitio?"
-        - "Cada celda se resuelve desde sus vecinas o desde el borde, y una marca evita tratarla dos veces."
+        - "¿A qué es igual la distancia de una celda abierta recién alcanzada?"
+        - "La primera vez que llegas abajo a la derecha, el número de pasos es el camino más corto, porque cada paso mide uno."
         - "Camina solo por celdas con valor 0 Usa BFS para calcular la distancia desde el inicio"
       matrix-diagonal-sum:
+        example: "Entrada: [[1, 2, 3], [4, 5, 6], [7, 8, 9]] → 25"
         title: Suma de diagonales de matriz
-        summary: Sum primary and secondary diagonals without double-counting the center.
-        whenToUse: Direct index walk on a square matrix.
+        summary: "Suma de las diagonales principal y secundaria sin contar dos veces el centro."
+        whenToUse: "Recorrido directo por índices en una matriz cuadrada."
         hints:
-        - "¿Esta celda depende de una vecina, del borde o de una marca que puedes escribir en el sitio?"
-        - "Cada celda se resuelve desde sus vecinas o desde el borde, y una marca evita tratarla dos veces."
-        - "Add mat[i][i] and mat[i][n-1-i] Subtract center once if n is odd"
+        - "¿Qué celdas están en ambas diagonales y deben contarse una vez?"
+        - "La suma es la diagonal principal más la antidiagonal, y la celda central no se suma dos veces cuando el lado es impar."
+        - "Suma mat[i][i] y mat[i][n-1-i]. Si n es impar, resta el centro una vez."
   STACKS:
     constraints: "La pila guarda índices o valores que todavía pueden ser la respuesta."
     followUp: "¿Y si el arreglo es circular y el último mira al primero?"
@@ -1596,47 +1687,52 @@ patterns:
       la cima)
     problems:
       valid-parentheses:
+        example: "Entrada: \"{[]}\" → true"
         title: Paréntesis válidos
         summary: Verifica si una cadena de paréntesis está correctamente emparejada y anidada.
         whenToUse: La plantilla clásica de pila para cualquier pregunta de validez de paréntesis.
         hints:
-        - "¿Qué hay que resolver antes de aceptar el valor actual?"
-        - "La pila guarda lo no resuelto en el orden en que todavía hay que cerrarlo."
+        - "¿Qué apertura debe casar el siguiente cierre?"
+        - "La pila guarda las aperturas sin cerrar en el orden en que hay que cerrarlas."
         - "Apila los paréntesis de apertura; en uno de cierre, extrae y verifica que coincida. La cadena es válida solo si la pila está vacía al final."
       daily-temperatures:
+        example: "Entrada: [73, 74, 75, 71, 69, 72, 76, 73] → [1, 1, 4, 2, 1, 1, 0, 0]"
         title: Temperaturas diarias
         summary: Para cada día, encuentra cuántos días faltan hasta que ocurra una temperatura más cálida.
         whenToUse: Una pila monótona decreciente de índices resuelve cada día en cuanto aparece uno más
           cálido.
         hints:
-        - "¿Qué hay que resolver antes de aceptar el valor actual?"
-        - "La pila guarda lo no resuelto en el orden en que todavía hay que cerrarlo."
+        - "¿Qué días anteriores siguen esperando una temperatura más cálida?"
+        - "La pila guarda índices cuyo día más cálido aún se desconoce, en orden de temperatura decreciente."
         - "Guarda índices en la pila, no temperaturas, para poder calcular diferencias de días. Extrae y resuelve cada índice apilado cuya temperatura sea menor que la del día actual."
       next-greater-element:
+        example: "Entrada: [4, 1, 2], [1, 3, 4, 2] → [-1, 3, -1]"
         title: Siguiente elemento mayor
         summary: Para cada elemento de nums1, encuentra su siguiente elemento mayor en nums2 (nums1 es
           subconjunto de nums2).
         whenToUse: Precalcula el siguiente mayor para cada valor de nums2 con una pila monótona, y luego
           mapea las respuestas de nums1 con un mapa hash.
         hints:
-        - "¿Qué hay que resolver antes de aceptar el valor actual?"
-        - "La pila guarda lo no resuelto en el orden en que todavía hay que cerrarlo."
+        - "¿Qué valores siguen esperando uno mayor a su derecha?"
+        - "La pila es una cola decreciente de valores sin resolver; un valor mayor nuevo responde a cada uno que puede sacar."
         - "Construye el mapeo completo de 'siguiente mayor' para nums2 en una sola pasada con pila monótona. Busca cada valor de nums1 en ese mapeo en vez de recorrer nums2 en cada consulta."
       decode-string:
+        example: "Entrada: \\\"3[a2[c]]\\\" → accaccacc"
         title: Decodificar cadena
         summary: Decodifica una cadena codificada como 3[a2[c]] → accaccacc.
         whenToUse: Pila de contadores y cadenas parciales.
         hints:
-        - "¿Qué hay que resolver antes de aceptar el valor actual?"
-        - "La pila guarda lo no resuelto en el orden en que todavía hay que cerrarlo."
+        - "¿Qué tienes que recordar al ver un corchete de apertura?"
+        - "La pila guarda la cadena y el número de repeticiones de antes del corchete; un cierre repite la cadena interior esa cantidad de veces."
         - "Apila al encontrar '[' Desapila y repite la cadena al encontrar ']'"
       basic-calculator:
+        example: "Entrada: \\\"(1+(4+5+2)-3)+(6+8)\\\" → 23"
         title: Calculadora básica
         summary: Evalúa una expresión con +, -, paréntesis y espacios.
         whenToUse: Pila de signos para manejar paréntesis anidados.
         hints:
-        - "¿Qué hay que resolver antes de aceptar el valor actual?"
-        - "La pila guarda lo no resuelto en el orden en que todavía hay que cerrarlo."
+        - "¿Cuál es el total en curso y qué signo tiene el número que estás leyendo?"
+        - "Un paréntesis guarda el total y el signo de fuera; al cerrarlo se suma el total interior con ese signo guardado."
         - "Mantén el resultado acumulado y el signo actual En '(' apila resultado/signo; en ')' desapílalos"
   GRAPHS:
     constraints: "Nombra el grafo: rejilla, lista de adyacencia o implícito. Luego BFS o DFS y por qué."
@@ -1687,45 +1783,50 @@ patterns:
       de árbol u ordenamiento topológico)
     problems:
       number-of-islands:
+        example: "Entrada: [\"11000\",\"11000\",\"00100\",\"00011\"] → 3"
         title: Número de islas
         summary: Cuenta el número de componentes de tierra ('1') en una cuadrícula 2D de agua y tierra.
         whenToUse: Inundación DFS o BFS desde cada celda de tierra no visitada, contando cuántas inundaciones
           se necesitan.
         hints:
-        - "¿Qué nodos están a una arista y en cuáles ya entraste?"
-        - "Un conjunto de visitados más una cola o una pila expande cada nodo una sola vez."
+        - "¿Qué te permite reclamar una celda de tierra no visitada?"
+        - "Un relleno marca una isla entera, y la respuesta es cuántas veces tienes que empezar un relleno nuevo."
         - "Marca una celda de tierra como visitada (o conviértela en '0') en cuanto la encoles/visites. Cada inundación desde una celda de tierra nueva no visitada representa exactamente una isla."
       clone-graph:
+        example: "Entrada: [[2,4],[1,3],[2,4],[1,3]] → [[2, 4], [1, 3], [2, 4], [1, 3]]"
         title: Clonar grafo
         summary: Crea una copia profunda de un grafo no dirigido y conectado a partir de un nodo de referencia.
         whenToUse: Un mapa hash del nodo original a su clon, llenado mientras se hace BFS o DFS.
         hints:
-        - "¿Qué nodos están a una arista y en cuáles ya entraste?"
-        - "Un conjunto de visitados más una cola o una pila expande cada nodo una sola vez."
+        - "Cuando ves un vecino, ¿cómo sabes si su copia ya existe?"
+        - "El mapa del nodo original a su copia se llena la primera vez que se ve el nodo, antes de recorrer sus aristas."
         - "Crea el clon de un nodo la primera vez que lo veas y guárdalo de inmediato en el mapa. Al conectar vecinos, busca (o crea) sus clones a través del mismo mapa para evitar recursión infinita."
       pacific-atlantic:
+        example: "Entrada: [[1, 2, 2, 3, 5], [3, 2, 3, 4, 4], [2, 4, 5, 3, 1], [6, 7, 1, 4, 5], [5, 1, 1, 2, 4]] → [[0, 4], [1, 3], [1, 4], [2, 2], [3, 0], [3, 1], [4, 0]]"
         title: Flujo de agua al Pacífico y al Atlántico
         summary: Encuentra las celdas desde las cuales el agua puede fluir hacia ambos océanos.
         whenToUse: DFS/BFS multi-origen tierra adentro desde los bordes de cada océano.
         hints:
-        - "¿Qué nodos están a una arista y en cuáles ya entraste?"
-        - "Un conjunto de visitados más una cola o una pila expande cada nodo una sola vez."
+        - "¿A qué océano puede llegar ya una celda y a qué vecino puede pasarle ese alcance cuesta arriba?"
+        - "Una celda alcanzable desde un océano puede compartir ese alcance con un vecino de altura mayor o igual."
         - "El agua solo fluye hacia vecinos con altura >= la actual Calcula la intersección de los conjuntos alcanzables desde cada océano"
       critical-connections:
+        example: "Entrada: 4, [[0, 1], [1, 2], [2, 0], [1, 3]] → [[1, 3]]"
         title: Conexiones críticas en una red
         summary: Encuentra todos los puentes en un grafo no dirigido.
         whenToUse: DFS de Tarjan con tiempos de descubrimiento y valores low-link.
         hints:
-        - "¿Qué nodos están a una arista y en cuáles ya entraste?"
-        - "Un conjunto de visitados más una cola o una pila expande cada nodo una sola vez."
+        - "¿Qué significaría que un hijo pueda volver a un ancestro de este nodo?"
+        - "Una arista hacia un hijo es un puente cuando el tiempo más temprano alcanzable del hijo es estrictamente posterior al descubrimiento de este nodo."
         - "Hay un puente cuando low[vecino] > disc[u] Ignora la arista hacia el padre"
       is-graph-bipartite:
+        example: "Entrada: [[1,3],[0,2],[1,3],[0,2]] → true"
         title: ¿Es el grafo bipartito?
         summary: Decide si un grafo no dirigido se puede partir en dos conjuntos sin aristas internas.
         whenToUse: Colorea el grafo con BFS o DFS. Un ciclo impar significa que no.
         hints:
-        - "¿Qué nodos están a una arista y en cuáles ya entraste?"
-        - "Un conjunto de visitados más una cola o una pila expande cada nodo una sola vez."
+        - "¿Qué significa que un vecino ya tenga tu color?"
+        - "Una 2-coloración es posible mientras cada arista une colores distintos; una arista del mismo color significa un ciclo impar."
         - "¿Qué dice de un ciclo que falle una 2-coloración? Da al inicio el color 1. Un vecino con el mismo color es un conflicto. Puede haber varios componentes, así que empieza en cada nodo sin color."
   TREE_DFS:
     constraints: "Di qué devuelve la llamada recursiva antes de combinar los hijos."
@@ -1777,47 +1878,52 @@ patterns:
       mejor'
     problems:
       path-sum:
+        example: "Entrada: [5, 4, 8, 11, null, 13, 4, 7, 2, null, null, null, 1], 22 → true"
         title: Suma de camino
         summary: Determina si existe un camino raíz-hoja cuyos valores sumen un objetivo dado.
         whenToUse: DFS restando el valor del nodo actual del objetivo restante mientras desciendes.
         hints:
-        - "¿En qué se convierte la respuesta del nodo cuando ambos hijos ya respondieron?"
-        - "El resultado de un nodo se arma solo con sus subárboles."
+        - "¿Qué objetivo le queda a un hijo después de gastar el valor de este nodo?"
+        - "Una hoja tiene éxito solo cuando el objetivo restante es igual a la hoja, y cualquier otro nodo solo se resta."
         - "En una hoja, verifica si el objetivo restante es igual al valor de la hoja. Recurre a los hijos con el objetivo menos el valor del nodo actual."
       all-path-sum:
+        example: "Entrada: [5, 4, 8, 11, null, 13, 4, 7, 2, null, null, 5, 1], 22 → [[5, 4, 11, 2], [5, 8, 4, 5]]"
         title: Todos los caminos para una suma
         summary: Devuelve cada camino raíz-hoja cuyos valores sumen un objetivo dado.
         whenToUse: DFS construyendo una lista de camino en curso, retrocediendo (quitando el último elemento)
           tras cada llamada recursiva.
         hints:
-        - "¿En qué se convierte la respuesta del nodo cuando ambos hijos ya respondieron?"
-        - "El resultado de un nodo se arma solo con sus subárboles."
+        - "¿Cuándo copias el camino y cuándo tienes que deshacer el nodo que añadiste?"
+        - "El camino compartido es la ruta de la raíz al nodo actual; se anota solo en una hoja que coincide y el nodo se quita al volver."
         - "Agrega el nodo actual a una lista de camino compartida antes de recurrir, y quítalo después. Copia el camino al resultado solo cuando una hoja coincide exactamente con el objetivo restante."
       tree-diameter:
+        example: "Entrada: [1, 2, 3, 4, 5] → 3"
         title: Diámetro del árbol binario
         summary: Encuentra la longitud (en aristas) del camino más largo entre dos nodos cualesquiera.
         whenToUse: DFS calculando la altura del subárbol mientras actualiza una variable aparte de 'mejor
           diámetro' con izquierda+derecha.
         hints:
-        - "¿En qué se convierte la respuesta del nodo cuando ambos hijos ya respondieron?"
-        - "El resultado de un nodo se arma solo con sus subárboles."
+        - "¿Qué devuelves a tu padre y qué anotas para ti?"
+        - "Un nodo devuelve su altura, mientras el mejor camino que pasa por él es la suma de las alturas de sus dos hijos."
         - "La función debe devolver la altura, pero actualizar una variable auxiliar con left_height + right_height. El diámetro en un nodo puede no pasar por la raíz, así que rastrea el máximo en todos los nodos."
       lowest-common-ancestor:
+        example: "Entrada: [3, 5, 1, 6, 2, 0, 8, null, null, 7, 4], 5, 4 → 5"
         title: Ancestro común más bajo
         summary: Encuentra el ancestro común más bajo de dos nodos en un árbol binario.
         whenToUse: 'Recorrido postorden: si ambos lados devuelven algo no nulo, la raíz es el LCA.'
         hints:
-        - "¿En qué se convierte la respuesta del nodo cuando ambos hijos ya respondieron?"
-        - "El resultado de un nodo se arma solo con sus subárboles."
+        - "¿Qué significa un retorno no nulo de un subárbol?"
+        - "Un nodo es el ancestro cuando hay un objetivo en cada subárbol hijo, o cuando el nodo mismo es un objetivo y el otro está debajo."
         - "Devuelve un resultado no nulo desde el subárbol que contiene p o q Si tanto la izquierda como la derecha son no nulas, la respuesta es el nodo actual"
       max-path-sum:
+        example: "Entrada: [1, 2, 3] → 6"
         title: Suma máxima de camino en árbol binario
         summary: Suma máxima de un camino entre dos nodos cualesquiera (el camino puede no pasar por la
           raíz).
         whenToUse: DFS devuelve la mejor ganancia hacia abajo; un global guarda el mejor camino que puede doblar por el nodo.
         hints:
-        - "¿En qué se convierte la respuesta del nodo cuando ambos hijos ya respondieron?"
-        - "El resultado de un nodo se arma solo con sus subárboles."
+        - "¿Cuándo la ganancia de un hijo perjudica el camino en vez de ayudarlo?"
+        - "Un nodo devuelve solo una rama hacia abajo y usa un hijo solo si su ganancia es positiva, mientras el mejor camino puede usar ambos hijos."
         - "Para cada hijo toma max(0, child_gain) — un hijo negativo nunca mejora el camino. Un camino por el nodo puede usar ambos hijos: candidate = node.val + left_gain + right_gain; actualiza el global. Devuelve al padre solo una rama: node.val + max(left_gain, right_gain), para que el camino sea simple."
   TREE_BFS:
     constraints: "El recorrido por niveles es una cola y una foto de su tamaño."
@@ -1867,45 +1973,50 @@ patterns:
       muy grande: considera si DFS con un contador de profundidad evita ese pico de memoria'
     problems:
       level-order:
+        example: "Entrada: [1, 2, 3, 4, 5] → [[1], [2, 3], [4, 5]]"
         title: Recorrido por niveles del árbol binario
         summary: Devuelve los valores de los nodos agrupados nivel por nivel, de arriba hacia abajo.
         whenToUse: 'La plantilla clásica de BFS en árboles: capturar el tamaño de la cola por nivel.'
         hints:
-        - "¿Qué nodos comparten la distancia a la raíz y cuándo aumenta esa distancia?"
-        - "La cola guarda un nivel; su tamaño al empezar el ciclo es todo ese nivel."
+        - "¿Cómo sabes qué nodos pertenecen al nivel que estás a punto de vaciar?"
+        - "El tamaño de la cola al empezar el ciclo es exactamente un nivel."
         - "Captura queue.size() antes del bucle interno para conocer el ancho del nivel actual. Construye una lista por nivel y agrégala a la lista de resultado externa."
       zigzag-level-order:
+        example: "Entrada: [1, 2, 3, 4, 5] → [[1], [3, 2], [4, 5]]"
         title: Recorrido en zigzag por niveles
         summary: Recorre nivel por nivel, alternando de izquierda a derecha y de derecha a izquierda.
         whenToUse: BFS estándar por niveles, más una bandera de dirección que invierte la lista de un
           nivel de cada dos.
         hints:
-        - "¿Qué nodos comparten la distancia a la raíz y cuándo aumenta esa distancia?"
-        - "La cola guarda un nivel; su tamaño al empezar el ciclo es todo ese nivel."
+        - "¿Qué cambia entre niveles y qué sigue siendo un recorrido normal de izquierda a derecha?"
+        - "Cada nivel se recoge en orden de visita y se invierte cuando la dirección dice de derecha a izquierda."
         - "Construye la lista de cada nivel normalmente, y luego invriértela cuando la bandera indique derecha a izquierda. Cambia la bandera de dirección al terminar cada nivel."
       right-side-view:
+        example: "Entrada: [1, 2, 3, null, 5, null, 4] → [1, 3, 4]"
         title: Vista lateral derecha del árbol binario
         summary: Devuelve los valores de los nodos visibles desde el lado derecho del árbol.
         whenToUse: BFS estándar por niveles, conservando solo el último nodo procesado en cada nivel.
         hints:
-        - "¿Qué nodos comparten la distancia a la raíz y cuándo aumenta esa distancia?"
-        - "La cola guarda un nivel; su tamaño al empezar el ciclo es todo ese nivel."
+        - "¿Qué nodo de un nivel es el que se ve desde la derecha?"
+        - "El último nodo sacado al vaciar un nivel es el nodo más a la derecha de ese nivel."
         - "Dentro del bucle interno de cada nivel, sobrescribe una variable 'lastInLevel' en cada extracción. Al terminar el bucle interno de un nivel, agrega 'lastInLevel' al resultado."
       min-depth:
+        example: "Entrada: [1, 2, 3, 4] → 2"
         title: Profundidad mínima de un árbol binario
         summary: Número de nodos en el camino más corto de la raíz a una hoja.
         whenToUse: BFS; la primera hoja encontrada determina la profundidad mínima.
         hints:
-        - "¿Qué nodos comparten la distancia a la raíz y cuándo aumenta esa distancia?"
-        - "La cola guarda un nivel; su tamaño al empezar el ciclo es todo ese nivel."
+        - "¿Qué hace de un nodo un lugar para parar, en vez de recorrer todo el árbol?"
+        - "La primera hoja alcanzada nivel por nivel tiene la profundidad mínima."
         - "Recorre por niveles hasta encontrar una hoja La profundidad aumenta en cada nivel"
       vertical-order:
+        example: "Entrada: [3, 9, 20, null, null, 15, 7] → [[9], [3, 15], [20], [7]]"
         title: Recorrido de orden vertical
         summary: Valores por columna de arriba hacia abajo, ordenados dentro de cada celda.
         whenToUse: BFS con claves (fila, columna) almacenadas en un TreeMap.
         hints:
-        - "¿Qué nodos comparten la distancia a la raíz y cuándo aumenta esa distancia?"
-        - "La cola guarda un nivel; su tamaño al empezar el ciclo es todo ese nivel."
+        - "¿Qué número le pegas a un nodo para saber su columna?"
+        - "La columna de un nodo es la de su padre más o menos uno, y los nodos de una columna se ordenan por fila y luego por valor."
         - "Rastrea el índice de columna de cada nodo Ordena cada columna primero por fila y luego por valor"
   TRIE:
     constraints: "Cada arista es un carácter. Luego los recorridos de insert y search."
@@ -1959,47 +2070,52 @@ patterns:
       más memoria que un set hash de las mismas palabras
     problems:
       implement-trie:
+        example: "Operaciones: insert(apple), search(apple), search(app), startsWith(app), insert(app), search(app) → [null, true, false, true, null, true]"
         title: Implementar Trie (árbol de prefijos)
         summary: Implementa las operaciones insert, search y startsWith para un trie.
         whenToUse: El TDA central de Trie sobre el que se construyen todos los demás problemas de trie.
         hints:
-        - "¿Qué prefijo es común y dónde se separa esta palabra?"
-        - "Cada arista es un carácter; una palabra termina solo en un nodo marcado como final."
+        - "¿Qué necesita un nodo para distinguir una palabra de un mero prefijo?"
+        - "Cada arista es un carácter, y una palabra termina solo en un nodo marcado como final."
         - "Cada nodo necesita un mapa de hijos y una bandera booleana de fin de palabra. search() requiere que la bandera de fin sea verdadera; startsWith() no."
       word-break-dict:
+        example: "Entrada: \\\"leetscode\\\", [\\\"leet\\\", \\\"code\\\", \\\"leetcode\\\"] → 1"
         title: Caracteres extra en una cadena (diccionario Trie)
         summary: Encuentra el mínimo número de caracteres sobrantes tras dividir una cadena usando palabras
           del diccionario.
         whenToUse: DP sobre posiciones de la cadena, usando un trie para verificar rápidamente qué palabras
           del diccionario comienzan en cada posición.
         hints:
-        - "¿Qué prefijo es común y dónde se separa esta palabra?"
-        - "Cada arista es un carácter; una palabra termina solo en un nodo marcado como final."
+        - "¿Qué se sabe ya del sufijo que empieza en i?"
+        - "El mejor número de caracteres extra desde i depende solo de sufijos que empiezan más tarde, tras una palabra del diccionario o un carácter saltado."
         - "dp[i] = mínimo de caracteres extra para la subcadena que empieza en i. En cada posición, prueba cada palabra del diccionario que coincida como prefijo vía el trie, y luego recurre más allá."
       replace-words:
+        example: "Entrada: [\\\"cat\\\", \\\"bat\\\", \\\"rat\\\"], \\\"the cattle was rattled by the battery\\\" → the cat was rat by the bat"
         title: Reemplazar palabras
         summary: Reemplaza las palabras por su raíz más corta del diccionario.
         whenToUse: Trie de raíces; recorre cada palabra hasta la marca de fin.
         hints:
-        - "¿Qué prefijo es común y dónde se separa esta palabra?"
-        - "Cada arista es un carácter; una palabra termina solo en un nodo marcado como final."
+        - "¿Hasta dónde recorres una palabra antes de que una raíz pueda reemplazarla?"
+        - "El primer nodo final alcanzado al deletrear la palabra es la raíz más corta que puede reemplazarla."
         - "Inserta todas las raíces en el Trie Detente en la primera marca de fin encontrada en la palabra"
       word-search-ii:
+        example: "Entrada: [\\\"oaan\\\", \\\"etae\\\", \\\"ihkr\\\", \\\"iflv\\\"], [\\\"oath\\\", \\\"pea\\\", \\\"eat\\\", \\\"rain\\\"] → [oath, eat]"
         title: Búsqueda de palabras II
         summary: Encuentra todas las palabras del diccionario en el tablero mediante celdas adyacentes.
         whenToUse: Trie de palabras combinado con DFS y poda sobre el tablero.
         hints:
-        - "¿Qué prefijo es común y dónde se separa esta palabra?"
-        - "Cada arista es un carácter; una palabra termina solo en un nodo marcado como final."
+        - "¿Cómo evitas explorar un camino del tablero que ninguna palabra restante puede seguir?"
+        - "La búsqueda sigue aristas del trie, y una palabra se quita del trie en cuanto se encuentra."
         - "Construye un Trie con todas las palabras del diccionario Elimina la palabra del Trie al encontrarla para evitar duplicados"
       longest-common-prefix:
+        example: "Entrada: [\\\"flower\\\", \\\"flow\\\", \\\"flight\\\"] → fl"
         title: Prefijo común más largo
-        summary: Find the longest common prefix among strings.
-        whenToUse: Trie of words or vertical scan until mismatch.
+        summary: "El prefijo común más largo de un conjunto de cadenas."
+        whenToUse: "Un trie de palabras o un barrido vertical hasta el primer desajuste."
         hints:
-        - "¿Qué prefijo es común y dónde se separa esta palabra?"
-        - "Cada arista es un carácter; una palabra termina solo en un nodo marcado como final."
-        - "Compare characters column by column Stop at first mismatch or end of a word"
+        - "¿Qué columna de caracteres es la primera en la que las palabras pueden discrepar?"
+        - "El prefijo es la serie más larga de columnas donde cada palabra aún tiene el mismo carácter."
+        - "Compara caracteres columna a columna. Para en el primer desajuste o al final de una palabra."
   HASH_MAPS:
     constraints: "n suele llegar a 1e5, así que un doble bucle ya no es respuesta."
     followUp: "¿Y si el arreglo es un flujo y no puedes guardar cada valor?"
@@ -2049,46 +2165,51 @@ patterns:
       de tamaño fijo funcione igual de bien
     problems:
       two-sum:
-        title: Two Sum
+        example: "Entrada: [2, 7, 11, 15], 9 → [0, 1]"
+        title: "Suma de dos"
         summary: Devuelve los índices de dos números en un arreglo que sumen un objetivo.
         whenToUse: Mapa de valor a índice mientras recorres; verifica el complemento antes de insertar
           el valor actual.
         hints:
-        - "¿Qué has visto ya que respondería al elemento actual en tiempo constante?"
-        - "El mapa guarda el complemento o la cuenta de todo lo anterior al índice actual."
+        - "¿Qué tendrías que haber visto ya para terminar en este número?"
+        - "El mapa guarda el índice de cada valor anterior, y el número actual se inserta solo después de comprobar su complemento."
         - "Para cada número, verifica si objetivo - número ya está en el mapa. Inserta el índice del número actual solo después de verificar, para evitar que un elemento coincida consigo mismo."
       subarray-sum-equals-k:
+        example: "Entrada: [1, 1, 1], 2 → 2"
         title: Suma de subarreglo igual a K
         summary: Cuenta el número de subarreglos contiguos cuyos elementos suman K.
         whenToUse: Suma de prefijo en curso más un mapa de cuántas veces ha ocurrido cada valor de suma
           de prefijo.
         hints:
-        - "¿Qué has visto ya que respondería al elemento actual en tiempo constante?"
-        - "El mapa guarda el complemento o la cuenta de todo lo anterior al índice actual."
+        - "¿Qué suma de prefijo anterior haría que el tramo que termina aquí valga K?"
+        - "El mapa cuenta cuántas veces ocurrió cada suma de prefijo, incluido el 0 una vez antes de que empiece el arreglo."
         - "Inicializa el mapa con la suma de prefijo 0 ocurriendo una vez, para manejar subarreglos que empiezan en el índice 0. En cada paso, suma map.get(currentSum - K) a la respuesta antes de actualizar el mapa con currentSum."
       isomorphic-strings:
+        example: "Entrada: \\\"egg\\\", \\\"add\\\" → true"
         title: Cadenas isomorfas
         summary: Comprueba si s y t son isomorfas mediante una biyección de caracteres.
         whenToUse: Dos mapas (o un mapa más un conjunto) para el mapeo directo e inverso.
         hints:
-        - "¿Qué has visto ya que respondería al elemento actual en tiempo constante?"
-        - "El mapa guarda el complemento o la cuenta de todo lo anterior al índice actual."
+        - "¿Qué debe seguir siendo cierto si este carácter ya fue mapeado?"
+        - "Cada carácter de la primera cadena tiene una sola imagen, y dos caracteres no comparten imagen."
         - "Mapea s→t y verifica que sea consistente Asegúrate también de que dos caracteres de s no mapeen al mismo carácter de t"
       longest-consecutive-already:
+        example: "Entrada: [0, 1, 0, 1, 1] → 4"
         title: Arreglo contiguo
         summary: Longitud máxima de un subarreglo contiguo con igual cantidad de ceros y unos.
         whenToUse: Balance de prefijos más un mapa de la primera posición vista de cada balance.
         hints:
-        - "¿Qué has visto ya que respondería al elemento actual en tiempo constante?"
-        - "El mapa guarda el complemento o la cuenta de todo lo anterior al índice actual."
+        - "¿Qué balance de ceros y unos significaría que este tramo está a medias?"
+        - "Tratando el 0 como -1, un balance repetido significa que el tramo entre esos índices tiene iguales ceros y unos."
         - "Trata el 0 como -1 Si ese balance ya se vio antes, actualiza la longitud máxima"
       four-sum-ii:
-        title: 4Sum II
+        example: "Entrada: [1, 2], [-2, -1], [-1, 2], [0, 2] → 2"
+        title: "Suma de cuatro II"
         summary: Cuenta las tuplas (i,j,k,l) cuya suma es cero entre cuatro arreglos.
         whenToUse: Hashea todas las sumas de A+B y luego busca -(C+D).
         hints:
-        - "¿Qué has visto ya que respondería al elemento actual en tiempo constante?"
-        - "El mapa guarda el complemento o la cuenta de todo lo anterior al índice actual."
+        - "¿Qué suma de par de los dos últimos arreglos cancelaría una suma de par que guardaste?"
+        - "El mapa cuenta sumas de los dos primeros arreglos, y cada suma de los dos últimos busca su negación."
         - "Construye un mapa suma→cantidad para los primeros dos arreglos Para cada suma c+d, busca -(c+d) en el mapa"
   KNOWING_WHAT_TO_TRACK:
     constraints: "Nombra el número o la entrada del mapa que hace el resto del pase O(1)."
@@ -2142,32 +2263,44 @@ patterns:
       que contadores ad hoc
     problems:
       majority-element:
+        example: "Entrada: [2, 2, 1, 1, 1, 2, 2] → 2"
         title: Elemento mayoritario
         summary: Encuentra el elemento que aparece más de n/2 veces en un arreglo.
         whenToUse: 'Votación de Boyer-Moore: rastrea un único candidato y un conteo en vez de un mapa
           de frecuencias completo.'
         hints:
-        - "¿Qué único número, actualizado en cada paso, vuelve innecesario el resto de la historia?"
-        - "El valor que sigues basta para recuperar la respuesta; no guardas todo el recorrido."
+        - "Cuando el conteo llega a cero, ¿qué puedes olvidar?"
+        - "El candidato y su conteo de votos bastan: las coincidencias suman un voto y todo lo demás resta uno."
         - "Incrementa el conteo cuando el número actual coincide con el candidato, decreméntalo si no. Cuando el conteo llegue a cero, cambia el candidato al número actual."
       longest-consecutive:
+        example: "Entrada: [100, 4, 200, 1, 3, 2] → 4"
         title: Secuencia consecutiva más larga
         summary: Encuentra la longitud de la racha más larga de enteros consecutivos en un arreglo no
           ordenado.
         whenToUse: Coloca todo en un set hash, y luego empieza a contar una racha solo desde números sin
           predecesor presente.
         hints:
-        - "¿Qué único número, actualizado en cada paso, vuelve innecesario el resto de la historia?"
-        - "El valor que sigues basta para recuperar la respuesta; no guardas todo el recorrido."
+        - "¿Qué números son inicios de verdad y cuáles son solo el medio de una serie?"
+        - "Un número inicia una serie solo cuando su predecesor falta, y la longitud es hasta dónde llegan los sucesores."
         - "Solo empieza a extender una secuencia desde un número x donde x-1 no está en el set. Desde cada inicio válido, sigue verificando x+1, x+2, ... para medir la longitud de la racha."
       majority-element-ii:
+        example: "Entrada: [1, 2, 1, 2, 1, 2, 3] → [1, 2]"
         title: Elemento mayoritario II
         summary: Todos los elementos que aparecen más de ⌊n/3⌋ veces.
         whenToUse: Algoritmo de Boyer-Moore con dos candidatos.
         hints:
-        - "¿Qué único número, actualizado en cada paso, vuelve innecesario el resto de la historia?"
-        - "El valor que sigues basta para recuperar la respuesta; no guardas todo el recorrido."
+        - "¿Cuántos candidatos pueden superar n/3 al mismo tiempo?"
+        - "Dos huecos de candidato y sus conteos cancelan un tercer valor distinto, y los supervivientes aún necesitan un conteo exacto."
         - "Puede haber como máximo dos respuestas Verifica los conteos reales en una segunda pasada"
+      maximum-gap:
+        title: Brecha máxima
+        summary: La mayor diferencia entre valores sucesivos en orden ordenado, sin ordenar el arreglo.
+        whenToUse: "El tiempo lineal obliga a guardar solo el mínimo y el máximo de cada cubo. El salto grande está entre cubos, no dentro de uno."
+        example: "Entrada: [3, 6, 9, 1] → 3"
+        hints:
+        - "Si no puedes ordenar, ¿qué dos números dentro de un tramo del rango bastan?"
+        - "Un cubo guarda solo su mínimo y su máximo, y la mayor brecha sucesiva está entre un cubo ocupado y el siguiente."
+        - "El ancho del cubo es (max-min)/(n-1). Recorre los cubos ocupados y quédate con la mayor diferencia entre el máximo de uno y el mínimo del siguiente."
   UNION_FIND:
     constraints: "Rango y compresión de camino son la razón de que esto sea casi O(1)."
     followUp: "¿Y si hay que deshacer la última unión?"
@@ -2214,46 +2347,51 @@ patterns:
       no rastrea la longitud del camino'
     problems:
       number-of-provinces:
+        example: "Entrada: [[1, 1, 0], [1, 1, 0], [0, 0, 1]] → 2"
         title: Número de provincias
         summary: Cuenta los componentes conectados en un grafo no dirigido dado como matriz de adyacencia.
         whenToUse: Une cada conexión directa de la matriz y luego cuenta cuántas raíces distintas quedan.
         hints:
-        - "¿Estos dos elementos ya están en el mismo componente, o esta arista debe unirlos?"
-        - "Cada elemento apunta a un padre; la raíz es el componente, y una unión enlaza dos raíces."
+        - "¿Cuándo dos ciudades dejan de ser componentes separados?"
+        - "Cada ciudad empieza como su propia raíz, y una unión exitosa reduce el número de componentes en uno."
         - "Solo hace falta recorrer el triángulo superior (o inferior) de la matriz simétrica. La respuesta final es el número de elementos que son su propia raíz."
       redundant-connection:
+        example: "Entrada: [[1, 2], [1, 3], [2, 3]] → [2, 3]"
         title: Conexión redundante
         summary: Encuentra la arista que se puede eliminar para que el grafo vuelva a ser un árbol (árbol
           más una arista extra).
         whenToUse: Procesa las aristas en orden; la primera cuyos extremos ya comparten raíz es la redundante.
         hints:
-        - "¿Estos dos elementos ya están en el mismo componente, o esta arista debe unirlos?"
-        - "Cada elemento apunta a un padre; la raíz es el componente, y una unión enlaza dos raíces."
+        - "¿Qué es cierto de una arista cuyos extremos ya comparten raíz?"
+        - "Las aristas se unen en el orden de entrada, y la primera que junta dos nodos ya en el mismo componente es la de más."
         - "Une los extremos de a una arista a la vez, en el orden de entrada dado. En cuanto find(u) == find(v) antes de unir, esa arista es la respuesta."
       accounts-merge:
+        example: "Entrada: John vía johnsmith y john_newyork, John vía johnsmith y john00, Mary → [[John, john00@mail.com, john_newyork@mail.com, johnsmith@mail.com], [Mary, mary@mail.com]]"
         title: Combinar cuentas
         summary: Combina las cuentas que comparten direcciones de correo.
         whenToUse: Une los correos con Union-Find y agrupa por raíz.
         hints:
-        - "¿Estos dos elementos ya están en el mismo componente, o esta arista debe unirlos?"
-        - "Cada elemento apunta a un padre; la raíz es el componente, y una unión enlaza dos raíces."
+        - "¿Qué correos ya son la misma persona, aunque las filas de cuenta difieran?"
+        - "Los correos de una cuenta se unen, y los grupos finales son los correos que comparten raíz."
         - "Construye un mapa correo→nombre Une los correos consecutivos dentro de una misma cuenta"
       number-of-islands-ii:
+        example: "Entrada: 3, 3, [[0, 0], [0, 1], [1, 2], [2, 1], [1, 1]] → [1, 1, 2, 3, 1]"
         title: Número de islas II
         summary: Después de agregar cada celda de tierra, devuelve el número actual de islas.
         whenToUse: Union-Find en línea a medida que las celdas se convierten en tierra.
         hints:
-        - "¿Estos dos elementos ya están en el mismo componente, o esta arista debe unirlos?"
-        - "Cada elemento apunta a un padre; la raíz es el componente, y una unión enlaza dos raíces."
+        - "Cuando una celda nueva de tierra toca tierra que ya está, ¿qué le pasa al conteo?"
+        - "Cada tierra añadida empieza como un componente, y cada unión exitosa con un vecino baja el conteo en uno."
         - "Agrega la tierra y luego une con los 4 vecinos Incrementa el contador al agregar y decrementa en cada unión exitosa"
       path-exists:
+        example: "Entrada: 6, [[0, 1], [1, 2], [2, 5], [3, 4]], 0, 5 → true"
         title: ¿Existe un camino en el grafo?
-        summary: Return whether a path exists between source and destination.
-        whenToUse: Union all edges, then check same component.
+        summary: "Si existe un camino entre source y destination."
+        whenToUse: "Une todas las aristas y comprueba que ambas estén en la misma componente."
         hints:
-        - "¿Estos dos elementos ya están en el mismo componente, o esta arista debe unirlos?"
-        - "Cada elemento apunta a un padre; la raíz es el componente, y una unión enlaza dos raíces."
-        - "Union endpoints of each edge find(source)==find(destination)"
+        - "Después de unir cada arista, ¿qué pregunta queda?"
+        - "El origen alcanza el destino exactamente cuando tienen la misma raíz."
+        - "Une los extremos de cada arista. La respuesta es find(source) == find(destination)."
   CUSTOM_DATA_STRUCTURES:
     constraints: "Nombra las dos estructuras y qué operación hace O(1) cada una."
     followUp: "¿Y si la capacidad no tiene tope o cada operación debe ser segura entre hilos?"
@@ -2305,47 +2443,52 @@ patterns:
       que basta una estructura unificada más simple
     problems:
       min-stack:
+        example: "Operaciones: push(-2), push(0), push(-3), getMin(), pop(), top() → [null, null, null, -3, null, 0, -2]"
         title: Pila con mínimo
         summary: Diseña una pila que soporte push, pop, top y getMin, todo en O(1).
         whenToUse: Una pila auxiliar (o pares de valores codificados) rastrea el mínimo en curso junto
           a la pila principal.
         hints:
-        - "¿Qué operación debe seguir siendo rápida, y qué enlace extra compra esa velocidad?"
-        - "La estructura guarda el orden que necesitas y un acceso directo al nodo que vas a actualizar."
+        - "¿Qué guardas para no tener que escanear el mínimo?"
+        - "Una segunda pila guarda el mínimo que era actual en cada push, y se saca junto con los valores."
         - "Apila el nuevo mínimo en una pila auxiliar cada vez que cambie (o en cada push, rastreando duplicados). Extrae de ambas pilas juntas para mantenerlas sincronizadas."
       lru-cache:
+        example: "Operaciones: put(1, 1), put(2, 2), get(1), put(3, 3), get(2), put(4, 4) → [null, null, 1, null, -1, null, -1, 3, 4]"
         title: Caché LRU
         summary: Diseña una caché con get y put en O(1) que desaloje la entrada usada menos recientemente
           cuando esté llena.
         whenToUse: 'Caché acotada con get/put O(1) — LinkedHashMap en access-order (o HashMap + lista doblemente enlazada).'
         hints:
-        - "¿Qué operación debe seguir siendo rápida, y qué enlace extra compra esa velocidad?"
-        - "La estructura guarda el orden que necesitas y un acceso directo al nodo que vas a actualizar."
+        - "¿Qué entrada sueltas cuando la caché está llena?"
+        - "El orden de recencia pone la clave usada al frente, y la menos reciente es la que se desaloja al llegar a la capacidad."
         - "Usa LinkedHashMap en modo access-order (o un mapa ordenado equivalente). En get/put refresca la clave para que sea la más reciente. Si el tamaño supera capacity, elimina la entrada eldest (menos reciente). Alternativa de entrevista: HashMap<node> + lista doblemente enlazada para splice-to-front / evict-tail explícitos."
       time-map:
+        example: "Operaciones: set(foo, bar, 1), get(foo, 1), get(foo, 3), set(foo, bar2, 4), get(foo, 4), get(foo, 5) → [null, \"bar\", \"bar\", null, \"bar2\", \"bar2\"]"
         title: Almacén clave-valor con marcas de tiempo
         summary: Guarda valores por marca de tiempo y obtén el último valor en o antes de una marca dada.
         whenToUse: Mapa clave → lista append-only de (timestamp, value); búsqueda binaria del último stamp ≤ query.
         hints:
-        - "¿Qué operación debe seguir siendo rápida, y qué enlace extra compra esa velocidad?"
-        - "La estructura guarda el orden que necesitas y un acceso directo al nodo que vas a actualizar."
+        - "Dada una marca de tiempo, ¿qué valor guardado es el más tardío que puedes devolver?"
+        - "Los valores de una clave se añaden en orden temporal, así que la respuesta es la marca más a la derecha que aún es ≤ la consulta."
         - "Los timestamps de una clave se insertan no decrecientes, así la lista queda ordenada para binary search. get debe devolver el valor más a la derecha con timestamp ≤ query (upper_bound − 1), o vacío si no hay. Guarda pares o arrays paralelos; no reordenes en cada get."
       lfu-cache:
+        example: "Operaciones: put(1, 1), put(2, 2), get(1), put(3, 3), get(2), get(3) → [null, null, 1, null, -1, 3]"
         title: Caché LFU
         summary: get/put en O(1) con expulsión del menos frecuentemente usado (empate → LRU).
         whenToUse: Mapas más listas doblemente enlazadas agrupadas por frecuencia.
         hints:
-        - "¿Qué operación debe seguir siendo rápida, y qué enlace extra compra esa velocidad?"
-        - "La estructura guarda el orden que necesitas y un acceso directo al nodo que vas a actualizar."
+        - "Cuando dos claves empatan en la menor frecuencia, ¿cuál se va?"
+        - "Cada frecuencia tiene su lista de recencia, y la víctima es la clave menos reciente de la frecuencia más baja."
         - "Rastrea la frecuencia mínima actual En cada get, mueve el elemento al siguiente cubo de frecuencia"
       design-hashmap:
+        example: "Operaciones: put(1, 1), put(2, 2), get(1), get(3), put(2, 1), get(2) → [null, null, 1, -1, null, 1, null, -1]"
         title: Diseñar un HashMap
-        summary: Implement a simple HashMap without built-in map libraries.
-        whenToUse: Array of buckets + chaining for interview design warmup.
+        summary: "Un HashMap sencillo sin mapas de la biblioteca."
+        whenToUse: "Arreglo de cubetas y encadenamiento, como calentamiento de diseño."
         hints:
-        - "¿Qué operación debe seguir siendo rápida, y qué enlace extra compra esa velocidad?"
-        - "La estructura guarda el orden que necesitas y un acceso directo al nodo que vas a actualizar."
-        - "Use an array of linked lists Hash with key % bucketCount"
+        - "¿Dónde cae una clave y qué pasa si ese hueco ya está ocupado?"
+        - "Una clave vive en el cubo de clave módulo el número de cubos, y una colisión es otro nodo en la cadena de ese cubo."
+        - "Usa un arreglo de listas enlazadas. El hash es key % número de cubetas."
   BITWISE:
     constraints: "Di la propiedad: XOR cancela pares, una máscara aísla un bit."
     followUp: "¿Y si los números pueden ser negativos y desplazas un int con signo?"
@@ -2396,55 +2539,61 @@ patterns:
       y un set hash es más claro
     problems:
       single-number:
+        example: "Entrada: [4, 1, 2, 1, 2] → 4"
         title: Número único
         summary: Cada elemento de un arreglo aparece dos veces excepto uno - encuentra ese.
         whenToUse: Aplica XOR a todos los elementos; los valores emparejados se cancelan a cero, dejando
           solo el sin pareja.
         hints:
-        - "¿Qué bit puedes decidir sin mirar los demás?"
-        - "Una máscara o un desplazamiento aísla un bit; el resto del entero no cambia."
+        - "¿Qué queda después de que cada valor pareado se cancela?"
+        - "XOR borra un valor que aparece dos veces y deja el que aparece una."
         - "a XOR a = 0 y a XOR 0 = a, así que los pares desaparecen sin importar el orden. No se necesita espacio extra ni ordenar - basta una pasada de XOR."
       number-of-1-bits:
+        example: "Entrada: -1 → 32"
         title: Número de bits en 1
         summary: Cuenta el número de bits activados (peso de Hamming) en un entero.
         whenToUse: n &= n-1 limpia el bit activado más bajo cada vez, así que iterar hasta que n sea cero
           cuenta los bits directamente.
         hints:
-        - "¿Qué bit puedes decidir sin mirar los demás?"
-        - "Una máscara o un desplazamiento aísla un bit; el resto del entero no cambia."
+        - "¿Qué cambia en el conteo borrar el bit a 1 más bajo?"
+        - "Cada paso quita exactamente un bit a 1, así que el número de pasos es el número de bits a 1."
         - "Cada iteración de n &= (n - 1) elimina exactamente un bit activado. El bucle se ejecuta exactamente popcount(n) veces, lo cual ya es eficiente sin revisar cada posición de bit."
       single-number-ii:
+        example: "Entrada: [2, 2, 3, 2] → 3"
         title: Número único II
         summary: Cada elemento aparece tres veces excepto uno — encuéntralo.
         whenToUse: Conteo de bits módulo 3, o una máquina de estados ones/twos.
         hints:
-        - "¿Qué bit puedes decidir sin mirar los demás?"
-        - "Una máscara o un desplazamiento aísla un bit; el resto del entero no cambia."
+        - "¿Cómo recuerdas un bit visto una vez y uno visto dos veces?"
+        - "Cada bit se cuenta módulo 3, así que los bits vistos tres veces desaparecen y los vistos una vez quedan."
         - "Cuenta cada bit módulo 3 O bien mantén máscaras ones y twos"
       sum-of-two-integers:
+        example: "Entrada: 1, 2 → 3"
         title: Suma de dos enteros
         summary: Suma dos enteros sin usar los operadores + o -.
         whenToUse: XOR da los bits de la suma sin acarreo, (AND)<<1 da el acarreo — repite en bucle.
         hints:
-        - "¿Qué bit puedes decidir sin mirar los demás?"
-        - "Una máscara o un desplazamiento aísla un bit; el resto del entero no cambia."
+        - "¿Dónde está la suma y dónde el acarreo si no puedes usar +?"
+        - "XOR es la suma sin acarreo, y un AND desplazado a la izquierda es el acarreo que aún hay que sumar."
         - "a^b es la suma sin considerar el acarreo (a&b)<<1 es el acarreo que se debe sumar después"
       reverse-bits:
+        example: "Entrada: 43261596 → 964176192"
         title: Invertir bits
         summary: Invierte los bits de un entero sin signo de 32 bits.
         whenToUse: Desplaza y acumula el resultado bit a bit.
         hints:
-        - "¿Qué bit puedes decidir sin mirar los demás?"
-        - "Una máscara o un desplazamiento aísla un bit; el resto del entero no cambia."
+        - "¿Qué le pasa al bit que acabas de pelar del extremo bajo?"
+        - "Se vuelve el nuevo bit alto del resultado, y esto ocurre una vez por cada una de las 32 posiciones."
         - "Repite el ciclo 32 veces result = (result<<1) | (n&1); n>>>=1"
       bitwise-and-range:
+        example: "Entrada: 5, 7 → 4"
         title: AND bit a bit de un rango
-        summary: Bitwise AND of all numbers in [left, right].
-        whenToUse: Shift until left==right to clear differing low bits.
+        summary: "AND bit a bit de todos los números en [left, right]."
+        whenToUse: "Desplaza hasta que left == right para borrar los bits bajos que difieren."
         hints:
-        - "¿Qué bit puedes decidir sin mirar los demás?"
-        - "Una máscara o un desplazamiento aísla un bit; el resto del entero no cambia."
-        - "While left < right, right &= right-1 or shift both Common prefix bits survive"
+        - "¿Qué bits pueden sobrevivir a cada número de left a right?"
+        - "Solo queda el prefijo común de left y right; cada bit que aún cambia dentro del rango se vuelve 0."
+        - "Mientras left < right, haz right &= right-1 o desplaza ambos. Sobrevive el prefijo común de bits."
   MATH_GEOMETRY:
     constraints: "Reduce la fórmula antes de codear. El desbordamiento es parte de la respuesta."
     followUp: "¿Y si las coordenadas son tan grandes que la pendiente debe ser una fracción reducida, no un double?"
@@ -2494,55 +2643,61 @@ patterns:
       así que una identidad ingeniosa añade riesgo sin beneficio real
     problems:
       pow-x-n:
-        title: Pow(x, n)
+        example: "Entrada: 2, 10 → 1024"
+        title: "Potencia(x, n)"
         summary: Calcula x elevado a la potencia n de forma eficiente usando exponenciación binaria.
         whenToUse: Potencia rápida mediante elevación al cuadrado repetida; reduce a la mitad el exponente
           en cada paso en vez de multiplicar n veces.
         hints:
-        - "¿Qué cantidad no cambia, de modo que puedes calcularla en vez de simular cada paso?"
-        - "Una forma cerrada, un gcd o una pendiente sustituyen el bucle."
+        - "¿Cómo se encoge un exponente par y qué pelas cuando es impar?"
+        - "Elevar la base al cuadrado parte a la mitad un exponente par, y un exponente negativo es el recíproco del positivo."
         - "Si n es par, x^n = (x*x)^(n/2); si es impar, separa primero un factor de x. Maneja n negativo calculando 1 / x^(-n), y cuida el desbordamiento de Integer.MIN_VALUE al negar."
       gcd-of-strings:
+        example: "Entrada: \\\"ABCABC\\\", \\\"ABC\\\" → ABC"
         title: Máximo común divisor de cadenas
         summary: Encuentra la cadena más grande que divide a ambas de dos cadenas dadas.
         whenToUse: Verifica primero str1+str2 == str2+str1, y luego toma la subcadena de longitud gcd(len1,
           len2).
         hints:
-        - "¿Qué cantidad no cambia, de modo que puedes calcularla en vez de simular cada paso?"
-        - "Una forma cerrada, un gcd o una pendiente sustituyen el bucle."
+        - "¿Qué tiene que ser cierto antes de que un prefijo común pueda dividir ambas cadenas?"
+        - "Las cadenas comparten una cadena divisora solo cuando cualquier orden de concatenación da la misma cadena."
         - "Dos cadenas comparten una cadena divisora solo si concatenarlas en cualquier orden da el mismo resultado. Si esa verificación pasa, la respuesta es el prefijo de longitud gcd(str1.length(), str2.length())."
       sqrt:
-        title: Sqrt(x)
+        example: "Entrada: 8 → 2"
+        title: "Raíz cuadrada(x)"
         summary: Raíz cuadrada entera de x (redondeada hacia abajo).
         whenToUse: Búsqueda binaria sobre el espacio de posibles respuestas.
         hints:
-        - "¿Qué cantidad no cambia, de modo que puedes calcularla en vez de simular cada paso?"
-        - "Una forma cerrada, un gcd o una pendiente sustituyen el bucle."
+        - "¿Cuál es el mayor entero cuyo cuadrado no pasa de x?"
+        - "La búsqueda guarda el mayor medio cuyo cuadrado sigue siendo ≤ x."
         - "Busca mid tal que mid*mid <= x Cuidado con el desbordamiento; usa long"
       integer-to-roman:
+        example: "Entrada: 1994 → MCMXCIV"
         title: Entero a número romano
         summary: Convierte un entero en su numeral romano.
         whenToUse: Resta voraz de los valores romanos más grandes, incluyendo las combinaciones sustractivas.
         hints:
-        - "¿Qué cantidad no cambia, de modo que puedes calcularla en vez de simular cada paso?"
-        - "Una forma cerrada, un gcd o una pendiente sustituyen el bucle."
+        - "¿Qué valor de símbolo es el mayor que aún puedes restar?"
+        - "El número se reduce en el mayor valor de la tabla que aún cabe, y ese símbolo se añade."
         - "Usa la tabla de valores 1000, 900, 500, 400, ... Añade el símbolo mientras num >= el valor actual"
       max-points-line-math:
+        example: "Entrada: [0, 1], [1, 0], [0, -1], [-1, 0] → true"
         title: Cuadrado válido
         summary: Comprueba si cuatro puntos forman un cuadrado.
         whenToUse: 'Distancias: 2 diagonales iguales, 4 lados iguales, ninguna distancia cero.'
         hints:
-        - "¿Qué cantidad no cambia, de modo que puedes calcularla en vez de simular cada paso?"
-        - "Una forma cerrada, un gcd o una pendiente sustituyen el bucle."
+        - "¿Qué distancias tienen que coincidir para que cuatro puntos sean un cuadrado?"
+        - "Cuatro lados iguales y dos diagonales iguales, medidos por longitud al cuadrado, bastan, y el orden de los puntos no importa."
         - "Calcula las 6 distancias al cuadrado entre pares de puntos Se necesitan 4 lados iguales y 2 diagonales iguales"
       max-points-on-a-line:
+        example: "Entrada: [[1, 1], [2, 2], [3, 3], [4, 4], [1, 2]] → 4"
         title: Máximo de puntos en una línea
-        summary: Maximum number of points that lie on the same line.
-        whenToUse: For each origin count slopes with reduced fractions.
+        summary: "Máximo de puntos que caen en la misma recta."
+        whenToUse: "Para cada origen cuenta pendientes con fracciones reducidas."
         hints:
-        - "¿Qué cantidad no cambia, de modo que puedes calcularla en vez de simular cada paso?"
-        - "Una forma cerrada, un gcd o una pendiente sustituyen el bucle."
-        - "Normalize slope by GCD Handle duplicates and vertical lines"
+        - "Para un origen elegido, ¿qué hace que otros dos puntos sean la misma recta?"
+        - "Los puntos desde un origen comparten recta cuando sus pendientes se reducen a la misma fracción, con las verticales y los duplicados contados aparte."
+        - "Normaliza la pendiente con el MCD. Trata aparte duplicados y líneas verticales."
   SPRING_BOOT_INTERVIEW:
     constraints: "Di si el proceso está solo o es uno de muchos antes de elegir una estructura en memoria."
     followUp: "¿Qué pasa al reiniciar, y qué pasa si una segunda instancia no ve esa memoria?"
@@ -2597,6 +2752,7 @@ patterns:
       de anotaciones específicas del framework no'
     problems:
       rate-limiter:
+        example: "Operaciones: allow(one), allow(one), allow(one), allow(two) → [true, true, false, true]"
         failureNote: "Un cubo en memoria se reinicia en el despliegue e ignora las demás instancias. Di dónde vivirían los tokens si hubiera más de un proceso, y qué haces cuando ese almacén está caído."
         title: Limitador de tasa con token bucket
         summary: Permite como máximo N solicitudes por ventana de tiempo por clave usando semántica de
@@ -2604,10 +2760,11 @@ patterns:
         whenToUse: Una pregunta clásica de diseño de API gateway / concurrencia en entrevistas sobre controlar
           la tasa de solicitudes por cliente.
         hints:
-        - "¿Qué falla primero cuando aparece una segunda instancia, un reintento o un reinicio?"
-        - "Nombra el estado compartido y el lock, la transacción o la clave que impiden ejecutar el efecto dos veces."
+        - "¿Cuántos tokens tiene esta clave ahora mismo, sin un reloj de fondo?"
+        - "Los tokens se reponen con el tiempo pasado desde la última llamada, y una llamada gasta uno solo si queda un token."
         - "Rastrea los tokens disponibles y una marca de tiempo del último relleno por clave. Rellena los tokens de forma perezosa según el tiempo transcurrido en vez de ejecutar un temporizador en segundo plano."
       idempotency-store:
+        example: "Entrada: put(K, R) con un TTL de 5 minutos. Un reintento de K devuelve R. Tras el TTL, K se ejecuta otra vez."
         failureNote: "Un TTL que expira a mitad del reintento vuelve a ejecutar el efecto. Una clave solo en memoria desaparece al reiniciar, y el siguiente reintento ya no es idempotente."
         title: Almacén de claves de idempotencia
         summary: Guarda resultados de solicitudes indexados por una clave de idempotencia con semántica
@@ -2615,37 +2772,41 @@ patterns:
         whenToUse: Reintentos seguros de POST en APIs tipo pagos, donde reenviar una solicitud no debe
           duplicar un efecto secundario.
         hints:
-        - "¿Qué falla primero cuando aparece una segunda instancia, un reintento o un reinicio?"
-        - "Nombra el estado compartido y el lock, la transacción o la clave que impiden ejecutar el efecto dos veces."
+        - "¿Qué debe ver un reintento y qué no debe hacer?"
+        - "Una clave recuerda el resultado y un vencimiento; dentro del TTL se devuelve el resultado guardado en vez de ejecutar el efecto otra vez."
         - "Guarda pares (resultado, marca de expiración) indexados por la clave de idempotencia proporcionada por el cliente. Ante una clave repetida dentro de la ventana TTL, devuelve el resultado guardado en vez de reejecutar la operación."
       circuit-breaker:
+        example: "Operaciones: getState(), recordFailure(), getState(), allowRequest(), recordFailure(), allowRequest() → [\"CLOSED\", null, \"CLOSED\", true, null, false, \"OPEN\"]"
         failureNote: "Un breaker en un proceso no protege a la flota. Si todos los pods pasan a half-open a la vez, avalanchan la dependencia de la que acabas de apartarte."
         title: Circuit Breaker (interruptor de circuito)
         summary: Un interruptor de circuito simple con umbral de fallos y tiempo de espera en estado abierto.
         whenToUse: Protege a quienes llaman de fallos en cascada.
         hints:
-        - "¿Qué falla primero cuando aparece una segunda instancia, un reintento o un reinicio?"
-        - "Nombra el estado compartido y el lock, la transacción o la clave que impiden ejecutar el efecto dos veces."
+        - "¿En qué estado estás tras demasiados fallos y qué se permite después del tiempo de espera?"
+        - "Closed cuenta fallos, open falla de inmediato, y tras el tiempo de espera una prueba es half-open."
         - "Pasa a estado abierto tras N fallos Tras el tiempo de espera, permite un intento en estado HALF_OPEN"
       lru-http-cache:
+        example: "Entrada: GET /a se guarda como B durante 30 s. Un segundo GET dentro de esos 30 s devuelve B. Tras el vencimiento la entrada desaparece."
         failureNote: "Una caché de un proceso queda vieja en cuanto otra instancia escribe. Un GET que depende de quién llama, o un TTL olvidado, sirve el cuerpo equivocado."
         title: Caché de respuestas HTTP
         summary: Caché con TTL para respuestas GET idempotentes, con expulsión por capacidad.
         whenToUse: Patrón cache-aside para endpoints REST de lectura intensiva.
         hints:
-        - "¿Qué falla primero cuando aparece una segunda instancia, un reintento o un reinicio?"
-        - "Nombra el estado compartido y el lock, la transacción o la clave que impiden ejecutar el efecto dos veces."
+        - "¿Qué vuelve inutilizable una respuesta en caché aunque siga siendo la más nueva?"
+        - "Una entrada es un cuerpo más un vencimiento; un get la tira cuando el vencimiento pasó, y una caché llena tira la menos reciente."
         - "Guarda la marca de tiempo de expiración Elimina las entradas caducadas en el get; expulsa por LRU cuando esté llena"
       config-store:
+        example: "Operaciones: set(theme, dark), get(theme), get(missing), getOrDefault(missing, light) → [null, \"dark\", null, \"light\"]"
         failureNote: "Un ConcurrentHashMap no es un servicio de configuración. Nadie más ve la escritura, y un reinicio la borra."
         title: Almacén de configuración en memoria
-        summary: Thread-safe in-memory configuration key/value store.
-        whenToUse: Simple Spring-style config bean for interviews.
+        summary: "Almacén clave/valor en memoria y seguro entre hilos."
+        whenToUse: "Un bean de configuración al estilo Spring para la entrevista."
         hints:
-        - "¿Qué falla primero cuando aparece una segunda instancia, un reintento o un reinicio?"
-        - "Nombra el estado compartido y el lock, la transacción o la clave que impiden ejecutar el efecto dos veces."
-        - "ConcurrentHashMap under the hood getOrDefault for missing keys"
+        - "¿Qué devuelves cuando la clave nunca se escribió?"
+        - "El mapa es todo el almacén, y una clave ausente devuelve el valor por defecto que pasó quien llama."
+        - "Por debajo, un ConcurrentHashMap. Para una clave ausente, getOrDefault."
       request-id-filter:
+        example: "Entrada: una petición sin X-Request-Id recibe un id nuevo. Una petición que ya lo trae lo conserva."
         failureNote: "Un id nacido dentro de un servicio no correlaciona la llamada que entró por la pasarela. Fiarse de un id del cliente sin límites invita a trazas falsas."
         title: Filtro de Request Id
         summary: Genera o propaga un X-Request-Id por cada solicitud entrante y lo expone a las llamadas
@@ -2653,10 +2814,11 @@ patterns:
         whenToUse: Toda solicitud necesita un id de correlación estable para trazabilidad entre servicios,
           sin importar si quien llama ya lo proporcionó.
         hints:
-        - "¿Qué falla primero cuando aparece una segunda instancia, un reintento o un reinicio?"
-        - "Nombra el estado compartido y el lock, la transacción o la clave que impiden ejecutar el efecto dos veces."
+        - "¿Cuándo el encabezado entrante es el id y cuándo acuñas uno?"
+        - "Un id entrante no vacío se conserva; si no, se genera uno nuevo y se guarda para esta petición."
         - "Si el encabezado entrante está presente y no está en blanco, reutilízalo; si no, genera un id nuevo. Guarda el id resuelto en un ámbito de la solicitud para que el código posterior pueda leerlo sin pasarlo como parámetro en cada llamada."
       transactional-outbox:
+        example: "Entrada: enqueue escribe PENDING. publishDue envía solo las filas cuyo momento ya llegó y luego las marca como enviadas."
         failureNote: "La fila del outbox y la escritura de negocio tienen que confirmarse juntas. Publicar antes del commit, o caer después del commit y antes de publicar, es el bug. Una cola en memoria no sobrevive al reinicio."
         title: Outbox transaccional
         summary: Cola outbox en memoria que encola eventos junto con una escritura en BD y publica solo
@@ -2665,10 +2827,11 @@ patterns:
           distribuida, escribiendo el evento en una tabla/cola outbox dentro de la misma transacción
           y publicándolo por separado.
         hints:
-        - "¿Qué falla primero cuando aparece una segunda instancia, un reintento o un reinicio?"
-        - "Nombra el estado compartido y el lock, la transacción o la clave que impiden ejecutar el efecto dos veces."
+        - "¿Qué se guarda en vez de publicar de inmediato?"
+        - "Una fila queda pendiente hasta su hora, y publishDue envía solo las filas que ya tocan, y luego las marca enviadas."
         - "enqueue guarda el evento con un estado y una marca de tiempo de elegibilidad en vez de publicarlo de inmediato. publishDue busca eventos PENDING que ya sean elegibles, se los pasa al publicador, y luego los marca como PUBLISHED (o los deja PENDING para reintentar si el publicador lanza una excepción)."
       optimistic-lock-service:
+        example: "Entrada: una actualización con la versión 3 tiene éxito y pasa a 4. Una segunda que sigue llevando 3 se rechaza."
         failureNote: "Una versión comprobada solo en esta JVM no coordina una segunda instancia. Dos pods pueden leer la versión 3 y escribir los dos."
         title: Servicio de bloqueo optimista
         summary: Actualización de un registro versionado que falla cuando la versión esperada por quien
@@ -2676,10 +2839,11 @@ patterns:
         whenToUse: Actualizaciones concurrentes sobre la misma fila sin tomar un bloqueo de base de
           datos, análogo a una columna @Version de JPA y a OptimisticLockException.
         hints:
-        - "¿Qué falla primero cuando aparece una segunda instancia, un reintento o un reinicio?"
-        - "Nombra el estado compartido y el lock, la transacción o la clave que impiden ejecutar el efecto dos veces."
+        - "¿Qué demuestra que tu actualización sigue siendo sobre el registro que leíste?"
+        - "La versión guardada debe igualar la que envías; el éxito la incrementa, y una diferencia es un conflicto."
         - "Guarda un número de versión junto al valor de cada registro; cada actualización exitosa lo incrementa. Rechaza una actualización cuya versión esperada no coincida con la versión guardada, en vez de sobrescribir en silencio."
       concurrent-login-tracker:
+        example: "Entrada: límite 2. El tercer inicio en este proceso descarta la sesión más antigua. Otra instancia nunca ve ese conjunto."
         failureNote: "Un conjunto de sesiones de este proceso está vacío en el siguiente pod. No puedes contar ni revocar un login que cayó en otro sitio."
         title: Rastreador de inicios de sesión concurrentes
         summary: Rastrea las sesiones activas por usuario y aplica un número máximo de inicios de sesión
@@ -2688,10 +2852,11 @@ patterns:
           debe ser rechazado o debe desalojar la sesión más antigua, según la política, al alcanzar el
           límite por usuario.'
         hints:
-        - "¿Qué falla primero cuando aparece una segunda instancia, un reintento o un reinicio?"
-        - "Nombra el estado compartido y el lock, la transacción o la clave que impiden ejecutar el efecto dos veces."
+        - "¿Qué sesión hay que soltar cuando este usuario ya está en el límite?"
+        - "Este proceso recuerda las sesiones activas en orden, y un login pasado el límite quita solo la más antigua de aquí."
         - "Mantén una colección ordenada de ids de sesión activos por usuario para encontrar fácilmente la sesión más antigua. Ante un nuevo inicio de sesión que supera el límite, recházalo o desaloja y reemplaza la sesión más antigua según la política configurada; haz que el desalojo y la inserción sean atómicos bajo un bloqueo por usuario."
       sql-injection-safe-query:
+        example: "Entrada: buildSelect(\"users\", {id: 7}) enlaza 7. Un nombre de columna que no es un identificador simple se rechaza."
         failureNote: "Una lista blanca armada desde la petición no es una lista blanca. Ata los valores como parámetros. Los identificadores que no se pueden atar se quedan en una lista que escribiste tú."
         title: Constructor de consultas seguro frente a inyección SQL
         summary: Construye marcadores de posición parametrizados a partir de un mapa columna-valor,
@@ -2700,6 +2865,6 @@ patterns:
           de forma segura - valida los nombres de columna contra una lista blanca y siempre vincula
           los valores como parámetros, nunca los concatenes como texto en el SQL.
         hints:
-        - "¿Qué falla primero cuando aparece una segunda instancia, un reintento o un reinicio?"
-        - "Nombra el estado compartido y el lock, la transacción o la clave que impiden ejecutar el efecto dos veces."
+        - "¿Qué parte de la sentencia puede ser texto y qué parte debe ser un valor ligado?"
+        - "Los identificadores se comprueban contra una regla de nombre simple antes de escribirse en SQL, y los valores son parámetros."
         - "Valida cada identificador (nombre de columna) contra un patrón de lista blanca antes de usarlo en el texto SQL generado. Nunca insertes el valor directamente - siempre emite un marcador `?` y devuelve la lista de valores por separado para que un PreparedStatement los vincule."

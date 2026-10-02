@@ -7,11 +7,9 @@ challenges:
       su derecha, así que piensa con cuidado qué determina el nivel de agua en cada posición antes de
       recurrir a un patrón específico.
     hints:
-    - El agua en el índice i está limitada por la menor entre max-izquierda y max-derecha.
-    - Dos punteros desde ambos extremos pueden rastrear los máximos en curso sin precalcular dos arreglos
-      completos.
-    - Mueve el puntero del lado con el máximo en curso más pequeño, ya que el nivel de agua de ese lado
-      ya está determinado.
+    - "¿Qué, a cada lado de una barra, limita el agua?"
+    - "El agua sobre una barra no sube por encima del menor de los máximos ya vistos a cada lado."
+    - "Avanza el lado cuyo máximo en curso es menor, porque el nivel de agua de ese lado ya está decidido."
   longest-repeating-replacement:
     title: Reemplazo más largo de caracteres repetidos
     prompt: Se te da una cadena s y un entero k. Puedes elegir cualquier carácter de la cadena y cambiarlo
@@ -20,11 +18,9 @@ challenges:
       las operaciones. Piensa qué hace que una ventana de la cadena sea 'alcanzable' con a lo sumo k reemplazos
       antes de decidir un enfoque.
     hints:
-    - Una ventana es válida mientras windowLength - maxFrequencyInWindow <= k.
-    - Rastrea un conteo de frecuencia de caracteres en curso mientras se expande el borde derecho de la
-      ventana.
-    - La ventana nunca necesita reducirse por debajo de su tamaño máximo histórico, así que puedes deslizarla
-      en vez de recalcular por completo el borde izquierdo.
+    - "¿Cuándo un tramo sigue siendo alcanzable con solo k reemplazos?"
+    - "Un tramo es válido mientras su longitud menos su carácter más frecuente es como máximo k."
+    - "Crece el borde derecho y no retires el izquierdo por debajo de la longitud válida más larga ya vista."
   employee-free-time:
     title: Tiempo libre de empleados
     prompt: Se nos da una lista de horarios de empleados, que representa el tiempo de trabajo de cada
@@ -33,11 +29,9 @@ challenges:
       por hora de inicio. Considera cómo combinar los horarios de varios empleados en una sola línea de
       tiempo antes de buscar huecos.
     hints:
-    - Aplana los intervalos de todos los empleados en una gran lista y luego ordénala por hora de inicio.
-    - Fusiona los intervalos solapados en esa lista combinada de la misma forma que lo harías para un
-      solo horario.
-    - Cualquier hueco entre el fin de un intervalo fusionado y el inicio del siguiente es tiempo libre
-      común.
+    - "¿Dónde hay un hueco que comparten todos los empleados?"
+    - "Cuando todo intervalo ocupado está en una sola línea, un hueco entre dos bloques ocupados fusionados está libre para todos."
+    - "Ordena por inicio, fusiona solapes y emite cada hueco positivo entre un fin fusionado y el siguiente inicio."
   median-of-two-sorted:
     title: Mediana de dos arreglos ordenados
     prompt: Dados dos arreglos ordenados nums1 y nums2 de tamaño m y n respectivamente, devuelve la mediana
@@ -45,12 +39,9 @@ challenges:
       simplemente fusionar los arreglos. Piensa qué propiedad de un punto de partición válido en ambos
       arreglos te permitiría ubicar la mediana sin fusionarlos por completo.
     hints:
-    - Aplica búsqueda binaria del punto de partición en el arreglo más corto, no en el más largo, para
-      mantener pequeño el espacio de búsqueda.
-    - Una partición correcta tiene todos los elementos del lado izquierdo <= todos los del lado derecho,
-      combinando ambos arreglos.
-    - Una vez que la partición es correcta, la mediana se obtiene directamente de los cuatro elementos
-      límite alrededor de la partición.
+    - "¿Qué tendría que cumplir un corte por ambos arreglos para caer en la mediana?"
+    - "Todo valor a la izquierda del corte es como máximo todo valor a la derecha."
+    - "Busca el corte en el arreglo más corto hasta que los cuatro valores de frontera queden en orden; la mediana está entre esas fronteras."
   word-ladder:
     title: Escalera de palabras
     prompt: Una secuencia de transformación de la palabra beginWord a la palabra endWord usando un diccionario
@@ -60,11 +51,9 @@ challenges:
       existe tal secuencia. Piensa qué implica la relación de 'difiere en una letra' entre palabras sobre
       la estructura general que las conecta.
     hints:
-    - Modela cada palabra como un nodo y conecta dos palabras con una arista si difieren en exactamente
-      una letra.
-    - La secuencia de transformación más corta en un grafo no ponderado se encuentra con BFS, no con DFS.
-    - Generar todas las variaciones de una letra de la palabra actual (en vez de comparar contra cada
-      palabra del diccionario) mantiene cada paso eficiente.
+    - "¿Qué cuenta como un paso desde la palabra actual?"
+    - "Dos palabras están a un paso cuando difieren en exactamente una letra, y la respuesta es el menor número de esos pasos."
+    - "Desde la palabra actual, prueba cada cambio de una letra que siga sin usarse en el diccionario, y no revisites una palabra."
   serialize-binary-tree:
     title: Serializar y deserializar árbol binario
     prompt: Diseña un algoritmo para serializar y deserializar un árbol binario. No hay restricción sobre
@@ -73,14 +62,9 @@ challenges:
       de árbol original. Piensa qué orden de recorrido preserva suficiente información estructural para
       reconstruir el árbol sin ambigüedad, incluyendo dónde van los hijos nulos.
     hints:
-    - Marcadores explícitos de null en la salida serializada permiten que la deserialización sepa exactamente
-      dónde termina cada subárbol.
-    - Prefiere un DFS en preorden que escriba valores y marcadores null — reconstruye sin ambigüedad desde
-      un flujo de tokens.
-    - El recorrido por niveles con marcadores null es una alternativa válida; deserializa en el mismo
-      orden en que escribiste.
-    - Durante la deserialización, consume tokens de izquierda a derecha, recursivamente (o con cola),
-      reconstruyendo enlaces padre-hijo conforme aparecen marcadores.
+    - "¿Qué hay que escribir para que un hijo ausente no se confunda con el fin del árbol?"
+    - "Un marcador nulo ocupa cada hijo ausente, así que el flujo de tokens tiene un hueco para cada rama."
+    - "Escribe valores y marcadores nulos en un orden fijo, y reconstruye consumiendo ese mismo orden."
   largest-rectangle-histogram:
     title: Rectángulo más grande en un histograma
     prompt: Dado un arreglo de enteros heights que representa las alturas de las barras de un histograma
@@ -89,12 +73,9 @@ challenges:
       mientras siga siendo la barra más baja en ese tramo, en vez de verificar directamente cada rectángulo
       posible.
     hints:
-    - Para cada barra, el rectángulo más grande usándola como la más baja se extiende hasta la primera
-      barra más baja a cada lado.
-    - Una pila monótona creciente de índices te permite encontrar, para la barra que se extrae, exactamente
-      dónde están esos límites.
-    - Al extraer una barra porque aparece una más baja, el ancho abarca desde la nueva cima de la pila
-      (exclusiva) hasta el índice actual (exclusivo).
+    - "Para esta barra, ¿hasta dónde puede extenderse mientras sigue siendo la más baja?"
+    - "El rectángulo que usa esta barra como la más baja se detiene en la primera barra estrictamente más baja a cada lado."
+    - "Cuando llega una barra más baja, la barra que apartas tiene el borde derecho en el índice nuevo y el izquierdo justo después del índice pendiente anterior."
   alien-dictionary:
     title: Diccionario alienígena
     prompt: Existe un nuevo idioma alienígena que usa el alfabeto inglés, pero el orden entre las letras
@@ -104,11 +85,9 @@ challenges:
       órdenes válidos, devuelve cualquiera de ellos. Piensa qué te puede decir comparar cada par de palabras
       adyacentes sobre el orden de letras individuales.
     hints:
-    - Compara cada par de palabras adyacentes carácter por carácter para hallar la primera posición donde
-      difieren.
-    - Ese primer par de caracteres distintos te da una arista de 'va antes de' entre dos letras.
-    - Una vez recolectadas todas las aristas, un ordenamiento topológico sobre las 26 letras (solo las
-      presentes) da un orden válido.
+    - "¿Qué dice la primera posición en que dos palabras vecinas difieren?"
+    - "Ese par de letras es una precedencia: la letra de la palabra anterior va primero."
+    - "Recoge esas precedencias y toma repetidamente una letra que ninguna regla restante siga colocando después de otra."
 
   sliding-window-maximum:
     title: Máximo en ventana deslizante
@@ -117,36 +96,36 @@ challenges:
       de cada posición de la ventana. Un escaneo anidado es demasiado lento; piensa cómo reutilizar trabajo
       al deslizar.
     hints:
-    - Una deque monótona decreciente de índices guarda candidatos al máximo.
-    - Elimina índices fuera de la ventana por el frente; valores menores por atrás antes de insertar.
-    - El frente de la deque es siempre el índice del máximo actual.
+    - "¿Qué índice anterior ya no puede ser el máximo de ninguna ventana posterior?"
+    - "Los candidatos se quedan en orden decreciente, y el candidato del frente sigue dentro de la ventana."
+    - "Tira los índices que salieron de la ventana y los valores menores antes de aceptar el índice nuevo."
   word-break-ii:
     title: Word Break II
     prompt: >
       Dada una cadena s y un diccionario wordDict, inserta espacios en s para formar frases donde cada
       palabra esté en el diccionario. Devuelve todas las frases posibles en cualquier orden.
     hints:
-    - Haz backtracking sobre cortes; solo recurre si el prefijo está en el diccionario.
-    - Memoiza índices de inicio fallidos para no reexplorar el mismo sufijo.
-    - Une las palabras con espacios solo al llegar al final de s.
+    - "¿Qué corte vale la pena continuar y qué prefijo es un callejón sin salida?"
+    - "Un corte es legal solo cuando el trozo recién tomado está en el diccionario."
+    - "Al llegar al final de la cadena, une los trozos elegidos con espacios."
   russian-doll-envelopes:
     title: Sobres matrioska
     prompt: >
       Dados sobres [wi, hi], uno cabe en otro solo si ancho y alto son estrictamente mayores. Devuelve
       el máximo número de sobres anidados. No se permite rotar.
     hints:
-    - Ordena por ancho ascendente y alto descendente para que anchos iguales no aniden.
-    - La respuesta es la LIS sobre las alturas tras esa ordenación.
-    - Búsqueda binaria sobre tails da LIS en O(n log n).
+    - "Cuando fijas un orden de los sobres, ¿qué queda por maximizar?"
+    - "Anchos iguales no se anidan, así que entre anchos iguales las alturas se toman para que las alturas restantes aún puedan crecer."
+    - "La cadena más larga es la serie estrictamente creciente más larga de esas alturas."
   minimum-window-subsequence:
     title: Ventana mínima como subsecuencia
     prompt: >
       Dadas s y t, devuelve la ventana contigua mínima de s tal que t sea subsecuencia de esa ventana.
       Si no existe, cadena vacía; si hay varias, la más a la izquierda.
     hints:
-    - Avanza hasta cubrir t como subsecuencia y luego encoge hacia atrás al inicio más temprano válido.
-    - Guarda la ventana más corta y luego la más a la izquierda.
-    - Un barrido de dos pasadas evita una tabla DP completa cuando m es pequeño.
+    - "Cuando el patrón ya está cubierto en orden, ¿hasta dónde atrás puede empezar esta ventana?"
+    - "La mejor ventana es la más corta, y en empate la más a la izquierda, y termina en una coincidencia del último carácter del patrón."
+    - "Expande hasta cubrir el patrón en orden, luego retrocede hasta el inicio más temprano que aún lo cubre."
 
   count-of-smaller:
     title: Conteo de menores a la derecha
@@ -154,24 +133,24 @@ challenges:
       Dado nums, devuelve counts donde counts[i] es cuántos elementos estrictamente menores hay a la
       derecha. Merge-sort y Fenwick/segment tree son válidos en entrevista.
     hints:
-    - Merge sort cuenta inversiones ordenando índices.
-    - Fenwick / segment tree sobre rangos también funciona.
-    - Explica el trade-off entre ambos enfoques.
+    - "Cuando este valor pasa junto a otros, ¿cuáles de ellos son menores y siguen a su derecha?"
+    - "El conteo de un valor es cuántos menores lo pasan mientras se combinan mitades ordenadas."
+    - "Al combinar las mitades, suma la cantidad de valores menores ya tomados al valor mayor junto al que pasan."
   palindrome-pairs:
     title: Pares palíndromo
     prompt: >
       Dadas palabras únicas, devuelve pares (i, j) tales que words[i] + words[j] sea palíndromo.
       Hash map de reversos o un trie de palabras invertidas aplican.
     hints:
-    - Indexa palabras y busca complementos reverse de prefijos/sufijos.
-    - Un trie de reversos es un camino de reconocimiento igual de válido.
-    - Deduplica pares.
+    - "¿Qué otra palabra completaría un palíndromo en el lado no emparejado de esta palabra?"
+    - "Un par funciona cuando el lado no emparejado es él mismo un palíndromo y el otro lado es el reverso de una palabra guardada."
+    - "Para cada corte de una palabra, busca el reverso de un lado entre las palabras ya indexadas."
   task-scheduler:
     title: Planificador de tareas
     prompt: >
       Programa tareas de CPU con enfriamiento n entre iguales. Devuelve el tiempo mínimo.
       Fórmula greedy por frecuencias o simulación con max-heap son aceptables.
     hints:
-    - La tarea más frecuente domina la longitud.
-    - idleSlots = (maxFreq - 1) * n, luego rellena con otras.
-    - La simulación con heap también es válida.
+    - "¿Qué obliga al tiempo ocioso: el número de tareas o la que más se repite?"
+    - "La tarea más ocupada deja un hueco de n tras cada copia salvo la última, y otras tareas pueden llenar esos huecos."
+    - "El tiempo es el mayor entre el número de tareas y la longitud que fuerzan los huecos de la tarea más ocupada."

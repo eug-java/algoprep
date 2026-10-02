@@ -85,8 +85,11 @@ public class CourseController {
     }
 
     @GetMapping("/walkthroughs/{problemId}")
-    public Map<String, String> walkthrough(@PathVariable String problemId) {
-        String ascii = courseService.getWalkthrough(problemId)
+    public Map<String, String> walkthrough(
+            HttpServletRequest request,
+            @PathVariable String problemId,
+            @RequestParam(required = false) String lang) {
+        String ascii = courseService.getWalkthrough(locale(request, lang), problemId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Walkthrough not found"));
         Map<String, String> body = new LinkedHashMap<>();
         body.put("problemId", problemId);

@@ -54,12 +54,13 @@ patterns:
     difficulty: EASY
     className: com.algoprep.patterns.twopointers.PairWithTargetSum
     summary: Find the indices of two numbers in a sorted array that add up to a target value.
+    example: "Input: [1, 2, 3, 4], 6 → [1, 3]"
     whenToUse: Sorted array plus pair-sum question is the textbook signal for opposite-direction two pointers.
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - "Which pointer can you move without losing the rest of the answer?"
-    - "Each step discards only the side that can no longer hold the answer."
+    - "Which end is safe to drop after this pair misses the target?"
+    - "The pair, if it exists, is still strictly between the two indices."
     - "Start left at index 0 and right at index n-1. If the sum is too small move left forward; if too large move right backward."
     tags:
     - array
@@ -73,12 +74,13 @@ patterns:
     difficulty: EASY
     className: com.algoprep.patterns.twopointers.RemoveDuplicates
     summary: Compact a sorted array in-place so each element appears once, returning the new length.
+    example: "Input: [2, 3, 3, 6, 9, 9] → 4"
     whenToUse: In-place compaction with a slow write pointer and a fast scan pointer over sorted data.
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - "Which pointer can you move without losing the rest of the answer?"
-    - "Each step discards only the side that can no longer hold the answer."
+    - "Where is the next free slot for a value you have not written yet?"
+    - "The write index sits just after the last unique value kept."
     - "Keep a write index that only advances when a new unique value is found. The fast pointer scans every element; the slow pointer marks the next free slot."
     tags:
     - array
@@ -93,14 +95,14 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.twopointers.TripletSumToZero
     summary: Find all unique triplets in an array that sum to zero.
-    example: "Input: [-3, 0, 1, 2, -1, 1, -2] — trace this case by hand before coding"
+    example: "Input: [-3, 0, 1, 2, -1, 1, -2] → [[-3, 1, 2], [-2, 0, 2], [-2, 1, 1], [-1, 0, 1]]"
     whenToUse: Sort, fix one index as an anchor, then run two pointers over the remaining range for its
       complement pair.
     timeComplexity: O(n^2)
     spaceComplexity: O(1) excluding output
     hints:
-    - "Which pointer can you move without losing the rest of the answer?"
-    - "Each step discards only the side that can no longer hold the answer."
+    - "Once one number is fixed, what target must the other two hit?"
+    - "For a fixed anchor, a valid pair still lies in the unsorted-away range to its right."
     - "Sort first so two pointers and duplicate-skipping both become possible. After fixing nums[i], search for a pair summing to -nums[i] in the rest of the array. Skip over repeated values for i, left, and right to avoid duplicate triplets."
     tags:
     - array
@@ -114,12 +116,13 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.twopointers.ContainerWithMostWater
     summary: Find two lines that form a container with the max water area.
+    example: "Input: [1, 8, 6, 2, 5, 4, 8, 3, 7] → 49"
     whenToUse: Two ends of a height line; area is min(height)*width, so move the shorter pointer inward.
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - "Which pointer can you move without losing the rest of the answer?"
-    - "Each step discards only the side that can no longer hold the answer."
+    - "Which side is the one that cannot grow the area anymore?"
+    - "The best area so far is at least as large as any container that still uses the shorter side you are about to leave."
     - "Start left=0 and right=n-1; the widest container is the first candidate. Area = min(h[left], h[right]) * (right-left). Track the maximum. Only advancing the shorter side can improve the min height; advancing the taller side never helps."
     tags:
     - array
@@ -138,8 +141,8 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - "Which pointer can you move without losing the rest of the answer?"
-    - "Each step discards only the side that can no longer hold the answer."
+    - "Which region is already finished, and which index is still unknown?"
+    - "Everything before low is 0, everything after high is 2, and mid is the first unclassified index."
     - "Maintain [0..low) as 0s and (high..n] as 2s Swap mid with low/high based on value"
     tags:
     - array
@@ -153,13 +156,13 @@ patterns:
     difficulty: HARD
     className: com.algoprep.patterns.twopointers.QuadrupleSum
     summary: Find all unique quadruplets that sum to target.
-    example: "Input: [4, 1, 2, -1, 1, -3], 1 — trace this case by hand before coding"
+    example: "Input: [4, 1, 2, -1, 1, -3], 1 → [[-3, -1, 1, 4], [-3, 1, 1, 2]]"
     whenToUse: Sort + fix two indices + two pointers for the pair.
     timeComplexity: O(n³)
     spaceComplexity: O(n)
     hints:
-    - "Which pointer can you move without losing the rest of the answer?"
-    - "Each step discards only the side that can no longer hold the answer."
+    - "After two numbers are fixed, what pair-sum is left to find?"
+    - "The remaining pair, if it exists, lies between the inner indices, and duplicate values at each level are skipped."
     - "Sort first and skip duplicates at every level Inner pair uses classic two pointers"
     tags:
     - array
@@ -227,8 +230,8 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - "What does the gap between a one-step walker and a two-step walker tell you?"
-    - "The fast walker gains one step each move, so the gap finds the middle or the loop."
+    - "What would a meeting of the two walkers prove, and what would a null prove?"
+    - "If the fast walker reaches null there is no cycle; a meeting means the next links loop."
     - "If fast ever meets slow, a cycle exists. If fast reaches null, the list is acyclic."
     tags:
     - linked-list
@@ -247,8 +250,8 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - "What does the gap between a one-step walker and a two-step walker tell you?"
-    - "The fast walker gains one step each move, so the gap finds the middle or the loop."
+    - "When the fast walker runs out of nodes, where is the slow one?"
+    - "Slow has taken half as many steps as fast, so it stands on the middle."
     - "Advance fast by two and slow by one in the same loop. When fast is null or fast.next is null, slow is the answer."
     tags:
     - linked-list
@@ -261,13 +264,13 @@ patterns:
     difficulty: EASY
     className: com.algoprep.patterns.fastslow.HappyNumber
     summary: Determine if repeatedly summing squared digits eventually reaches 1.
-    example: "Input: 23 — trace this case by hand before coding"
+    example: "Input: 23 → true"
     whenToUse: The digit-square transform forms a functional graph; a cycle that isn't 1 means unhappy.
     timeComplexity: O(log n)
     spaceComplexity: O(1)
     hints:
-    - "What does the gap between a one-step walker and a two-step walker tell you?"
-    - "The fast walker gains one step each move, so the gap finds the middle or the loop."
+    - "What repeats if the digit-square chain never reaches 1?"
+    - "The sequence of digit-square sums is a path that either hits 1 or loops."
     - "Treat 'next value' as one step of a linked structure. Run fast/slow on that implicit sequence to detect a non-1 cycle."
     tags:
     - math
@@ -281,13 +284,13 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.fastslow.CycleStart
     summary: Return the node where the cycle begins, or null.
-    example: "Input: [1, 2] — trace this case by hand before coding"
+    example: "Input: 1 → 2 → (back to 2) → 2"
     whenToUse: Floyd meet + reset one pointer to head.
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - "What does the gap between a one-step walker and a two-step walker tell you?"
-    - "The fast walker gains one step each move, so the gap finds the middle or the loop."
+    - "After the walkers meet, which node is the same distance from the head and from the meeting point?"
+    - "Resetting one walker to the head and stepping both once makes them meet at the cycle entrance."
     - "After meeting, move one pointer to head Advance both one step until they meet again"
     tags:
     - linked-list
@@ -301,12 +304,13 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.fastslow.PalindromeLinkedList
     summary: Check if a linked list reads the same forward and backward.
+    example: "Input: 1 → 2 → 2 → 1 → true"
     whenToUse: Find middle, reverse second half, compare.
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - "What does the gap between a one-step walker and a two-step walker tell you?"
-    - "The fast walker gains one step each move, so the gap finds the middle or the loop."
+    - "Which half can you reverse so the two halves can be compared in one pass?"
+    - "The first half stays put; the reversed second half lines up with it from the outside in."
     - "Fast/slow to middle Reverse second half then compare"
     tags:
     - linked-list
@@ -320,13 +324,13 @@ patterns:
     difficulty: HARD
     className: com.algoprep.patterns.fastslow.CircularArrayLoop
     summary: Detect a cycle in a circular jump array of length > 1 in one direction.
-    example: "Input: [1, 2, -1, 2, 2] — trace this case by hand before coding"
+    example: "Input: [1, 2, -1, 2, 2] → true"
     whenToUse: Treat indices as a functional graph; fast/slow per start.
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - "What does the gap between a one-step walker and a two-step walker tell you?"
-    - "The fast walker gains one step each move, so the gap finds the middle or the loop."
+    - "What makes a jump illegal even if the index comes back?"
+    - "A loop counts only when every jump in it has the same sign and the length is more than one."
     - "Reject opposite-direction jumps Mark visited indices to avoid rework"
     tags:
     - array
@@ -389,13 +393,14 @@ patterns:
     difficulty: EASY
     className: com.algoprep.patterns.slidingwindow.MaxSumSubarrayOfSizeK
     summary: Find the maximum sum of any contiguous subarray of a fixed size K.
+    example: "Input: [2, 1, 5, 1, 3, 2], k = 3 → 9"
     whenToUse: 'Fixed window size K: add the entering element on the right, remove the leaving one on
       the left.'
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - "Which part of the range can you drop and never check again?"
-    - "The window stays feasible; you shrink it from the left only when the condition breaks."
+    - "What changes when the window moves one step, and what stays?"
+    - "The window sum loses the outgoing value and gains the incoming one; the answer is the best sum seen."
     - "Compute the first window's sum directly, then slide by one. Each slide only needs one addition and one subtraction, not a full re-sum."
     tags:
     - array
@@ -409,14 +414,14 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.slidingwindow.LongestSubstringKDistinct
     summary: Find the length of the longest substring containing at most K distinct characters.
-    example: "Input: \"araaci\", 2 — trace this case by hand before coding"
+    example: "Input: \\\"araaci\\\", 2 → 4"
     whenToUse: Variable-size window plus a frequency map of distinct keys, shrinking whenever distinct
       count exceeds K.
     timeComplexity: O(n)
     spaceComplexity: O(k)
     hints:
-    - "Which part of the range can you drop and never check again?"
-    - "The window stays feasible; you shrink it from the left only when the condition breaks."
+    - "When the window holds one distinct character too many, which side must give something up?"
+    - "The window is valid exactly while its frequency map has at most K keys."
     - "Grow the window and add each new character to a frequency map. While the map has more than K keys, shrink from the left and decrement/remove counts."
     tags:
     - string
@@ -431,13 +436,13 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.slidingwindow.FindAllAnagrams
     summary: Return the start indices of all of p's anagrams found within s.
-    example: "Input: \"cbaebabacd\", \"abc\" — trace this case by hand before coding"
+    example: "Input: \\\"cbaebabacd\\\", \\\"abc\\\" → [0, 6]"
     whenToUse: Fixed window equal to p's length, comparing running character counts against p's counts.
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - "Which part of the range can you drop and never check again?"
-    - "The window stays feasible; you shrink it from the left only when the condition breaks."
+    - "What stays the same in every window that is an anagram of the pattern?"
+    - "A window of the pattern's length matches when its character counts equal the pattern's counts."
     - "Build a target frequency map for p once, up front. Slide a window of len(p) over s, comparing counts; matching counts means an anagram starts there."
     tags:
     - string
@@ -457,8 +462,8 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(min(n,alphabet))
     hints:
-    - "Which part of the range can you drop and never check again?"
-    - "The window stays feasible; you shrink it from the left only when the condition breaks."
+    - "Where must the left edge jump when the new character was already inside the window?"
+    - "Left sits just after the previous copy of the character at right, and the answer is the widest such gap."
     - "Keep a map from character → last index seen inside (or just before) the current window. When s[right] was seen at index j ≥ left, set left = j+1 so the window stays duplicate-free. Update best = max(best, right-left+1) after each expansion."
     tags:
     - string
@@ -473,13 +478,13 @@ patterns:
     difficulty: HARD
     className: com.algoprep.patterns.slidingwindow.MinWindowSubstring
     summary: Smallest substring of s covering all characters of t.
-    example: "Input: \"ADOBECODEBANC\", \"ABC\" — trace this case by hand before coding"
+    example: "Input: \\\"ADOBECODEBANC\\\", \\\"ABC\\\" → BANC"
     whenToUse: Shrinkable window with need/have frequency maps until every required character is satisfied.
     timeComplexity: O(|s|+|t|)
     spaceComplexity: O(alphabet)
     hints:
-    - "Which part of the range can you drop and never check again?"
-    - "The window stays feasible; you shrink it from the left only when the condition breaks."
+    - "What has to become true before you are allowed to shrink?"
+    - "The window is valid only while every required character's count is satisfied."
     - "Build a need map for t and track how many distinct required characters are currently satisfied. Expand right until the window is valid (satisfied == need.size), then shrink left while it stays valid. Whenever the window is valid, compare its length to the best answer and keep the shortest (leftmost on ties if required). Decrement have counts carefully when shrinking so satisfied drops only when a required count falls below need."
     tags:
     - string
@@ -541,8 +546,8 @@ patterns:
     timeComplexity: O(n log n)
     spaceComplexity: O(n)
     hints:
-    - "What becomes obvious once the intervals are sorted by start?"
-    - "You only compare the current interval with the one you have not closed yet."
+    - "After sorting, which previous interval can the current one still touch?"
+    - "Only the last merged interval can overlap the one you are looking at."
     - "Sort by start time before anything else. Compare each interval's start against the last merged interval's end."
     tags:
     - intervals
@@ -560,8 +565,8 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(n)
     hints:
-    - "What becomes obvious once the intervals are sorted by start?"
-    - "You only compare the current interval with the one you have not closed yet."
+    - "Where does the new interval start swallowing its neighbors?"
+    - "Before the overlap the list is copied as-is; during the overlap the new bounds only grow."
     - "No sorting needed - the input list is already sorted. Keep expanding the new interval's bounds while it overlaps the current one."
     tags:
     - intervals
@@ -575,12 +580,13 @@ patterns:
     difficulty: EASY
     className: com.algoprep.patterns.intervals.ConflictingAppointments
     summary: Check whether any two appointments in a list overlap.
+    example: "Input: [1,4], [2,5], [7,9] → false"
     whenToUse: Sort by start, then check each adjacent pair — after sorting, only neighbors can overlap.
     timeComplexity: O(n log n)
     spaceComplexity: O(n)
     hints:
-    - "What becomes obvious once the intervals are sorted by start?"
-    - "You only compare the current interval with the one you have not closed yet."
+    - "After sorting by start, which pair is the only one that can clash?"
+    - "A clash exists exactly when one appointment starts before the previous one ends."
     - "After sorting by start, only adjacent pairs can possibly overlap. An overlap exists as soon as one appointment's start is before the previous one's end."
     tags:
     - intervals
@@ -598,8 +604,8 @@ patterns:
     timeComplexity: O(m+n)
     spaceComplexity: O(1) excluding output
     hints:
-    - "What becomes obvious once the intervals are sorted by start?"
-    - "You only compare the current interval with the one you have not closed yet."
+    - "Which start and which end define the overlap of the two current intervals?"
+    - "The overlap is from the later start to the earlier end, and it is empty when that range is backwards."
     - "Intersection start is max(starts); intersection end is min(ends). Emit only when start < end (or ≤ if inclusive). Advance the pointer of the interval that ends first — it cannot intersect any later intervals from the other list."
     tags:
     - intervals
@@ -613,12 +619,13 @@ patterns:
     difficulty: HARD
     className: com.algoprep.patterns.intervals.MinimumMeetingRooms
     summary: Find the minimum number of meeting rooms required.
+    example: "Input: [0,30], [5,10], [15,20] → 2"
     whenToUse: 'Track concurrent meetings: sort by start and keep a min-heap of ongoing end times (or sweep starts/ends).'
     timeComplexity: O(n log n)
     spaceComplexity: O(n)
     hints:
-    - "What becomes obvious once the intervals are sorted by start?"
-    - "You only compare the current interval with the one you have not closed yet."
+    - "When a meeting starts, which earlier meeting might already have freed a room?"
+    - "The number of rooms is how many meetings are open at once, tracked by ends that are still in the future."
     - "Sort meetings by start time so you always schedule the next earliest meeting. Keep a min-heap of end times for rooms currently in use; free a room when heap.min ≤ next.start. If no room is free, allocate one (push the new end). The heap size is the rooms needed so far. Alternatively: sort starts and ends separately and sweep — increment on a start, decrement on an end."
     tags:
     - intervals
@@ -680,8 +687,8 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - "Which links can you rewrite while holding only a few node references?"
-    - "The prefix you already walked is rewired; the rest of the list is still untouched."
+    - "What do you have to remember before you overwrite a next pointer?"
+    - "The reversed prefix ends at the node you just rewired, and the rest of the list is still the old chain."
     - "Save curr.next before overwriting it. The last non-null curr becomes the new head once the loop ends."
     tags:
     - linked-list
@@ -699,8 +706,8 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - "Which links can you rewrite while holding only a few node references?"
-    - "The prefix you already walked is rewired; the rest of the list is still untouched."
+    - "Which node becomes the tail of the reversed segment?"
+    - "The node that was at the left boundary ends the reversed piece and must be tied to whatever followed the right boundary."
     - "Use a dummy head so left=1 doesn't need special-casing. The original 'left' node becomes the tail of the reversed segment - reconnect it to what follows 'right'."
     tags:
     - linked-list
@@ -719,8 +726,8 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - "Which links can you rewrite while holding only a few node references?"
-    - "The prefix you already walked is rewired; the rest of the list is still untouched."
+    - "What must be true before you reverse the next group of k?"
+    - "A group is reversed only when k nodes remain; its new head is tied back to the previous group's tail."
     - "Before reversing a group, check that k nodes actually remain. Connect the previous group's tail to the current group's new head after each reversal."
     tags:
     - linked-list
@@ -738,8 +745,8 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - "Which links can you rewrite while holding only a few node references?"
-    - "The prefix you already walked is rewired; the rest of the list is still untouched."
+    - "After k steps, which node is the new tail?"
+    - "The list is a circle for one splice: the new tail is n - (k mod n) steps from the old head."
     - "k %= n New tail is at n - k - 1 from head after cycle"
     tags:
     - linked-list
@@ -758,8 +765,8 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - "Which links can you rewrite while holding only a few node references?"
-    - "The prefix you already walked is rewired; the rest of the list is still untouched."
+    - "Which half has to be reversed before you can zip the two halves?"
+    - "The first half stays in order; the reversed second half is woven in as every other node."
     - "Find the middle with fast/slow pointers (slow ends on the last node of the first half for odd lengths). Reverse only the second half (nodes after mid), then weave first-half and reversed-second nodes. Be careful not to create a cycle when cutting the list at mid."
     tags:
     - linked-list
@@ -827,8 +834,8 @@ patterns:
     timeComplexity: O(log n) insert, O(1) median
     spaceComplexity: O(n)
     hints:
-    - "Which half of the values must stay ordered, and which half can stay loose?"
-    - "One heap keeps the half you have set aside, and the other keeps the choice you can take next."
+    - "After each insert, which heap is allowed to be larger?"
+    - "The max-heap holds the lower half, the min-heap the upper half, and their sizes differ by at most one."
     - "Insert into the max-heap first, then move its top to the min-heap to keep order. Rebalance sizes after every insert so they differ by at most one."
     tags:
     - heap
@@ -842,14 +849,14 @@ patterns:
     difficulty: HARD
     className: com.algoprep.patterns.twoheaps.MaximizeCapital
     summary: Pick at most k projects to maximize final capital (the IPO problem).
-    example: "Input: [0, 1, 2], [1, 2, 3], 3, 0 — trace this case by hand before coding"
+    example: "Input: [0, 1, 2], [1, 2, 3], 3, 0 → 6"
     whenToUse: A min-heap by required capital to find affordable projects, paired with a max-heap by profit
       to pick the best one.
     timeComplexity: O(n log n)
     spaceComplexity: O(n)
     hints:
-    - "Which half of the values must stay ordered, and which half can stay loose?"
-    - "One heap keeps the half you have set aside, and the other keeps the choice you can take next."
+    - "Which projects are you allowed to consider with the capital you have now?"
+    - "Affordable projects sit in a profit heap; taking the best one only raises capital."
     - "Push all projects affordable with current capital into a max-heap by profit. Always take the top of the profit max-heap, then unlock newly affordable projects."
     tags:
     - heap
@@ -863,13 +870,13 @@ patterns:
     difficulty: HARD
     className: com.algoprep.patterns.twoheaps.SlidingWindowMedian
     summary: Medians of every contiguous window of size k.
-    example: "Input: [1, 3, -1, -3, 5, 3, 6, 7], 3 — trace this case by hand before coding"
+    example: "Input: [1, 3, -1, -3, 5, 3, 6, 7], 3 → [1.0, -1.0, -1.0, 3.0, 5.0, 6.0]"
     whenToUse: Two heaps plus delayed lazy deletion.
     timeComplexity: O(n log n)
     spaceComplexity: O(n)
     hints:
-    - "Which half of the values must stay ordered, and which half can stay loose?"
-    - "One heap keeps the half you have set aside, and the other keeps the choice you can take next."
+    - "When the window slides, which value must leave the heaps, and which arrives?"
+    - "The two heaps still split the current window into a lower and an upper half, even if a departure is deleted lazily."
     - "Balance max/min heaps for the window Lazy-delete outgoing elements"
     tags:
     - heap
@@ -888,8 +895,8 @@ patterns:
     timeComplexity: O(n log n)
     spaceComplexity: O(n)
     hints:
-    - "Which half of the values must stay ordered, and which half can stay loose?"
-    - "One heap keeps the half you have set aside, and the other keeps the choice you can take next."
+    - "For an interval that just ended, which later start is the first one that can follow it?"
+    - "You match the earliest unfinished end to the earliest start that is still at least that end."
     - "Heap intervals by start descending Match against ends descending"
     tags:
     - heap
@@ -903,13 +910,13 @@ patterns:
     difficulty: EASY
     className: com.algoprep.patterns.twoheaps.StaticMedian
     summary: Find the median of an unsorted array using two heaps.
-    example: "Input: [3, 1, 2] — trace this case by hand before coding"
+    example: "Input: [3, 1, 2] → 2.0"
     whenToUse: Same two-heap balance idea as the stream median, but for a fixed array.
     timeComplexity: O(n log n)
     spaceComplexity: O(n)
     hints:
-    - "Which half of the values must stay ordered, and which half can stay loose?"
-    - "One heap keeps the half you have set aside, and the other keeps the choice you can take next."
+    - "Which half of the values do you need on top to read the median?"
+    - "After rebalancing, the median is the top of the larger heap, or the average of the two tops."
     - "Push into max/min heaps and rebalance Median is top or average of tops"
     tags:
     - heap
@@ -974,8 +981,8 @@ patterns:
     timeComplexity: O(N log k)
     spaceComplexity: O(k)
     hints:
-    - "Of the K sorted fronts, which element is safe to take next?"
-    - "A min-heap of the current heads always yields the next value in global order."
+    - "Which of the K heads is safe to take next?"
+    - "A heap of the current heads yields the next node in global order, and that node's successor replaces it."
     - "Push each list's head node (not just its value) so you can advance it later. After popping a node, push its .next into the heap if it exists."
     tags:
     - heap
@@ -990,14 +997,14 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.kwaymerge.KthSmallestInSortedMatrix
     summary: Find the k-th smallest element in a matrix sorted by row and column.
-    example: "Input: [[1, 3, 4], [2, 6, 8], [3, 6, 7]], 5 — trace this case by hand before coding"
+    example: "Input: [[1, 3, 4], [2, 6, 8], [3, 6, 7]], 5 → 4"
     whenToUse: Treat rows as sorted lists and heap-merge them, or binary search directly on the value
       range.
     timeComplexity: O(k log n)
     spaceComplexity: O(n)
     hints:
-    - "Of the K sorted fronts, which element is safe to take next?"
-    - "A min-heap of the current heads always yields the next value in global order."
+    - "After you pop a cell, which new cell becomes a candidate?"
+    - "The heap holds the smallest unused cell of the rows you have opened, and the k-th pop is the answer."
     - "Seed the heap with the first element of each row (up to k rows). Pop k times; the k-th pop is the answer."
     tags:
     - heap
@@ -1011,13 +1018,13 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.kwaymerge.KSmallestPairs
     summary: K pairs (u,v) with smallest sums from two sorted arrays.
-    example: "Input: [1, 7, 11], [2, 4, 6], 3 — trace this case by hand before coding"
+    example: "Input: [1, 7, 11], [2, 4, 6], 3 → [[1, 2], [1, 4], [1, 6]]"
     whenToUse: Min-heap of candidate pairs expanding indices.
     timeComplexity: O(k log k)
     spaceComplexity: O(k)
     hints:
-    - "Of the K sorted fronts, which element is safe to take next?"
-    - "A min-heap of the current heads always yields the next value in global order."
+    - "When you take the pair (i, j), which next pair from the same i is worth considering?"
+    - "The heap stores the best unused pair per starting index, so the next pop is the next-smallest sum."
     - "Seed heap with (i,0) for first k of nums1 Push (i,j+1) when popping"
     tags:
     - heap
@@ -1030,13 +1037,13 @@ patterns:
     difficulty: HARD
     className: com.algoprep.patterns.kwaymerge.SmallestRange
     summary: Smallest range that includes at least one number from each list.
-    example: "Input: [[4, 10, 15, 24, 26], [0, 9, 12, 20], [5, 18, 22, 30]] — trace this case by hand before coding"
+    example: "Input: [[4, 10, 15, 24, 26], [0, 9, 12, 20], [5, 18, 22, 30]] → [20, 24]"
     whenToUse: Min-heap across list heads tracking current max.
     timeComplexity: O(n log k)
     spaceComplexity: O(k)
     hints:
-    - "Of the K sorted fronts, which element is safe to take next?"
-    - "A min-heap of the current heads always yields the next value in global order."
+    - "Which list currently owns the minimum, and what is the maximum among the K fronts?"
+    - "The range that covers one element from each list runs from the heap's minimum to the best maximum seen among those fronts."
     - "Track global max among heap tops Advance the list of the min"
     tags:
     - heap
@@ -1055,8 +1062,8 @@ patterns:
     timeComplexity: O(m+n)
     spaceComplexity: O(1)
     hints:
-    - "Of the K sorted fronts, which element is safe to take next?"
-    - "A min-heap of the current heads always yields the next value in global order."
+    - "Which of the two current nodes is the next one to attach?"
+    - "The merged list is the smaller head, then the merge of what remains."
     - "Use a dummy head Always attach the smaller current node"
     tags:
     - linked-list
@@ -1111,13 +1118,13 @@ patterns:
     difficulty: EASY
     className: com.algoprep.patterns.topk.TopKNumbers
     summary: Return the K largest numbers from an unsorted array.
-    example: "Input: [3, 1, 5, 12, 2, 11], 3 — trace this case by hand before coding"
+    example: "Input: [3, 1, 5, 12, 2, 11], 3 → [12, 11, 5]"
     whenToUse: A min-heap of size K is the direct application of the pattern.
     timeComplexity: O(n log k)
     spaceComplexity: O(k)
     hints:
-    - "Do you need the whole order, or only the K values that beat the rest?"
-    - "A heap of size K forgets anything that can no longer enter the answer."
+    - "Which value in a heap of size K is the one you are willing to throw away?"
+    - "The heap holds the K largest so far, and its top is the smallest of those K."
     - "Push the first K numbers, then compare every later number to the heap's top. Replace the top only if the new number is larger."
     tags:
     - heap
@@ -1130,13 +1137,13 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.topk.KClosestPoints
     summary: Return the K points with the smallest Euclidean distance to the origin.
-    example: "Input: [[1, 3], [-2, 2], [0, 1]], 2 — trace this case by hand before coding"
+    example: "Input: [[1, 3], [-2, 2], [0, 1]], 2 → [[0, 1], [-2, 2]]"
     whenToUse: A max-heap of size K by distance keeps the farthest of the kept points ready to evict.
     timeComplexity: O(n log k)
     spaceComplexity: O(k)
     hints:
-    - "Do you need the whole order, or only the K values that beat the rest?"
-    - "A heap of size K forgets anything that can no longer enter the answer."
+    - "Which point in the heap is the farthest, and therefore the one to evict?"
+    - "A heap of size K ordered by distance keeps the closest points; its top is the farthest among them."
     - "Compare squared distances to avoid unnecessary sqrt calls. Evict the max-heap's top whenever the heap grows past K."
     tags:
     - heap
@@ -1151,13 +1158,13 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.topk.TopKFrequent
     summary: Return the K most frequent elements in an array.
-    example: "Input: [1, 3, 5, 12, 11, 12, 11], 2 — trace this case by hand before coding"
+    example: "Input: [1, 3, 5, 12, 11, 12, 11], 2 → [12, 11]"
     whenToUse: Build a frequency map first, then run a size-K heap keyed by frequency.
     timeComplexity: O(n log k)
     spaceComplexity: O(n)
     hints:
-    - "Do you need the whole order, or only the K values that beat the rest?"
-    - "A heap of size K forgets anything that can no longer enter the answer."
+    - "After you know every frequency, which frequency is the one a size-K heap should drop?"
+    - "The heap stores K pairs by frequency, and its top is the least frequent of those K."
     - "Count frequencies with a hash map in one pass. Push (value, frequency) pairs into a min-heap ordered by frequency, capped at size K."
     tags:
     - heap
@@ -1172,13 +1179,13 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.topk.KthLargest
     summary: Return the k-th largest element in an unsorted array.
-    example: "Input: [3, 2, 1, 5, 6, 4], 2 — trace this case by hand before coding"
+    example: "Input: [3, 2, 1, 5, 6, 4], 2 → 5"
     whenToUse: Min-heap of size k (interview-safe) or quickselect for average O(n); state the tradeoff out loud.
     timeComplexity: O(n log k)
     spaceComplexity: O(k)
     hints:
-    - "Do you need the whole order, or only the K values that beat the rest?"
-    - "A heap of size K forgets anything that can no longer enter the answer."
+    - "What does the top of a min-heap of size K mean?"
+    - "The heap is the K largest values seen, so its top is the current k-th largest."
     - "Maintain a min-heap of the k largest values seen so far; the heap top is the current k-th largest. Push each number; if size exceeds k, poll the smallest — that value can never be the answer. Quickselect is an average O(n) follow-up; mention worst-case O(n²) unless you add median-of-medians."
     tags:
     - heap
@@ -1192,13 +1199,13 @@ patterns:
     difficulty: HARD
     className: com.algoprep.patterns.topk.ReorganizeString
     summary: Rearrange so no two adjacent chars are equal; empty if impossible.
-    example: "Input: \"aab\" — trace this case by hand before coding"
+    example: "Input: \\\"aab\\\" → aba"
     whenToUse: Max-heap by frequency; greedily place next.
     timeComplexity: O(n log a)
     spaceComplexity: O(a)
     hints:
-    - "Do you need the whole order, or only the K values that beat the rest?"
-    - "A heap of size K forgets anything that can no longer enter the answer."
+    - "Which character are you not allowed to place next?"
+    - "The most frequent remaining character that is not the one just used is the next choice, and it is impossible if one character must repeat too soon."
     - "If max freq > (n+1)/2 impossible Always take the current most frequent available"
     tags:
     - heap
@@ -1257,14 +1264,14 @@ patterns:
     difficulty: EASY
     className: com.algoprep.patterns.binarysearch.OrderAgnosticBinarySearch
     summary: Search for a target in an array sorted either ascending or descending.
-    example: "Input: [4, 6, 10], 10 — trace this case by hand before coding"
+    example: "Input: [4, 6, 10], 10 → 2"
     whenToUse: Detect the order from the two end elements once, then run standard binary search adapted
       to that order.
     timeComplexity: O(log n)
     spaceComplexity: O(1)
     hints:
-    - "After you look at the middle, which half is guaranteed not to hold the answer?"
-    - "Each step keeps the answer, if it exists, inside the range you have not discarded."
+    - "How do you know whether the middle is too small or too large?"
+    - "The first and last elements fix the sort direction, and that direction decides which half to keep."
     - "Compare the first and last elements to decide ascending vs descending. Flip the comparison direction based on which order was detected."
     tags:
     - binary-search
@@ -1277,14 +1284,14 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.binarysearch.SearchRotatedArray
     summary: Find a target's index in a rotated sorted array with unique elements.
-    example: "Input: [10, 15, 1, 3, 8], 1 — trace this case by hand before coding"
+    example: "Input: [10, 15, 1, 3, 8], 1 → 2"
     whenToUse: At mid, one side is always sorted - search there if the target falls in its range, otherwise
       search the other side.
     timeComplexity: O(log n)
     spaceComplexity: O(1)
     hints:
-    - "After you look at the middle, which half is guaranteed not to hold the answer?"
-    - "Each step keeps the answer, if it exists, inside the range you have not discarded."
+    - "Which half is still sorted, and could the target live there?"
+    - "One side of the middle is a normal sorted range; the target is kept only if it falls inside that range."
     - "Compare nums[low] to nums[mid] to find which half is sorted. Check if target lies within the sorted half's value range before recursing into it."
     tags:
     - binary-search
@@ -1297,14 +1304,14 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.binarysearch.FindRange
     summary: Find the first and last index of a target value in a sorted array.
-    example: "Input: [4, 6, 6, 6, 9], 6 — trace this case by hand before coding"
+    example: "Input: [4, 6, 6, 6, 9], 6 → [1, 3]"
     whenToUse: 'Run two binary searches: one biased to find the lower bound, one biased to find the upper
       bound.'
     timeComplexity: O(log n)
     spaceComplexity: O(1)
     hints:
-    - "After you look at the middle, which half is guaranteed not to hold the answer?"
-    - "Each step keeps the answer, if it exists, inside the range you have not discarded."
+    - "When you find the target, are you done or do you still need a side?"
+    - "The left search keeps the leftmost match, the right search the rightmost, and both share the same sorted array."
     - "On finding a match while searching for the first position, keep narrowing left instead of stopping. Do the same but narrow right for the last position search."
     tags:
     - binary-search
@@ -1319,13 +1326,13 @@ patterns:
     className: com.algoprep.patterns.binarysearch.FindPeakElement
     summary: Return the index of any peak — an element strictly greater than its neighbors (ends compare
       against one neighbor).
-    example: "Input: [1, 2, 3, 1] — trace this case by hand before coding"
+    example: "Input: [1, 2, 3, 1] → 2"
     whenToUse: Binary search on the slope — move toward the greater neighbor, which must contain a peak.
     timeComplexity: O(log n)
     spaceComplexity: O(1)
     hints:
-    - "After you look at the middle, which half is guaranteed not to hold the answer?"
-    - "Each step keeps the answer, if it exists, inside the range you have not discarded."
+    - "If the middle is lower than its right neighbor, which side still hides a peak?"
+    - "A rising slope to the right means a peak exists on the right; otherwise one exists on the left, including the middle."
     - "If nums[mid] < nums[mid+1], a peak exists on the right (search mid+1..hi). Otherwise a peak exists on the left including mid (search lo..mid). Any valid peak index is accepted; you do not need the global maximum."
     tags:
     - binary-search
@@ -1338,13 +1345,13 @@ patterns:
     difficulty: HARD
     className: com.algoprep.patterns.binarysearch.SearchRotatedDuplicates
     summary: Search target in rotated sorted array that may contain duplicates.
-    example: "Input: [2, 5, 6, 0, 0, 1, 2], 0 — trace this case by hand before coding"
+    example: "Input: [2, 5, 6, 0, 0, 1, 2], 0 → true"
     whenToUse: Binary search with duplicate shrinkage at ends.
     timeComplexity: O(n) worst, O(log n) average
     spaceComplexity: O(1)
     hints:
-    - "After you look at the middle, which half is guaranteed not to hold the answer?"
-    - "Each step keeps the answer, if it exists, inside the range you have not discarded."
+    - "What can you conclude when the ends and the middle are equal?"
+    - "If the three values match, neither half is proven sorted, so both ends shrink by one; otherwise the usual rotated half applies."
     - "When nums[lo]==nums[mid]==nums[hi] shrink both ends Otherwise same rotated half logic"
     tags:
     - binary-search
@@ -1402,13 +1409,13 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.subsets.Subsets
     summary: Return all subsets (the power set) of an array of distinct integers.
-    example: "Input: [1, 2] — trace this case by hand before coding"
+    example: "Input: [1, 2] → [[], [1], [2], [1, 2]]"
     whenToUse: 'Textbook cascading BFS: double the subset list for every new element.'
     timeComplexity: O(n * 2^n)
     spaceComplexity: O(n * 2^n)
     hints:
-    - "What choice are you adding to the current path, and what do you undo when it fails?"
-    - "The current path is one partial answer; you record it before the next choice and undo on the way back."
+    - "For the number you are looking at, what are the only two futures of each subset so far?"
+    - "The result is every subset of the prefix, and the new number either is appended to each of them or is not."
     - "Start the result list with just the empty subset. For each number, append it to a copy of every subset already in the result."
     tags:
     - subsets
@@ -1422,14 +1429,14 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.subsets.SubsetsWithDuplicates
     summary: Return all unique subsets when the input array may contain duplicate values.
-    example: "Input: [1, 2, 2] — trace this case by hand before coding"
+    example: "Input: [1, 2, 2] → [[], [1], [2], [1, 2], [2, 2], [1, 2, 2]]"
     whenToUse: Sort first, then only extend subsets created in the previous round when handling a repeated
       value.
     timeComplexity: O(n * 2^n)
     spaceComplexity: O(n * 2^n)
     hints:
-    - "What choice are you adding to the current path, and what do you undo when it fails?"
-    - "The current path is one partial answer; you record it before the next choice and undo on the way back."
+    - "When this value equals the previous one, which subsets are you forbidden to extend?"
+    - "Duplicate values only extend the subsets created by the previous copy, so the same subset is not built twice."
     - "Sort the array so duplicate values become adjacent. When nums[i] equals nums[i-1], only append it to subsets added during the previous number's round."
     tags:
     - subsets
@@ -1442,13 +1449,13 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.subsets.Permutations
     summary: Return all permutations of an array of distinct numbers.
-    example: "Input: [1, 2, 3] — trace this case by hand before coding"
+    example: "Input: [1, 2, 3] → [[3, 2, 1], [2, 3, 1], [2, 1, 3], [3, 1, 2], [1, 3, 2], [1, 2, 3]]"
     whenToUse: Backtracking swap-and-undo, or BFS by inserting the next number at every position.
     timeComplexity: O(n * n!)
     spaceComplexity: O(n * n!)
     hints:
-    - "What choice are you adding to the current path, and what do you undo when it fails?"
-    - "The current path is one partial answer; you record it before the next choice and undo on the way back."
+    - "What has to be restored after you try the value at this position?"
+    - "The prefix up to the current index is one partial permutation, and the swap is undone before the next choice."
     - "Swap the current index with each later index, recurse, then swap back. Base case: when the current index reaches the array's end, record a full permutation."
     tags:
     - permutations
@@ -1462,13 +1469,13 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.subsets.GenerateParentheses
     summary: All combinations of n pairs of well-formed parentheses.
-    example: "Input: 3 — trace this case by hand before coding"
+    example: "Input: 3 → ((())), (()()), (())(), ()(()), ()()()"
     whenToUse: Backtracking with open/close counts — prune any prefix that could never become valid.
     timeComplexity: O(4ⁿ/√n)
     spaceComplexity: O(n)
     hints:
-    - "What choice are you adding to the current path, and what do you undo when it fails?"
-    - "The current path is one partial answer; you record it before the next choice and undo on the way back."
+    - "When are you allowed to place a close, and when an open?"
+    - "A prefix is valid while the number of closes never exceeds the number of opens, and opens never exceed n."
     - "Add '(' only while open_used < n; you never need more opens than n. Add ')' only while close_used < open_used; this keeps every prefix balanced. Record a string only when open_used == close_used == n. Raw subset generation without these guards explodes and produces invalid strings."
     tags:
     - backtracking
@@ -1482,13 +1489,13 @@ patterns:
     difficulty: HARD
     className: com.algoprep.patterns.subsets.UniquePermutations
     summary: All unique permutations of an array that may contain duplicates.
-    example: "Input: [1, 1, 2] — trace this case by hand before coding"
+    example: "Input: [1, 1, 2] → [[1, 1, 2], [1, 2, 1], [2, 1, 1]]"
     whenToUse: Backtracking with sorted skip of identical siblings.
     timeComplexity: O(n·n!)
     spaceComplexity: O(n)
     hints:
-    - "What choice are you adding to the current path, and what do you undo when it fails?"
-    - "The current path is one partial answer; you record it before the next choice and undo on the way back."
+    - "When two identical values are adjacent, which one are you allowed to use next?"
+    - "A duplicate is used at this depth only if the previous identical value was already used, so identical permutations are not repeated."
     - "Sort first Skip a duplicate if previous identical not used"
     tags:
     - permutations
@@ -1502,13 +1509,13 @@ patterns:
     difficulty: EASY
     className: com.algoprep.patterns.subsets.CombinationsOfSizeK
     summary: Return all combinations of k numbers chosen from 1..n.
-    example: "Input: 4, 2 — trace this case by hand before coding"
+    example: "Input: 4, 2 → [[1, 2], [1, 3], [1, 4], [2, 3], [2, 4], [3, 4]]"
     whenToUse: Subset/backtracking generation with a fixed size limit.
     timeComplexity: O(C(n,k)·k)
     spaceComplexity: O(k)
     hints:
-    - "What choice are you adding to the current path, and what do you undo when it fails?"
-    - "The current path is one partial answer; you record it before the next choice and undo on the way back."
+    - "When the path already has K numbers, what is left to do?"
+    - "The path is one combination built from an increasing start index, so numbers are never reused or reordered."
     - "Choose or skip each number from start..n Stop when path size is k"
     tags:
     - subsets
@@ -1567,14 +1574,14 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.greedy.JumpGame
     summary: Determine whether you can reach the last index given max-jump lengths at each position.
-    example: "Input: [2, 3, 1, 1, 4] — trace this case by hand before coding"
+    example: "Input: [2, 3, 1, 1, 4] → true"
     whenToUse: Track the farthest reachable index while scanning; if the current index ever exceeds it,
       you're stuck.
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - "Which local choice, once you sort by the right key, never has to be undone?"
-    - "The sort key makes the next pick safe for every later step."
+    - "What is the farthest index you can promise as you stand at i?"
+    - "If i is ever past the farthest reach, the end is unreachable; otherwise the reach only grows."
     - "Update farthest = max(farthest, i + nums[i]) at each index. If i ever exceeds farthest, the last index is unreachable."
     tags:
     - greedy
@@ -1588,14 +1595,14 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.greedy.JumpGameII
     summary: Find the minimum number of jumps required to reach the last index.
-    example: "Input: [2, 3, 1, 1, 4] — trace this case by hand before coding"
+    example: "Input: [2, 3, 1, 1, 4] → 2"
     whenToUse: 'BFS-like level expansion: track the current jump''s farthest end and the overall farthest
       reach.'
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - "Which local choice, once you sort by the right key, never has to be undone?"
-    - "The sort key makes the next pick safe for every later step."
+    - "When do you have to spend a jump?"
+    - "The current jump covers up to a recorded end, and a new jump is spent only when i reaches that end."
     - "When i reaches the current jump's end, increment jumps and set the end to the farthest seen so far. This greedily expands one 'level' at a time, similar to BFS on an implicit graph."
     tags:
     - greedy
@@ -1608,13 +1615,13 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.greedy.GasStation
     summary: Starting station index to complete the circuit, or -1.
-    example: "Input: [1, 2, 3, 4, 5], [3, 4, 5, 1, 2] — trace this case by hand before coding"
+    example: "Input: [1, 2, 3, 4, 5], [3, 4, 5, 1, 2] → 3"
     whenToUse: Greedy reset of start when tank goes negative.
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - "Which local choice, once you sort by the right key, never has to be undone?"
-    - "The sort key makes the next pick safe for every later step."
+    - "If the tank goes negative at i, where can the trip no longer have started?"
+    - "A start is possible only at a station after the failure, and only if the total gas covers the total cost."
     - "If total gas < total cost impossible When tank < 0, start = i+1 and reset tank"
     tags:
     - greedy
@@ -1627,13 +1634,13 @@ patterns:
     difficulty: HARD
     className: com.algoprep.patterns.greedy.Candy
     summary: Minimum candies so higher-rated neighbors get more.
-    example: "Input: [1, 0, 2] — trace this case by hand before coding"
+    example: "Input: [1, 0, 2] → 5"
     whenToUse: Two-pass greedy left-to-right and right-to-left.
     timeComplexity: O(n)
     spaceComplexity: O(n)
     hints:
-    - "Which local choice, once you sort by the right key, never has to be undone?"
-    - "The sort key makes the next pick safe for every later step."
+    - "What does a rising slope to the right force you to remember for the way back?"
+    - "Each child has at least one candy, plus one more than a lower neighbor on either side."
     - "Ensure rising slopes left→right Then enforce rising slopes right→left with max"
     tags:
     - greedy
@@ -1647,13 +1654,13 @@ patterns:
     difficulty: EASY
     className: com.algoprep.patterns.greedy.AssignCookies
     summary: Maximize content children by assigning cookies greedily.
-    example: "Input: [1, 2, 3], [1, 1] — trace this case by hand before coding"
+    example: "Input: [1, 2, 3], [1, 1] → 1"
     whenToUse: Sort both arrays and assign the smallest sufficient cookie.
     timeComplexity: O(n log n)
     spaceComplexity: O(1)
     hints:
-    - "Which local choice, once you sort by the right key, never has to be undone?"
-    - "The sort key makes the next pick safe for every later step."
+    - "Which cookie is the smallest one that can still satisfy this child?"
+    - "Both arrays are sorted, so a cookie that is too small is useless for every later child too."
     - "Sort greed and cookie sizes Two pointers: give cookie only when it fits"
     tags:
     - greedy
@@ -1710,14 +1717,14 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.backtracking.CombinationSum
     summary: Find all unique combinations of candidates that sum to a target; numbers can be reused.
-    example: "Input: [2, 3, 6, 7], 7 — trace this case by hand before coding"
+    example: "Input: [2, 3, 6, 7], 7 → [[2, 2, 3], [7]]"
     whenToUse: Classic backtracking with a start index that prevents generating permutations of the same
       combination.
     timeComplexity: O(2^n) worst-case
     spaceComplexity: O(target)
     hints:
-    - "Where do you commit to a choice, and where must you undo it?"
-    - "The board is valid for the choices made so far; a dead end restores the previous board."
+    - "When you reuse a number, which index are you allowed to start from again?"
+    - "The path sum is the total of the chosen multiset, and a branch dies as soon as the sum passes the target."
     - "Pass the same start index (not start+1) when reusing a number. Prune the branch as soon as the running sum exceeds the target."
     tags:
     - backtracking
@@ -1730,13 +1737,13 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.backtracking.WordSearch
     summary: Determine whether a word exists in a grid via adjacent cells, each used at most once.
-    example: "Input: [\"ABCE\", \"SFCS\", \"ADEE\"], \"ABCCED\" — trace this case by hand before coding"
+    example: "Input: [\\\"ABCE\\\", \\\"SFCS\\\", \\\"ADEE\\\"], \\\"ABCCED\\\" → true"
     whenToUse: DFS/backtracking from each cell, marking visited cells and unmarking them on backtrack.
     timeComplexity: O(m*n*4^L)
     spaceComplexity: O(L)
     hints:
-    - "Where do you commit to a choice, and where must you undo it?"
-    - "The board is valid for the choices made so far; a dead end restores the previous board."
+    - "What must the board look like again after a neighbor fails?"
+    - "The current cell is marked used for this path and unmarked as soon as the path returns."
     - "Mark a cell visited before recursing into its neighbors, and unmark it right after. Prune immediately if the current cell's letter doesn't match the needed character."
     tags:
     - backtracking
@@ -1751,13 +1758,13 @@ patterns:
     difficulty: HARD
     className: com.algoprep.patterns.backtracking.NQueens
     summary: All distinct solutions to the n-queens puzzle.
-    example: "Input: 4 — trace this case by hand before coding"
+    example: "Input: 4 → 2 boards"
     whenToUse: Place row by row; prune columns/diagonals.
     timeComplexity: O(n!)
     spaceComplexity: O(n)
     hints:
-    - "Where do you commit to a choice, and where must you undo it?"
-    - "The board is valid for the choices made so far; a dead end restores the previous board."
+    - "Which columns and diagonals are already taken by the queens you placed?"
+    - "A row is safe when its column and both diagonals are free; the board is recorded only when every row has a queen."
     - "Track cols and both diagonals Build board strings at leaves"
     tags:
     - backtracking
@@ -1771,13 +1778,13 @@ patterns:
     className: com.algoprep.patterns.backtracking.SudokuSolver
     summary: Fill every empty cell of a 9×9 Sudoku board in-place so each row, column, and 3×3 box contains
       digits 1–9 once.
-    example: "Input: [\"53..7....\", \"6..195...\", \".98....6.\", \"8...6...3\", \"4..8.3..1\", \"7...2...6\", \".6....28.\", \"...419..5\", \"....8..79\"] — trace this case by hand before coding"
+    example: "Input:\n53..7....\n6..195...\n.98....6.\n8...6...3\n4..8.3..1\n7...2...6\n.6....28.\n...419..5\n....8..79\n→\n534678912\n672195348\n198342567\n859761423\n426853791\n713924856\n961537284\n287419635\n345286179"
     whenToUse: Backtracking — try digits 1–9 in the next empty cell, pruning with row/col/box occupancy.
     timeComplexity: O(9^m)
     spaceComplexity: O(1)
     hints:
-    - "Where do you commit to a choice, and where must you undo it?"
-    - "The board is valid for the choices made so far; a dead end restores the previous board."
+    - "Which empty cell are you filling, and which digits are still legal there?"
+    - "A placement is legal only if that digit is absent from the cell's row, column, and box, and it is removed if the rest of the board fails."
     - "Scan for the next '.' cell; if none remain, the board is solved. Before placing digit d, confirm it is unused in that row, column, and 3×3 box. Place, recurse, then restore '.' on failure so sibling branches stay clean."
     tags:
     - backtracking
@@ -1790,13 +1797,13 @@ patterns:
     difficulty: EASY
     className: com.algoprep.patterns.backtracking.LetterCasePermutation
     summary: Return all strings formed by toggling letter case.
-    example: "Input: \"a1b2\" — trace this case by hand before coding"
+    example: "Input: \\\"a1b2\\\" → a1b2, a1B2, A1b2, A1B2"
     whenToUse: Simple backtracking / branching on letters only.
     timeComplexity: O(2^L · n)
     spaceComplexity: O(2^L · n)
     hints:
-    - "Where do you commit to a choice, and where must you undo it?"
-    - "The board is valid for the choices made so far; a dead end restores the previous board."
+    - "For a letter, what are the two branches, and what happens to a digit?"
+    - "Digits are copied once; each letter forks into lower and upper, and the path is one partial string."
     - "Digits stay fixed Branch lower/upper for each letter"
     tags:
     - backtracking
@@ -1859,8 +1866,8 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - "Which smaller question has the same shape, and what would you recompute if you solved it from scratch?"
-    - "The cell for this prefix is built only from cells you have already finished."
+    - "How many ways end with a single step, and how many with a double?"
+    - "The ways to reach n are the ways to reach n-1 plus the ways to reach n-2."
     - "The base cases are dp[1]=1 and dp[2]=2. Only the last two values are ever needed, so O(1) space works."
     tags:
     - dp
@@ -1873,13 +1880,13 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.dp.HouseRobber
     summary: Find the maximum money you can rob without robbing two adjacent houses.
-    example: "Input: [2, 7, 9, 3, 1] — trace this case by hand before coding"
+    example: "Input: [2, 7, 9, 3, 1] → 12"
     whenToUse: dp[i] = max(dp[i-1], dp[i-2] + nums[i]) - decide to skip or take each house.
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - "Which smaller question has the same shape, and what would you recompute if you solved it from scratch?"
-    - "The cell for this prefix is built only from cells you have already finished."
+    - "If you rob this house, which neighbor becomes forbidden?"
+    - "The best loot through house i is the better of skipping i or taking i plus the best through i-2."
     - "At each house, either skip it (keep dp[i-1]) or rob it (dp[i-2] + nums[i]). Only the previous two dp values need to be kept."
     tags:
     - dp
@@ -1893,13 +1900,13 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.dp.Knapsack01
     summary: Maximize value packed into a weight capacity when each item can be used at most once.
-    example: "Input: [1, 6, 10, 16], [1, 2, 3, 5], 7 — trace this case by hand before coding"
+    example: "Input: [1, 6, 10, 16], [1, 2, 3, 5], 7 → 22"
     whenToUse: Classic 2D (or 1D reverse-iteration) knapsack DP over item index and remaining capacity.
     timeComplexity: O(n*W)
     spaceComplexity: O(W)
     hints:
-    - "Which smaller question has the same shape, and what would you recompute if you solved it from scratch?"
-    - "The cell for this prefix is built only from cells you have already finished."
+    - "If this item does not fit, what choice is left?"
+    - "The best value for the first i items and capacity c is the best of skipping the item or taking it when it fits."
     - "dp[c] represents the best value achievable with capacity c. Iterate capacity from high to low in the 1D version so each item is only used once."
     tags:
     - dp
@@ -1915,13 +1922,13 @@ patterns:
     className: com.algoprep.patterns.dp.CoinChange
     summary: Return the fewest coins needed to make up amount using unlimited coins of the given denominations,
       or -1 if impossible.
-    example: "Input: [1, 2, 5], 11 — trace this case by hand before coding"
+    example: "Input: [1, 2, 5], 11 → 3"
     whenToUse: "Unbounded-knapsack DP over amounts. Greedy fails when denominations are not canonical. Coins [1,3,4] and amount 6 take 3 coins greedily and 2 with DP."
     timeComplexity: O(amount·coins)
     spaceComplexity: O(amount)
     hints:
-    - "Which smaller question has the same shape, and what would you recompute if you solved it from scratch?"
-    - "The cell for this prefix is built only from cells you have already finished."
+    - "Which coin, if you use it once, leaves a smaller amount you already know?"
+    - "The fewest coins for amount a is one plus the fewest coins for a minus a coin, or impossible if no coin reaches it."
     - "Let dp[x] be fewest coins for amount x; dp[x] = min(dp[x-c]+1) over coins c ≤ x. Initialize dp[0]=0 and other entries to a sentinel larger than any valid answer (e.g. amount+1). After filling, if dp[amount] is still the sentinel, return -1."
     tags:
     - dp
@@ -1934,13 +1941,13 @@ patterns:
     difficulty: HARD
     className: com.algoprep.patterns.dp.EditDistance
     summary: Minimum number of insert, delete, and replace operations to transform word1 into word2.
-    example: "Input: \"horse\", \"ros\" — trace this case by hand before coding"
+    example: "Input: \\\"horse\\\", \\\"ros\\\" → 3"
     whenToUse: 2D DP on prefixes of both strings (Levenshtein); each cell is insert / delete / replace from neighbors.
     timeComplexity: O(mn)
     spaceComplexity: O(n)
     hints:
-    - "Which smaller question has the same shape, and what would you recompute if you solved it from scratch?"
-    - "The cell for this prefix is built only from cells you have already finished."
+    - "Which of the three edits shrinks the remaining problem?"
+    - "The distance between the prefixes is the cheapest of a substitution, a deletion, or an insertion on the last characters."
     - "dp[i][j] is the distance between word1[:i] and word2[:j]; matching chars take the diagonal. On mismatch, take 1 + min(insert=dp[i][j-1], delete=dp[i-1][j], replace=dp[i-1][j-1]). Keep only the previous row to match the O(n) space bound after the 2D recurrence is clear."
     tags:
     - dp
@@ -1954,13 +1961,14 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.dp.LongestIncreasingSubsequence
     summary: Length of the longest strictly increasing subsequence. The subsequence need not be contiguous.
+    example: "Input: [10, 9, 2, 5, 3, 7, 101, 18] → 4"
     whenToUse: dp[i] is the best length ending at i. State the sentence before the nested loop. O(n log n)
       patience sorting is the follow-up, not the first version you write.
     timeComplexity: O(n^2)
     spaceComplexity: O(n)
     hints:
-    - "Which smaller question has the same shape, and what would you recompute if you solved it from scratch?"
-    - "The cell for this prefix is built only from cells you have already finished."
+    - "If this value extends an earlier subsequence, which length does it beat?"
+    - "The best length ending at i is one more than the best length ending at a smaller earlier value."
     - "What does one cell mean, before you write a loop? dp[i] = 1 + the best dp[j] among earlier smaller values. The answer is the maximum cell, not dp[n-1]."
     tags:
     - dp
@@ -1973,13 +1981,13 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.dp.UniquePaths
     summary: Count paths from the top-left cell to the bottom-right, moving only right or down.
-    example: "Input: 3, 7 — trace this case by hand before coding"
+    example: "Input: 3, 7 → 28"
     whenToUse: dp[r][c] = dp[r-1][c] + dp[r][c-1], with the first row and column equal to 1.
     timeComplexity: O(mn)
     spaceComplexity: O(n)
     hints:
-    - "Which smaller question has the same shape, and what would you recompute if you solved it from scratch?"
-    - "The cell for this prefix is built only from cells you have already finished."
+    - "How many ways arrive from the cell above, and how many from the left?"
+    - "The ways into a cell are the ways into the cell above plus the ways into the cell to the left, with the first row and column equal to 1."
     - "Say what a cell stores before filling it. A cell is reached only from above or from the left. The first row and the first column have exactly one way to be reached."
     tags:
     - dp
@@ -2041,8 +2049,8 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - "If every value belongs in one index, which value is sitting in the wrong place?"
-    - "Index i should hold i or i + 1; one swap puts a value home without extra memory."
+    - "Which value is sitting at this index, and which index is its home?"
+    - "Index i is finished when it holds the value that belongs there; a swap sends one value home."
     - "While nums[i] isn't at index nums[i]-1, swap it there. Each element is swapped at most once into its final place, keeping it O(n)."
     tags:
     - cyclic-sort
@@ -2055,13 +2063,13 @@ patterns:
     difficulty: EASY
     className: com.algoprep.patterns.cyclicsort.FindMissingNumber
     summary: Given n distinct numbers taken from 0..n, find the one number missing from the array.
-    example: "Input: [4, 0, 3, 1] — trace this case by hand before coding"
+    example: "Input: [4, 0, 3, 1] → 2"
     whenToUse: Cyclic-place the numbers (or use sum/XOR math); here, cyclic sort then scan for the mismatch.
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - "If every value belongs in one index, which value is sitting in the wrong place?"
-    - "Index i should hold i or i + 1; one swap puts a value home without extra memory."
+    - "If the value at i is not i, where does that value belong?"
+    - "After every value that fits in range sits at its own index, the index that still holds the wrong value is the missing number."
     - "Place each value v at index v when v < n. After placing, the first index i where nums[i] != i is the missing number."
     tags:
     - cyclic-sort
@@ -2074,13 +2082,13 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.cyclicsort.FindAllDuplicates
     summary: Given numbers from 1..n where some appear twice, return all the duplicates.
-    example: "Input: [4, 3, 2, 7, 8, 2, 3, 1] — trace this case by hand before coding"
+    example: "Input: [4, 3, 2, 7, 8, 2, 3, 1] → [3, 2]"
     whenToUse: Place each value by index; whatever can't be placed because its slot is taken is a duplicate.
     timeComplexity: O(n)
     spaceComplexity: O(1) excluding output
     hints:
-    - "If every value belongs in one index, which value is sitting in the wrong place?"
-    - "Index i should hold i or i + 1; one swap puts a value home without extra memory."
+    - "What does it mean if the slot for this value is already marked?"
+    - "Each value claims the slot at value-1; a second claim means that value appeared twice."
     - "Run cyclic sort placement as usual. After placement, any index i where nums[i] != i + 1 holds a duplicate value."
     tags:
     - cyclic-sort
@@ -2094,13 +2102,13 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.cyclicsort.FindDuplicateNumber
     summary: Array of n+1 ints in 1..n with one duplicate; find it without modifying.
-    example: "Input: [1, 3, 4, 2, 2] — trace this case by hand before coding"
+    example: "Input: [1, 3, 4, 2, 2] → 2"
     whenToUse: Treat indices→values as a functional graph and find the cycle entrance (Floyd), without modifying the array.
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - "If every value belongs in one index, which value is sitting in the wrong place?"
-    - "Index i should hold i or i + 1; one swap puts a value home without extra memory."
+    - "If you treat each value as a next index, what does a repeated value do to the path?"
+    - "The duplicate is the entrance of the cycle in the index chain."
     - "Each index i points to nums[i]; because one value is duplicated, the graph has exactly one cycle. Run Floyd: slow = nums[slow], fast = nums[nums[fast]] until they meet. Reset one pointer to the start and advance both one step at a time; the meeting point is the duplicate."
     tags:
     - cyclic-sort
@@ -2114,13 +2122,13 @@ patterns:
     difficulty: HARD
     className: com.algoprep.patterns.cyclicsort.FirstMissingPositive
     summary: Smallest missing positive integer in unsorted array.
-    example: "Input: [3, 4, -1, 1] — trace this case by hand before coding"
+    example: "Input: [3, 4, -1, 1] → 2"
     whenToUse: 'In-place placement: put each value v in [1..n] at index v-1, then scan for the first mismatch.'
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - "If every value belongs in one index, which value is sitting in the wrong place?"
-    - "Index i should hold i or i + 1; one swap puts a value home without extra memory."
+    - "Which positive integer should live at this index?"
+    - "Index i should hold i+1; anything outside 1..n is ignored, and the first index that does not hold its value is the answer."
     - "Ignore non-positive values and values > n — they cannot be the first missing positive within 1..n+1. While nums[i] is in range and not already at home, swap it into index nums[i]-1 (guard against infinite self-swaps). After placement, the first index i with nums[i] != i+1 means the answer is i+1; if all match, answer is n+1."
     tags:
     - cyclic-sort
@@ -2179,13 +2187,13 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.topo.CourseSchedule
     summary: Determine whether you can finish all courses given a list of prerequisite pairs.
-    example: "Input: 2, [[1, 0]] — trace this case by hand before coding"
+    example: "Input: 2, [[1, 0]] → true"
     whenToUse: Cycle detection via topological sort - if not all nodes get processed, a cycle blocks completion.
     timeComplexity: O(V+E)
     spaceComplexity: O(V+E)
     hints:
-    - "Which node has no remaining prerequisites, and what becomes free when you finish it?"
-    - "A node enters the order only when its indegree hits zero."
+    - "Which course has no remaining prerequisite?"
+    - "A course is free when its indegree hits zero; a cycle remains if some course never becomes free."
     - "Build the graph as prerequisite -> course. If the processed-node count ends up less than the total course count, a cycle exists."
     tags:
     - graph
@@ -2200,13 +2208,13 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.topo.CourseScheduleOrder
     summary: Return one valid course order, or an empty array if no valid order exists.
-    example: "Input: 4, [[1, 0], [2, 0], [3, 1], [3, 2]] — trace this case by hand before coding"
+    example: "Input: 4, [[1, 0], [2, 0], [3, 1], [3, 2]] → [0, 1, 2, 3]"
     whenToUse: Kahn's algorithm, collecting the popped nodes directly into the output order.
     timeComplexity: O(V+E)
     spaceComplexity: O(V+E)
     hints:
-    - "Which node has no remaining prerequisites, and what becomes free when you finish it?"
-    - "A node enters the order only when its indegree hits zero."
+    - "In what order do courses become free?"
+    - "The order is the sequence in which indegrees hit zero; if that sequence is short, the graph had a cycle."
     - "Seed the queue with all zero-indegree courses. If the final order's length is less than the course count, return an empty array."
     tags:
     - graph
@@ -2220,13 +2228,13 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.topo.TasksScheduling
     summary: Can all tasks finish given prerequisites?
-    example: "Input: 3, [[0, 1], [1, 2]] — trace this case by hand before coding"
+    example: "Input: 3, [[0, 1], [1, 2]] → true"
     whenToUse: Same as course schedule — cycle detection via topo.
     timeComplexity: O(V+E)
     spaceComplexity: O(V+E)
     hints:
-    - "Which node has no remaining prerequisites, and what becomes free when you finish it?"
-    - "A node enters the order only when its indegree hits zero."
+    - "Which task can start because nothing it needs is unfinished?"
+    - "A schedule exists exactly when every task eventually reaches indegree zero."
     - "Build indegree graph BFS Kahn; fail if processed < tasks"
     tags:
     - graph
@@ -2240,13 +2248,13 @@ patterns:
     difficulty: HARD
     className: com.algoprep.patterns.topo.AlienDictionaryOrder
     summary: Derive alien letter order from sorted dictionary words.
-    example: "Input: [\"wrt\", \"wrf\", \"er\", \"ett\", \"rftt\"] — trace this case by hand before coding"
+    example: "Input: [\\\"wrt\\\", \\\"wrf\\\", \\\"er\\\", \\\"ett\\\", \\\"rftt\\\"] → wertf"
     whenToUse: Extract edges from adjacent words; topo sort.
     timeComplexity: O(C)
     spaceComplexity: O(1) alphabet
     hints:
-    - "Which node has no remaining prerequisites, and what becomes free when you finish it?"
-    - "A node enters the order only when its indegree hits zero."
+    - "Where do two adjacent words first disagree, and what edge does that give you?"
+    - "The first differing letters are a precedence edge, and a valid alphabet is an order with indegree zero peeled off."
     - "Compare adjacent pairs for first difference Invalid if longer word is prefix after shorter"
     tags:
     - graph
@@ -2260,13 +2268,13 @@ patterns:
     difficulty: EASY
     className: com.algoprep.patterns.topo.VerifyAlienDictionary
     summary: Check whether words are sorted by a given alien alphabet order.
-    example: "Input: [\"hello\", \"leetcode\"], \"hlabcdefgijkmnopqrstuvwxyz\" — trace this case by hand before coding"
+    example: "Input: [\\\"hello\\\", \\\"leetcode\\\"], \\\"hlabcdefgijkmnopqrstuvwxyz\\\" → true"
     whenToUse: Compare adjacent words using a custom alphabet ranking.
     timeComplexity: O(total chars)
     spaceComplexity: O(1)
     hints:
-    - "Which node has no remaining prerequisites, and what becomes free when you finish it?"
-    - "A node enters the order only when its indegree hits zero."
+    - "For two neighboring words, which character is the first one allowed to decide the order?"
+    - "In the alien order, words are sorted exactly when each adjacent pair is nondecreasing at the first position they differ."
     - "Map each letter to its rank Invalid if longer word is a prefix after a shorter equal prefix"
     tags:
     - sort
@@ -2325,14 +2333,14 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.sortsearch.GroupAnagrams
     summary: Group an array of strings so that all anagrams of each other end up together.
-    example: "Input: [\"eat\", \"tea\", \"tan\", \"ate\", \"nat\", \"bat\"] — trace this case by hand before coding"
+    example: "Input: [\\\"eat\\\", \\\"tea\\\", \\\"tan\\\", \\\"ate\\\", \\\"nat\\\", \\\"bat\\\"] → [[eat, tea, ate], [tan, nat], [bat]]"
     whenToUse: Sort each word's characters to build a canonical key, then group by that key in a hash
       map.
     timeComplexity: O(n * k log k)
     spaceComplexity: O(n * k)
     hints:
-    - "What becomes cheap to find once equal items sit together?"
-    - "Sorting groups the values that a later scan or binary search will treat as one run."
+    - "What is the same for every word that belongs in one group?"
+    - "Words that share a sorted signature, or the same character counts, are one group."
     - "Two strings are anagrams exactly when their sorted character sequences are equal. Use the sorted string (or a character-count signature) as the hash map key."
     tags:
     - hash-map
@@ -2347,13 +2355,13 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.sortsearch.SearchSuggestions
     summary: For each prefix of a search word, return up to 3 lexicographically smallest matching products.
-    example: "Input: [\"mobile\", \"mouse\", \"moneypot\", \"monitor\", \"mousepad\"], \"mouse\" — trace this case by hand before coding"
+    example: "Input: [\\\"mobile\\\", \\\"mouse\\\", \\\"moneypot\\\", \\\"monitor\\\", \\\"mousepad\\\"], \\\"mouse\\\" → [[mobile, moneypot, monitor], [mobile, moneypot, monitor], [mouse, mousepad], [mouse, mousepad], [mouse, mousepad]]"
     whenToUse: Sort products once, then binary search each growing prefix's lower bound instead of rescanning.
     timeComplexity: O(n log n + m * log n)
     spaceComplexity: O(n)
     hints:
-    - "What becomes cheap to find once equal items sit together?"
-    - "Sorting groups the values that a later scan or binary search will treat as one run."
+    - "As the prefix grows by one letter, which products can you throw away?"
+    - "The products are sorted, so the matches for a prefix are a contiguous slice, and a longer prefix only narrows that slice."
     - "Sort the product list lexicographically up front. For each prefix, binary search for its lower bound and take up to 3 matches from there."
     tags:
     - binary-search
@@ -2368,13 +2376,13 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.sortsearch.WiggleSort
     summary: Reorder so nums[0] <= nums[1] >= nums[2] <= nums[3] ….
-    example: "Input: [3, 5, 2, 1, 6, 4] — trace this case by hand before coding"
+    example: "Input: [3, 5, 2, 1, 6, 4] → [3, 5, 1, 6, 2, 4]"
     whenToUse: One-pass swap based on even/odd positions.
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - "What becomes cheap to find once equal items sit together?"
-    - "Sorting groups the values that a later scan or binary search will treat as one run."
+    - "At an even index, which neighbor is allowed to be smaller?"
+    - "Even indices hold values no larger than their neighbors, so one pass of swaps fixes each adjacent pair."
     - "For even i ensure nums[i] <= nums[i+1] For odd i ensure nums[i] >= nums[i+1]"
     tags:
     - sort
@@ -2388,13 +2396,13 @@ patterns:
     difficulty: HARD
     className: com.algoprep.patterns.sortsearch.CountSmallerAfterSelf
     summary: For each element, count smaller elements to its right.
-    example: "Input: [5, 2, 6, 1] — trace this case by hand before coding"
+    example: "Input: [5, 2, 6, 1] → [2, 1, 1, 0]"
     whenToUse: Merge sort tree counting inversions while merging.
     timeComplexity: O(n log n)
     spaceComplexity: O(n)
     hints:
-    - "What becomes cheap to find once equal items sit together?"
-    - "Sorting groups the values that a later scan or binary search will treat as one run."
+    - "When this value is merged from the right half, how many right-half values are already known to be smaller?"
+    - "Each value's count is the number of smaller values that pass it while the halves are merged."
     - "Merge sort indices When taking from right half, add mid-i+1 to left counts"
     tags:
     - sort
@@ -2409,13 +2417,13 @@ patterns:
     difficulty: EASY
     className: com.algoprep.patterns.sortsearch.IntersectionTwoArrays
     summary: Return unique intersection of two arrays.
-    example: "Input: [4, 9, 5, 9], [9, 4, 9, 8, 4] — trace this case by hand before coding"
+    example: "Input: [4, 9, 5, 9], [9, 4, 9, 8, 4] → [4, 9]"
     whenToUse: Sort + two pointers, or hash set membership.
     timeComplexity: O(n log n)
     spaceComplexity: O(n)
     hints:
-    - "What becomes cheap to find once equal items sit together?"
-    - "Sorting groups the values that a later scan or binary search will treat as one run."
+    - "Which values from the first array are you still allowed to report?"
+    - "A value is in the answer once if it occurs in both arrays, regardless of extra copies."
     - "Put one array into a set Filter unique hits from the other"
     tags:
     - hash-set
@@ -2474,14 +2482,14 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.matrices.SpiralOrder
     summary: Return all elements of a matrix in clockwise spiral order.
-    example: "Input: [[1, 2, 3], [4, 5, 6], [7, 8, 9]] — trace this case by hand before coding"
+    example: "Input: [[1, 2, 3], [4, 5, 6], [7, 8, 9]] → [1, 2, 3, 6, 9, 8, 7, 4, 5]"
     whenToUse: Shrink top/bottom/left/right boundaries after fully consuming each edge of the current
       layer.
     timeComplexity: O(m*n)
     spaceComplexity: O(1) excluding output
     hints:
-    - "Does this cell depend on a neighbor, a border, or a mark you can write in place?"
-    - "Each cell is handled from its neighbors or its border, and a mark stops you from processing it twice."
+    - "Which edge have you already emptied, and which direction is next?"
+    - "The unread cells form a rectangle; each pass consumes one side and shrinks that bound."
     - "Traverse top row, right column, bottom row, left column, in that cyclic order. After each edge, move the corresponding boundary inward by one."
     tags:
     - matrix
@@ -2500,8 +2508,8 @@ patterns:
     timeComplexity: O(n^2)
     spaceComplexity: O(1)
     hints:
-    - "Does this cell depend on a neighbor, a border, or a mark you can write in place?"
-    - "Each cell is handled from its neighbors or its border, and a mark stops you from processing it twice."
+    - "Which cell receives the value that used to sit on the top row?"
+    - "A rotation moves four cells in a cycle, and the layer's bounds shrink toward the center."
     - "Transpose swaps matrix[i][j] with matrix[j][i] for i < j. Reversing each row after transposing produces the clockwise rotation."
     tags:
     - matrix
@@ -2520,8 +2528,8 @@ patterns:
     timeComplexity: O(m*n)
     spaceComplexity: O(1)
     hints:
-    - "Does this cell depend on a neighbor, a border, or a mark you can write in place?"
-    - "Each cell is handled from its neighbors or its border, and a mark stops you from processing it twice."
+    - "If a zero sits in the first row or column, what must you remember separately?"
+    - "A cell becomes zero when its row or column was marked, and the marks themselves live in the first row and column."
     - "Use two boolean flags to remember whether the first row/column originally had a zero. Mark row i and column j via matrix[i][0] and matrix[0][j] as you scan the rest of the grid."
     tags:
     - matrix
@@ -2535,13 +2543,13 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.matrices.Search2DMatrix
     summary: Search in a matrix sorted per row and column.
-    example: "Input: [[1, 4, 7, 11], [2, 5, 8, 12], [3, 6, 9, 16]], 8 — trace this case by hand before coding"
+    example: "Input: [[1, 4, 7, 11], [2, 5, 8, 12], [3, 6, 9, 16]], 8 → true"
     whenToUse: Start top-right; move left/down by comparison.
     timeComplexity: O(m+n)
     spaceComplexity: O(1)
     hints:
-    - "Does this cell depend on a neighbor, a border, or a mark you can write in place?"
-    - "Each cell is handled from its neighbors or its border, and a mark stops you from processing it twice."
+    - "From the corner you are in, which way is definitely too big and which way is definitely too small?"
+    - "Each comparison discards a row or a column, and the target remains in the rectangle you have not discarded."
     - "From top-right corner Too big → left; too small → down"
     tags:
     - matrix
@@ -2557,13 +2565,13 @@ patterns:
     className: com.algoprep.patterns.matrices.ShortestPathBinaryMatrix
     summary: Length of the shortest clear path from (0,0) to (n-1,n-1) on a binary grid, moving in all
       8 directions through 0-cells (return -1 if impossible).
-    example: "Input: [[0, 1], [1, 0]] — trace this case by hand before coding"
+    example: "Input: [[0, 1], [1, 0]] → 2"
     whenToUse: BFS from the top-left on the grid graph — unweighted shortest path needs level-order distance.
     timeComplexity: O(n²)
     spaceComplexity: O(n²)
     hints:
-    - "Does this cell depend on a neighbor, a border, or a mark you can write in place?"
-    - "Each cell is handled from its neighbors or its border, and a mark stops you from processing it twice."
+    - "What does the distance of a newly reached open cell equal?"
+    - "The first time you reach the bottom-right, the number of steps taken is the shortest path, because every step has length one."
     - "If grid[0][0] or the destination is blocked (1), return -1 immediately. Enqueue all 8 neighbors of each 0-cell; mark visited when enqueueing to avoid duplicate work. Distance counts cells on the path (start is 1), not the number of edges."
     tags:
     - matrix
@@ -2577,13 +2585,13 @@ patterns:
     difficulty: EASY
     className: com.algoprep.patterns.matrices.MatrixDiagonalSum
     summary: Sum primary and secondary diagonals without double-counting the center.
-    example: "Input: [[1, 2, 3], [4, 5, 6], [7, 8, 9]] — trace this case by hand before coding"
+    example: "Input: [[1, 2, 3], [4, 5, 6], [7, 8, 9]] → 25"
     whenToUse: Direct index walk on a square matrix.
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - "Does this cell depend on a neighbor, a border, or a mark you can write in place?"
-    - "Each cell is handled from its neighbors or its border, and a mark stops you from processing it twice."
+    - "Which cells are on both diagonals and must be counted once?"
+    - "The sum is the main diagonal plus the anti-diagonal, and the center cell is not added twice when the side is odd."
     - "Add mat[i][i] and mat[i][n-1-i] Subtract center once if n is odd"
     tags:
     - matrix
@@ -2650,8 +2658,8 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(n)
     hints:
-    - "What has to be resolved before you can accept the current value?"
-    - "The stack holds unresolved items in the order they still need to be closed."
+    - "What is the opener that the next closer is required to match?"
+    - "The stack holds unmatched openers in the order they must be closed."
     - "Push opening brackets; on a closing bracket, pop and check it matches. The string is valid only if the stack is empty at the very end."
     tags:
     - stack
@@ -2664,13 +2672,13 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.stacks.DailyTemperatures
     summary: For each day, find how many days until a warmer temperature occurs.
-    example: "Input: [73, 74, 75, 71, 69, 72, 76, 73] — trace this case by hand before coding"
+    example: "Input: [73, 74, 75, 71, 69, 72, 76, 73] → [1, 1, 4, 2, 1, 1, 0, 0]"
     whenToUse: A monotonic decreasing stack of indices resolves each day the moment a warmer one appears.
     timeComplexity: O(n)
     spaceComplexity: O(n)
     hints:
-    - "What has to be resolved before you can accept the current value?"
-    - "The stack holds unresolved items in the order they still need to be closed."
+    - "Which earlier days are still waiting for a warmer temperature?"
+    - "The stack holds indices whose warmer day is still unknown, in decreasing temperature order."
     - "Keep indices on the stack, not temperatures, so you can compute day differences. Pop and resolve every stacked index whose temperature is less than the current day's."
     tags:
     - stack
@@ -2685,14 +2693,14 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.stacks.NextGreaterElement
     summary: For each element of nums1, find its next greater element in nums2 (nums1 is a subset of nums2).
-    example: "Input: [4, 1, 2], [1, 3, 4, 2] — trace this case by hand before coding"
+    example: "Input: [4, 1, 2], [1, 3, 4, 2] → [-1, 3, -1]"
     whenToUse: Precompute next-greater for every value in nums2 with a monotonic stack, then map nums1's
       answers via a hash map.
     timeComplexity: O(n)
     spaceComplexity: O(n)
     hints:
-    - "What has to be resolved before you can accept the current value?"
-    - "The stack holds unresolved items in the order they still need to be closed."
+    - "Which values are still waiting for a greater one to their right?"
+    - "The stack is a decreasing run of unresolved values; a new greater value answers every one it can pop."
     - "Build the full next-greater mapping for nums2 in one monotonic-stack pass. Look up each nums1 value in that mapping instead of rescanning nums2 per query."
     tags:
     - stack
@@ -2707,14 +2715,14 @@ patterns:
     className: com.algoprep.patterns.stacks.DecodeString
     summary: Decode a nested encoding like "3[a2[c]]" into "accaccacc", where k[encoded] means the substring
       repeated k times.
-    example: "Input: \"3[a2[c]]\" — trace this case by hand before coding"
+    example: "Input: \\\"3[a2[c]]\\\" → accaccacc"
     whenToUse: Two stacks (or one stack of pairs) — push the current count and buffer on '[', pop and
       repeat on ']'.
     timeComplexity: O(n)
     spaceComplexity: O(n)
     hints:
-    - "What has to be resolved before you can accept the current value?"
-    - "The stack holds unresolved items in the order they still need to be closed."
+    - "What do you need to remember when you see an opening bracket?"
+    - "The stack holds the string and the repeat count from before the bracket; a closing bracket repeats the inner string that many times."
     - "Accumulate multi-digit counts before each '['; do not treat each digit as its own factor. On ']', pop the previous string and count, then append current.repeat(count) onto the previous string. Letters append to the current buffer; digits never belong in the decoded output."
     tags:
     - stack
@@ -2728,13 +2736,13 @@ patterns:
     difficulty: HARD
     className: com.algoprep.patterns.stacks.BasicCalculator
     summary: Evaluate expression with +, -, parentheses, and spaces.
-    example: "Input: \"(1+(4+5+2)-3)+(6+8)\" — trace this case by hand before coding"
+    example: "Input: \\\"(1+(4+5+2)-3)+(6+8)\\\" → 23"
     whenToUse: Sign stack for nested parentheses.
     timeComplexity: O(n)
     spaceComplexity: O(n)
     hints:
-    - "What has to be resolved before you can accept the current value?"
-    - "The stack holds unresolved items in the order they still need to be closed."
+    - "What is the running total, and what sign applies to the number you are reading?"
+    - "A parenthesis saves the total and the sign from outside; closing it adds the inner total back with that saved sign."
     - "Keep running result and sign On '(' push result/sign; on ')' pop"
     tags:
     - stack
@@ -2794,12 +2802,13 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.graphs.NumberOfIslands
     summary: Count the number of land components ('1's) in a 2D grid of water and land.
+    example: "Input: [\"11000\",\"11000\",\"00100\",\"00011\"] → 3"
     whenToUse: DFS or BFS flood fill from each unvisited land cell, counting how many fills are needed.
     timeComplexity: O(m*n)
     spaceComplexity: O(m*n)
     hints:
-    - "Which nodes are one edge away, and which have you already entered?"
-    - "A visited set plus a queue or a stack expands each node once."
+    - "What does finding an unvisited land cell let you claim?"
+    - "One flood fill marks a whole island, and the answer is how many times you have to start a new fill."
     - "Mark a land cell visited (or sink it to '0') as soon as you enqueue/visit it. Each flood fill from a fresh unvisited land cell represents exactly one island."
     tags:
     - graph
@@ -2815,14 +2824,15 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.graphs.CloneGraph
     summary: Create a deep copy of an undirected, connected graph given a reference node.
+    example: "Input: [[2,4],[1,3],[2,4],[1,3]] → [[2, 4], [1, 3], [2, 4], [1, 3]]"
     whenToUse: A hash map from original node to its clone, filled while doing BFS or DFS. The playground
       passes a 1-indexed adjacency list and expects each neighbor row sorted, because the judge cannot
       compare node identity.
     timeComplexity: O(V+E)
     spaceComplexity: O(V)
     hints:
-    - "Which nodes are one edge away, and which have you already entered?"
-    - "A visited set plus a queue or a stack expands each node once."
+    - "When you see a neighbor, how do you know whether its copy already exists?"
+    - "The map from original node to its copy is filled the first time the node is seen, before its edges are walked."
     - "Create a node's clone the first time you see it and store it in the map immediately. When wiring neighbors, look up (or create) their clones through the same map to avoid infinite recursion."
     tags:
     - graph
@@ -2835,13 +2845,13 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.graphs.PacificAtlantic
     summary: Cells from which water can flow to both oceans.
-    example: "Input: [[1, 2, 2, 3, 5], [3, 2, 3, 4, 4], [2, 4, 5, 3, 1], [6, 7, 1, 4, 5], [5, 1, 1, 2, 4]] — trace this case by hand before coding"
+    example: "Input: [[1, 2, 2, 3, 5], [3, 2, 3, 4, 4], [2, 4, 5, 3, 1], [6, 7, 1, 4, 5], [5, 1, 1, 2, 4]] → [[0, 4], [1, 3], [1, 4], [2, 2], [3, 0], [3, 1], [4, 0]]"
     whenToUse: Multi-source DFS/BFS inland from ocean borders.
     timeComplexity: O(mn)
     spaceComplexity: O(mn)
     hints:
-    - "Which nodes are one edge away, and which have you already entered?"
-    - "A visited set plus a queue or a stack expands each node once."
+    - "Which ocean can a cell already reach, and which neighbor can pass that reach uphill?"
+    - "A cell reachable from an ocean can share that reach with a neighbor of greater or equal height."
     - "Flow only to >= height neighbors Intersect reachable sets"
     tags:
     - graph
@@ -2856,13 +2866,13 @@ patterns:
     className: com.algoprep.patterns.graphs.CriticalConnections
     summary: Find every bridge in an undirected network — edges whose removal increases the number of
       connected components.
-    example: "Input: 4, [[0, 1], [1, 2], [2, 0], [1, 3]] — trace this case by hand before coding"
+    example: "Input: 4, [[0, 1], [1, 2], [2, 0], [1, 3]] → [[1, 3]]"
     whenToUse: Tarjan-style DFS with discovery and low-link times; edge u–v is a bridge when low[v] > disc[u].
     timeComplexity: O(V+E)
     spaceComplexity: O(V+E)
     hints:
-    - "Which nodes are one edge away, and which have you already entered?"
-    - "A visited set plus a queue or a stack expands each node once."
+    - "What would it mean if a child can reach back to an ancestor of this node?"
+    - "An edge to a child is a bridge when that child's earliest reachable time is strictly after this node's discovery time."
     - "Track disc[u] (first visit time) and low[u] (earliest reachable discovery via tree/back edges). After exploring child v, if low[v] > disc[u], the edge (u,v) is a bridge. Ignore the parent edge when updating low from neighbors so you do not falsely cancel a bridge."
     tags:
     - graph
@@ -2876,13 +2886,14 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.graphs.IsGraphBipartite
     summary: Decide whether an undirected graph can be split into two sets with no internal edges.
+    example: "Input: [[1,3],[0,2],[1,3],[0,2]] → true"
     whenToUse: Color the graph with BFS or DFS. An odd cycle means the answer is no. This replaces a
       one-line star-center check as the graph drill that actually uses traversal.
     timeComplexity: O(V+E)
     spaceComplexity: O(V)
     hints:
-    - "Which nodes are one edge away, and which have you already entered?"
-    - "A visited set plus a queue or a stack expands each node once."
+    - "What does it mean if a neighbor already has your color?"
+    - "A 2-coloring is possible while every edge joins different colors; a same-color edge means an odd cycle."
     - "What would a two-coloring failing tell you about a cycle? Give the start node color 1 and push it. A neighbor already wearing the same color is a conflict. A graph can have several components, so start a new search from every uncolored node."
     tags:
     - graph
@@ -2946,8 +2957,8 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(h)
     hints:
-    - "What does this node's answer become once both children have answered?"
-    - "The result of a node is built only from its subtrees."
+    - "What target is left for a child after you spend this node's value?"
+    - "A leaf succeeds only when the remaining target equals the leaf, and every other node just subtracts itself."
     - "At a leaf, check whether the remaining target equals the leaf's value. Recurse into children with target minus the current node's value."
     tags:
     - tree
@@ -2967,8 +2978,8 @@ patterns:
     timeComplexity: O(n^2) worst-case copy
     spaceComplexity: O(n)
     hints:
-    - "What does this node's answer become once both children have answered?"
-    - "The result of a node is built only from its subtrees."
+    - "When do you copy the path, and when do you have to undo the node you added?"
+    - "The shared path is the root-to-current route; it is recorded only at a matching leaf and the node is removed on the way back."
     - "Add the current node to a shared path list before recursing, remove it after. Only copy the path into the result list when a leaf matches the remaining target exactly."
     tags:
     - tree
@@ -2989,8 +3000,8 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(h)
     hints:
-    - "What does this node's answer become once both children have answered?"
-    - "The result of a node is built only from its subtrees."
+    - "What do you return to your parent, and what do you record for yourself?"
+    - "A node returns its height, while the best path through it is the sum of its two child heights."
     - "The function should return height, but update a side variable with left_height + right_height. The diameter at a node may not pass through the root, so track the max across every node."
     tags:
     - tree
@@ -3004,13 +3015,13 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.treedfs.LowestCommonAncestor
     summary: LCA of two nodes in a binary tree.
-    example: "Input: [3, 5, 1, 6, 2, 0, 8, null, null, 7, 4], 5, 4 — trace this case by hand before coding"
+    example: "Input: [3, 5, 1, 6, 2, 0, 8, null, null, 7, 4], 5, 4 → 5"
     whenToUse: 'Post-order: if both sides nonempty, root is LCA. The playground passes the two target values, not node objects.'
     timeComplexity: O(n)
     spaceComplexity: O(h)
     hints:
-    - "What does this node's answer become once both children have answered?"
-    - "The result of a node is built only from its subtrees."
+    - "What does a non-null return from a subtree mean?"
+    - "A node is the ancestor when one target is in each child subtree, or when the node itself is a target and the other is below it."
     - "Return non-null from subtree containing p/q If both left and right non-null, root is answer"
     tags:
     - tree
@@ -3029,8 +3040,8 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(h)
     hints:
-    - "What does this node's answer become once both children have answered?"
-    - "The result of a node is built only from its subtrees."
+    - "When does a child's gain hurt the path instead of helping it?"
+    - "A node returns only one downward branch, using a child only if that child's gain is positive, while the best path may use both children."
     - "For each child, take max(0, child_gain) — a negative child can never improve a path. A path through the node may use both children: candidate = node.val + left_gain + right_gain; update a global max. Return to the parent only a single-branch gain: node.val + max(left_gain, right_gain), so paths stay simple."
     tags:
     - tree
@@ -3099,8 +3110,8 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(n)
     hints:
-    - "Which nodes share a distance from the root, and when does that distance increase?"
-    - "The queue holds one level; its size at the start of the loop is that whole level."
+    - "How do you know which nodes belong to the level you are about to drain?"
+    - "The queue's size at the start of the loop is exactly one level."
     - "Capture queue.size() before the inner loop to know the current level's width. Build one list per level and append it to the outer result list."
     tags:
     - tree
@@ -3120,8 +3131,8 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(n)
     hints:
-    - "Which nodes share a distance from the root, and when does that distance increase?"
-    - "The queue holds one level; its size at the start of the loop is that whole level."
+    - "What changes between levels, and what stays a normal left-to-right walk?"
+    - "Each level is collected in visit order and reversed when the direction says right to left."
     - "Build each level's list normally, then reverse it when the direction flag says right-to-left. Flip the direction flag after finishing each level."
     tags:
     - tree
@@ -3140,8 +3151,8 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(n)
     hints:
-    - "Which nodes share a distance from the root, and when does that distance increase?"
-    - "The queue holds one level; its size at the start of the loop is that whole level."
+    - "Which node of a level is the one you can see from the right?"
+    - "The last node popped while draining a level is that level's rightmost node."
     - "Within each level's inner loop, overwrite a 'lastInLevel' variable on every poll. After finishing a level's inner loop, append 'lastInLevel' to the result."
     tags:
     - tree
@@ -3161,8 +3172,8 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(n)
     hints:
-    - "Which nodes share a distance from the root, and when does that distance increase?"
-    - "The queue holds one level; its size at the start of the loop is that whole level."
+    - "What makes a node a place to stop, instead of walking the whole tree?"
+    - "The first leaf reached level by level has the minimum depth."
     - "Level-order until a leaf Depth increments per level"
     tags:
     - tree
@@ -3181,8 +3192,8 @@ patterns:
     timeComplexity: O(n log n)
     spaceComplexity: O(n)
     hints:
-    - "Which nodes share a distance from the root, and when does that distance increase?"
-    - "The queue holds one level; its size at the start of the loop is that whole level."
+    - "What number do you attach to a node so its column is known?"
+    - "A node's column is its parent's column plus or minus one, and nodes in a column are ordered by row then value."
     - "Track column index Sort each column by row then value"
     tags:
     - tree
@@ -3252,8 +3263,8 @@ patterns:
     timeComplexity: O(L) per op
     spaceComplexity: O(ALPHABET * total chars)
     hints:
-    - "Which prefix is shared, and where does this word branch off?"
-    - "Each edge is one character; a word ends only at a node marked as terminal."
+    - "What does a node need so you can tell a word from a mere prefix?"
+    - "Each edge is one character, and a word ends only at a node marked terminal."
     - "Each node needs a children map and a boolean end-of-word flag. search() requires the end flag to be true; startsWith() does not."
     tags:
     - trie
@@ -3267,14 +3278,14 @@ patterns:
     className: com.algoprep.patterns.trie.ExtraCharacters
     summary: Find the minimum number of extra characters left over after breaking a string using dictionary
       words.
-    example: "Input: \"leetscode\", [\"leet\", \"code\", \"leetcode\"] — trace this case by hand before coding"
+    example: "Input: \\\"leetscode\\\", [\\\"leet\\\", \\\"code\\\", \\\"leetcode\\\"] → 1"
     whenToUse: DP over string positions, using a trie to quickly check which dictionary words start at
       each position.
     timeComplexity: O(n^2)
     spaceComplexity: O(dictionary)
     hints:
-    - "Which prefix is shared, and where does this word branch off?"
-    - "Each edge is one character; a word ends only at a node marked as terminal."
+    - "What is already known about the suffix that starts at i?"
+    - "The best extra-character count from i depends only on suffixes that start later, after a dictionary word or a skipped character."
     - "dp[i] = minimum extra characters for the substring starting at i. At each position, try every dictionary word that matches as a prefix via the trie, then recurse past it."
     tags:
     - trie
@@ -3289,13 +3300,13 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.trie.ReplaceWords
     summary: Replace words with their shortest dictionary root prefix.
-    example: "Input: [\"cat\", \"bat\", \"rat\"], \"the cattle was rattled by the battery\" — trace this case by hand before coding"
+    example: "Input: [\\\"cat\\\", \\\"bat\\\", \\\"rat\\\"], \\\"the cattle was rattled by the battery\\\" → the cat was rat by the bat"
     whenToUse: Trie of roots; walk each word until end mark.
     timeComplexity: O(total chars)
     spaceComplexity: O(dictionary)
     hints:
-    - "Which prefix is shared, and where does this word branch off?"
-    - "Each edge is one character; a word ends only at a node marked as terminal."
+    - "How far along a word do you walk before a root is allowed to replace it?"
+    - "The first terminal node reached while spelling the word is the shortest root that can replace it."
     - "Insert all roots Stop at first isEnd along the word"
     tags:
     - trie
@@ -3309,13 +3320,13 @@ patterns:
     difficulty: HARD
     className: com.algoprep.patterns.trie.WordSearchII
     summary: Find all dictionary words on the board via adjacent cells.
-    example: "Input: [\"oaan\", \"etae\", \"ihkr\", \"iflv\"], [\"oath\", \"pea\", \"eat\", \"rain\"] — trace this case by hand before coding"
+    example: "Input: [\\\"oaan\\\", \\\"etae\\\", \\\"ihkr\\\", \\\"iflv\\\"], [\\\"oath\\\", \\\"pea\\\", \\\"eat\\\", \\\"rain\\\"] → [oath, eat]"
     whenToUse: Trie of words + DFS pruning on board.
     timeComplexity: O(m·n·4·L)
     spaceComplexity: O(dictionary)
     hints:
-    - "Which prefix is shared, and where does this word branch off?"
-    - "Each edge is one character; a word ends only at a node marked as terminal."
+    - "How do you avoid exploring a board path that no remaining word can follow?"
+    - "The search follows trie edges, and a word is removed from the trie once it has been found."
     - "Build trie of words Remove word from trie when found to dedupe"
     tags:
     - trie
@@ -3330,13 +3341,13 @@ patterns:
     difficulty: EASY
     className: com.algoprep.patterns.trie.LongestCommonPrefix
     summary: Find the longest common prefix among strings.
-    example: "Input: [\"flower\", \"flow\", \"flight\"] — trace this case by hand before coding"
+    example: "Input: [\\\"flower\\\", \\\"flow\\\", \\\"flight\\\"] → fl"
     whenToUse: Trie of words or vertical scan until mismatch.
     timeComplexity: O(total chars)
     spaceComplexity: O(1)
     hints:
-    - "Which prefix is shared, and where does this word branch off?"
-    - "Each edge is one character; a word ends only at a node marked as terminal."
+    - "Which character column is the first one the words are allowed to disagree on?"
+    - "The prefix is the longest run of columns where every word still has the same character."
     - "Compare characters column by column Stop at first mismatch or end of a word"
     tags:
     - trie
@@ -3401,8 +3412,8 @@ patterns:
     timeComplexity: O(n)
     spaceComplexity: O(n)
     hints:
-    - "What have you already seen that would answer the current element in constant time?"
-    - "The map stores the complement or the count of everything before the current index."
+    - "What would you need to have already seen to finish on this number?"
+    - "The map holds each earlier value's index, and the current number is inserted only after its complement is checked."
     - "For each number, check if target - number is already in the map. Insert the current number's index only after checking, to avoid matching an element with itself."
     tags:
     - hash-map
@@ -3415,13 +3426,13 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.hashmaps.SubarraySumEqualsK
     summary: Count the number of contiguous subarrays whose elements sum to K.
-    example: "Input: [1, 1, 1], 2 — trace this case by hand before coding"
+    example: "Input: [1, 1, 1], 2 → 2"
     whenToUse: Running prefix sum plus a map of how many times each prefix sum value has occurred.
     timeComplexity: O(n)
     spaceComplexity: O(n)
     hints:
-    - "What have you already seen that would answer the current element in constant time?"
-    - "The map stores the complement or the count of everything before the current index."
+    - "Which earlier prefix sum would make the slice ending here equal K?"
+    - "The map counts how often each prefix sum has occurred, including 0 once before the array starts."
     - "Initialize the map with prefix sum 0 occurring once, to handle subarrays starting at index 0. At each step, add map.get(currentSum - K) to the answer before updating the map with currentSum."
     tags:
     - hash-map
@@ -3435,13 +3446,13 @@ patterns:
     difficulty: EASY
     className: com.algoprep.patterns.hashmaps.IsomorphicStrings
     summary: Check if s and t are isomorphic via bijection of chars.
-    example: "Input: \"egg\", \"add\" — trace this case by hand before coding"
+    example: "Input: \\\"egg\\\", \\\"add\\\" → true"
     whenToUse: Two maps (or map+set) for forward/backward mapping.
     timeComplexity: O(n)
     spaceComplexity: O(1) alphabet
     hints:
-    - "What have you already seen that would answer the current element in constant time?"
-    - "The map stores the complement or the count of everything before the current index."
+    - "What must stay true if this character was already mapped?"
+    - "Each character of the first string has one image, and no two characters share an image."
     - "Map s→t and ensure consistency Also ensure two s chars don't map to same t"
     tags:
     - hash-map
@@ -3454,13 +3465,13 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.hashmaps.ContiguousArray
     summary: Max length of contiguous subarray with equal 0s and 1s.
-    example: "Input: [0, 1, 0, 1, 1] — trace this case by hand before coding"
+    example: "Input: [0, 1, 0, 1, 1] → 4"
     whenToUse: Prefix balance + first-seen index map.
     timeComplexity: O(n)
     spaceComplexity: O(n)
     hints:
-    - "What have you already seen that would answer the current element in constant time?"
-    - "The map stores the complement or the count of everything before the current index."
+    - "What balance of zeros and ones would mean this slice is half and half?"
+    - "Treating 0 as -1, a repeated balance means the slice between those two indices has equal zeros and ones."
     - "Treat 0 as -1 If balance seen before, update max length"
     tags:
     - hash-map
@@ -3475,13 +3486,13 @@ patterns:
     difficulty: HARD
     className: com.algoprep.patterns.hashmaps.FourSumII
     summary: Count tuples (i,j,k,l) with sum zero across four arrays.
-    example: "Input: [1, 2], [-2, -1], [-1, 2], [0, 2] — trace this case by hand before coding"
+    example: "Input: [1, 2], [-2, -1], [-1, 2], [0, 2] → 2"
     whenToUse: Hash all sums of A+B; probe -(C+D).
     timeComplexity: O(n²)
     spaceComplexity: O(n²)
     hints:
-    - "What have you already seen that would answer the current element in constant time?"
-    - "The map stores the complement or the count of everything before the current index."
+    - "Which pair-sum from the last two arrays would cancel a pair-sum you stored?"
+    - "The map counts sums of the first two arrays, and each sum of the last two looks up its negation."
     - "Map sum→count for first two arrays For each c+d look up -(c+d)"
     tags:
     - hash-map
@@ -3543,13 +3554,13 @@ patterns:
     difficulty: EASY
     className: com.algoprep.patterns.tracking.MajorityElement
     summary: Find the element that appears more than n/2 times in an array.
-    example: "Input: [2, 2, 1, 1, 1, 2, 2] — trace this case by hand before coding"
+    example: "Input: [2, 2, 1, 1, 1, 2, 2] → 2"
     whenToUse: 'Boyer-Moore voting: track a single candidate and a count instead of a full frequency map.'
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - "Which single number, updated on every step, makes the rest of the history unnecessary?"
-    - "The tracked value is enough to recover the answer; you do not store the whole pass."
+    - "When the count hits zero, what are you allowed to forget?"
+    - "The candidate and its vote count are enough: matches add a vote, everything else takes one away."
     - "Increment the count when the current number matches the candidate, decrement otherwise. When the count hits zero, switch the candidate to the current number."
     tags:
     - tracking
@@ -3562,14 +3573,14 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.tracking.LongestConsecutive
     summary: Find the length of the longest run of consecutive integers in an unsorted array.
-    example: "Input: [100, 4, 200, 1, 3, 2] — trace this case by hand before coding"
+    example: "Input: [100, 4, 200, 1, 3, 2] → 4"
     whenToUse: Put everything in a hash set, then only start counting a run from numbers with no predecessor
       present.
     timeComplexity: O(n)
     spaceComplexity: O(n)
     hints:
-    - "Which single number, updated on every step, makes the rest of the history unnecessary?"
-    - "The tracked value is enough to recover the answer; you do not store the whole pass."
+    - "Which numbers are real starts, and which are just the middle of a run?"
+    - "A number starts a run only when its predecessor is absent, and the length is how far the successors go."
     - "Only begin extending a sequence from a number x where x-1 is not in the set. From each valid start, keep checking x+1, x+2, ... to measure the run's length."
     tags:
     - hash-set
@@ -3583,19 +3594,38 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.tracking.MajorityElementII
     summary: Find every element that appears more than ⌊n/3⌋ times (at most two such elements).
-    example: "Input: [1, 2, 1, 2, 1, 2, 3] — trace this case by hand before coding"
+    example: "Input: [1, 2, 1, 2, 1, 2, 3] → [1, 2]"
     whenToUse: Boyer-Moore voting with two candidate slots, then a second counting pass to verify.
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - "Which single number, updated on every step, makes the rest of the history unnecessary?"
-    - "The tracked value is enough to recover the answer; you do not store the whole pass."
+    - "How many candidates can exceed n/3 at the same time?"
+    - "Two candidate slots and their counts cancel a third distinct value, and the survivors still need an exact count."
     - "At most two answers — three values each > n/3 would exceed the array length. Maintain two candidates and counts; a third distinct value decrements both (pairwise cancel). Always verify final candidates with an exact frequency pass; voting alone can leave false survivors."
     tags:
     - tracking
     companies:
     - Amazon
     - Amazon
+    frequency: MEDIUM
+  - id: maximum-gap
+    title: Maximum Gap
+    difficulty: HARD
+    className: com.algoprep.patterns.tracking.MaximumGap
+    summary: Largest difference between two successive values once the array is in sorted order, without sorting it.
+    example: "Input: [3, 6, 9, 1] → 3"
+    whenToUse: "A linear bound forces you to keep only a bucket's minimum and maximum. The biggest jump sits between buckets, not inside one."
+    timeComplexity: O(n)
+    spaceComplexity: O(n)
+    hints:
+    - "If you cannot sort, which two numbers inside a slice of the range are enough?"
+    - "A bucket stores only its minimum and maximum, and the largest successive gap is between one occupied bucket and the next."
+    - "Set the bucket width to (max-min)/(n-1). Scan occupied buckets and keep the largest gap between one bucket's max and the next bucket's min."
+    tags:
+    - tracking
+    - bucket
+    companies:
+    - Google
     frequency: MEDIUM
 - id: UNION_FIND
   order: 10
@@ -3648,13 +3678,13 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.unionfind.NumberOfProvinces
     summary: Count connected components in an undirected graph given as an adjacency matrix.
-    example: "Input: [[1, 1, 0], [1, 1, 0], [0, 0, 1]] — trace this case by hand before coding"
+    example: "Input: [[1, 1, 0], [1, 1, 0], [0, 0, 1]] → 2"
     whenToUse: Union every direct connection in the matrix, then count how many distinct roots remain.
     timeComplexity: O(n^2 * alpha(n))
     spaceComplexity: O(n)
     hints:
-    - "Are these two items already in the same component, or should this edge join them?"
-    - "Each item points at a parent; the root is the component, and a union links two roots."
+    - "When do two cities stop being separate components?"
+    - "Each city starts as its own root, and a successful union reduces the component count by one."
     - "Only need to scan the upper (or lower) triangle of the symmetric matrix. The final answer is the number of elements that are their own root."
     tags:
     - union-find
@@ -3669,14 +3699,14 @@ patterns:
     className: com.algoprep.patterns.unionfind.RedundantConnection
     summary: Find the edge that can be removed so the graph becomes a tree again (a tree plus one extra
       edge).
-    example: "Input: [[1, 2], [1, 3], [2, 3]] — trace this case by hand before coding"
+    example: "Input: [[1, 2], [1, 3], [2, 3]] → [2, 3]"
     whenToUse: Process edges in order; the first edge whose endpoints already share a root is the redundant
       one.
     timeComplexity: O(n * alpha(n))
     spaceComplexity: O(n)
     hints:
-    - "Are these two items already in the same component, or should this edge join them?"
-    - "Each item points at a parent; the root is the component, and a union links two roots."
+    - "What is true of an edge whose ends already share a root?"
+    - "Edges are united in input order, and the first edge that joins two nodes already in the same component is the extra one."
     - "Union endpoints one edge at a time, in the given input order. As soon as find(u) == find(v) before unioning, that edge is the answer."
     tags:
     - union-find
@@ -3691,14 +3721,14 @@ patterns:
     className: com.algoprep.patterns.unionfind.AccountsMerge
     summary: Given accounts as [name, email…], merge any accounts that share at least one email and return
       each group's emails sorted under the account name.
-    example: "Input: [[\"John\", \"johnsmith@mail.com\", \"john_newyork@mail.com\"], [\"John\", \"johnsmith@mail.com\", \"john00@mail.com\"], [\"Mary\", \"mary@mail.com\"]] — trace this case by hand before coding"
+    example: "Input: John via johnsmith and john_newyork, John via johnsmith and john00, Mary → [[John, john00@mail.com, john_newyork@mail.com, johnsmith@mail.com], [Mary, mary@mail.com]]"
     whenToUse: Union-Find (or DFS on an email graph) — emails that co-occur are connected, then group by
       root.
     timeComplexity: O(emails · α)
     spaceComplexity: O(emails)
     hints:
-    - "Are these two items already in the same component, or should this edge join them?"
-    - "Each item points at a parent; the root is the component, and a union links two roots."
+    - "Which emails are already the same person, even if the account rows differ?"
+    - "Emails in one account are united, and the finished groups are the emails that share a root."
     - "Map each email to its account name once, and union consecutive emails within the same account. After all unions, collect emails by find(root), sort each group, and prepend the name. Same display name with no shared email stays separate — connectivity is by email, not by name."
     tags:
     - union-find
@@ -3712,13 +3742,13 @@ patterns:
     difficulty: HARD
     className: com.algoprep.patterns.unionfind.NumberOfIslandsII
     summary: After each land add, return current island count.
-    example: "Input: 3, 3, [[0, 0], [0, 1], [1, 2], [2, 1], [1, 1]] — trace this case by hand before coding"
+    example: "Input: 3, 3, [[0, 0], [0, 1], [1, 2], [2, 1], [1, 1]] → [1, 1, 2, 3, 1]"
     whenToUse: Online Union-Find as cells become land.
     timeComplexity: O(k α(mn))
     spaceComplexity: O(mn)
     hints:
-    - "Are these two items already in the same component, or should this edge join them?"
-    - "Each item points at a parent; the root is the component, and a union links two roots."
+    - "When a new land cell touches land that is already there, what happens to the count?"
+    - "Each added land starts as one component, and each successful union with a neighbor decreases the count by one."
     - "Add land then union 4-neighbors Increment count on add; decrement on each successful union"
     tags:
     - union-find
@@ -3731,13 +3761,13 @@ patterns:
     difficulty: EASY
     className: com.algoprep.patterns.unionfind.PathExists
     summary: Return whether a path exists between source and destination.
-    example: "Input: 6, [[0, 1], [1, 2], [2, 5], [3, 4]], 0, 5 — trace this case by hand before coding"
+    example: "Input: 6, [[0, 1], [1, 2], [2, 5], [3, 4]], 0, 5 → true"
     whenToUse: Union all edges, then check same component.
     timeComplexity: O(n + e·α(n))
     spaceComplexity: O(n)
     hints:
-    - "Are these two items already in the same component, or should this edge join them?"
-    - "Each item points at a parent; the root is the component, and a union links two roots."
+    - "After every edge has been united, what question is left?"
+    - "Source can reach destination exactly when they have the same root."
     - "Union endpoints of each edge find(source)==find(destination)"
     tags:
     - union-find
@@ -3802,8 +3832,8 @@ patterns:
     timeComplexity: O(1) all ops
     spaceComplexity: O(n)
     hints:
-    - "Which operation must stay fast, and what extra link buys that speed?"
-    - "The structure keeps both the order you need and a direct handle to the node you will update."
+    - "What do you store so the minimum does not have to be scanned?"
+    - "A second stack holds the minimum that was current at each push, and it pops together with the values."
     - "Push the new minimum onto an auxiliary stack every time it changes (or on every push, tracking duplicates). Pop from both stacks together to keep them in sync."
     tags:
     - design
@@ -3822,8 +3852,8 @@ patterns:
     timeComplexity: O(1)
     spaceComplexity: O(capacity)
     hints:
-    - "Which operation must stay fast, and what extra link buys that speed?"
-    - "The structure keeps both the order you need and a direct handle to the node you will update."
+    - "Which entry is the one to drop when the cache is full?"
+    - "Recency order puts the used key at the front, and the least recent key is the one evicted at capacity."
     - "Use LinkedHashMap in access-order mode (or an equivalent ordered map). On get/put, refresh the key so it becomes most recently used. When size exceeds capacity, remove the eldest (least recently used) entry. Interview alternate: HashMap<node> + doubly linked list for explicit O(1) splice-to-front / evict-tail."
     tags:
     - design
@@ -3843,8 +3873,8 @@ patterns:
     timeComplexity: O(log n) get
     spaceComplexity: O(n)
     hints:
-    - "Which operation must stay fast, and what extra link buys that speed?"
-    - "The structure keeps both the order you need and a direct handle to the node you will update."
+    - "Given a timestamp, which stored value is the latest one you may return?"
+    - "Values for a key are appended in time order, so the answer is the rightmost timestamp that is still ≤ the query."
     - "Timestamps for a key are inserted in non-decreasing order, so each list stays sorted for binary search. get should return the rightmost value with timestamp ≤ query (upper_bound - 1), or empty if none. Store pairs or parallel arrays; avoid resorting on every get."
     tags:
     - design
@@ -3863,8 +3893,8 @@ patterns:
     timeComplexity: O(1)
     spaceComplexity: O(capacity)
     hints:
-    - "Which operation must stay fast, and what extra link buys that speed?"
-    - "The structure keeps both the order you need and a direct handle to the node you will update."
+    - "When two keys are tied for least frequent, which one goes?"
+    - "Each frequency has its own recency list, and the victim is the least recent key in the lowest frequency."
     - "Track min frequency On get bump frequency bucket"
     tags:
     - design
@@ -3882,8 +3912,8 @@ patterns:
     timeComplexity: O(1) average
     spaceComplexity: O(n)
     hints:
-    - "Which operation must stay fast, and what extra link buys that speed?"
-    - "The structure keeps both the order you need and a direct handle to the node you will update."
+    - "Where does a key land, and what if that slot is already taken?"
+    - "A key lives in the bucket of key modulo the bucket count, and a collision is another node in that bucket's chain."
     - "Use an array of linked lists Hash with key % bucketCount"
     tags:
     - design
@@ -3942,12 +3972,13 @@ patterns:
     difficulty: EASY
     className: com.algoprep.patterns.bitwise.SingleNumber
     summary: Every element in an array appears twice except one - find that one.
+    example: "Input: [4, 1, 2, 1, 2] → 4"
     whenToUse: XOR every element together; paired values cancel to zero, leaving only the unpaired one.
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - "Which bit can you decide without looking at the others?"
-    - "A mask or a shift isolates one bit; the rest of the integer stays unchanged."
+    - "What is left after every paired value cancels?"
+    - "XOR clears a value that appears twice and leaves the value that appears once."
     - "a XOR a = 0 and a XOR 0 = a, so pairs vanish regardless of order. No extra space or sorting is needed - a single pass of XOR suffices."
     tags:
     - bit
@@ -3960,14 +3991,14 @@ patterns:
     difficulty: EASY
     className: com.algoprep.patterns.bitwise.NumberOf1Bits
     summary: Count the number of set bits (Hamming weight) in an integer.
-    example: "Input: -1 — trace this case by hand before coding"
+    example: "Input: -1 → 32"
     whenToUse: n &= n-1 clears the lowest set bit each time, so looping until n is zero counts the bits
       directly.
     timeComplexity: O(1)
     spaceComplexity: O(1)
     hints:
-    - "Which bit can you decide without looking at the others?"
-    - "A mask or a shift isolates one bit; the rest of the integer stays unchanged."
+    - "What does clearing the lowest set bit change about the count?"
+    - "Each step removes exactly one set bit, so the number of steps is the number of 1-bits."
     - "Each iteration of n &= (n - 1) removes exactly one set bit. The loop runs exactly popcount(n) times, which is already efficient without checking every bit position."
     tags:
     - bit
@@ -3980,13 +4011,13 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.bitwise.SingleNumberII
     summary: Every element appears thrice except one — find it.
-    example: "Input: [2, 2, 3, 2] — trace this case by hand before coding"
+    example: "Input: [2, 2, 3, 2] → 3"
     whenToUse: Bit counts mod 3, or ones/twos state machine.
     timeComplexity: O(n)
     spaceComplexity: O(1)
     hints:
-    - "Which bit can you decide without looking at the others?"
-    - "A mask or a shift isolates one bit; the rest of the integer stays unchanged."
+    - "How do you remember a bit that has been seen once, and one that has been seen twice?"
+    - "Each bit is counted modulo 3, so bits seen three times disappear and the bits seen once remain."
     - "Count each bit mod 3 Or maintain ones/twos masks"
     tags:
     - bit
@@ -4000,14 +4031,14 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.bitwise.SumOfTwoIntegers
     summary: Return the sum of two integers without using the + or - operators.
-    example: "Input: 1, 2 — trace this case by hand before coding"
+    example: "Input: 1, 2 → 3"
     whenToUse: Bitwise half-adder loop — XOR builds sum bits, AND<<1 builds carry, repeat until carry is
       0.
     timeComplexity: O(1)
     spaceComplexity: O(1)
     hints:
-    - "Which bit can you decide without looking at the others?"
-    - "A mask or a shift isolates one bit; the rest of the integer stays unchanged."
+    - "Where is the sum, and where is the carry, if you cannot use +?"
+    - "XOR is the sum without carry, and a left-shifted AND is the carry still to add."
     - "a ^ b is the sum ignoring carry; (a & b) << 1 is the carry to add next. Loop setting a = sumWithoutCarry and b = carry until b becomes 0. Negatives work the same in two's complement under the language's fixed-width int semantics."
     tags:
     - bit
@@ -4020,13 +4051,13 @@ patterns:
     difficulty: EASY
     className: com.algoprep.patterns.bitwise.ReverseBits
     summary: Reverse the 32 bits of an unsigned integer (bit 0 becomes bit 31, and so on).
-    example: "Input: 43261596 — trace this case by hand before coding"
+    example: "Input: 43261596 → 964176192"
     whenToUse: Fixed-width bit walk — build the result by shifting in n's low bit 32 times.
     timeComplexity: O(1)
     spaceComplexity: O(1)
     hints:
-    - "Which bit can you decide without looking at the others?"
-    - "A mask or a shift isolates one bit; the rest of the integer stays unchanged."
+    - "What happens to the bit you just peeled off the low end?"
+    - "It becomes the new high bit of the result, and this happens once for each of the 32 positions."
     - "Loop exactly 32 times: result = (result << 1) | (n & 1), then unsigned-shift n right by 1. Leading zeros still matter — process all 32 positions; do not stop early. Prefer >>> (unsigned shift) so the high bit of n does not sign-extend incorrectly."
     tags:
     - bit
@@ -4039,13 +4070,13 @@ patterns:
     difficulty: HARD
     className: com.algoprep.patterns.bitwise.BitwiseAndRange
     summary: Bitwise AND of all numbers in [left, right].
-    example: "Input: 5, 7 — trace this case by hand before coding"
+    example: "Input: 5, 7 → 4"
     whenToUse: Shift until left==right to clear differing low bits.
     timeComplexity: O(1)
     spaceComplexity: O(1)
     hints:
-    - "Which bit can you decide without looking at the others?"
-    - "A mask or a shift isolates one bit; the rest of the integer stays unchanged."
+    - "Which bits can survive every number from left to right?"
+    - "Only the common prefix of left and right stays; every bit that still flips inside the range becomes 0."
     - "While left < right, right &= right-1 or shift both Common prefix bits survive"
     tags:
     - bit
@@ -4106,14 +4137,14 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.math.PowXN
     summary: Compute x raised to the power n efficiently using binary exponentiation.
-    example: "Input: 2, 10 — trace this case by hand before coding"
+    example: "Input: 2, 10 → 1024"
     whenToUse: Fast power via repeated squaring; halve the exponent each step instead of multiplying n
       times.
     timeComplexity: O(log n)
     spaceComplexity: O(1)
     hints:
-    - "Which quantity stays fixed, so you can compute it instead of simulating every step?"
-    - "A closed form, a gcd, or a slope replaces the loop."
+    - "How does an even exponent shrink, and what do you peel off when it is odd?"
+    - "Squaring the base halves an even exponent, and a negative exponent is the reciprocal of the positive one."
     - "If n is even, x^n = (x*x)^(n/2); if odd, peel off one factor of x first. Handle negative n by computing 1 / x^(-n), and watch for Integer.MIN_VALUE overflow when negating."
     tags:
     - math
@@ -4126,13 +4157,13 @@ patterns:
     difficulty: EASY
     className: com.algoprep.patterns.math.GcdOfStrings
     summary: Find the largest string that divides both of two given strings.
-    example: "Input: \"ABCABC\", \"ABC\" — trace this case by hand before coding"
+    example: "Input: \\\"ABCABC\\\", \\\"ABC\\\" → ABC"
     whenToUse: Check str1+str2 == str2+str1 first, then take the substring of length gcd(len1, len2).
     timeComplexity: O(n)
     spaceComplexity: O(n)
     hints:
-    - "Which quantity stays fixed, so you can compute it instead of simulating every step?"
-    - "A closed form, a gcd, or a slope replaces the loop."
+    - "What has to be true before a shared prefix can divide both strings?"
+    - "The strings share a divisor string only when either concatenation order is the same string."
     - "Two strings share a divisor string only if concatenating them in either order gives the same result. If that check passes, the answer is the prefix of length gcd(str1.length(), str2.length())."
     tags:
     - math
@@ -4147,13 +4178,13 @@ patterns:
     className: com.algoprep.patterns.math.SqrtX
     summary: Return the floor of the square root of a non-negative integer x (largest integer whose square
       is ≤ x).
-    example: "Input: 8 — trace this case by hand before coding"
+    example: "Input: 8 → 2"
     whenToUse: Binary search over the answer range [0..x] rather than testing every candidate linearly.
     timeComplexity: O(log x)
     spaceComplexity: O(1)
     hints:
-    - "Which quantity stays fixed, so you can compute it instead of simulating every step?"
-    - "A closed form, a gcd, or a slope replaces the loop."
+    - "What is the largest integer whose square does not pass x?"
+    - "The search keeps the largest mid whose square is still ≤ x."
     - "Search for the largest mid where mid*mid ≤ x; if mid*mid > x, search the left half. Cast mid*mid to long (or use division) to avoid 32-bit overflow when mid is large. For x < 2 the answer is x itself — handle that before the search loop."
     tags:
     - math
@@ -4167,13 +4198,13 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.math.IntegerToRoman
     summary: Convert integer to Roman numeral.
-    example: "Input: 1994 — trace this case by hand before coding"
+    example: "Input: 1994 → MCMXCIV"
     whenToUse: Greedy subtract largest Roman values including subtractives.
     timeComplexity: O(1)
     spaceComplexity: O(1)
     hints:
-    - "Which quantity stays fixed, so you can compute it instead of simulating every step?"
-    - "A closed form, a gcd, or a slope replaces the loop."
+    - "Which symbol value is the largest one you can still subtract?"
+    - "The number is reduced by the largest table value that still fits, and that symbol is appended."
     - "Table 1000,900,500,400,... Append while num >= value"
     tags:
     - math
@@ -4187,13 +4218,13 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.math.ValidSquare
     summary: Check whether four points form a square.
-    example: "Input: [0, 1], [1, 0], [0, -1], [-1, 0] — trace this case by hand before coding"
+    example: "Input: [0, 1], [1, 0], [0, -1], [-1, 0] → true"
     whenToUse: 'Distances: 2 diagonals equal, 4 sides equal, no zero.'
     timeComplexity: O(1)
     spaceComplexity: O(1)
     hints:
-    - "Which quantity stays fixed, so you can compute it instead of simulating every step?"
-    - "A closed form, a gcd, or a slope replaces the loop."
+    - "Which distances have to match for four points to be a square?"
+    - "Four equal sides and two equal diagonals, measured by squared length, are enough, and the order of the points does not matter."
     - "Compute 6 pairwise squared distances Need 4 equal sides + 2 equal diagonals"
     tags:
     - math
@@ -4208,13 +4239,13 @@ patterns:
     difficulty: HARD
     className: com.algoprep.patterns.math.MaxPointsOnALine
     summary: Maximum number of points that lie on the same line.
-    example: "Input: [[1, 1], [2, 2], [3, 3], [4, 4], [1, 2]] — trace this case by hand before coding"
+    example: "Input: [[1, 1], [2, 2], [3, 3], [4, 4], [1, 2]] → 4"
     whenToUse: For each origin count slopes with reduced fractions.
     timeComplexity: O(n²)
     spaceComplexity: O(n)
     hints:
-    - "Which quantity stays fixed, so you can compute it instead of simulating every step?"
-    - "A closed form, a gcd, or a slope replaces the loop."
+    - "For one chosen origin, what makes two other points the same line?"
+    - "Points from one origin share a line when their slopes reduce to the same fraction, with vertical lines and duplicates counted apart."
     - "Normalize slope by GCD Handle duplicates and vertical lines"
     tags:
     - math
@@ -4285,8 +4316,8 @@ patterns:
     timeComplexity: O(1)
     spaceComplexity: O(1) per key
     hints:
-    - "What fails first when a second instance, a retry, or a restart shows up?"
-    - "Name the shared state and the lock, transaction, or key that keeps one side effect from running twice."
+    - "How many tokens does this key have right now, without a background clock?"
+    - "Tokens refill from the elapsed time since the last call, and a call spends one only if a token remains."
     - "Track available tokens and a last-refill timestamp per key. Refill tokens lazily based on elapsed time instead of running a background timer."
     tags:
     - spring
@@ -4301,13 +4332,14 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.spring.IdempotencyStore
     summary: Store request results keyed by an idempotency key with TTL semantics so retries are safe.
+    example: "Input: put(K, R) with a 5-minute TTL. A retry of K returns R. After the TTL, K runs again."
     whenToUse: Safe POST retries in payment-like APIs, where re-sending a request must not duplicate a
       side effect.
     timeComplexity: O(1)
     spaceComplexity: O(n)
     hints:
-    - "What fails first when a second instance, a retry, or a restart shows up?"
-    - "Name the shared state and the lock, transaction, or key that keeps one side effect from running twice."
+    - "What must a retry see, and what must it not do?"
+    - "A key remembers the result and an expiry; inside the TTL the stored result is returned instead of running the side effect again."
     - "Store (result, expiryTimestamp) pairs keyed by the client-supplied idempotency key. On a repeated key within the TTL window, return the stored result instead of re-executing the operation."
     tags:
     - spring
@@ -4326,8 +4358,8 @@ patterns:
     timeComplexity: O(1)
     spaceComplexity: O(1)
     hints:
-    - "What fails first when a second instance, a retry, or a restart shows up?"
-    - "Name the shared state and the lock, transaction, or key that keeps one side effect from running twice."
+    - "What state are you in after too many failures, and what is allowed after the timeout?"
+    - "Closed counts failures, open fails fast, and after the timeout one trial is half-open."
     - "Trip open after N failures After timeout allow trial in HALF_OPEN"
     tags:
     - spring
@@ -4342,12 +4374,13 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.spring.HttpResponseCache
     summary: TTL cache for idempotent GET responses with capacity eviction.
+    example: "Input: cache GET /a as B for 30s. A second GET inside 30s returns B. After expiry the entry is gone."
     whenToUse: Cache-aside for read-heavy REST endpoints.
     timeComplexity: O(1)
     spaceComplexity: O(capacity)
     hints:
-    - "What fails first when a second instance, a retry, or a restart shows up?"
-    - "Name the shared state and the lock, transaction, or key that keeps one side effect from running twice."
+    - "What makes a cached response unusable even if it is still the newest?"
+    - "An entry is a body plus an expiry; a get drops it when the expiry has passed, and a full cache drops the least recent."
     - "Store expiry timestamp Evict expired on get; LRU when full"
     tags:
     - spring
@@ -4367,8 +4400,8 @@ patterns:
     timeComplexity: O(1)
     spaceComplexity: O(n)
     hints:
-    - "What fails first when a second instance, a retry, or a restart shows up?"
-    - "Name the shared state and the lock, transaction, or key that keeps one side effect from running twice."
+    - "What do you return when the key was never written?"
+    - "The map is the whole store, and a missing key returns the caller-supplied default."
     - "ConcurrentHashMap under the hood getOrDefault for missing keys"
     tags:
     - spring
@@ -4383,13 +4416,14 @@ patterns:
     className: com.algoprep.patterns.spring.RequestIdFilter
     summary: Generate or propagate an X-Request-Id per inbound request and expose it to downstream calls
       and logs.
+    example: "Input: a request with no X-Request-Id gets a new id. A request that already has one keeps it."
     whenToUse: Every request needs a stable correlation id for tracing across services, whether or not
       the caller already supplied one.
     timeComplexity: O(1)
     spaceComplexity: O(1)
     hints:
-    - "What fails first when a second instance, a retry, or a restart shows up?"
-    - "Name the shared state and the lock, transaction, or key that keeps one side effect from running twice."
+    - "When is the incoming header the id, and when do you mint one?"
+    - "A non-blank incoming id is kept; otherwise a new id is generated and stored for this request."
     - "If the incoming header is present and non-blank, reuse it; otherwise generate a new id. Store the resolved id somewhere request-scoped (here, a simple holder) so later code can read it without re-threading a parameter."
     tags:
     - spring
@@ -4405,13 +4439,14 @@ patterns:
     className: com.algoprep.patterns.spring.TransactionalOutbox
     summary: In-memory outbox queue that enqueues events with a DB write and publishes only the ones that
       are due.
+    example: "Input: enqueue writes PENDING. publishDue sends only rows whose time has come, then marks them sent."
     whenToUse: Reliably publish an event after a transactional write without a distributed transaction,
       by writing the event to an outbox table/queue in the same transaction and publishing it separately.
     timeComplexity: O(n) per publishDue call
     spaceComplexity: O(n)
     hints:
-    - "What fails first when a second instance, a retry, or a restart shows up?"
-    - "Name the shared state and the lock, transaction, or key that keeps one side effect from running twice."
+    - "What is stored instead of publishing immediately?"
+    - "A row is pending until its time, and publishDue sends only the rows that are due, then marks them sent."
     - "Enqueue stores the event with a status and an eligible-at timestamp instead of publishing immediately. publishDue scans for PENDING events that are eligible now, hands each to the publisher, then marks it PUBLISHED (or leaves it PENDING to retry if the publisher throws)."
     tags:
     - spring
@@ -4427,13 +4462,14 @@ patterns:
     difficulty: MEDIUM
     className: com.algoprep.patterns.spring.OptimisticLockService
     summary: Versioned record update that fails when the caller's expected version is stale.
+    example: "Input: an update carrying version 3 succeeds and becomes 4. A second update still carrying 3 is rejected."
     whenToUse: Concurrent updates to the same row without taking a database lock, analogous to a JPA @Version
       column and OptimisticLockException.
     timeComplexity: O(1)
     spaceComplexity: O(n)
     hints:
-    - "What fails first when a second instance, a retry, or a restart shows up?"
-    - "Name the shared state and the lock, transaction, or key that keeps one side effect from running twice."
+    - "What proves your update is still about the record you read?"
+    - "The stored version must equal the version you send; success increments it, and a mismatch is a conflict."
     - "Store a version number alongside each record's value; every successful update increments it. Reject an update whose expected version does not match the stored version instead of overwriting silently."
     tags:
     - spring
@@ -4449,13 +4485,14 @@ patterns:
     difficulty: HARD
     className: com.algoprep.patterns.spring.ConcurrentLoginTracker
     summary: Track active sessions per user and enforce a maximum number of concurrent logins.
+    example: "Input: limit 2. The third login in this process drops the oldest session. Another instance never sees that set."
     whenToUse: 'Enforce a "max N devices logged in" policy: a new login should either be rejected or evict
       the oldest session, depending on policy, once the per-user limit is reached.'
     timeComplexity: O(1) amortized per login/logout
     spaceComplexity: O(active sessions)
     hints:
-    - "What fails first when a second instance, a retry, or a restart shows up?"
-    - "Name the shared state and the lock, transaction, or key that keeps one side effect from running twice."
+    - "Which session is the one to drop when this user is already at the limit?"
+    - "This process remembers active sessions in order, and a login past the limit removes the oldest one here only."
     - "Keep an ordered per-user collection of active session ids so the oldest session is easy to find. On a new login past the limit, either reject it or evict-and-replace the oldest session depending on the configured policy; make eviction and insertion atomic under one lock per user."
     tags:
     - spring
@@ -4471,14 +4508,15 @@ patterns:
     className: com.algoprep.patterns.spring.SqlInjectionSafeQuery
     summary: Build parameterized query placeholders from a column-to-value map, validating identifiers
       instead of concatenating raw input.
+    example: "Input: buildSelect(\"users\", {id: 7}) binds 7. A column name that is not a plain identifier is rejected."
     whenToUse: Discuss/implement how a repository layer builds dynamic WHERE clauses safely - validate
       column names against an allow-list and always bind values as parameters, never string-concatenate
       them into SQL.
     timeComplexity: O(n) in the number of columns
     spaceComplexity: O(n)
     hints:
-    - "What fails first when a second instance, a retry, or a restart shows up?"
-    - "Name the shared state and the lock, transaction, or key that keeps one side effect from running twice."
+    - "What part of the statement is allowed to be text, and what part must be a bound value?"
+    - "Identifiers are checked against a plain-name rule before they are written into SQL, and values are parameters."
     - "Validate every identifier (column name) against an allow-list pattern before using it in the generated SQL text. Never inline the value itself - always emit a `?` placeholder and return the value list separately for a PreparedStatement to bind."
     tags:
     - spring

@@ -33,7 +33,11 @@ class CourseControllerTest {
                 .andExpect(jsonPath("$.patterns[0].easyCount").value(greaterThanOrEqualTo(0)))
                 .andExpect(jsonPath("$.patterns[0].mediumCount").value(greaterThanOrEqualTo(0)))
                 .andExpect(jsonPath("$.patterns[0].hardCount").value(greaterThanOrEqualTo(0)))
-                .andExpect(jsonPath("$.weeks", hasSize(0)))
+                .andExpect(jsonPath("$.weeks", hasSize(4)))
+                .andExpect(jsonPath("$.weeks[0].week").value(1))
+                .andExpect(jsonPath("$.weeks[0].title").value("Hash maps, two pointers, windows, lists"))
+                .andExpect(jsonPath("$.weeks[0].patternIds[0]").value("HASH_MAPS"))
+                .andExpect(jsonPath("$.weeks[3].patternIds[10]").value("SPRING_BOOT_INTERVIEW"))
                 .andExpect(jsonPath("$.language").value("en"));
     }
 
@@ -69,6 +73,18 @@ class CourseControllerTest {
                 .andExpect(jsonPath("$.title").value("Два указателя"))
                 .andExpect(jsonPath("$.problems", hasSize(greaterThanOrEqualTo(5))))
                 .andExpect(jsonPath("$.walkthrough").isNotEmpty());
+        mockMvc.perform(get("/api/v1/course").param("lang", "ru"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.weeks[0].title").value("Хеш-таблицы, два указателя, окна, списки"));
+        mockMvc.perform(get("/api/v1/course/patterns/TWO_HEAPS/problems/static-median").param("lang", "ru"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.summary").value("Медиана неотсортированного массива через две кучи."));
+        mockMvc.perform(get("/api/v1/course/patterns/TWO_POINTERS/problems/quadruple-sum").param("lang", "ru"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.walkthroughAscii", org.hamcrest.Matchers.containsString("Результат")));
+        mockMvc.perform(get("/api/v1/course/walkthroughs/maximum-gap").param("lang", "es"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.walkthroughAscii", org.hamcrest.Matchers.containsString("respuesta")));
     }
 
     @Test
@@ -76,6 +92,12 @@ class CourseControllerTest {
         mockMvc.perform(get("/api/v1/course/patterns/TWO_POINTERS").param("lang", "es"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.title").value("Dos punteros"));
+        mockMvc.perform(get("/api/v1/course").param("lang", "es"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.weeks[0].title").value("Mapas hash, dos punteros, ventanas, listas"));
+        mockMvc.perform(get("/api/v1/course/patterns/HASH_MAPS/problems/two-sum").param("lang", "es"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.title").value("Suma de dos"));
     }
 
     @Test

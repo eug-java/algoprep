@@ -164,6 +164,13 @@ class JudgeServiceTest {
                     }
                 }
                 """);
+        judgeOk("maximum-gap", "KNOWING_WHAT_TO_TRACK", """
+                public class Solution {
+                    public int maximumGap(int[] nums) {
+                        return com.algoprep.patterns.tracking.MaximumGap.maximumGap(nums);
+                    }
+                }
+                """);
         judgeOk("employee-free-time", "CHALLENGE", """
                 import java.util.*;
                 public class Solution {

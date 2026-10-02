@@ -87,7 +87,11 @@ export async function renderChallenge(id) {
   document.getElementById('btn-hints').onclick = () => {
     if (!challengeHints.length) return;
     challengeHintCount = Math.min(challengeHints.length, challengeHintCount + 1);
-    const items = challengeHints.slice(0, challengeHintCount).map((h) => `<li>${escapeHtml(h)}</li>`).join('');
+    const stageKeys = ['problem.hint.notice', 'problem.hint.invariant', 'problem.hint.move'];
+    const items = challengeHints.slice(0, challengeHintCount).map((h, i) => {
+      const label = stageKeys[i] ? t(stageKeys[i]) : t('problem.hints');
+      return `<li><span class="hint-stage">${escapeHtml(label)}</span> ${escapeHtml(h)}</li>`;
+    }).join('');
     const more = challengeHintCount < challengeHints.length ? `<p class="meta-mini">${escapeHtml(t('problem.nextHint'))}</p>` : '';
     extra.innerHTML = `<div class="panel"><h3>${escapeHtml(t('problem.hints'))}</h3><ul class="bullet-list">${items}</ul>${more}</div>`;
   };

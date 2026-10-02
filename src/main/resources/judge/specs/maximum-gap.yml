@@ -1,0 +1,12 @@
+className: Solution
+method: maximumGap
+params: [int[]]
+returns: int
+referenceClass: com.algoprep.patterns.tracking.MaximumGap
+referenceMethod: maximumGap
+referenceStatic: true
+cases:
+  - name: classic
+    args: [[3, 6, 9, 1]]
+  - name: wide-gap
+    args: [[1, 10000000]]

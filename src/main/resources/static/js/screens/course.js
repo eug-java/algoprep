@@ -44,6 +44,28 @@ import {
   resetProgress,
 } from '../shared.js';
 
+function weekStrip(overview) {
+  const weeks = overview.weeks || [];
+  if (!weeks.length) return '';
+  const titles = Object.fromEntries((overview.patterns || []).map((pattern) => [pattern.id, pattern.title]));
+  return `
+    <section class="week-strip-wrap">
+      <h2>${escapeHtml(t('home.weeks'))}</h2>
+      <div class="week-strip">
+        ${weeks.map((week) => `
+          <article class="week-card">
+            <h3>${escapeHtml(t('week.label', { n: week.week }))}</h3>
+            <p>${escapeHtml(week.title || '')}</p>
+            <div class="week-links">
+              ${(week.patternIds || []).map((id) => `<a href="#/patterns/${escapeHtml(id)}" data-link>${escapeHtml(titles[id] || id)}</a>`).join('')}
+            </div>
+          </article>
+        `).join('')}
+      </div>
+    </section>
+  `;
+}
+
 export async function renderHome() {
   await ensureTotals();
   const overview = await api.overview();
@@ -80,6 +102,7 @@ export async function renderHome() {
         </div>
       </div>
     </section>
+    ${weekStrip(overview)}
     <div class="home-grid">
       <a class="home-tile" href="#/plans" data-link><h3>${escapeHtml(t('nav.plans'))}</h3><p>${escapeHtml(t('plans.lede'))}</p></a>
       <a class="home-tile" href="#/skills" data-link><h3>${escapeHtml(t('nav.skills'))}</h3><p>${escapeHtml(t('skills.lede'))}</p></a>

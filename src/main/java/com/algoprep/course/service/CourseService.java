@@ -11,6 +11,7 @@ import com.algoprep.course.model.PatternMeta;
 import com.algoprep.course.model.ProblemMeta;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.EnumMap;
 import java.util.LinkedHashMap;
@@ -27,7 +28,7 @@ public class CourseService {
     private final ChallengeCatalogLoader challengeLoader;
     private final CourseCatalogLoader.CatalogDocument baseCatalog;
     private final List<ChallengeCatalogLoader.ChallengeItem> baseChallenges;
-    private final Map<String, String> walkthroughs;
+    private final Map<CourseLocale, Map<String, String>> walkthroughs;
     private final Map<CourseLocale, LocalizedBundle> cache = new ConcurrentHashMap<>();
 
     public CourseService(
@@ -39,7 +40,10 @@ public class CourseService {
         this.challengeLoader = challengeLoader;
         this.baseCatalog = catalogLoader.loadBase();
         this.baseChallenges = challengeLoader.loadItems();
-        this.walkthroughs = catalogLoader.loadWalkthroughs();
+        this.walkthroughs = new EnumMap<>(CourseLocale.class);
+        for (CourseLocale locale : CourseLocale.values()) {
+            this.walkthroughs.put(locale, catalogLoader.loadWalkthroughs(locale.code()));
+        }
     }
 
     public CourseOverview overview(CourseLocale locale) {
@@ -68,6 +72,17 @@ public class CourseService {
         int hardCount = summaries.stream().mapToInt(CourseOverview.PatternSummary::hardCount).sum()
                 + bundle.challenges().size();
 
+        Map<Integer, List<PatternId>> byWeek = new LinkedHashMap<>();
+        for (CourseOverview.PatternSummary summary : summaries) {
+            byWeek.computeIfAbsent(summary.week(), ignored -> new ArrayList<>()).add(summary.id());
+        }
+        List<CourseOverview.WeekSummary> weeks = byWeek.entrySet().stream()
+                .map(entry -> new CourseOverview.WeekSummary(
+                        entry.getKey(),
+                        bundle.weekTitle(entry.getKey()),
+                        List.copyOf(entry.getValue())))
+                .toList();
+
         return new CourseOverview(
                 properties.title(),
                 locale.code(),
@@ -78,7 +93,7 @@ public class CourseService {
                 easyCount,
                 mediumCount,
                 hardCount,
-                List.of(),
+                weeks,
                 summaries
         );
     }
@@ -111,23 +126,32 @@ public class CourseService {
     public Optional<ProblemMeta> getProblem(CourseLocale locale, PatternId patternId, String problemId) {
         return getPattern(locale, patternId)
                 .flatMap(p -> p.problems().stream().filter(pr -> pr.id().equals(problemId)).findFirst())
-                .map(this::attachWalkthrough);
+                .map(problem -> attachWalkthrough(locale, problem));
     }
 
-    public Optional<String> getWalkthrough(String problemId) {
-        String text = walkthroughs.get(problemId);
+    public Optional<String> getWalkthrough(CourseLocale locale, String problemId) {
+        String text = walkthroughText(locale, problemId);
         if (text == null || text.isBlank()) {
             return Optional.empty();
         }
         return Optional.of(text);
     }
 
-    private ProblemMeta attachWalkthrough(ProblemMeta problem) {
-        String ascii = walkthroughs.get(problem.id());
+    private ProblemMeta attachWalkthrough(CourseLocale locale, ProblemMeta problem) {
+        String ascii = walkthroughText(locale, problem.id());
         if (ascii == null || ascii.isBlank()) {
             return problem;
         }
         return problem.withWalkthroughAscii(ascii);
+    }
+
+    private String walkthroughText(CourseLocale locale, String problemId) {
+        Map<String, String> localized = walkthroughs.getOrDefault(locale, Map.of());
+        String text = localized.get(problemId);
+        if (text == null || text.isBlank()) {
+            text = walkthroughs.getOrDefault(CourseLocale.EN, Map.of()).get(problemId);
+        }
+        return text;
     }
 
     public List<ChallengeMeta> listChallenges(CourseLocale locale) {

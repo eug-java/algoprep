@@ -207,10 +207,29 @@ public class CourseCatalogLoader {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public Map<String, String> loadWalkthroughs() {
+        return loadWalkthroughs("en");
+    }
+
+    public Map<String, String> loadWalkthroughs(String localeCode) {
+        Map<String, String> base = readWalkthroughs("course/walkthroughs.yml");
+        if (localeCode == null || localeCode.isBlank() || "en".equals(localeCode)) {
+            return base;
+        }
+        Map<String, String> merged = new java.util.LinkedHashMap<>(base);
+        readWalkthroughs("course/i18n/" + localeCode + "/walkthroughs.yml")
+                .forEach((key, value) -> {
+                    if (value != null && !value.isBlank()) {
+                        merged.put(key, value);
+                    }
+                });
+        return merged;
+    }
+
+    @SuppressWarnings("unchecked")
+    private Map<String, String> readWalkthroughs(String path) {
         try {
-            Map<String, Object> doc = read("course/walkthroughs.yml", Map.class);
+            Map<String, Object> doc = read(path, Map.class);
             Map<String, String> out = new java.util.LinkedHashMap<>();
             if (doc != null) {
                 doc.forEach((k, v) -> {

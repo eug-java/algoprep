@@ -27,6 +27,7 @@
   "home.cta.challenge": "Blind Spot",
   "home.cta.cheatsheet": "Шпаргалка распознавания",
   "home.stats": "{patterns} паттернов · {problems} задач · микс Easy/Medium/Hard · Spring Boot lab.",
+  "home.weeks": "Маршрут на четыре недели",
   "patterns.title": "Паттерны",
   "patterns.lede": "Каждый модуль — переиспользуемая стратегия. Сначала признаки, потом практика.",
   "patterns.modules": "{n} модулей",

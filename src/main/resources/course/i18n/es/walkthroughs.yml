@@ -1,0 +1,340 @@
+# Recorridos de los problemas difíciles. Los números coinciden con la traza en inglés.
+"quadruple-sum": |
+  nums = [1, 0, -1, 0, -2, 2], objetivo = 0
+  ordenar -> [-2, -1, 0, 0, 1, 2]
+
+  i=0 (-2), j=1 (-1)
+    L=2 (0), R=5 (2)
+    suma=-2-1+0+2=-1 < 0 -> L++
+    L=3 (0), R=5 (2)
+    suma=-2-1+0+2=-1 < 0 -> L++
+    L=4 (1), R=5 (2)
+    suma=-2-1+1+2=0  ok  [-2,-1,1,2]
+
+  Se saltan los pares duplicados; i y j avanzan igual.
+  Resultado: [[-2,-1,1,2],[-2,0,0,2],[-1,0,0,1]]
+
+"min-window-substring": |
+  s = "ADOBECODEBANC", t = "ABC"
+  falta = {A:1, B:1, C:1}, pendientes = 3
+
+  se expande R:
+    A D O B E C ...  -> ya hay A,B,C; pendientes=0
+    ventana "ADOBEC" (0..5)
+
+  se encoge L mientras sea válida:
+    se suelta A -> pendientes=1; la mejor sigue con longitud 6
+  sigue...
+    más adelante "BANC" (9..12) longitud 4  MEJOR
+
+  Respuesta: "BANC"
+
+"minimum-meeting-rooms": |
+  reuniones: [0,30], [5,10], [15,20]
+  inicios: 0, 5, 15
+  fines:   10, 20, 30
+
+  barrido i/j:
+    0 inicio -> salas=1 (máx=1)
+    5 inicio -> salas=2 (máx=2)
+   10 fin    -> salas=1
+   15 inicio -> salas=2 (máx=2)
+   20 fin    -> salas=1
+   30 fin    -> salas=0
+
+  Respuesta: 2
+
+"merge-k-sorted-lists": |
+  listas: [1,4,5], [1,3,4], [2,6]
+  semilla del min-heap: (1,a0), (1,b0), (2,c0)
+
+  sale 1(a) -> entra el siguiente 4(a)
+  sale 1(b) -> entra el siguiente 3(b)
+  sale 2(c) -> entra el siguiente 6(c)
+  sale 3(b) -> entra el siguiente 4(b)
+  ...
+  salida: 1 -> 1 -> 2 -> 3 -> 4 -> 4 -> 5 -> 6
+
+"n-queens": |
+  tablero n=4, se coloca fila por fila
+
+  fila0: prueba columnas 0..3
+    coloca (0,1)
+  fila1: ¿atacan 0,1,2? prueba columna 3
+    coloca (1,3)
+  fila2: prueba columna 0
+    coloca (2,0)
+  fila3: prueba columna 2
+    coloca (3,2)  SOLUCIÓN
+
+  Retrocede cuando no queda una columna segura.
+
+"edit-distance": |
+  palabra1="horse", palabra2="ros"
+
+  tabla dp (filas=horse, columnas=ros):
+       ''  r  o  s
+  ''    0  1  2  3
+  h     1  1  2  3
+  o     2  2  1  2
+  r     3  2  2  2
+  s     4  3  3  2
+  e     5  4  4  3
+
+  dp[i][j] = mínimo de reemplazar, insertar o borrar
+  Respuesta: 3  (horse -> rorse -> rose -> ros)
+
+"alien-dictionary-order": |
+  palabras: ["wrt","wrf","er","ett","rftt"]
+
+  aristas de pares vecinos:
+    t -> f   (wrt < wrf)
+    w -> e   (wrf < er)
+    r -> t   (er < ett)
+    e -> r   (ett < rftt)
+
+  orden topológico de Kahn:
+    grado de entrada: w0 e1 r1 t1 f1
+    orden: w -> e -> r -> t -> f
+  Respuesta: "wertf"
+
+"max-path-sum": |
+  árbol (raíz=-10, izq=9, der=20, der.izq=15, der.der=7)
+
+  ganancia(nodo) = nodo + max(0, ganancia(L), ganancia(R))
+  camino por el nodo = nodo + max(0,L) + max(0,R)
+
+  hoja 15 -> 15, hoja 7 -> 7
+  20: por el nodo=20+15+7=42  MEJOR
+  raíz: por el nodo=-10+9+20 = 19 < 42
+
+  Respuesta: 42
+
+"lru-cache": |
+  capacidad=2
+  put(1,a)  mapa{1}  lista: 1
+  put(2,b)  mapa{1,2} lista: 2-1
+  get(1)    sube 1      lista: 1-2
+  put(3,c)  expulsa 2   lista: 3-1
+  get(2)    -1
+  put(4,d)  expulsa 1   lista: 4-3
+  get(1)    -1
+  get(3)    c
+  get(4)    d
+
+"sudoku-solver": |
+  Busca la primera celda vacía (r,c)
+  Prueba el dígito 1..9 si fila, columna y caja están libres:
+    tablero[r][c]=d
+    recursión
+    si falla: tablero[r][c]='.'  (deshacer)
+  Sin celdas vacías -> resuelto
+
+  Índice de la caja = (r/3)*3 + (c/3)
+
+"word-search-ii": |
+  palabras=["oath","pea","eat","rain"]
+  las filas del tablero comparten un trie
+
+  DFS desde cada celda:
+    pasa al hijo del trie
+    si el nodo tiene palabra: se recoge y se borra (sin duplicar)
+    marca '#' , explora 4 direcciones, restaura
+
+  Se podan las ramas vacías del trie tras cada hallazgo.
+  Respuesta: ["oath","eat"]
+
+"first-missing-positive": |
+  nums = [3,4,-1,1]  n=4
+  cada x del rango va al índice x-1:
+
+  i=0: 3 -> intercambio con nums[2] => [-1,4,3,1]
+  i=1: 4 -> intercambio con nums[3] => [-1,1,3,4]
+       1 -> intercambio con nums[0] => [1,-1,3,4]
+  i=2,3 ya están en su sitio
+
+  barrido: el índice 1 tiene -1, no 2
+  Respuesta: 2
+
+"find-median-stream": |
+  flujo: 1, 2, 3
+  maxHeap (bajos) | minHeap (altos)
+
+  +1 -> bajos:[1]              mediana=1
+  +2 -> bajos:[1] altos:[2]    mediana=(1+2)/2
+  +3 -> bajos:[1,2] altos:[3]  reequilibrio; mediana=2
+
+  Siempre |bajos| == |altos| o |bajos| == |altos|+1
+
+"reorder-list": |
+  1 -> 2 -> 3 -> 4 -> 5
+
+  medio (slow/fast se detienen en 3)
+  corte tras el medio: primera = 1->2->3 , segunda = 4->5
+  se invierte solo la segunda: 5 -> 4
+  se entrelaza la primera con la segunda invertida:
+    1 -> 5 -> 2 -> 4 -> 3
+
+"critical-connections": |
+  puentes del grafo con descubrimiento y lowlink (Tarjan)
+
+  dfs(u):
+    disc[u]=low[u]=tiempo++
+    para v en vecinos de u:
+      si no se visitó: es el padre, recursión
+        low[u]=min(low[u], low[v])
+        si low[v] > disc[u]: (u,v) es puente
+      si no, y v no es el padre:
+        low[u]=min(low[u], disc[v])
+
+"basic-calculator": |
+  s = "(1+(4+5+2)-3)+(6+8)"
+  la pila guarda la suma y el signo anteriores al '('
+
+  num=0, signo=+1, acum=0
+  '(': apila acum y signo; reinicia
+  ')': acum = signo_sacado*acum + suma_sacada
+  dígito: arma num; en un operador aplica signo*num
+
+  Respuesta: 23
+
+"vertical-order": |
+  raíz=3, izq=9, der=20, der.izq=15, der.der=7
+
+  BFS, la cola lleva (nodo, columna)
+  mapa de columnas:
+    -1: [9]
+     0: [3,15]
+     1: [20]
+     2: [7]
+
+  se emiten las columnas de izquierda a derecha
+  Respuesta: [[9],[3,15],[20],[7]]
+
+"count-smaller-after-self": |
+  nums = [5,2,6,1]
+  merge-sort cuenta inversiones a la derecha
+
+  al fusionar, cuando se toma de la mitad derecha,
+  cada elemento que queda a la izquierda gana +1 menor-después
+
+  por índices: [2,1,1,0]
+
+"lfu-cache": |
+  capacidad=2
+  put(1,a) frecuencia 1
+  put(2,b) frecuencia 1
+  get(1)   frecuencia 2  (1 es más frecuente)
+  put(3,c) expulsa 2 (el menos frecuente entre frecuencia 1)
+  get(2)   -1
+  get(3)   c
+
+  mapas: clave->nodo, frecuencia->lista LRU, frecuencia mínima
+
+"shortest-path-binary-matrix": |
+  rejilla: 0 abierto, 1 bloqueado, BFS en 8 direcciones
+  inicio (0,0) si está abierto
+
+  cola con distancia=1; se marca visitado
+  se expanden 8 vecinos; el primer alcance de (n-1,n-1) es el más corto
+
+  inicio o fin bloqueado -> -1
+
+"candy": |
+  valoraciones = [1,0,2]
+  pasada izquierda: quien es mayor que el vecino izquierdo recibe más
+    caramelos: [1,1,2]
+  pasada derecha: también frente al vecino derecho
+    caramelos: [2,1,2]
+  suma = 5
+
+"circular-array-loop": |
+  nums = [2, -1, 1, 2, 2]
+  lento y rápido se quedan en la misma dirección
+  índice 0 -> 2 -> 3 -> 0 es un ciclo hacia adelante
+  un cambio de signo significa que este inicio no es un bucle
+
+"maximize-capital": |
+  proyectos: capital [0,1,1], beneficios [1,2,3], k=2, w=0
+  min-heap por capital, max-heap de beneficios alcanzables
+  con w=0 se toma el beneficio 1 -> w=1
+  con w=1 se toma el beneficio 3 -> w=4
+
+"sliding-window-median": |
+  nums = [1,3,-1,-3,5,3,6,7], k=3
+  dos montículos mantienen la ventana ordenada
+  ventana [1,3,-1], mediana 1
+  deslizar: sale 1, entra -3 -> mediana -1
+  se reequilibra para que los montículos difieran como mucho en uno
+
+"smallest-range": |
+  listas [4,10,15,24,26] [0,9,12,20] [5,18,22,30]
+  montículo de cabezas actuales: 0,4,5  rango 0..5
+  avanza la lista dueña del mínimo
+  siguientes cabezas 4,5,9  rango 4..9 peor
+  el mejor sigue en 0..5 hasta que aparezca uno más estrecho (20..24)
+
+"reorganize-string": |
+  s = aab
+  max-heap por cuenta: a2, b1
+  se coloca a, luego la otra letra b, luego a
+  resulta aba
+  si la letra de arriba pasa de (n+1)/2, la respuesta es vacía
+
+"search-rotated-duplicates": |
+  nums = [2,5,6,0,0,1,2], objetivo 0
+  ambos extremos igualan al medio, no se sabe qué mitad está ordenada
+  se encogen ambos extremos en uno y se busca otra vez
+  después vale el descarte normal de un arreglo rotado
+
+"unique-permutations": |
+  nums = [1,1,2]
+  primero se ordena
+  se elige 1 y, a la misma profundidad, se salta el 1 duplicado
+  ramas: 1,1,2 y 1,2,1 y 2,1,1
+
+"four-sum-ii": |
+  A=B=C=D = [1,2] [-2,-1] [-1,2] [0,2]
+  cada A[i]+B[j] entra en un mapa de cuentas
+  por cada C[k]+D[l] se suma la cuenta de la negación
+  respuesta 2
+
+"number-of-islands-ii": |
+  las celdas de tierra se añaden de una en una
+  cada celda nueva es su propio componente
+  se une con un vecino que ya sea tierra (4 direcciones)
+  la respuesta tras cada alta es el número de componentes
+
+"bitwise-and-range": |
+  left=5 (101), right=7 (111)
+  el AND del rango conserva solo el prefijo común
+  se desplaza hasta left==right y luego se devuelve el prefijo
+  5&6&7 = 4
+
+"max-points-on-a-line": |
+  puntos (1,1) (2,2) (3,3)
+  desde (1,1) la pendiente hacia los otros dos es 1/1
+  la misma pendiente reducida es la misma recta
+  las verticales van a un cubo aparte, no a una fracción
+
+"circuit-breaker": |
+  cerrado: fallos 0
+  la llamada falla, fallos 1
+  umbral 2 -> abierto
+  mientras está abierto, las llamadas fallan al instante
+  tras la pausa, un intento queda semiabierto
+  el éxito cierra; otro fallo vuelve a abrir
+
+"concurrent-login-tracker": |
+  login(user) anota la sesión en este proceso
+  otra instancia no ve ese conjunto
+  el conteo en memoria se queda corto en cuanto el tráfico se reparte
+
+"maximum-gap": |
+  nums = [3, 6, 9, 1]
+  min=1 max=9 n=4
+  ancho del cubo = (9-1)/(4-1) = 2
+  cubos: [1,3) [3,5) [5,7) [7,9]
+  ocupados: 1 | 3 | 6 | 9
+  saltos entre vecinos: 3-1=2, 6-3=3, 9-6=3
+  respuesta 3

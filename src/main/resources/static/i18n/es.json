@@ -27,6 +27,7 @@
   "home.cta.challenge": "Blind Spot",
   "home.cta.cheatsheet": "Hoja de reconocimiento",
   "home.stats": "{patterns} patrones · {problems} problemas · mix Easy/Medium/Hard · lab Spring Boot.",
+  "home.weeks": "Ruta de cuatro semanas",
   "patterns.title": "Patrones",
   "patterns.lede": "Cada módulo es una estrategia reutilizable. Aprende las señales y luego practica.",
   "patterns.modules": "{n} módulos",

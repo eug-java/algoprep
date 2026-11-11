@@ -91,6 +91,22 @@ test.describe('AlgoPrep smoke', () => {
     await expect(page.locator('#btn-run')).toHaveCount(0);
   });
 
+  test('daily shows one problem of each difficulty', async ({ page }) => {
+    await openApp(page, '/#/daily');
+    await expect(page.locator('.badge.easy')).toHaveCount(1, { timeout: 15_000 });
+    await expect(page.locator('.badge.medium')).toHaveCount(1);
+    await expect(page.locator('.badge.hard')).toHaveCount(1);
+  });
+
+  test('marking done does not put a card on review', async ({ page }) => {
+    await openApp(page, '/#/patterns/HASH_MAPS/problems/two-sum');
+    await page.getByRole('button', { name: 'Mark done' }).click();
+    await openApp(page, '/#/review');
+    await expect(page.getByText('Nothing due — keep solving and check back later.')).toBeVisible({
+      timeout: 15_000,
+    });
+  });
+
   test('plans and report routes render', async ({ page }) => {
     await openApp(page, '/#/plans');
     await expect(page.getByRole('heading').first()).toBeVisible({ timeout: 15_000 });

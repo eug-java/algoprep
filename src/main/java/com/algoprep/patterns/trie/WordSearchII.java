@@ -12,7 +12,14 @@ public final class WordSearchII {
     for (int r = 0; r < board.length; r++) for (int c = 0; c < board[r].length; c++) search(board, r, c, root, result);
     return result;
   }
-  private static void insert(Node root, String word) { for (char ch : word.toCharArray()) { int i = ch - 'a'; if (root.next[i] == null) root.next[i] = new Node(); root = root.next[i]; } root.word = word; }
+  private static void insert(Node root, String word) {
+    for (char ch : word.toCharArray()) {
+      int i = ch - 'a';
+      if (root.next[i] == null) root.next[i] = new Node();
+      root = root.next[i];
+    }
+    root.word = word;
+  }
   private static void search(char[][] b, int r, int c, Node node, List<String> out) {
     if (r < 0 || r == b.length || c < 0 || c == b[r].length || b[r][c] == '#') return;
     node = node.next[b[r][c] - 'a']; if (node == null) return;

@@ -8,3 +8,6 @@ referenceStatic: true
 cases:
   - name: case1
     args: [-1]
+  - name: eleven
+    args: [11]
+    expected: 3

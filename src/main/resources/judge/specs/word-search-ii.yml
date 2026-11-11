@@ -8,3 +8,6 @@ referenceStatic: true
 cases:
   - name: words
     args: [[oaan, etae, ihkr, iflv], [oath, pea, eat, rain]]
+  - name: duplicate-word
+    args: [[a], [a, a]]
+    expected: [a]

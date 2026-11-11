@@ -8,3 +8,6 @@ referenceStatic: true
 cases:
   - name: case1
     args: [43261596]
+  - name: high-bit
+    args: [-2147483648]
+    expected: 1

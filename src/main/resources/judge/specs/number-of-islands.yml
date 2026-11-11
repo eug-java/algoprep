@@ -6,3 +6,9 @@ cases:
   - name: separate-islands
     args: [["11000", "11000", "00100", "00011"]]
     expected: 3
+  - name: compact
+    args: [["1100", "1001", "0011"]]
+    expected: 2
+  - name: empty
+    args: [[]]
+    expected: 0

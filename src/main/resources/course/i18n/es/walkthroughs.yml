@@ -1,4 +1,4 @@
-# Recorridos de los problemas difíciles. Los números coinciden con la traza en inglés.
+# Recorrido de cada problema del catálogo. En los difíciles, los números coinciden con la traza en inglés.
 "quadruple-sum": |
   nums = [1, 0, -1, 0, -2, 2], objetivo = 0
   ordenar -> [-2, -1, 0, 0, 1, 2]
@@ -487,3 +487,427 @@
   Ejemplo: Entrada: una petición sin X-Request-Id recibe un id nuevo. Una petición que ya lo trae lo conserva.
   Invariante: Un id entrante no vacío se conserva; si no, se genera uno nuevo y se guarda para esta petición.
   Comprueba el ejemplo a mano contra ese invariante antes de escribir el bucle.
+"triplet-sum-zero": |
+  Ejemplo: Entrada: [-3, 0, 1, 2, -1, 1, -2] → [[-3, 1, 2], [-2, 0, 2], [-2, 1, 1], [-1, 0, 1]]
+  Invariante: Para un ancla fija, el par válido sigue a su derecha.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"container-with-most-water": |
+  Ejemplo: Entrada: [1, 8, 6, 2, 5, 4, 8, 3, 7] → 49
+  Invariante: La mejor área es al menos tan grande como cualquier recipiente que aún use el lado corto que vas a abandonar.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"dutch-national-flag": |
+  Ejemplo: Entrada: [1, 0, 2, 1, 0] → [0, 0, 1, 1, 2]
+  Invariante: Todo antes de low es 0, todo después de high es 2, y mid es el primer índice sin clasificar.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"cycle-start": |
+  Ejemplo: Entrada: 1 → 2 → (vuelve a 2) → 2
+  Invariante: Al devolver uno a la cabeza y avanzar ambos de uno en uno, se encuentran en la entrada del ciclo.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"palindrome-linked-list": |
+  Ejemplo: Entrada: 1 → 2 → 2 → 1 → true
+  Invariante: La primera mitad se queda; la segunda invertida se alinea con ella de fuera hacia dentro.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"longest-substring-k-distinct": |
+  Ejemplo: Entrada: \"araaci\", 2 → 4
+  Invariante: La ventana es válida exactamente mientras su mapa tiene como máximo K claves.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"find-all-anagrams": |
+  Ejemplo: Entrada: \"cbaebabacd\", \"abc\" → [0, 6]
+  Invariante: Una ventana de la longitud del patrón coincide cuando sus conteos igualan los del patrón.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"longest-no-repeat": |
+  Ejemplo: Entrada: "aabccbb" → 3
+  Invariante: Left queda justo después de la copia anterior del carácter de la derecha; la respuesta es la brecha más ancha.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"merge-intervals": |
+  Ejemplo: Entrada: [[2, 5], [1, 3], [7, 9]] → [[1, 5], [7, 9]]
+  Invariante: Solo el último intervalo fusionado puede solaparse con el que miras.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"insert-interval": |
+  Ejemplo: Entrada: [[1, 3], [6, 9]], [2, 5] → [[1, 5], [6, 9]]
+  Invariante: Antes del solape la lista se copia tal cual; durante el solape los límites nuevos solo crecen.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"interval-intersection": |
+  Ejemplo: Entrada: [[0, 2], [5, 10]], [[1, 5], [8, 12]] → [[1, 2], [5, 5], [8, 10]]
+  Invariante: El solape va del inicio más tardío al fin más temprano, y está vacío si ese tramo va al revés.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"reverse-sublist": |
+  Ejemplo: Entrada: [1, 2, 3, 4, 5], 2, 4 → [1, 4, 3, 2, 5]
+  Invariante: El nodo que estaba en el límite izquierdo cierra el tramo invertido y debe unirse a lo que seguía al límite derecho.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"reverse-every-k": |
+  Ejemplo: Entrada: [1, 2, 3, 4, 5], 2 → [2, 1, 4, 3, 5]
+  Invariante: Un grupo se invierte solo si quedan k nodos; su nueva cabeza se ata a la cola del grupo anterior.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"rotate-list": |
+  Ejemplo: Entrada: [1, 2, 3, 4, 5], 2 → [4, 5, 1, 2, 3]
+  Invariante: La lista es un círculo por un empalme: la nueva cola está a n - (k mod n) pasos de la vieja cabeza.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"next-interval": |
+  Ejemplo: Entrada: [[2, 3], [3, 4], [5, 6]] → [1, 2, -1]
+  Invariante: Emparejas el fin pendiente más temprano con el inicio más temprano que aún no es anterior a ese fin.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"kth-smallest-sorted-matrix": |
+  Ejemplo: Entrada: [[1, 3, 4], [2, 6, 8], [3, 6, 7]], 5 → 4
+  Invariante: El heap guarda la menor celda aún no tomada de las filas abiertas, y la extracción k es la respuesta.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"k-smallest-pairs": |
+  Ejemplo: Entrada: [1, 7, 11], [2, 4, 6], 3 → [[1, 2], [1, 4], [1, 6]]
+  Invariante: El heap guarda el mejor par aún no tomado por cada índice inicial, así que la siguiente extracción es la siguiente suma menor.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"k-closest-points": |
+  Ejemplo: Entrada: [[1, 3], [-2, 2], [0, 1]], 2 → [[0, 1], [-2, 2]]
+  Invariante: Un heap de tamaño K ordenado por distancia guarda los puntos más cercanos; su cima es el más lejano de ellos.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"top-k-frequent": |
+  Ejemplo: Entrada: [1, 3, 5, 12, 11, 12, 11], 2 → [12, 11]
+  Invariante: El heap guarda K pares por frecuencia, y su cima es la menos frecuente de esas K.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"kth-largest": |
+  Ejemplo: Entrada: [3, 2, 1, 5, 6, 4], 2 → 5
+  Invariante: El heap son los K valores mayores vistos, así que su cima es el k-ésimo mayor actual.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"search-rotated-array": |
+  Ejemplo: Entrada: [10, 15, 1, 3, 8], 1 → 2
+  Invariante: Un lado del medio es un rango ordenado normal; el objetivo se conserva solo si cae dentro de ese rango.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"find-range": |
+  Ejemplo: Entrada: [4, 6, 6, 6, 9], 6 → [1, 3]
+  Invariante: La búsqueda izquierda guarda la coincidencia más a la izquierda y la derecha la más a la derecha, ambas en el mismo arreglo ordenado.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"find-peak-element": |
+  Ejemplo: Entrada: [1, 2, 3, 1] → 2
+  Invariante: Una subida a la derecha significa que hay un pico a la derecha; si no, hay uno a la izquierda, incluido el medio.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"subsets": |
+  Ejemplo: Entrada: [1, 2] → [[], [1], [2], [1, 2]]
+  Invariante: El resultado es todo subconjunto del prefijo, y el número nuevo se añade a cada uno o no.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"subsets-with-duplicates": |
+  Ejemplo: Entrada: [1, 2, 2] → [[], [1], [2], [1, 2], [2, 2], [1, 2, 2]]
+  Invariante: Un duplicado solo extiende los subconjuntos creados por la copia anterior, así que el mismo subconjunto no se construye dos veces.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"permutations": |
+  Ejemplo: Entrada: [1, 2, 3] → [[3, 2, 1], [2, 3, 1], [2, 1, 3], [3, 1, 2], [1, 3, 2], [1, 2, 3]]
+  Invariante: El prefijo hasta el índice actual es una permutación parcial, y el intercambio se deshace antes de la siguiente elección.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"generate-parentheses": |
+  Ejemplo: Entrada: 3 → ((())), (()()), (())(), ()(()), ()()()
+  Invariante: Un prefijo es válido mientras los cierres no superan a las aperturas, y las aperturas no superan n.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"jump-game": |
+  Ejemplo: Entrada: [2, 3, 1, 1, 4] → true
+  Invariante: Si i queda alguna vez más allá del alcance, el final es inalcanzable; si no, el alcance solo crece.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"jump-game-ii": |
+  Ejemplo: Entrada: [2, 3, 1, 1, 4] → 2
+  Invariante: El salto actual cubre hasta un fin registrado, y un salto nuevo se gasta solo cuando i llega a ese fin.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"gas-station": |
+  Ejemplo: Entrada: [1, 2, 3, 4, 5], [3, 4, 5, 1, 2] → 3
+  Invariante: Un inicio es posible solo en una estación posterior al fallo, y solo si el gas total cubre el costo total.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"combination-sum": |
+  Ejemplo: Entrada: [2, 3, 6, 7], 7 → [[2, 2, 3], [7]]
+  Invariante: La suma del camino es el total del multiconjunto elegido, y una rama muere en cuanto la suma pasa el objetivo.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"word-search": |
+  Ejemplo: Entrada: [\"ABCE\", \"SFCS\", \"ADEE\"], \"ABCCED\" → true
+  Invariante: La celda actual queda marcada como usada para este camino y se desmarca en cuanto el camino vuelve.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"house-robber": |
+  Ejemplo: Entrada: [2, 7, 9, 3, 1] → 12
+  Invariante: El mejor botín hasta la casa i es el mejor entre saltarla o tomarla más el mejor hasta i-2.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"0-1-knapsack": |
+  Ejemplo: Entrada: [1, 6, 10, 16], [1, 2, 3, 5], 7 → 22
+  Invariante: El mejor valor de los primeros i objetos con capacidad c es el mejor entre saltarlo o tomarlo si cabe.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"coin-change": |
+  Ejemplo: Entrada: [1, 2, 5], 11 → 3
+  Invariante: El mínimo de monedas para la cantidad a es uno más el mínimo para a menos una moneda, o imposible si ninguna moneda llega.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"longest-increasing-subsequence": |
+  Ejemplo: Entrada: [10, 9, 2, 5, 3, 7, 101, 18] → 4
+  Invariante: La mejor longitud que termina en i es uno más que la mejor longitud que termina en un valor anterior menor.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"unique-paths": |
+  Ejemplo: Entrada: 3, 7 → 28
+  Invariante: Los caminos a una celda son los de la celda de arriba más los de la celda de la izquierda, con la primera fila y columna en 1.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"find-all-duplicates": |
+  Ejemplo: Entrada: [4, 3, 2, 7, 8, 2, 3, 1] → [3, 2]
+  Invariante: Cada valor reclama el hueco value-1; un segundo reclamo significa que ese valor apareció dos veces.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"find-duplicate-number": |
+  Ejemplo: Entrada: [1, 3, 4, 2, 2] → 2
+  Invariante: El duplicado es la entrada del ciclo en la cadena de índices.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"course-schedule": |
+  Ejemplo: Entrada: 2, [[1, 0]] → true
+  Invariante: Un curso queda libre cuando su grado de entrada llega a cero; queda un ciclo si algún curso nunca se libera.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"course-schedule-order": |
+  Ejemplo: Entrada: 4, [[1, 0], [2, 0], [3, 1], [3, 2]] → [0, 1, 2, 3]
+  Invariante: El orden es la secuencia en que los grados de entrada llegan a cero; si es corta, el grafo tenía un ciclo.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"tasks-scheduling": |
+  Ejemplo: Entrada: 3, [[0, 1], [1, 2]] → true
+  Invariante: Hay un horario exactamente cuando toda tarea acaba con grado de entrada cero.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"group-anagrams": |
+  Ejemplo: Entrada: [\"eat\", \"tea\", \"tan\", \"ate\", \"nat\", \"bat\"] → [[eat, tea, ate], [tan, nat], [bat]]
+  Invariante: Las palabras que comparten una firma ordenada, o los mismos conteos de caracteres, son un grupo.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"search-suggestions": |
+  Ejemplo: Entrada: [\"mobile\", \"mouse\", \"moneypot\", \"monitor\", \"mousepad\"], \"mouse\" → [[mobile, moneypot, monitor], [mobile, moneypot, monitor], [mouse, mousepad], [mouse, mousepad], [mouse, mousepad]]
+  Invariante: Los productos están ordenados, así que las coincidencias de un prefijo son un tramo contiguo, y un prefijo más largo solo lo estrecha.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"wiggle-sort": |
+  Ejemplo: Entrada: [3, 5, 2, 1, 6, 4] → [3, 5, 1, 6, 2, 4]
+  Invariante: Los índices pares guardan valores no mayores que sus vecinos, así que un paso de intercambios arregla cada par adyacente.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"spiral-order": |
+  Ejemplo: Entrada: [[1, 2, 3], [4, 5, 6], [7, 8, 9]] → [1, 2, 3, 6, 9, 8, 7, 4, 5]
+  Invariante: Las celdas no leídas forman un rectángulo; cada pasada consume un lado y encoge ese límite.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"rotate-image": |
+  Ejemplo: Entrada: [[1, 2, 3], [4, 5, 6], [7, 8, 9]] → [[7, 4, 1], [8, 5, 2], [9, 6, 3]]
+  Invariante: Una rotación mueve cuatro celdas en un ciclo, y los límites de la capa se encogen hacia el centro.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"set-matrix-zeroes": |
+  Ejemplo: Entrada: [[1, 1, 1], [1, 0, 1], [1, 1, 1]] → [[1, 0, 1], [0, 0, 0], [1, 0, 1]]
+  Invariante: Una celda se vuelve cero cuando su fila o columna fue marcada, y las marcas viven en la primera fila y columna.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"search-2d-matrix": |
+  Ejemplo: Entrada: [[1, 4, 7, 11], [2, 5, 8, 12], [3, 6, 9, 16]], 8 → true
+  Invariante: Cada comparación descarta una fila o una columna, y el objetivo sigue en el rectángulo que no descartaste.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"daily-temperatures": |
+  Ejemplo: Entrada: [73, 74, 75, 71, 69, 72, 76, 73] → [1, 1, 4, 2, 1, 1, 0, 0]
+  Invariante: La pila guarda índices cuyo día más cálido aún se desconoce, en orden de temperatura decreciente.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"next-greater-element": |
+  Ejemplo: Entrada: [4, 1, 2], [1, 3, 4, 2] → [-1, 3, -1]
+  Invariante: La pila es una cola decreciente de valores sin resolver; un valor mayor nuevo responde a cada uno que puede sacar.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"decode-string": |
+  Ejemplo: Entrada: \"3[a2[c]]\" → accaccacc
+  Invariante: La pila guarda la cadena y el número de repeticiones de antes del corchete; un cierre repite la cadena interior esa cantidad de veces.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"number-of-islands": |
+  Ejemplo: Entrada: ["11000","11000","00100","00011"] → 3
+  Invariante: Un relleno marca una isla entera, y la respuesta es cuántas veces tienes que empezar un relleno nuevo.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"clone-graph": |
+  Ejemplo: Entrada: [[2,4],[1,3],[2,4],[1,3]] → [[2, 4], [1, 3], [2, 4], [1, 3]]
+  Invariante: El mapa del nodo original a su copia se llena la primera vez que se ve el nodo, antes de recorrer sus aristas.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"pacific-atlantic": |
+  Ejemplo: Entrada: [[1, 2, 2, 3, 5], [3, 2, 3, 4, 4], [2, 4, 5, 3, 1], [6, 7, 1, 4, 5], [5, 1, 1, 2, 4]] → [[0, 4], [1, 3], [1, 4], [2, 2], [3, 0], [3, 1], [4, 0]]
+  Invariante: Una celda alcanzable desde un océano puede compartir ese alcance con un vecino de altura mayor o igual.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"is-graph-bipartite": |
+  Ejemplo: Entrada: [[1,3],[0,2],[1,3],[0,2]] → true
+  Invariante: Una 2-coloración es posible mientras cada arista une colores distintos; una arista del mismo color significa un ciclo impar.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"all-path-sum": |
+  Ejemplo: Entrada: [5, 4, 8, 11, null, 13, 4, 7, 2, null, null, 5, 1], 22 → [[5, 4, 11, 2], [5, 8, 4, 5]]
+  Invariante: El camino compartido es la ruta de la raíz al nodo actual; se anota solo en una hoja que coincide y el nodo se quita al volver.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"tree-diameter": |
+  Ejemplo: Entrada: [1, 2, 3, 4, 5] → 3
+  Invariante: Un nodo devuelve su altura, mientras el mejor camino que pasa por él es la suma de las alturas de sus dos hijos.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"lowest-common-ancestor": |
+  Ejemplo: Entrada: [3, 5, 1, 6, 2, 0, 8, null, null, 7, 4], 5, 4 → 5
+  Invariante: Un nodo es el ancestro cuando hay un objetivo en cada subárbol hijo, o cuando el nodo mismo es un objetivo y el otro está debajo.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"level-order": |
+  Ejemplo: Entrada: [1, 2, 3, 4, 5] → [[1], [2, 3], [4, 5]]
+  Invariante: El tamaño de la cola al empezar el ciclo es exactamente un nivel.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"zigzag-level-order": |
+  Ejemplo: Entrada: [1, 2, 3, 4, 5] → [[1], [3, 2], [4, 5]]
+  Invariante: Cada nivel se recoge en orden de visita y se invierte cuando la dirección dice de derecha a izquierda.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"right-side-view": |
+  Ejemplo: Entrada: [1, 2, 3, null, 5, null, 4] → [1, 3, 4]
+  Invariante: El último nodo sacado al vaciar un nivel es el nodo más a la derecha de ese nivel.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"implement-trie": |
+  Ejemplo: Operaciones: insert(apple), search(apple), search(app), startsWith(app), insert(app), search(app) → [null, true, false, true, null, true]
+  Invariante: Cada arista es un carácter, y una palabra termina solo en un nodo marcado como final.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"word-break-dict": |
+  Ejemplo: Entrada: \"leetscode\", [\"leet\", \"code\", \"leetcode\"] → 1
+  Invariante: El mejor número de caracteres extra desde i depende solo de sufijos que empiezan más tarde, tras una palabra del diccionario o un carácter saltado.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"replace-words": |
+  Ejemplo: Entrada: [\"cat\", \"bat\", \"rat\"], \"the cattle was rattled by the battery\" → the cat was rat by the bat
+  Invariante: El primer nodo final alcanzado al deletrear la palabra es la raíz más corta que puede reemplazarla.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"subarray-sum-equals-k": |
+  Ejemplo: Entrada: [1, 1, 1], 2 → 2
+  Invariante: El mapa cuenta cuántas veces ocurrió cada suma de prefijo, incluido el 0 una vez antes de que empiece el arreglo.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"longest-consecutive-already": |
+  Ejemplo: Entrada: [0, 1, 0, 1, 1] → 4
+  Invariante: Tratando el 0 como -1, un balance repetido significa que el tramo entre esos índices tiene iguales ceros y unos.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"longest-consecutive": |
+  Ejemplo: Entrada: [100, 4, 200, 1, 3, 2] → 4
+  Invariante: Un número inicia una serie solo cuando su predecesor falta, y la longitud es hasta dónde llegan los sucesores.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"majority-element-ii": |
+  Ejemplo: Entrada: [1, 2, 1, 2, 1, 2, 3] → [1, 2]
+  Invariante: Dos huecos de candidato y sus conteos cancelan un tercer valor distinto, y los supervivientes aún necesitan un conteo exacto.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"number-of-provinces": |
+  Ejemplo: Entrada: [[1, 1, 0], [1, 1, 0], [0, 0, 1]] → 2
+  Invariante: Cada ciudad empieza como su propia raíz, y una unión exitosa reduce el número de componentes en uno.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"redundant-connection": |
+  Ejemplo: Entrada: [[1, 2], [1, 3], [2, 3]] → [2, 3]
+  Invariante: Las aristas se unen en el orden de entrada, y la primera que junta dos nodos ya en el mismo componente es la de más.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"accounts-merge": |
+  Ejemplo: Entrada: John vía johnsmith y john_newyork, John vía johnsmith y john00, Mary → [[John, john00@mail.com, john_newyork@mail.com, johnsmith@mail.com], [Mary, mary@mail.com]]
+  Invariante: Los correos de una cuenta se unen, y los grupos finales son los correos que comparten raíz.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"min-stack": |
+  Ejemplo: Operaciones: push(-2), push(0), push(-3), getMin(), pop(), top() → [null, null, null, -3, null, 0, -2]
+  Invariante: Una segunda pila guarda el mínimo que era actual en cada push, y se saca junto con los valores.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"time-map": |
+  Ejemplo: Operaciones: set(foo, bar, 1), get(foo, 1), get(foo, 3), set(foo, bar2, 4), get(foo, 4), get(foo, 5) → [null, "bar", "bar", null, "bar2", "bar2"]
+  Invariante: Los valores de una clave se añaden en orden temporal, así que la respuesta es la marca más a la derecha que aún es ≤ la consulta.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"single-number-ii": |
+  Ejemplo: Entrada: [2, 2, 3, 2] → 3
+  Invariante: Cada bit se cuenta módulo 3, así que los bits vistos tres veces desaparecen y los vistos una vez quedan.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"sum-of-two-integers": |
+  Ejemplo: Entrada: 1, 2 → 3
+  Invariante: XOR es la suma sin acarreo, y un AND desplazado a la izquierda es el acarreo que aún hay que sumar.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"pow-x-n": |
+  Ejemplo: Entrada: 2, 10 → 1024
+  Invariante: Elevar la base al cuadrado parte a la mitad un exponente par, y un exponente negativo es el recíproco del positivo.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"integer-to-roman": |
+  Ejemplo: Entrada: 1994 → MCMXCIV
+  Invariante: El número se reduce en el mayor valor de la tabla que aún cabe, y ese símbolo se añade.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"max-points-line-math": |
+  Ejemplo: Entrada: [0, 1], [1, 0], [0, -1], [-1, 0] → true
+  Invariante: Cuatro lados iguales y dos diagonales iguales, medidos por longitud al cuadrado, bastan, y el orden de los puntos no importa.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"rate-limiter": |
+  Ejemplo: Operaciones: allow(one), allow(one), allow(one), allow(two) → [true, true, false, true]
+  Invariante: Los tokens se reponen con el tiempo pasado desde la última llamada, y una llamada gasta uno solo si queda un token.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"idempotency-store": |
+  Ejemplo: Entrada: put(K, R) con un TTL de 5 minutos. Un reintento de K devuelve R. Tras el TTL, K se ejecuta otra vez.
+  Invariante: Una clave recuerda el resultado y un vencimiento; dentro del TTL se devuelve el resultado guardado en vez de ejecutar el efecto otra vez.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"lru-http-cache": |
+  Ejemplo: Entrada: GET /a se guarda como B durante 30 s. Un segundo GET dentro de esos 30 s devuelve B. Tras el vencimiento la entrada desaparece.
+  Invariante: Una entrada es un cuerpo más un vencimiento; un get la tira cuando el vencimiento pasó, y una caché llena tira la menos reciente.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"transactional-outbox": |
+  Ejemplo: Entrada: enqueue escribe PENDING. publishDue envía solo las filas cuyo momento ya llegó y luego las marca como enviadas.
+  Invariante: Una fila queda pendiente hasta su hora, y publishDue envía solo las filas que ya tocan, y luego las marca enviadas.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"optimistic-lock-service": |
+  Ejemplo: Entrada: una actualización con la versión 3 tiene éxito y pasa a 4. Una segunda que sigue llevando 3 se rechaza.
+  Invariante: La versión guardada debe igualar la que envías; el éxito la incrementa, y una diferencia es un conflicto.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.
+
+"sql-injection-safe-query": |
+  Ejemplo: Entrada: buildSelect("users", {id: 7}, lista {users, id}) enlaza 7. El nombre email se rechaza si no está en ese conjunto, aunque parezca un identificador simple.
+  Invariante: Un nombre se escribe en el SQL solo si está en la lista blanca. Los valores nunca: se convierten en parámetros ?.
+  Comprueba el ejemplo a mano con ese invariante antes de escribir el bucle.

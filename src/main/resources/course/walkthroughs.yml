@@ -1,4 +1,4 @@
-# ASCII walkthroughs for selected HARD problems (problemId -> multiline string)
+# ASCII walkthroughs for every catalog problem (problemId -> multiline string)
 "quadruple-sum": |
   nums = [1, 0, -1, 0, -2, 2], target = 0
   sort -> [-2, -1, 0, 0, 1, 2]
@@ -486,4 +486,428 @@
 "request-id-filter": |
   Example: Input: a request with no X-Request-Id gets a new id. A request that already has one keeps it.
   Invariant: A non-blank incoming id is kept; otherwise a new id is generated and stored for this request.
+  Check the example by hand against that invariant before writing the loop.
+"triplet-sum-zero": |
+  Example: Input: [-3, 0, 1, 2, -1, 1, -2] → [[-3, 1, 2], [-2, 0, 2], [-2, 1, 1], [-1, 0, 1]]
+  Invariant: For a fixed anchor, a valid pair still lies in the unsorted-away range to its right.
+  Check the example by hand against that invariant before writing the loop.
+
+"container-with-most-water": |
+  Example: Input: [1, 8, 6, 2, 5, 4, 8, 3, 7] → 49
+  Invariant: The best area so far is at least as large as any container that still uses the shorter side you are about to leave.
+  Check the example by hand against that invariant before writing the loop.
+
+"dutch-national-flag": |
+  Example: Input: [1, 0, 2, 1, 0] → [0, 0, 1, 1, 2]
+  Invariant: Everything before low is 0, everything after high is 2, and mid is the first unclassified index.
+  Check the example by hand against that invariant before writing the loop.
+
+"cycle-start": |
+  Example: Input: 1 → 2 → (back to 2) → 2
+  Invariant: Resetting one walker to the head and stepping both once makes them meet at the cycle entrance.
+  Check the example by hand against that invariant before writing the loop.
+
+"palindrome-linked-list": |
+  Example: Input: 1 → 2 → 2 → 1 → true
+  Invariant: The first half stays put; the reversed second half lines up with it from the outside in.
+  Check the example by hand against that invariant before writing the loop.
+
+"longest-substring-k-distinct": |
+  Example: Input: \"araaci\", 2 → 4
+  Invariant: The window is valid exactly while its frequency map has at most K keys.
+  Check the example by hand against that invariant before writing the loop.
+
+"find-all-anagrams": |
+  Example: Input: \"cbaebabacd\", \"abc\" → [0, 6]
+  Invariant: A window of the pattern's length matches when its character counts equal the pattern's counts.
+  Check the example by hand against that invariant before writing the loop.
+
+"longest-no-repeat": |
+  Example: Input: "aabccbb" → 3
+  Invariant: Left sits just after the previous copy of the character at right, and the answer is the widest such gap.
+  Check the example by hand against that invariant before writing the loop.
+
+"merge-intervals": |
+  Example: Input: [[2, 5], [1, 3], [7, 9]] → [[1, 5], [7, 9]]
+  Invariant: Only the last merged interval can overlap the one you are looking at.
+  Check the example by hand against that invariant before writing the loop.
+
+"insert-interval": |
+  Example: Input: [[1, 3], [6, 9]], [2, 5] → [[1, 5], [6, 9]]
+  Invariant: Before the overlap the list is copied as-is; during the overlap the new bounds only grow.
+  Check the example by hand against that invariant before writing the loop.
+
+"interval-intersection": |
+  Example: Input: [[0, 2], [5, 10]], [[1, 5], [8, 12]] → [[1, 2], [5, 5], [8, 10]]
+  Invariant: The overlap is from the later start to the earlier end, and it is empty when that range is backwards.
+  Check the example by hand against that invariant before writing the loop.
+
+"reverse-sublist": |
+  Example: Input: [1, 2, 3, 4, 5], 2, 4 → [1, 4, 3, 2, 5]
+  Invariant: The node that was at the left boundary ends the reversed piece and must be tied to whatever followed the right boundary.
+  Check the example by hand against that invariant before writing the loop.
+
+"reverse-every-k": |
+  Example: Input: [1, 2, 3, 4, 5], 2 → [2, 1, 4, 3, 5]
+  Invariant: A group is reversed only when k nodes remain; its new head is tied back to the previous group's tail.
+  Check the example by hand against that invariant before writing the loop.
+
+"rotate-list": |
+  Example: Input: [1, 2, 3, 4, 5], 2 → [4, 5, 1, 2, 3]
+  Invariant: The list is a circle for one splice: the new tail is n - (k mod n) steps from the old head.
+  Check the example by hand against that invariant before writing the loop.
+
+"next-interval": |
+  Example: Input: [[2, 3], [3, 4], [5, 6]] → [1, 2, -1]
+  Invariant: You match the earliest unfinished end to the earliest start that is still at least that end.
+  Check the example by hand against that invariant before writing the loop.
+
+"kth-smallest-sorted-matrix": |
+  Example: Input: [[1, 3, 4], [2, 6, 8], [3, 6, 7]], 5 → 4
+  Invariant: The heap holds the smallest unused cell of the rows you have opened, and the k-th pop is the answer.
+  Check the example by hand against that invariant before writing the loop.
+
+"k-smallest-pairs": |
+  Example: Input: [1, 7, 11], [2, 4, 6], 3 → [[1, 2], [1, 4], [1, 6]]
+  Invariant: The heap stores the best unused pair per starting index, so the next pop is the next-smallest sum.
+  Check the example by hand against that invariant before writing the loop.
+
+"k-closest-points": |
+  Example: Input: [[1, 3], [-2, 2], [0, 1]], 2 → [[0, 1], [-2, 2]]
+  Invariant: A heap of size K ordered by distance keeps the closest points; its top is the farthest among them.
+  Check the example by hand against that invariant before writing the loop.
+
+"top-k-frequent": |
+  Example: Input: [1, 3, 5, 12, 11, 12, 11], 2 → [12, 11]
+  Invariant: The heap stores K pairs by frequency, and its top is the least frequent of those K.
+  Check the example by hand against that invariant before writing the loop.
+
+"kth-largest": |
+  Example: Input: [3, 2, 1, 5, 6, 4], 2 → 5
+  Invariant: The heap is the K largest values seen, so its top is the current k-th largest.
+  Check the example by hand against that invariant before writing the loop.
+
+"search-rotated-array": |
+  Example: Input: [10, 15, 1, 3, 8], 1 → 2
+  Invariant: One side of the middle is a normal sorted range; the target is kept only if it falls inside that range.
+  Check the example by hand against that invariant before writing the loop.
+
+"find-range": |
+  Example: Input: [4, 6, 6, 6, 9], 6 → [1, 3]
+  Invariant: The left search keeps the leftmost match, the right search the rightmost, and both share the same sorted array.
+  Check the example by hand against that invariant before writing the loop.
+
+"find-peak-element": |
+  Example: Input: [1, 2, 3, 1] → 2
+  Invariant: A rising slope to the right means a peak exists on the right; otherwise one exists on the left, including the middle.
+  Check the example by hand against that invariant before writing the loop.
+
+"subsets": |
+  Example: Input: [1, 2] → [[], [1], [2], [1, 2]]
+  Invariant: The result is every subset of the prefix, and the new number either is appended to each of them or is not.
+  Check the example by hand against that invariant before writing the loop.
+
+"subsets-with-duplicates": |
+  Example: Input: [1, 2, 2] → [[], [1], [2], [1, 2], [2, 2], [1, 2, 2]]
+  Invariant: Duplicate values only extend the subsets created by the previous copy, so the same subset is not built twice.
+  Check the example by hand against that invariant before writing the loop.
+
+"permutations": |
+  Example: Input: [1, 2, 3] → [[3, 2, 1], [2, 3, 1], [2, 1, 3], [3, 1, 2], [1, 3, 2], [1, 2, 3]]
+  Invariant: The prefix up to the current index is one partial permutation, and the swap is undone before the next choice.
+  Check the example by hand against that invariant before writing the loop.
+
+"generate-parentheses": |
+  Example: Input: 3 → ((())), (()()), (())(), ()(()), ()()()
+  Invariant: A prefix is valid while the number of closes never exceeds the number of opens, and opens never exceed n.
+  Check the example by hand against that invariant before writing the loop.
+
+"jump-game": |
+  Example: Input: [2, 3, 1, 1, 4] → true
+  Invariant: If i is ever past the farthest reach, the end is unreachable; otherwise the reach only grows.
+  Check the example by hand against that invariant before writing the loop.
+
+"jump-game-ii": |
+  Example: Input: [2, 3, 1, 1, 4] → 2
+  Invariant: The current jump covers up to a recorded end, and a new jump is spent only when i reaches that end.
+  Check the example by hand against that invariant before writing the loop.
+
+"gas-station": |
+  Example: Input: [1, 2, 3, 4, 5], [3, 4, 5, 1, 2] → 3
+  Invariant: A start is possible only at a station after the failure, and only if the total gas covers the total cost.
+  Check the example by hand against that invariant before writing the loop.
+
+"combination-sum": |
+  Example: Input: [2, 3, 6, 7], 7 → [[2, 2, 3], [7]]
+  Invariant: The path sum is the total of the chosen multiset, and a branch dies as soon as the sum passes the target.
+  Check the example by hand against that invariant before writing the loop.
+
+"word-search": |
+  Example: Input: [\"ABCE\", \"SFCS\", \"ADEE\"], \"ABCCED\" → true
+  Invariant: The current cell is marked used for this path and unmarked as soon as the path returns.
+  Check the example by hand against that invariant before writing the loop.
+
+"house-robber": |
+  Example: Input: [2, 7, 9, 3, 1] → 12
+  Invariant: The best loot through house i is the better of skipping i or taking i plus the best through i-2.
+  Check the example by hand against that invariant before writing the loop.
+
+"0-1-knapsack": |
+  Example: Input: [1, 6, 10, 16], [1, 2, 3, 5], 7 → 22
+  Invariant: The best value for the first i items and capacity c is the best of skipping the item or taking it when it fits.
+  Check the example by hand against that invariant before writing the loop.
+
+"coin-change": |
+  Example: Input: [1, 2, 5], 11 → 3
+  Invariant: The fewest coins for amount a is one plus the fewest coins for a minus a coin, or impossible if no coin reaches it.
+  Check the example by hand against that invariant before writing the loop.
+
+"longest-increasing-subsequence": |
+  Example: Input: [10, 9, 2, 5, 3, 7, 101, 18] → 4
+  Invariant: The best length ending at i is one more than the best length ending at a smaller earlier value.
+  Check the example by hand against that invariant before writing the loop.
+
+"unique-paths": |
+  Example: Input: 3, 7 → 28
+  Invariant: The ways into a cell are the ways into the cell above plus the ways into the cell to the left, with the first row and column equal to 1.
+  Check the example by hand against that invariant before writing the loop.
+
+"find-all-duplicates": |
+  Example: Input: [4, 3, 2, 7, 8, 2, 3, 1] → [3, 2]
+  Invariant: Each value claims the slot at value-1; a second claim means that value appeared twice.
+  Check the example by hand against that invariant before writing the loop.
+
+"find-duplicate-number": |
+  Example: Input: [1, 3, 4, 2, 2] → 2
+  Invariant: The duplicate is the entrance of the cycle in the index chain.
+  Check the example by hand against that invariant before writing the loop.
+
+"course-schedule": |
+  Example: Input: 2, [[1, 0]] → true
+  Invariant: A course is free when its indegree hits zero; a cycle remains if some course never becomes free.
+  Check the example by hand against that invariant before writing the loop.
+
+"course-schedule-order": |
+  Example: Input: 4, [[1, 0], [2, 0], [3, 1], [3, 2]] → [0, 1, 2, 3]
+  Invariant: The order is the sequence in which indegrees hit zero; if that sequence is short, the graph had a cycle.
+  Check the example by hand against that invariant before writing the loop.
+
+"tasks-scheduling": |
+  Example: Input: 3, [[0, 1], [1, 2]] → true
+  Invariant: A schedule exists exactly when every task eventually reaches indegree zero.
+  Check the example by hand against that invariant before writing the loop.
+
+"group-anagrams": |
+  Example: Input: [\"eat\", \"tea\", \"tan\", \"ate\", \"nat\", \"bat\"] → [[eat, tea, ate], [tan, nat], [bat]]
+  Invariant: Words that share a sorted signature, or the same character counts, are one group.
+  Check the example by hand against that invariant before writing the loop.
+
+"search-suggestions": |
+  Example: Input: [\"mobile\", \"mouse\", \"moneypot\", \"monitor\", \"mousepad\"], \"mouse\" → [[mobile, moneypot, monitor], [mobile, moneypot, monitor], [mouse, mousepad], [mouse, mousepad], [mouse, mousepad]]
+  Invariant: The products are sorted, so the matches for a prefix are a contiguous slice, and a longer prefix only narrows that slice.
+  Check the example by hand against that invariant before writing the loop.
+
+"wiggle-sort": |
+  Example: Input: [3, 5, 2, 1, 6, 4] → [3, 5, 1, 6, 2, 4]
+  Invariant: Even indices hold values no larger than their neighbors, so one pass of swaps fixes each adjacent pair.
+  Check the example by hand against that invariant before writing the loop.
+
+"spiral-order": |
+  Example: Input: [[1, 2, 3], [4, 5, 6], [7, 8, 9]] → [1, 2, 3, 6, 9, 8, 7, 4, 5]
+  Invariant: The unread cells form a rectangle; each pass consumes one side and shrinks that bound.
+  Check the example by hand against that invariant before writing the loop.
+
+"rotate-image": |
+  Example: Input: [[1, 2, 3], [4, 5, 6], [7, 8, 9]] → [[7, 4, 1], [8, 5, 2], [9, 6, 3]]
+  Invariant: A rotation moves four cells in a cycle, and the layer's bounds shrink toward the center.
+  Check the example by hand against that invariant before writing the loop.
+
+"set-matrix-zeroes": |
+  Example: Input: [[1, 1, 1], [1, 0, 1], [1, 1, 1]] → [[1, 0, 1], [0, 0, 0], [1, 0, 1]]
+  Invariant: A cell becomes zero when its row or column was marked, and the marks themselves live in the first row and column.
+  Check the example by hand against that invariant before writing the loop.
+
+"search-2d-matrix": |
+  Example: Input: [[1, 4, 7, 11], [2, 5, 8, 12], [3, 6, 9, 16]], 8 → true
+  Invariant: Each comparison discards a row or a column, and the target remains in the rectangle you have not discarded.
+  Check the example by hand against that invariant before writing the loop.
+
+"daily-temperatures": |
+  Example: Input: [73, 74, 75, 71, 69, 72, 76, 73] → [1, 1, 4, 2, 1, 1, 0, 0]
+  Invariant: The stack holds indices whose warmer day is still unknown, in decreasing temperature order.
+  Check the example by hand against that invariant before writing the loop.
+
+"next-greater-element": |
+  Example: Input: [4, 1, 2], [1, 3, 4, 2] → [-1, 3, -1]
+  Invariant: The stack is a decreasing run of unresolved values; a new greater value answers every one it can pop.
+  Check the example by hand against that invariant before writing the loop.
+
+"decode-string": |
+  Example: Input: \"3[a2[c]]\" → accaccacc
+  Invariant: The stack holds the string and the repeat count from before the bracket; a closing bracket repeats the inner string that many times.
+  Check the example by hand against that invariant before writing the loop.
+
+"number-of-islands": |
+  Example: Input: ["11000","11000","00100","00011"] → 3
+  Invariant: One flood fill marks a whole island, and the answer is how many times you have to start a new fill.
+  Check the example by hand against that invariant before writing the loop.
+
+"clone-graph": |
+  Example: Input: [[2,4],[1,3],[2,4],[1,3]] → [[2, 4], [1, 3], [2, 4], [1, 3]]
+  Invariant: The map from original node to its copy is filled the first time the node is seen, before its edges are walked.
+  Check the example by hand against that invariant before writing the loop.
+
+"pacific-atlantic": |
+  Example: Input: [[1, 2, 2, 3, 5], [3, 2, 3, 4, 4], [2, 4, 5, 3, 1], [6, 7, 1, 4, 5], [5, 1, 1, 2, 4]] → [[0, 4], [1, 3], [1, 4], [2, 2], [3, 0], [3, 1], [4, 0]]
+  Invariant: A cell reachable from an ocean can share that reach with a neighbor of greater or equal height.
+  Check the example by hand against that invariant before writing the loop.
+
+"is-graph-bipartite": |
+  Example: Input: [[1,3],[0,2],[1,3],[0,2]] → true
+  Invariant: A 2-coloring is possible while every edge joins different colors; a same-color edge means an odd cycle.
+  Check the example by hand against that invariant before writing the loop.
+
+"all-path-sum": |
+  Example: Input: [5, 4, 8, 11, null, 13, 4, 7, 2, null, null, 5, 1], 22 → [[5, 4, 11, 2], [5, 8, 4, 5]]
+  Invariant: The shared path is the root-to-current route; it is recorded only at a matching leaf and the node is removed on the way back.
+  Check the example by hand against that invariant before writing the loop.
+
+"tree-diameter": |
+  Example: Input: [1, 2, 3, 4, 5] → 3
+  Invariant: A node returns its height, while the best path through it is the sum of its two child heights.
+  Check the example by hand against that invariant before writing the loop.
+
+"lowest-common-ancestor": |
+  Example: Input: [3, 5, 1, 6, 2, 0, 8, null, null, 7, 4], 5, 4 → 5
+  Invariant: A node is the ancestor when one target is in each child subtree, or when the node itself is a target and the other is below it.
+  Check the example by hand against that invariant before writing the loop.
+
+"level-order": |
+  Example: Input: [1, 2, 3, 4, 5] → [[1], [2, 3], [4, 5]]
+  Invariant: The queue's size at the start of the loop is exactly one level.
+  Check the example by hand against that invariant before writing the loop.
+
+"zigzag-level-order": |
+  Example: Input: [1, 2, 3, 4, 5] → [[1], [3, 2], [4, 5]]
+  Invariant: Each level is collected in visit order and reversed when the direction says right to left.
+  Check the example by hand against that invariant before writing the loop.
+
+"right-side-view": |
+  Example: Input: [1, 2, 3, null, 5, null, 4] → [1, 3, 4]
+  Invariant: The last node popped while draining a level is that level's rightmost node.
+  Check the example by hand against that invariant before writing the loop.
+
+"implement-trie": |
+  Example: Ops: insert(apple), search(apple), search(app), startsWith(app), insert(app), search(app) → [null, true, false, true, null, true]
+  Invariant: Each edge is one character, and a word ends only at a node marked terminal.
+  Check the example by hand against that invariant before writing the loop.
+
+"word-break-dict": |
+  Example: Input: \"leetscode\", [\"leet\", \"code\", \"leetcode\"] → 1
+  Invariant: The best extra-character count from i depends only on suffixes that start later, after a dictionary word or a skipped character.
+  Check the example by hand against that invariant before writing the loop.
+
+"replace-words": |
+  Example: Input: [\"cat\", \"bat\", \"rat\"], \"the cattle was rattled by the battery\" → the cat was rat by the bat
+  Invariant: The first terminal node reached while spelling the word is the shortest root that can replace it.
+  Check the example by hand against that invariant before writing the loop.
+
+"subarray-sum-equals-k": |
+  Example: Input: [1, 1, 1], 2 → 2
+  Invariant: The map counts how often each prefix sum has occurred, including 0 once before the array starts.
+  Check the example by hand against that invariant before writing the loop.
+
+"longest-consecutive-already": |
+  Example: Input: [0, 1, 0, 1, 1] → 4
+  Invariant: Treating 0 as -1, a repeated balance means the slice between those two indices has equal zeros and ones.
+  Check the example by hand against that invariant before writing the loop.
+
+"longest-consecutive": |
+  Example: Input: [100, 4, 200, 1, 3, 2] → 4
+  Invariant: A number starts a run only when its predecessor is absent, and the length is how far the successors go.
+  Check the example by hand against that invariant before writing the loop.
+
+"majority-element-ii": |
+  Example: Input: [1, 2, 1, 2, 1, 2, 3] → [1, 2]
+  Invariant: Two candidate slots and their counts cancel a third distinct value, and the survivors still need an exact count.
+  Check the example by hand against that invariant before writing the loop.
+
+"number-of-provinces": |
+  Example: Input: [[1, 1, 0], [1, 1, 0], [0, 0, 1]] → 2
+  Invariant: Each city starts as its own root, and a successful union reduces the component count by one.
+  Check the example by hand against that invariant before writing the loop.
+
+"redundant-connection": |
+  Example: Input: [[1, 2], [1, 3], [2, 3]] → [2, 3]
+  Invariant: Edges are united in input order, and the first edge that joins two nodes already in the same component is the extra one.
+  Check the example by hand against that invariant before writing the loop.
+
+"accounts-merge": |
+  Example: Input: John via johnsmith and john_newyork, John via johnsmith and john00, Mary → [[John, john00@mail.com, john_newyork@mail.com, johnsmith@mail.com], [Mary, mary@mail.com]]
+  Invariant: Emails in one account are united, and the finished groups are the emails that share a root.
+  Check the example by hand against that invariant before writing the loop.
+
+"min-stack": |
+  Example: Ops: push(-2), push(0), push(-3), getMin(), pop(), top() → [null, null, null, -3, null, 0, -2]
+  Invariant: A second stack holds the minimum that was current at each push, and it pops together with the values.
+  Check the example by hand against that invariant before writing the loop.
+
+"time-map": |
+  Example: Ops: set(foo, bar, 1), get(foo, 1), get(foo, 3), set(foo, bar2, 4), get(foo, 4), get(foo, 5) → [null, "bar", "bar", null, "bar2", "bar2"]
+  Invariant: Values for a key are appended in time order, so the answer is the rightmost timestamp that is still ≤ the query.
+  Check the example by hand against that invariant before writing the loop.
+
+"single-number-ii": |
+  Example: Input: [2, 2, 3, 2] → 3
+  Invariant: Each bit is counted modulo 3, so bits seen three times disappear and the bits seen once remain.
+  Check the example by hand against that invariant before writing the loop.
+
+"sum-of-two-integers": |
+  Example: Input: 1, 2 → 3
+  Invariant: XOR is the sum without carry, and a left-shifted AND is the carry still to add.
+  Check the example by hand against that invariant before writing the loop.
+
+"pow-x-n": |
+  Example: Input: 2, 10 → 1024
+  Invariant: Squaring the base halves an even exponent, and a negative exponent is the reciprocal of the positive one.
+  Check the example by hand against that invariant before writing the loop.
+
+"integer-to-roman": |
+  Example: Input: 1994 → MCMXCIV
+  Invariant: The number is reduced by the largest table value that still fits, and that symbol is appended.
+  Check the example by hand against that invariant before writing the loop.
+
+"max-points-line-math": |
+  Example: Input: [0, 1], [1, 0], [0, -1], [-1, 0] → true
+  Invariant: Four equal sides and two equal diagonals, measured by squared length, are enough, and the order of the points does not matter.
+  Check the example by hand against that invariant before writing the loop.
+
+"rate-limiter": |
+  Example: Ops: allow(one), allow(one), allow(one), allow(two) → [true, true, false, true]
+  Invariant: Tokens refill from the elapsed time since the last call, and a call spends one only if a token remains.
+  Check the example by hand against that invariant before writing the loop.
+
+"idempotency-store": |
+  Example: Input: put(K, R) with a 5-minute TTL. A retry of K returns R. After the TTL, K runs again.
+  Invariant: A key remembers the result and an expiry; inside the TTL the stored result is returned instead of running the side effect again.
+  Check the example by hand against that invariant before writing the loop.
+
+"lru-http-cache": |
+  Example: Input: cache GET /a as B for 30s. A second GET inside 30s returns B. After expiry the entry is gone.
+  Invariant: An entry is a body plus an expiry; a get drops it when the expiry has passed, and a full cache drops the least recent.
+  Check the example by hand against that invariant before writing the loop.
+
+"transactional-outbox": |
+  Example: Input: enqueue writes PENDING. publishDue sends only rows whose time has come, then marks them sent.
+  Invariant: A row is pending until its time, and publishDue sends only the rows that are due, then marks them sent.
+  Check the example by hand against that invariant before writing the loop.
+
+"optimistic-lock-service": |
+  Example: Input: an update carrying version 3 succeeds and becomes 4. A second update still carrying 3 is rejected.
+  Invariant: The stored version must equal the version you send; success increments it, and a mismatch is a conflict.
+  Check the example by hand against that invariant before writing the loop.
+
+"sql-injection-safe-query": |
+  Example: Input: buildSelect("users", {id: 7}, allow {users, id}) binds 7. The identifier email is rejected when it is absent from that set, even though it looks like a plain name.
+  Invariant: A name is written into SQL only when it is on the allow-list. Values never are: they become ? parameters.
   Check the example by hand against that invariant before writing the loop.

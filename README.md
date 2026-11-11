@@ -64,7 +64,7 @@ Difficulty counts (Easy / Medium / Hard) show on the home hero, pattern list, pa
 
 ### Study modes in the UI
 
-- **Patterns** — intuition, walkthrough, animated diagrams, company/frequency filters, difficulty counts, solution reveal, complexity self-check
+- **Patterns** — intuition, a short trace for every catalog problem, animated diagrams, company/frequency filters, difficulty counts, solution reveal, complexity self-check
 - **Plans / Report** — week checklists and printable weekly progress
 - **Playground** — edit Java (Monaco), run hidden tests via `/api/v1/judge`
 - **Daily** — three deterministic problems per day + streak
@@ -137,7 +137,7 @@ Full tables and judge details: [docs/API.md](docs/API.md). Architecture notes: [
 
 ## CI
 
-GitHub Actions (`.github/workflows/ci.yml`) runs `./mvnw test`, packages the jar, boots the app, smokes APIs, and runs Playwright e2e.
+GitHub Actions (`.github/workflows/ci.yml`) runs `./mvnw test`, the study-loop checks, packages the jar, boots the app, smokes APIs, and runs Playwright e2e. The workflow installs the Chromium binary only; it does not install system packages with `apt`.
 
 ## License / intent
 

@@ -179,6 +179,7 @@ class JudgeServiceTest {
                         for (List<Interval> employee : schedule) busy.addAll(employee);
                         busy.sort((a, b) -> Integer.compare(a.start, b.start));
                         List<Interval> free = new ArrayList<>();
+                        if (busy.isEmpty()) return free;
                         int end = busy.get(0).end;
                         for (int i = 1; i < busy.size(); i++) {
                             Interval next = busy.get(i);

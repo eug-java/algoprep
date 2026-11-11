@@ -338,3 +338,152 @@
   occupied: 1 | 3 | 6 | 9
   gaps between neighbors: 3-1=2, 6-3=3, 9-6=3
   answer 3
+
+"pair-with-target-sum": |
+  Example: Input: [1, 2, 3, 4], 6 → [1, 3]
+  Invariant: The pair, if it exists, is still strictly between the two indices.
+  Check the example by hand against that invariant before writing the loop.
+"remove-duplicates": |
+  Example: Input: [2, 3, 3, 6, 9, 9] → 4
+  Invariant: The write index sits just after the last unique value kept.
+  Check the example by hand against that invariant before writing the loop.
+"linked-list-cycle": |
+  Example: Input: [1, 2, 3, 4] → false
+  Invariant: If the fast walker reaches null there is no cycle; a meeting means the next links loop.
+  Check the example by hand against that invariant before writing the loop.
+"middle-of-linked-list": |
+  Example: Input: [1, 2, 3, 4, 5] → [3, 4, 5]
+  Invariant: Slow has taken half as many steps as fast, so it stands on the middle.
+  Check the example by hand against that invariant before writing the loop.
+"happy-number": |
+  Example: Input: 23 → true
+  Invariant: The sequence of digit-square sums is a path that either hits 1 or loops.
+  Check the example by hand against that invariant before writing the loop.
+"max-sum-subarray-k": |
+  Example: Input: [2, 1, 5, 1, 3, 2], k = 3 → 9
+  Invariant: The window sum loses the outgoing value and gains the incoming one; the answer is the best sum seen.
+  Check the example by hand against that invariant before writing the loop.
+"conflicting-appointments": |
+  Example: Input: [1,4], [2,5], [7,9] → false
+  Invariant: A clash exists exactly when one appointment starts before the previous one ends.
+  Check the example by hand against that invariant before writing the loop.
+"reverse-linked-list": |
+  Example: Input: [1, 2, 3, 4] → [4, 3, 2, 1]
+  Invariant: The reversed prefix ends at the node you just rewired, and the rest of the list is still the old chain.
+  Check the example by hand against that invariant before writing the loop.
+"static-median": |
+  Example: Input: [3, 1, 2] → 2.0
+  Invariant: After rebalancing, the median is the top of the larger heap, or the average of the two tops.
+  Check the example by hand against that invariant before writing the loop.
+"merge-two-sorted-lists": |
+  Example: Input: [1, 2, 4], [1, 3, 4] → [1, 1, 2, 3, 4, 4]
+  Invariant: The merged list is the smaller head, then the merge of what remains.
+  Check the example by hand against that invariant before writing the loop.
+"top-k-numbers": |
+  Example: Input: [3, 1, 5, 12, 2, 11], 3 → [12, 11, 5]
+  Invariant: The heap holds the K largest so far, and its top is the smallest of those K.
+  Check the example by hand against that invariant before writing the loop.
+"order-agnostic-binary-search": |
+  Example: Input: [4, 6, 10], 10 → 2
+  Invariant: The first and last elements fix the sort direction, and that direction decides which half to keep.
+  Check the example by hand against that invariant before writing the loop.
+"subsets-size-k": |
+  Example: Input: 4, 2 → [[1, 2], [1, 3], [1, 4], [2, 3], [2, 4], [3, 4]]
+  Invariant: The path is one combination built from an increasing start index, so numbers are never reused or reordered.
+  Check the example by hand against that invariant before writing the loop.
+"assign-cookies": |
+  Example: Input: [1, 2, 3], [1, 1] → 1
+  Invariant: Both arrays are sorted, so a cookie that is too small is useless for every later child too.
+  Check the example by hand against that invariant before writing the loop.
+"letter-case-permutation": |
+  Example: Input: \"a1b2\" → a1b2, a1B2, A1b2, A1B2
+  Invariant: Digits are copied once; each letter forks into lower and upper, and the path is one partial string.
+  Check the example by hand against that invariant before writing the loop.
+"climbing-stairs": |
+  Example: Input: 5 → 8
+  Invariant: The ways to reach n are the ways to reach n-1 plus the ways to reach n-2.
+  Check the example by hand against that invariant before writing the loop.
+"cyclic-sort": |
+  Example: Input: [3, 1, 5, 4, 2] → [1, 2, 3, 4, 5]
+  Invariant: Index i is finished when it holds the value that belongs there; a swap sends one value home.
+  Check the example by hand against that invariant before writing the loop.
+"find-missing-number": |
+  Example: Input: [4, 0, 3, 1] → 2
+  Invariant: After every value that fits in range sits at its own index, the index that still holds the wrong value is the missing number.
+  Check the example by hand against that invariant before writing the loop.
+"verify-alien-dictionary": |
+  Example: Input: [\"hello\", \"leetcode\"], \"hlabcdefgijkmnopqrstuvwxyz\" → true
+  Invariant: In the alien order, words are sorted exactly when each adjacent pair is nondecreasing at the first position they differ.
+  Check the example by hand against that invariant before writing the loop.
+"intersection-two-arrays": |
+  Example: Input: [4, 9, 5, 9], [9, 4, 9, 8, 4] → [4, 9]
+  Invariant: A value is in the answer once if it occurs in both arrays, regardless of extra copies.
+  Check the example by hand against that invariant before writing the loop.
+"matrix-diagonal-sum": |
+  Example: Input: [[1, 2, 3], [4, 5, 6], [7, 8, 9]] → 25
+  Invariant: The sum is the main diagonal plus the anti-diagonal, and the center cell is not added twice when the side is odd.
+  Check the example by hand against that invariant before writing the loop.
+"valid-parentheses": |
+  Example: Input: "{[]}" → true
+  Invariant: The stack holds unmatched openers in the order they must be closed.
+  Check the example by hand against that invariant before writing the loop.
+"path-sum": |
+  Example: Input: [5, 4, 8, 11, null, 13, 4, 7, 2, null, null, null, 1], 22 → true
+  Invariant: A leaf succeeds only when the remaining target equals the leaf, and every other node just subtracts itself.
+  Check the example by hand against that invariant before writing the loop.
+"min-depth": |
+  Example: Input: [1, 2, 3, 4] → 2
+  Invariant: The first leaf reached level by level has the minimum depth.
+  Check the example by hand against that invariant before writing the loop.
+"longest-common-prefix": |
+  Example: Input: [\"flower\", \"flow\", \"flight\"] → fl
+  Invariant: The prefix is the longest run of columns where every word still has the same character.
+  Check the example by hand against that invariant before writing the loop.
+"two-sum": |
+  Example: Input: [2, 7, 11, 15], 9 → [0, 1]
+  Invariant: The map holds each earlier value's index, and the current number is inserted only after its complement is checked.
+  Check the example by hand against that invariant before writing the loop.
+"isomorphic-strings": |
+  Example: Input: \"egg\", \"add\" → true
+  Invariant: Each character of the first string has one image, and no two characters share an image.
+  Check the example by hand against that invariant before writing the loop.
+"majority-element": |
+  Example: Input: [2, 2, 1, 1, 1, 2, 2] → 2
+  Invariant: The candidate and its vote count are enough: matches add a vote, everything else takes one away.
+  Check the example by hand against that invariant before writing the loop.
+"path-exists": |
+  Example: Input: 6, [[0, 1], [1, 2], [2, 5], [3, 4]], 0, 5 → true
+  Invariant: Source can reach destination exactly when they have the same root.
+  Check the example by hand against that invariant before writing the loop.
+"design-hashmap": |
+  Example: Ops: put(1, 1), put(2, 2), get(1), get(3), put(2, 1), get(2) → [null, null, 1, -1, null, 1, null, -1]
+  Invariant: A key lives in the bucket of key modulo the bucket count, and a collision is another node in that bucket's chain.
+  Check the example by hand against that invariant before writing the loop.
+"single-number": |
+  Example: Input: [4, 1, 2, 1, 2] → 4
+  Invariant: XOR clears a value that appears twice and leaves the value that appears once.
+  Check the example by hand against that invariant before writing the loop.
+"number-of-1-bits": |
+  Example: Input: -1 → 32
+  Invariant: Each step removes exactly one set bit, so the number of steps is the number of 1-bits.
+  Check the example by hand against that invariant before writing the loop.
+"reverse-bits": |
+  Example: Input: 43261596 → 964176192
+  Invariant: It becomes the new high bit of the result, and this happens once for each of the 32 positions.
+  Check the example by hand against that invariant before writing the loop.
+"gcd-of-strings": |
+  Example: Input: \"ABCABC\", \"ABC\" → ABC
+  Invariant: The strings share a divisor string only when either concatenation order is the same string.
+  Check the example by hand against that invariant before writing the loop.
+"sqrt": |
+  Example: Input: 8 → 2
+  Invariant: The search keeps the largest mid whose square is still ≤ x.
+  Check the example by hand against that invariant before writing the loop.
+"config-store": |
+  Example: Ops: set(theme, dark), get(theme), get(missing), getOrDefault(missing, light) → [null, "dark", null, "light"]
+  Invariant: The map is the whole store, and a missing key returns the caller-supplied default.
+  Check the example by hand against that invariant before writing the loop.
+"request-id-filter": |
+  Example: Input: a request with no X-Request-Id gets a new id. A request that already has one keeps it.
+  Invariant: A non-blank incoming id is kept; otherwise a new id is generated and stored for this request.
+  Check the example by hand against that invariant before writing the loop.

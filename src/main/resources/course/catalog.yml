@@ -2285,7 +2285,7 @@ patterns:
     frequency: LOW
 - id: SORT_AND_SEARCH
   order: 26
-  week: 4
+  week: 3
   constraints: "Sorting is legal only when the problem does not need the original order."
   followUp: "What is the cost of the sort, and does a hash map avoid it?"
   title: Sort and Search
@@ -2601,7 +2601,7 @@ patterns:
     frequency: LOW
 - id: STACKS
   order: 20
-  week: 4
+  week: 1
   constraints: "The stack stores indices or values you might still be the answer for."
   followUp: "What if the array is circular and the last element looks at the first?"
   title: Stacks
@@ -3503,7 +3503,7 @@ patterns:
     frequency: MEDIUM
 - id: KNOWING_WHAT_TO_TRACK
   order: 25
-  week: 4
+  week: 3
   constraints: "Name the one number or map entry that makes the rest of the scan O(1)."
   followUp: "What if the guarantee (a majority exists, values are 0/1) is removed?"
   title: Knowing What to Track
@@ -4408,7 +4408,6 @@ patterns:
     companies:
     - Netflix
     failureNote: "A ConcurrentHashMap is not a config service. Nothing else can see the write, and a restart drops it."
-    discussionOnly: true
     frequency: LOW
   - id: request-id-filter
     title: Request Id Filter
@@ -4508,21 +4507,20 @@ patterns:
     className: com.algoprep.patterns.spring.SqlInjectionSafeQuery
     summary: Build parameterized query placeholders from a column-to-value map, validating identifiers
       instead of concatenating raw input.
-    example: "Input: buildSelect(\"users\", {id: 7}) binds 7. A column name that is not a plain identifier is rejected."
-    whenToUse: Discuss/implement how a repository layer builds dynamic WHERE clauses safely - validate
-      column names against an allow-list and always bind values as parameters, never string-concatenate
-      them into SQL.
+    example: "Input: buildSelect(\"users\", {id: 7}, allow {users, id}) binds 7. The identifier email is rejected when it is absent from that set, even though it looks like a plain name."
+    whenToUse: Discuss/implement how a repository layer builds dynamic WHERE clauses safely - accept only
+      table and column names from an allow-list you wrote, and always bind values as parameters.
     timeComplexity: O(n) in the number of columns
     spaceComplexity: O(n)
     hints:
     - "What part of the statement is allowed to be text, and what part must be a bound value?"
-    - "Identifiers are checked against a plain-name rule before they are written into SQL, and values are parameters."
-    - "Validate every identifier (column name) against an allow-list pattern before using it in the generated SQL text. Never inline the value itself - always emit a `?` placeholder and return the value list separately for a PreparedStatement to bind."
+    - "A name is written into SQL only when it is on the allow-list. Values never are: they become ? parameters."
+    - "Pass the fixed set of table and column names you are willing to emit. Reject any other identifier, including one that matches [A-Za-z_][A-Za-z0-9_]*. Emit ? for every value and return those values separately for a PreparedStatement."
     tags:
     - spring
     - security
     companies:
     - Netflix
-    failureNote: "An allow-list built from the request is not an allow-list. Bind values as parameters. Identifiers that cannot be bound stay on a fixed list you wrote, not one the caller sent."
+    failureNote: "An allow-list built from the request is not an allow-list. A regex that only checks the shape of a name still lets the caller choose any column. Bind values as parameters. Names stay on a fixed list you wrote."
     discussionOnly: true
     frequency: HIGH

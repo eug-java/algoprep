@@ -35,9 +35,11 @@ class CourseControllerTest {
                 .andExpect(jsonPath("$.patterns[0].hardCount").value(greaterThanOrEqualTo(0)))
                 .andExpect(jsonPath("$.weeks", hasSize(4)))
                 .andExpect(jsonPath("$.weeks[0].week").value(1))
-                .andExpect(jsonPath("$.weeks[0].title").value("Hash maps, two pointers, windows, lists"))
+                .andExpect(jsonPath("$.weeks[0].title").value("Hash maps, pointers, windows, lists, stacks"))
                 .andExpect(jsonPath("$.weeks[0].patternIds[0]").value("HASH_MAPS"))
-                .andExpect(jsonPath("$.weeks[3].patternIds[10]").value("SPRING_BOOT_INTERVIEW"))
+                .andExpect(jsonPath("$.weeks[0].patternIds", hasSize(6)))
+                .andExpect(jsonPath("$.weeks[3].patternIds", hasSize(8)))
+                .andExpect(jsonPath("$.weeks[3].patternIds[7]").value("SPRING_BOOT_INTERVIEW"))
                 .andExpect(jsonPath("$.language").value("en"));
     }
 
@@ -75,7 +77,7 @@ class CourseControllerTest {
                 .andExpect(jsonPath("$.walkthrough").isNotEmpty());
         mockMvc.perform(get("/api/v1/course").param("lang", "ru"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.weeks[0].title").value("Хеш-таблицы, два указателя, окна, списки"));
+                .andExpect(jsonPath("$.weeks[0].title").value("Хеш-таблицы, указатели, окна, списки, стек"));
         mockMvc.perform(get("/api/v1/course/patterns/TWO_HEAPS/problems/static-median").param("lang", "ru"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.summary").value("Медиана неотсортированного массива через две кучи."));
@@ -94,7 +96,7 @@ class CourseControllerTest {
                 .andExpect(jsonPath("$.title").value("Dos punteros"));
         mockMvc.perform(get("/api/v1/course").param("lang", "es"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.weeks[0].title").value("Mapas hash, dos punteros, ventanas, listas"));
+                .andExpect(jsonPath("$.weeks[0].title").value("Mapas hash, punteros, ventanas, listas, pila"));
         mockMvc.perform(get("/api/v1/course/patterns/HASH_MAPS/problems/two-sum").param("lang", "es"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.title").value("Suma de dos"));

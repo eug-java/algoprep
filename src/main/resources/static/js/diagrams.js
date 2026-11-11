@@ -28,6 +28,38 @@ export function diagramFor(patternId) {
       return twoHeaps();
     case 'TRIE':
       return trie();
+    case 'HASH_MAPS':
+      return hashMaps();
+    case 'STACKS':
+      return stacks();
+    case 'IN_PLACE_LINKED_LIST':
+      return linkedList();
+    case 'CYCLIC_SORT':
+      return cyclicSort();
+    case 'SUBSETS':
+      return subsets();
+    case 'GREEDY':
+      return greedy();
+    case 'TOPOLOGICAL_SORT':
+      return topological();
+    case 'UNION_FIND':
+      return unionFind();
+    case 'MATRICES':
+      return matrices();
+    case 'K_WAY_MERGE':
+      return kWayMerge();
+    case 'CUSTOM_DATA_STRUCTURES':
+      return customDs();
+    case 'BITWISE':
+      return bitwise();
+    case 'MATH_GEOMETRY':
+      return mathGeometry();
+    case 'SORT_AND_SEARCH':
+      return sortSearch();
+    case 'KNOWING_WHAT_TO_TRACK':
+      return tracking();
+    case 'SPRING_BOOT_INTERVIEW':
+      return springLab();
     default:
       return '';
   }
@@ -274,5 +306,228 @@ function trie() {
       <text x="100" y="148" text-anchor="end" class="cell-t">t</text>
     </svg>
     <p class="diagram-caption" data-diagram-caption="TRIE">Each edge is one character. A word ends only when the node is marked.</p>`
+  );
+}
+
+function hashMaps() {
+  return shell(
+    'Hash Maps',
+    `<svg viewBox="0 0 520 140" class="diagram-svg">
+      <rect class="cell active" x="40" y="48" width="70" height="36" rx="4"/>
+      <text x="75" y="72" text-anchor="middle" class="cell-t">2</text>
+      <path d="M120 66 H210" class="edge"/>
+      <rect class="cell" x="220" y="48" width="120" height="36" rx="4"/>
+      <text x="280" y="72" text-anchor="middle" class="cell-t">index 0</text>
+      <rect class="cell" x="360" y="48" width="120" height="36" rx="4"/>
+      <text x="420" y="72" text-anchor="middle" class="cell-t">9 − 2</text>
+    </svg>
+    <p class="diagram-caption" data-diagram-caption="HASH_MAPS">Store the complement you still need. One pass replaces the nested scan.</p>`
+  );
+}
+
+function stacks() {
+  return shell(
+    'Stacks',
+    `<svg viewBox="0 0 520 150" class="diagram-svg">
+      <rect class="cell" x="180" y="100" width="160" height="28" rx="4"/>
+      <rect class="cell" x="180" y="68" width="160" height="28" rx="4"/>
+      <rect class="cell active" x="180" y="36" width="160" height="28" rx="4"/>
+      <text x="260" y="56" text-anchor="middle" class="cell-t">top</text>
+    </svg>
+    <p class="diagram-caption" data-diagram-caption="STACKS">The top is the nearest unresolved value. Pop it when the current value answers it.</p>`
+  );
+}
+
+function linkedList() {
+  return shell(
+    'In-place Linked List',
+    `<svg viewBox="0 0 520 140" class="diagram-svg">
+      <circle cx="80" cy="70" r="16" class="node"/>
+      <circle cx="180" cy="70" r="16" class="node active"/>
+      <circle cx="280" cy="70" r="16" class="node"/>
+      <circle cx="380" cy="70" r="16" class="node"/>
+      <path d="M96 70 H164 M196 70 H264" class="edge"/>
+      <path d="M196 50 H110" class="edge"/>
+      <text x="180" y="110" text-anchor="middle" class="cell-t">prev</text>
+    </svg>
+    <p class="diagram-caption" data-diagram-caption="IN_PLACE_LINKED_LIST">Rewire next before you lose it. Three pointers are enough to reverse in place.</p>`
+  );
+}
+
+function cyclicSort() {
+  return shell(
+    'Cyclic Sort',
+    `<svg viewBox="0 0 520 140" class="diagram-svg">
+      ${[60, 150, 240, 330, 420].map((x, i) => `
+        <rect class="cell${i === 1 ? ' active' : ''}" x="${x - 28}" y="50" width="56" height="36" rx="4"/>
+        <text x="${x}" y="74" text-anchor="middle" class="cell-t">${[2, 1, 4, 3, 5][i]}</text>`).join('')}
+      <path d="M150 50 C150 20, 60 20, 60 50" class="edge" fill="none"/>
+    </svg>
+    <p class="diagram-caption" data-diagram-caption="CYCLIC_SORT">Value v belongs at index v − 1. Swap until the current slot is home.</p>`
+  );
+}
+
+function subsets() {
+  return shell(
+    'Subsets',
+    `<svg viewBox="0 0 520 150" class="diagram-svg">
+      <circle cx="260" cy="28" r="12" class="node active"/>
+      <line x1="260" y1="40" x2="160" y2="80" class="edge"/>
+      <line x1="260" y1="40" x2="360" y2="80" class="edge"/>
+      <text x="140" y="78" class="cell-t">take</text>
+      <text x="370" y="78" class="cell-t">skip</text>
+      <circle cx="160" cy="96" r="12" class="node"/>
+      <circle cx="360" cy="96" r="12" class="node"/>
+    </svg>
+    <p class="diagram-caption" data-diagram-caption="SUBSETS">Each element is taken or skipped. Record a copy when the choice path is complete.</p>`
+  );
+}
+
+function greedy() {
+  return shell(
+    'Greedy',
+    `<svg viewBox="0 0 520 140" class="diagram-svg">
+      ${[70, 160, 250, 340, 430].map((x, i) => `
+        <rect class="cell${i === 2 ? ' active' : ''}" x="${x - 24}" y="52" width="48" height="36" rx="4"/>
+        <text x="${x}" y="76" text-anchor="middle" class="cell-t">${[1, 3, 4, 6, 9][i]}</text>`).join('')}
+      <path d="M94 70 H136 M184 70 H226" class="edge"/>
+    </svg>
+    <p class="diagram-caption" data-diagram-caption="GREEDY">Sort by the key that makes the local choice safe, then never revisit it.</p>`
+  );
+}
+
+function topological() {
+  return shell(
+    'Topological Sort',
+    `<svg viewBox="0 0 520 140" class="diagram-svg">
+      <circle cx="80" cy="70" r="16" class="node active"/>
+      <circle cx="220" cy="40" r="16" class="node"/>
+      <circle cx="220" cy="110" r="16" class="node"/>
+      <circle cx="380" cy="70" r="16" class="node"/>
+      <path d="M96 62 L204 46 M96 80 L204 104 M236 48 L364 66 M236 102 L364 78" class="edge"/>
+      <text x="80" y="120" text-anchor="middle" class="cell-t">in 0</text>
+    </svg>
+    <p class="diagram-caption" data-diagram-caption="TOPOLOGICAL_SORT">Start from indegree 0. Taking a node reduces the indegree of what it unlocks.</p>`
+  );
+}
+
+function unionFind() {
+  return shell(
+    'Union Find',
+    `<svg viewBox="0 0 520 140" class="diagram-svg">
+      <circle cx="120" cy="40" r="14" class="node active"/>
+      <circle cx="70" cy="100" r="14" class="node"/>
+      <circle cx="170" cy="100" r="14" class="node"/>
+      <circle cx="360" cy="40" r="14" class="node"/>
+      <circle cx="360" cy="100" r="14" class="node"/>
+      <path d="M120 54 L78 86 M120 54 L162 86 M360 54 L360 86" class="edge"/>
+    </svg>
+    <p class="diagram-caption" data-diagram-caption="UNION_FIND">Each node points at a parent. Two nodes are connected when find meets at the same root.</p>`
+  );
+}
+
+function matrices() {
+  return shell(
+    'Matrices',
+    `<svg viewBox="0 0 520 150" class="diagram-svg">
+      ${[0, 1, 2].flatMap((r) => [0, 1, 2].map((c) => `
+        <rect class="cell${r === c ? ' active' : ''}" x="${150 + c * 52}" y="${30 + r * 36}" width="44" height="30" rx="4"/>`)).join('')}
+    </svg>
+    <p class="diagram-caption" data-diagram-caption="MATRICES">Name the boundary you have already consumed. Shrink it instead of visiting a cell twice.</p>`
+  );
+}
+
+function kWayMerge() {
+  return shell(
+    'K-way Merge',
+    `<svg viewBox="0 0 520 150" class="diagram-svg">
+      <rect class="cell" x="40" y="30" width="90" height="28" rx="4"/>
+      <rect class="cell" x="40" y="66" width="90" height="28" rx="4"/>
+      <rect class="cell" x="40" y="102" width="90" height="28" rx="4"/>
+      <text x="85" y="50" text-anchor="middle" class="cell-t">1, 4</text>
+      <text x="85" y="86" text-anchor="middle" class="cell-t">2, 6</text>
+      <text x="85" y="122" text-anchor="middle" class="cell-t">3, 5</text>
+      <rect class="cell active" x="280" y="58" width="160" height="36" rx="4"/>
+      <text x="360" y="82" text-anchor="middle" class="cell-t">heap of heads</text>
+    </svg>
+    <p class="diagram-caption" data-diagram-caption="K_WAY_MERGE">Keep one head from each sorted list in a heap. Pop the smallest and push its successor.</p>`
+  );
+}
+
+function customDs() {
+  return shell(
+    'Custom Data Structures',
+    `<svg viewBox="0 0 520 140" class="diagram-svg">
+      <rect class="cell active" x="40" y="48" width="140" height="36" rx="4"/>
+      <text x="110" y="72" text-anchor="middle" class="cell-t">map key → node</text>
+      <rect class="cell" x="240" y="48" width="220" height="36" rx="4"/>
+      <text x="350" y="72" text-anchor="middle" class="cell-t">order of use</text>
+    </svg>
+    <p class="diagram-caption" data-diagram-caption="CUSTOM_DATA_STRUCTURES">The map finds the node in O(1). The order structure decides who leaves.</p>`
+  );
+}
+
+function bitwise() {
+  return shell(
+    'Bitwise',
+    `<svg viewBox="0 0 520 140" class="diagram-svg">
+      <text x="70" y="60" class="cell-t">0101</text>
+      <text x="70" y="90" class="cell-t">0011</text>
+      <text x="200" y="78" class="cell-t">XOR → 0110</text>
+    </svg>
+    <p class="diagram-caption" data-diagram-caption="BITWISE">XOR cancels a value seen twice. A mask isolates the bit you still need.</p>`
+  );
+}
+
+function mathGeometry() {
+  return shell(
+    'Math and Geometry',
+    `<svg viewBox="0 0 520 140" class="diagram-svg">
+      <circle cx="180" cy="78" r="36" class="node"/>
+      <path d="M180 78 L250 40" class="edge"/>
+      <text x="280" y="70" class="cell-t">xⁿ = (x²)^(n/2)</text>
+    </svg>
+    <p class="diagram-caption" data-diagram-caption="MATH_GEOMETRY">Halve the exponent, or compare distances, instead of scanning every candidate.</p>`
+  );
+}
+
+function sortSearch() {
+  return shell(
+    'Sort and Search',
+    `<svg viewBox="0 0 520 140" class="diagram-svg">
+      ${[50, 120, 190, 260, 330, 400, 470].map((x, i) => `
+        <rect class="cell${i === 3 ? ' active' : ''}" x="${x - 22}" y="52" width="44" height="36" rx="4"/>
+        <text x="${x}" y="76" text-anchor="middle" class="cell-t">${i + 1}</text>`).join('')}
+    </svg>
+    <p class="diagram-caption" data-diagram-caption="SORT_AND_SEARCH">Sort once if the later questions are lookups. Then each question is a binary search.</p>`
+  );
+}
+
+function tracking() {
+  return shell(
+    'Knowing What to Track',
+    `<svg viewBox="0 0 520 140" class="diagram-svg">
+      ${[60, 140, 220, 300, 380, 460].map((x, i) => `
+        <rect class="cell${i === 4 ? ' active' : ''}" x="${x - 24}" y="52" width="48" height="36" rx="4"/>
+        <text x="${x}" y="76" text-anchor="middle" class="cell-t">${[2, 2, 1, 2, 3, 2][i]}</text>`).join('')}
+      <text x="260" y="120" text-anchor="middle" class="cell-t">candidate 2</text>
+    </svg>
+    <p class="diagram-caption" data-diagram-caption="KNOWING_WHAT_TO_TRACK">Keep the one fact that the next value can update. Drop the rest.</p>`
+  );
+}
+
+function springLab() {
+  return shell(
+    'Spring Boot Interview',
+    `<svg viewBox="0 0 520 140" class="diagram-svg">
+      <rect class="cell" x="30" y="50" width="100" height="36" rx="4"/>
+      <rect class="cell active" x="180" y="50" width="140" height="36" rx="4"/>
+      <rect class="cell" x="370" y="50" width="120" height="36" rx="4"/>
+      <text x="80" y="74" text-anchor="middle" class="cell-t">request</text>
+      <text x="250" y="74" text-anchor="middle" class="cell-t">limit / retry</text>
+      <text x="430" y="74" text-anchor="middle" class="cell-t">effect</text>
+      <path d="M130 68 H180 M320 68 H370" class="edge"/>
+    </svg>
+    <p class="diagram-caption" data-diagram-caption="SPRING_BOOT_INTERVIEW">Say which process owns the state, and what a retry or a second instance would do.</p>`
   );
 }

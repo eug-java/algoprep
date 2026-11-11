@@ -10,3 +10,6 @@ cases:
     args: [[2, 3, 6, 7], 7]
   - name: case2
     args: [[2], 1]
+  - name: zero-target
+    args: [[2], 0]
+    expected: [[]]

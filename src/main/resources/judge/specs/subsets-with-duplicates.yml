@@ -8,3 +8,6 @@ referenceStatic: true
 cases:
   - name: case1
     args: [[1, 2, 2]]
+  - name: single
+    args: [[1]]
+    expected: [[], [1]]

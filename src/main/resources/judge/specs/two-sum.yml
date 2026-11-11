@@ -9,3 +9,6 @@ cases:
   - name: absent
     args: [[1, 2], 9]
     expected: []
+  - name: same-values
+    args: [[3, 3], 6]
+    expected: [0, 1]

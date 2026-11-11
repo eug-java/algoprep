@@ -10,3 +10,6 @@ cases:
     args: [[73, 74, 75, 71, 69, 72, 76, 73]]
   - name: case2
     args: [[80, 70, 60]]
+  - name: single
+    args: [[30]]
+    expected: [0]

@@ -9,3 +9,6 @@ cases:
   - name: absent
     args: [[2, 5, 9, 11], 12]
     expected: [-1, -1]
+  - name: empty
+    args: [[], 0]
+    expected: [-1, -1]

@@ -27,8 +27,8 @@ class JudgeServiceTest {
                 new JudgeRequest("pair-with-target-sum", "TWO_POINTERS", source, "en"));
 
         assertTrue(result.ok(), result.compileErrors() + result.runtimeErrors());
-        assertEquals(2, result.passed());
-        assertEquals(2, result.total());
+        assertEquals(3, result.passed());
+        assertEquals(3, result.total());
     }
 
     @Test
@@ -117,7 +117,7 @@ class JudgeServiceTest {
         JudgeResult result = new JudgeService().judge(
                 new JudgeRequest("lowest-common-ancestor", "TREE_DFS", source, "en"));
         assertTrue(result.ok(), result.compileErrors() + result.runtimeErrors());
-        assertEquals(2, result.passed());
+        assertEquals(3, result.passed());
     }
 
     @Test

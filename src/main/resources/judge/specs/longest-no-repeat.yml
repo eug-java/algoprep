@@ -9,3 +9,6 @@ cases:
   - name: all-unique
     args: [abcdef]
     expected: 6
+  - name: empty
+    args: [""]
+    expected: 0

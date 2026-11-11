@@ -18,7 +18,7 @@ Spring Boot
 1. **Canonical English catalog** — `course/catalog.yml`, `challenges.yml`, `pattern-quiz.yml`
 2. **Locale overlays** — `course/i18n/{en,ru,es}/*.yml` merge titles/prompts/hints
 3. **UI chrome** — `static/i18n/{en,ru,es}.json`
-4. **Walkthroughs** — `course/walkthroughs.yml` keyed by problem id. Every catalog problem has one: the worked example, the invariant already written as a hint, and a prompt to check that example by hand. Locale files override the English text.
+4. **Walkthroughs** — `course/walkthroughs.yml` keyed by problem id. Every catalog problem has one. Problems on the four-week plan walk through their catalog example step by step, and the last line is that example's answer. The other problems keep the example, the invariant hint, and a prompt to check it by hand. Locale files override the English text.
 5. **Solutions** — Java classes referenced by `className` in the catalog
 6. **Judge specs** — optional YAML per problem id
 

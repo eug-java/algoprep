@@ -270,7 +270,7 @@ export async function renderProblem(patternId, problemId) {
   const template = await api.judgeTemplate(patternId, problemId);
   const hasJudge = Boolean(template);
   const ascii = problem.walkthroughAscii;
-  const showAscii = (problem.difficulty || '').toUpperCase() === 'HARD' && ascii;
+  const showAscii = Boolean(ascii);
   const constraints = problem.constraints || pattern.constraints || '';
   const followUp = problem.followUp || pattern.followUp || '';
   const discussion = Boolean(problem.discussionOnly);
@@ -376,7 +376,7 @@ export async function renderProblem(patternId, problemId) {
         updateProgressUi();
         document.getElementById('btn-done').textContent = t('problem.undone');
         toast(t('common.markedDone'));
-        showComplexityPanel(problem);
+        showComplexityPanel(problem, key);
       }
     } catch (e) {
       const tipKey = tipForJudgeMessage(e.message, e.message, '');
@@ -418,6 +418,6 @@ export async function renderProblem(patternId, problemId) {
     ev.currentTarget.textContent = on ? t('problem.undone') : t('problem.done');
     updateProgressUi();
     toast(on ? t('common.markedDone') : t('common.markedUndone'));
-    if (on) showComplexityPanel(problem);
+    if (on) showComplexityPanel(problem, key);
   };
 }

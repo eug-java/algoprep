@@ -13,7 +13,11 @@ public final class NQueens {
   private static void search(int row, int n, boolean[] columns, boolean[] down, boolean[] up, List<String> board, List<List<String>> result) {
     if (row == n) { result.add(new ArrayList<>(board)); return; }
     for (int col = 0; col < n; col++) { int d = row - col + n, u = row + col; if (columns[col] || down[d] || up[u]) continue;
-      columns[col] = down[d] = up[u] = true; board.add(".".repeat(col) + "Q" + ".".repeat(n - col - 1)); search(row + 1, n, columns, down, up, board, result); board.remove(board.size() - 1); columns[col] = down[d] = up[u] = false;
+      columns[col] = down[d] = up[u] = true;
+      board.add(".".repeat(col) + "Q" + ".".repeat(n - col - 1));
+      search(row + 1, n, columns, down, up, board, result);
+      board.remove(board.size() - 1);
+      columns[col] = down[d] = up[u] = false;
     }
   }
 }

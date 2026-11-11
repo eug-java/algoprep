@@ -1,8 +1,23 @@
 const KEY = 'algoprep.progress.v1';
 const META_KEY = 'algoprep.meta.v1';
 
-const SRS_INTERVALS = [0, 1, 3, 7, 21];
-const DAY_MS = 24 * 60 * 60 * 1000;
+export function localDateKey(date = new Date()) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
+
+export function shiftLocalDate(date, days) {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate() + days);
+}
+
+/** Due at local midnight `days` days after `now`'s local date. One day means the next local day. */
+export function dueAtLocalDay(days, now = new Date()) {
+  const when = shiftLocalDate(now, days);
+  when.setHours(0, 0, 0, 0);
+  return when.getTime();
+}
 
 function load() {
   try {
@@ -28,8 +43,8 @@ function saveMeta(meta) {
   localStorage.setItem(META_KEY, JSON.stringify(meta));
 }
 
-function todayKey() {
-  return new Date().toISOString().slice(0, 10);
+function todayKey(now = new Date()) {
+  return localDateKey(now);
 }
 
 function patternOf(id) {
@@ -62,7 +77,6 @@ export const progress = {
     if (state[id]) delete state[id];
     else state[id] = Date.now();
     save(state);
-    if (state[id]) this.srsSchedule(id, 'good');
     return Boolean(state[id]);
   },
   mark(id) {
@@ -70,7 +84,6 @@ export const progress = {
     state[id] = Date.now();
     save(state);
     this.touchStreak();
-    this.srsSchedule(id, 'good');
   },
   unmark(id) {
     const state = load();
@@ -105,29 +118,25 @@ export const progress = {
       };
     });
   },
-  touchStreak() {
+  touchStreak(now = new Date()) {
     const meta = loadMeta();
-    const today = todayKey();
+    const today = todayKey(now);
     if (meta.lastActive === today) {
       saveMeta(meta);
       return meta.streak || 1;
     }
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    const yKey = yesterday.toISOString().slice(0, 10);
+    const yKey = localDateKey(shiftLocalDate(now, -1));
     meta.streak = meta.lastActive === yKey ? (meta.streak || 0) + 1 : 1;
     meta.lastActive = today;
     saveMeta(meta);
     return meta.streak;
   },
-  streak() {
+  streak(now = new Date()) {
     const meta = loadMeta();
-    const today = todayKey();
+    const today = todayKey(now);
     if (!meta.lastActive) return 0;
     if (meta.lastActive === today) return meta.streak || 0;
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    if (meta.lastActive === yesterday.toISOString().slice(0, 10)) return meta.streak || 0;
+    if (meta.lastActive === localDateKey(shiftLocalDate(now, -1))) return meta.streak || 0;
     return 0;
   },
   recordDaily(ids) {
@@ -139,31 +148,41 @@ export const progress = {
   getDaily() {
     return (loadMeta().daily || {})[todayKey()] || null;
   },
-  /** SM-2 lite: grade again|hard|good|easy → intervals 0/1/3/7/21 */
-  srsSchedule(id, grade) {
+  /**
+   * SM-2 style recall grade. Ease changes the interval after the first successful reviews.
+   * Again is due on the next local day, not in the same moment.
+   */
+  srsSchedule(id, grade, now = new Date()) {
     const meta = loadMeta();
     meta.srs = meta.srs || {};
     const card = meta.srs[id] || { interval: 0, ease: 2.5, reps: 0, due: 0 };
-    let step = card.reps || 0;
+    let ease = card.ease || 2.5;
+    let interval = card.interval || 0;
+    let reps = card.reps || 0;
 
     if (grade === 'again') {
-      step = 0;
-      card.ease = Math.max(1.3, (card.ease || 2.5) - 0.2);
+      reps = 0;
+      interval = 1;
+      ease = Math.max(1.3, ease - 0.2);
     } else if (grade === 'hard') {
-      step = Math.max(1, Math.min(step, 1));
-      card.ease = Math.max(1.3, (card.ease || 2.5) - 0.15);
-    } else if (grade === 'good') {
-      step = Math.min(SRS_INTERVALS.length - 1, step + 1);
+      reps = Math.max(reps, 1);
+      interval = Math.max(1, Math.round((interval || 1) * 1.2));
+      ease = Math.max(1.3, ease - 0.15);
     } else if (grade === 'easy') {
-      step = Math.min(SRS_INTERVALS.length - 1, step + 2);
-      card.ease = (card.ease || 2.5) + 0.15;
+      interval = reps === 0 ? 4 : Math.max(1, Math.round((interval || 1) * ease * 1.3));
+      ease = Math.min(3, ease + 0.15);
+      reps += 1;
     } else {
-      step = Math.min(SRS_INTERVALS.length - 1, step + 1);
+      if (reps <= 0) interval = 1;
+      else if (reps === 1) interval = 6;
+      else interval = Math.max(1, Math.round((interval || 1) * ease));
+      reps += 1;
     }
 
-    card.reps = step;
-    card.interval = SRS_INTERVALS[step] ?? 21;
-    card.due = Date.now() + card.interval * DAY_MS;
+    card.reps = reps;
+    card.interval = interval;
+    card.ease = Math.round(ease * 100) / 100;
+    card.due = dueAtLocalDay(interval, now);
     card.lastGrade = grade;
     card.pattern = patternOf(id);
     meta.srs[id] = card;
@@ -278,9 +297,7 @@ export const progress = {
     const done = load();
     const days = [];
     for (let i = 6; i >= 0; i -= 1) {
-      const d = new Date();
-      d.setDate(d.getDate() - i);
-      const key = d.toISOString().slice(0, 10);
+      const key = localDateKey(shiftLocalDate(new Date(), -i));
       const picks = daily[key] || [];
       const completed = picks.filter((p) => done[`${p.patternId}:${p.problemId}`]).length;
       days.push({ date: key, total: picks.length, completed });

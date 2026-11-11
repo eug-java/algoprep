@@ -10,12 +10,13 @@ Self-contained **Java 21** interview training: reusable problem patterns, runnab
 
 Open [http://localhost:18080](http://localhost:18080).
 
-The app binds to **127.0.0.1** unless `SERVER_ADDRESS` is set. That is deliberate: the judge compiles and runs submitted Java in this process unless `algoprep.judge.docker` is on. Do not publish port 18080 to a network you do not control. Docker Compose sets `SERVER_ADDRESS=0.0.0.0` only inside the container, so the published port is still the host's localhost mapping.
+The app binds to **127.0.0.1** unless `SERVER_ADDRESS` is set. That is deliberate: the judge compiles and runs submitted Java in this process unless `algoprep.judge.docker` is on. Do not publish port 18080 to a network you do not control. Docker Compose sets `SERVER_ADDRESS=0.0.0.0` only inside the container and publishes `127.0.0.1:18080:18080` on the host.
 
 Requirements: **JDK 21+**. `start.sh` auto-detects common OpenJDK 21 installs and sets `JAVA_HOME`.
 
 ```bash
 ./mvnw test          # full suite
+node --test src/test/js/study-loop.test.mjs   # complexity, recall, daily
 ./mvnw -DskipTests package
 java -jar target/algoprep-1.0.0-SNAPSHOT.jar
 ```
@@ -26,7 +27,7 @@ java -jar target/algoprep-1.0.0-SNAPSHOT.jar
 docker compose up --build
 ```
 
-Same UI at [http://localhost:18080](http://localhost:18080). Sync files persist in the `algoprep-sync` volume.
+Same UI at [http://localhost:18080](http://localhost:18080). The runtime image includes a JDK, so the in-process judge can compile a submission. Sync files persist in the `algoprep-sync` volume. The published port is bound to host localhost only.
 
 Optional harder judge isolation on the **host** (Docker available):
 
@@ -81,7 +82,7 @@ Progress is stored in `localStorage` by default; export/import and optional serv
 1. Open a pattern → read intuition, signs, and the diagram.
 2. Solve Easy → Medium → Hard (or use Daily / Tracks).
 3. Use the playground when a judge spec exists; otherwise reveal the reference solution.
-4. Mark done, answer the complexity check, schedule SRS grades in Review.
+4. Mark done, answer the complexity check, then give an explicit recall grade. The done checkbox does not schedule a review.
 5. Drill recognition with Quiz and Blind Spot; run Mock under a timer.
 
 Reference solutions and JUnit tests live under `src/main/java/com/algoprep/patterns/**` and `src/test/java/...`.

@@ -2856,15 +2856,14 @@ patterns:
         - "Este proceso recuerda las sesiones activas en orden, y un login pasado el límite quita solo la más antigua de aquí."
         - "Mantén una colección ordenada de ids de sesión activos por usuario para encontrar fácilmente la sesión más antigua. Ante un nuevo inicio de sesión que supera el límite, recházalo o desaloja y reemplaza la sesión más antigua según la política configurada; haz que el desalojo y la inserción sean atómicos bajo un bloqueo por usuario."
       sql-injection-safe-query:
-        example: "Entrada: buildSelect(\"users\", {id: 7}) enlaza 7. Un nombre de columna que no es un identificador simple se rechaza."
-        failureNote: "Una lista blanca armada desde la petición no es una lista blanca. Ata los valores como parámetros. Los identificadores que no se pueden atar se quedan en una lista que escribiste tú."
+        example: "Entrada: buildSelect(\"users\", {id: 7}, lista {users, id}) enlaza 7. El nombre email se rechaza si no está en ese conjunto, aunque parezca un identificador simple."
+        failureNote: "Una lista armada desde la petición no es una lista blanca. Una expresión regular que solo mira la forma del nombre sigue dejando elegir cualquier columna. Ata los valores como parámetros. Los nombres se quedan en una lista que escribiste tú."
         title: Constructor de consultas seguro frente a inyección SQL
-        summary: Construye marcadores de posición parametrizados a partir de un mapa columna-valor,
-          validando identificadores en vez de concatenar entrada sin procesar.
-        whenToUse: Discute/implementa cómo una capa de repositorio construye cláusulas WHERE dinámicas
-          de forma segura - valida los nombres de columna contra una lista blanca y siempre vincula
-          los valores como parámetros, nunca los concatenes como texto en el SQL.
+        summary: Construye marcadores parametrizados a partir de un mapa columna-valor y acepta solo
+          nombres de una lista blanca fija.
+        whenToUse: "Cómo una capa de repositorio construye un WHERE dinámico de forma segura: solo entran
+          en el SQL los nombres de tabla y columna de una lista que escribiste tú, y los valores van siempre como parámetros."
         hints:
         - "¿Qué parte de la sentencia puede ser texto y qué parte debe ser un valor ligado?"
-        - "Los identificadores se comprueban contra una regla de nombre simple antes de escribirse en SQL, y los valores son parámetros."
-        - "Valida cada identificador (nombre de columna) contra un patrón de lista blanca antes de usarlo en el texto SQL generado. Nunca insertes el valor directamente - siempre emite un marcador `?` y devuelve la lista de valores por separado para que un PreparedStatement los vincule."
+        - "Un nombre se escribe en el SQL solo si está en la lista blanca. Los valores nunca: se convierten en parámetros ?."
+        - "Pasa el conjunto fijo de nombres de tabla y columna que estás dispuesto a emitir. Rechaza cualquier otro, aunque coincida con la forma de un identificador. Emite ? por cada valor y devuelve esos valores aparte para un PreparedStatement."

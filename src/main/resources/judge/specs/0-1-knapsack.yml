@@ -10,5 +10,3 @@ cases:
     args: [[1, 6, 10, 16], [1, 2, 3, 5], 7]
   - name: case2
     args: [[5], [2], 0]
-  - name: case3
-    args: [[1], [1, 2], 3]

@@ -1,6 +1,9 @@
 import { api, getLang } from './api.js';
 import { progress } from './progress.js';
 import { createEditor } from './editor.js';
+import { COMPLEXITY_OPTS, complexityMatch, normalizeComplexity } from './complexity.js';
+
+export { complexityMatch, normalizeComplexity };
 
 export const app = document.getElementById('app');
 export const progressPill = document.getElementById('progress-pill');
@@ -20,7 +23,6 @@ export function bindRender(fn) { renderImpl = fn; }
 function requestRender() { return renderImpl(); }
 
 const ONBOARD_KEY = 'algoprep.onboarded.v1';
-const COMPLEXITY_OPTS = ['O(1)', 'O(log n)', 'O(n)', 'O(n log n)', 'O(n^2)', 'O(2^n)'];
 export const TRACK_PRESETS = [
   { id: 'Amazon', match: ['Amazon', 'FAANG'] },
   { id: 'Google', match: ['Google', 'FAANG'] },
@@ -117,22 +119,6 @@ export function localizeDiagram(patternId) {
   });
 }
 
-export function normalizeComplexity(value) {
-  return String(value || '')
-    .toLowerCase()
-    .replace(/\s+/g, '')
-    .replace(/ο|ｏ/g, 'o')
-    .replace(/\*\*/g, '^')
-    .replace(/×/g, '*')
-    .replace(/log\s*\(?\s*n\s*\)?/g, 'logn');
-}
-
-export function complexityMatch(user, expected) {
-  const u = normalizeComplexity(user);
-  const e = normalizeComplexity(expected);
-  if (!u || !e) return false;
-  return u.includes(e) || e.includes(u);
-}
 
 export function complexitySelectHtml(id, selected = '') {
   return `<select id="${id}">
@@ -143,7 +129,7 @@ export function complexitySelectHtml(id, selected = '') {
   </select>`;
 }
 
-export function showComplexityPanel(problem) {
+export function showComplexityPanel(problem, problemKey) {
   let host = document.getElementById('complexity-panel');
   if (!host) {
     host = document.createElement('div');
@@ -164,8 +150,25 @@ export function showComplexityPanel(problem) {
       <button class="btn btn-primary" id="cx-check" type="button">${escapeHtml(t('complexity.check'))}</button>
       <button class="btn btn-ghost" id="cx-close" type="button">${escapeHtml(t('complexity.close'))}</button>
     </div>
-    <div id="cx-result"></div>`;
+    <div id="cx-result"></div>
+    ${problemKey ? `
+      <h3>${escapeHtml(t('problem.recall'))}</h3>
+      <p>${escapeHtml(t('problem.recallLede'))}</p>
+      <div class="review-grades" id="cx-recall">
+        <button type="button" class="btn btn-ghost" data-grade="again">${escapeHtml(t('review.again'))}</button>
+        <button type="button" class="btn btn-ghost" data-grade="hard">${escapeHtml(t('review.hard'))}</button>
+        <button type="button" class="btn btn-primary" data-grade="good">${escapeHtml(t('review.good'))}</button>
+        <button type="button" class="btn btn-signal" data-grade="easy">${escapeHtml(t('review.easy'))}</button>
+      </div>
+      <p id="cx-recall-result"></p>` : ''}`;
   document.getElementById('cx-close').onclick = () => { host.innerHTML = ''; host.className = 'hidden'; };
+  host.querySelectorAll('#cx-recall [data-grade]').forEach((btn) => {
+    btn.onclick = () => {
+      progress.srsSchedule(problemKey, btn.dataset.grade);
+      const note = document.getElementById('cx-recall-result');
+      if (note) note.textContent = t('problem.recallSaved', { grade: t(`review.${btn.dataset.grade}`) });
+    };
+  });
   document.getElementById('cx-check').onclick = () => {
     const time = document.getElementById('cx-time').value;
     const space = document.getElementById('cx-space').value;

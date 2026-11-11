@@ -8,5 +8,3 @@ referenceStatic: true
 cases:
   - name: case1
     args: [[3, 2, 1, 5, 6, 4], 2]
-  - name: case2
-    args: [[1], 0]

@@ -45,11 +45,12 @@ Optional Docker isolation (`algoprep.judge.docker=true`): compile+run in `docker
 |------|------|
 | `app.js` | Router + all pages |
 | `api.js` | Course / judge / sync / metrics clients |
-| `progress.js` | Done set, streak, daily, SRS, abandon stats, export/import |
+| `progress.js` | Done set, local-day streak, recall grades, abandon stats, export/import |
+| `complexity.js` | Canonical big-O classes for the self-check |
+| `daily.js` | One Easy, one Medium, and one Hard for the local day |
 | `editor.js` | Monaco loader (textarea fallback) |
 | `diagrams.js` | SVG pattern animations |
 | `diff.js` | Line diff vs official source |
-| `daily.js` | Deterministic daily picks |
 | `speak.js` | Fallback speak tips (prefer i18n keys) |
 | `theme.js` | Light/dark |
 
@@ -59,16 +60,20 @@ PWA: `manifest.webmanifest` + `sw.js` (static asset cache; API traffic is networ
 
 | Data | Where |
 |------|--------|
-| Progress, theme, lang, SRS, streak | Browser `localStorage` |
+| Progress, theme, lang, recall cards, streak | Browser `localStorage` |
 | Sync payloads | `./data/sync/{key}.json` |
 | Metrics aggregates | Process memory |
+
+Streak, Daily, and the weekly report use the browser's local date. A recall card is created only by an explicit grade (`again`, `hard`, `good`, `easy`) or a missed quiz pattern. `again` is due at the next local midnight. Later `good` and `easy` grades multiply the previous interval by the ease factor (starting at 2.5, clamped to 1.3–3.0). Marking a problem done records completion and does not invent a grade.
+
+The complexity self-check compares a chosen class such as `O(n^2)` or `O(V+E)` with the catalog bound. `O(n)` does not match `O(n^2)`. A bound that states two classes, such as `O(log n) insert, O(1) median`, accepts either class.
 
 ## Extending
 
 - **New pattern problem** — add YAML entry + Java class + JUnit test; optionally add `judge/specs/{id}.yml` (or run `scripts/generate_judge_specs.py`).
 - **New challenge** — `challenges.yml` + class under `patterns/challenge/` + i18n overlays.
 - **New UI string** — add key to all three `static/i18n/*.json` files.
-- **New diagram** — extend `diagrams.js` `diagramFor` switch + CSS.
+- **New diagram** — extend `diagrams.js` `diagramFor` switch, plus `diagram.title.*` and `diagram.caption.*` in all three `static/i18n/*.json` files.
 
 ## Design constraints
 

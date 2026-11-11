@@ -7,4 +7,10 @@ cases:
   - name: diameter
     args: [[1, 2, 3, 4, 5]]
     expected: 3
+  - name: longer
+    args: [[1, 2, 3, 4, 5, null, null, 6]]
+    expected: 4
+  - name: empty
+    args: [null]
+    expected: 0
 ...

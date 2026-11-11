@@ -7,4 +7,10 @@ cases:
   - name: no-cycle
     args: [[1, 2, 3, 4]]
     expected: false
+  - name: single
+    args: [[1]]
+    expected: false
+  - name: empty
+    args: [null]
+    expected: false
 ...

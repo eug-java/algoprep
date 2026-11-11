@@ -7,4 +7,10 @@ cases:
   - name: example
     args: [[1, 2, 3]]
     expected: 6
+  - name: cross
+    args: [[-10, 9, 20, null, null, 15, 7]]
+    expected: 42
+  - name: all-negative
+    args: [[-3]]
+    expected: -3
 ...

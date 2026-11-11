@@ -7,3 +7,6 @@ cases:
   - name: k2
     args: [[1, 2, 3, 4, 5], 2]
     expected: [2, 1, 4, 3, 5]
+  - name: single
+    args: [[1], 1]
+    expected: [1]

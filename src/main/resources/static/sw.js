@@ -1,4 +1,4 @@
-const CACHE = 'algoprep-v3';
+const CACHE = 'algoprep-v4';
 const ASSETS = [
   '/',
   '/index.html',
@@ -10,6 +10,8 @@ const ASSETS = [
   '/js/diagrams.js',
   '/js/diff.js',
   '/js/daily.js',
+  '/js/complexity.js',
+  '/js/shared.js',
   '/js/speak.js',
   '/manifest.webmanifest',
   '/icons/icon.svg',

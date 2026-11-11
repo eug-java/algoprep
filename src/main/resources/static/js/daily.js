@@ -1,4 +1,6 @@
-/** Deterministic daily problem picks from catalog patterns. */
+/** Deterministic daily problem picks: one Easy, one Medium, one Hard for the local day. */
+import { localDateKey } from './progress.js';
+
 function hash(str) {
   let h = 2166136261;
   for (let i = 0; i < str.length; i++) {
@@ -8,26 +10,49 @@ function hash(str) {
   return h >>> 0;
 }
 
+function nextSeed(seed) {
+  return (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+}
+
 export function pickDaily(patterns, date = new Date()) {
-  const key = date.toISOString().slice(0, 10);
+  const key = localDateKey(date);
   const pool = [];
+  const buckets = { EASY: [], MEDIUM: [], HARD: [] };
   patterns.forEach((p) => {
     (p.problems || []).forEach((pr) => {
-      pool.push({ patternId: p.id, patternTitle: p.title, ...pr });
+      const item = { patternId: p.id, patternTitle: p.title, ...pr };
+      const idx = pool.length;
+      pool.push(item);
+      const difficulty = String(pr.difficulty || '').toUpperCase();
+      if (buckets[difficulty]) buckets[difficulty].push(idx);
     });
   });
   if (!pool.length) return [];
-  const seed = hash(key + ':algoprep');
-  const picks = [];
+
   const used = new Set();
-  let s = seed;
+  const picks = [];
+  ['EASY', 'MEDIUM', 'HARD'].forEach((difficulty) => {
+    const bucket = buckets[difficulty];
+    if (!bucket.length) return;
+    let seed = hash(`${key}:algoprep:${difficulty}`);
+    for (let attempt = 0; attempt < bucket.length; attempt += 1) {
+      seed = nextSeed(seed);
+      const idx = bucket[seed % bucket.length];
+      if (!used.has(idx)) {
+        used.add(idx);
+        picks.push(pool[idx]);
+        return;
+      }
+    }
+  });
+
+  let seed = hash(`${key}:algoprep:fill`);
   while (picks.length < 3 && used.size < pool.length) {
-    s = (s * 1664525 + 1013904223) >>> 0;
-    const idx = s % pool.length;
+    seed = nextSeed(seed);
+    const idx = seed % pool.length;
     if (used.has(idx)) continue;
     used.add(idx);
     picks.push(pool[idx]);
   }
-  // prefer mix of difficulties if possible
   return picks;
 }

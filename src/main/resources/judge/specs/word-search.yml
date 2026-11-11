@@ -10,3 +10,6 @@ cases:
     args: [[ABCE, SFCS, ADEE], ABCCED]
   - name: missing
     args: [[ABCE, SFCS, ADEE], ABCB]
+  - name: miss
+    args: [["a"], "b"]
+    expected: false

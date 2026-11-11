@@ -8,3 +8,6 @@ referenceStatic: true
 cases:
   - name: case1
     args: [[[4, 10, 15, 24, 26], [0, 9, 12, 20], [5, 18, 22, 30]]]
+  - name: one-list
+    args: [[[8]]]
+    expected: [8, 8]

@@ -10,3 +10,6 @@ cases:
   - name: path-missing
     args: [[1, 2, 3], 5]
     expected: false
+  - name: empty
+    args: [null, 0]
+    expected: false

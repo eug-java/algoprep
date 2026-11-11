@@ -207,6 +207,13 @@ class ReferenceOracleTest {
             }
             return;
         }
+        if (expected instanceof char[][] left && actual instanceof char[][] right) {
+            assertEquals(left.length, right.length, name);
+            for (int i = 0; i < left.length; i++) {
+                org.junit.jupiter.api.Assertions.assertArrayEquals(left[i], right[i], name);
+            }
+            return;
+        }
         if (expected instanceof ListNode || actual instanceof ListNode) {
             assertEquals(ListNode.toList((ListNode) expected), ListNode.toList((ListNode) actual), name);
             return;

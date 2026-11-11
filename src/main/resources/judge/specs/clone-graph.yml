@@ -6,3 +6,6 @@ cases:
   - name: square
     args: [[[2, 4], [1, 3], [2, 4], [1, 3]]]
     expected: [[2, 4], [1, 3], [2, 4], [1, 3]]
+  - name: lone
+    args: [[[]]]
+    expected: [[]]

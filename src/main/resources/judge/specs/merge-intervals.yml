@@ -10,3 +10,6 @@ cases:
   - name: empty
     args: [[]]
     expected: []
+  - name: single
+    args: [[[1, 2]]]
+    expected: [[1, 2]]

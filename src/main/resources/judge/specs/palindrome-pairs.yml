@@ -6,3 +6,6 @@ cases:
   - name: reverses
     args: [["bat", "tab", "cat"]]
     expected: [[1, 0], [0, 1]]
+  - name: single
+    args: [["a"]]
+    expected: []

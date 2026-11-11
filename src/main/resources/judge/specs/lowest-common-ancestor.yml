@@ -10,3 +10,6 @@ cases:
   - name: split-at-root
     args: [[3, 5, 1, 6, 2, 0, 8, null, null, 7, 4], 5, 1]
     expected: 3
+  - name: same-node
+    args: [[1], 1, 1]
+    expected: 1

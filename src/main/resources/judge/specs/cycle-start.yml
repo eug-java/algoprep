@@ -7,3 +7,6 @@ cases:
   - name: acyclic
     args: [[1, 2]]
     expected: null
+  - name: empty
+    args: [null]
+    expected: null

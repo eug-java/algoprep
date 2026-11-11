@@ -20,6 +20,8 @@ jobs:
           node-version: '20'
       - name: Unit tests
         run: ./mvnw -B test
+      - name: Study-loop checks
+        run: node --test src/test/js/study-loop.test.mjs
       - name: Package
         run: ./mvnw -B -DskipTests package
       - name: Start app

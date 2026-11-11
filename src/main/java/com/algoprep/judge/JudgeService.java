@@ -176,7 +176,7 @@ public class JudgeService {
         return body.toString();
     }
 
-    private JudgeSpec loadSpec(String problemId) {
+    JudgeSpec loadSpec(String problemId) {
         if (!problemId.matches("[a-z0-9-]+")) throw new IllegalArgumentException("Invalid problem id");
         ClassPathResource resource = new ClassPathResource("judge/specs/" + problemId + ".yml");
         if (!resource.exists()) throw new IllegalArgumentException("No judge spec for problem: " + problemId);

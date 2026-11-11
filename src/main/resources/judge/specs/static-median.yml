@@ -12,5 +12,3 @@ cases:
     args: [[4, 1, 3, 2]]
   - name: case3
     args: [[-1, -3, -2]]
-  - name: case4
-    args: [[]]

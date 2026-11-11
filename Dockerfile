@@ -7,8 +7,8 @@ RUN chmod +x mvnw && ./mvnw -q -B dependency:go-offline
 COPY src ./src
 RUN ./mvnw -q -B -DskipTests package
 
-# Runtime
-FROM eclipse-temurin:21-jre-jammy
+# Runtime keeps a JDK so the in-process judge can run javac.
+FROM eclipse-temurin:21-jdk-jammy
 WORKDIR /app
 RUN apt-get update \
   && apt-get install -y --no-install-recommends curl \
